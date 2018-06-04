@@ -1,0 +1,11 @@
+<div formGroupName="queryForm">
+<button type="button" class="ui labeled top attached icon basic compact button" (click)="addFilter()">
+  <i class="plus icon"></i>Add Filter</button>
+<div class="ui attached list" formArrayName="filters">
+  <div *ngFor="let filter of filters.controls; index as i">
+      <query-filter (deleteFilterEvent)="removeFilter(i)" [filterFormGroup]="filters.at(i)"
+       [chosenEntity]="chosenEntity" [availableEntityFields]="availableEntityFields"></query-filter>
+  </div>
+</div>
+</div>
+

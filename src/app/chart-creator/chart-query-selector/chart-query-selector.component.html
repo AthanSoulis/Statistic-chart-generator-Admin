@@ -1,0 +1,35 @@
+<div class="ui equal width form" formGroupName="queryForm">
+  <h4 class="ui dividing header">Y Axis</h4>
+  <div class="required field">
+    <label>
+    <select class="ui search dropdown" formControlName="entity" (change)=entityChanged($event.target.value)>
+      <option value="">Select Entity</option>
+      <option *ngFor="let availableEntity of availableEntities" value='{{availableEntity}}'>{{availableEntity | titlecase}}</option>
+    </select>
+    </label>
+  </div>
+
+  <div [ngClass]="(chosenEntity == null) ? 'disabled field' : 'enabled'">
+    <div class="fields" formGroupName="selectY">
+      <div class="eight wide field">
+          <select class="ui dropdown" formControlName="aggregate">
+            <option value=null>Select Aggregate</option>
+            <option *ngFor="let availableAggregate of availableAggregates" value='{{availableAggregate}}'>{{availableAggregate | titlecase}}</option>
+          </select>
+      </div>
+      <span class="ui hidden horizontal divider"> of </span>
+      <div class="eight wide field">
+        <select-attribute formControlName="field" [chosenEntity]="chosenEntity" [availableEntityFields]="availableEntityFields" ></select-attribute>
+      </div>
+    </div>
+
+    <h4 class="ui dividing header">X Axis</h4>
+    <div formArrayName="selectXs">
+      <div *ngFor="let selectX of selectXs.controls; index as i" [formGroupName]="i">
+        <select-attribute formControlName="field" [chosenEntity]="chosenEntity" [availableEntityFields]="availableEntityFields" ></select-attribute>
+      </div>
+    </div>
+  <h4 class="ui dividing header">Filters</h4>
+  <query-filter-selector [filters]="filters" [chosenEntity]="chosenEntity" [availableEntityFields]="availableEntityFields"></query-filter-selector>
+  </div>
+</div>

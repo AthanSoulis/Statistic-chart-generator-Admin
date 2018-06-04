@@ -1,0 +1,24 @@
+<div class="ui container">
+    <div class="ui fluid tabular menu">
+            <div class="active item" data-tab="tab-properties">Properties</div>
+            <div class="item" data-tab="tab-query">Data</div>
+    </div>
+    <div class="ui container">
+        <form class="ui form container" [formGroup]="chartForm" (ngSubmit)="onSubmit()">
+            <div class="ui active tab" data-tab="tab-properties">
+                <chart-properties-selector ></chart-properties-selector>
+            </div>
+            <div class="ui tab" data-tab="tab-query">
+                <chart-query-selector [queryForm]="queryForm"></chart-query-selector>
+            </div>
+
+            <div class="ui hidden divider"></div>
+            <button type="submit" 
+                [ngClass]="isFormInvalid() ?
+                'ui disabled negative basic button' : 'ui positive basic button'">Submit</button>
+
+            <div class="ui negative message" *ngIf="isFormInvalid()">Error Message</div>
+        </form> 
+    </div>
+</div>
+

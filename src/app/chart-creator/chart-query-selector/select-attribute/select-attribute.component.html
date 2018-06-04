@@ -1,0 +1,20 @@
+
+<input value={{selectedField}} readonly>
+
+<span class="ui horizontal pointing up divider"></span>
+<div class="ui item">
+
+<div class="ui two column four wide grid container">
+  <div class="column">
+    <h4 class="ui dividing header">Relations</h4>
+    <tree-root [nodes]="availableEntityFields" [options]="treeOptions"
+    (toggleExpanded)="onExpanded($event)" (activate)="nodeActivated($event)"></tree-root>
+  </div>
+  <div class="column">
+    <h4 class="ui dividing header">Fields</h4>
+    <tree-root *ngIf="treeFields" [nodes]="treeFields" [options]="fieldsOptions" (activate)="nodeSelected($event)"></tree-root>
+  </div>
+  
+</div>  
+</div>
+  
