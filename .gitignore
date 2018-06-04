@@ -6,7 +6,6 @@
 # dependencies
 /node_modules
 /semantic
-semantic.json
 
 # IDEs and editors
 /.idea
