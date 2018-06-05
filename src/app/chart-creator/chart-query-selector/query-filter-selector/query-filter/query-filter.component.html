@@ -8,8 +8,10 @@
         <option *ngFor="let operator of operators" value='{{operator}}'>{{operator | titlecase}}</option>
     </select>
   </div>
-  <div class="field">
-    <input type="text" name="filterValue" placeholder="Value" formControlName="values"> 
+  <div class="fields"formArrayName="values">
+    <div class=" field" *ngFor="let value of values.controls; index as i" [formGroupName]="i">
+      <input type="text" name="filterValue" placeholder="Value"> 
+    </div>
   </div>
   <button (click)="deleteFilterEvent.emit()" type="button" 
   class="circular ui icon basic compact right floated button"><i class="close icon"></i></button>

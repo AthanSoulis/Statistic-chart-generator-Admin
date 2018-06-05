@@ -31,8 +31,8 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
       queryForm: this.formBuilder.group({
         entity: ['', Validators.required],
         selectY: this.formBuilder.group(new Select()),
-        selectXs: this.formBuilder.array([]),
-        filters: this.formBuilder.array([])
+        selectXs: this.formBuilder.array(new Array<Select>()),
+        filters: this.formBuilder.array(new Array<Filter>())
       })
     });
 

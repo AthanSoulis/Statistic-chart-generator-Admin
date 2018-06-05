@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, Input, AfterViewInit, EventEmitter, OnDestroy, forwardRef } from '@angular/core';
 import { ControlContainer, FormGroupDirective, FormBuilder, FormGroup,
-   Validators, ControlValueAccessor, NG_VALUE_ACCESSOR, FormGroupName, FormArray, AbstractControl } from '@angular/forms';
+   Validators, ControlValueAccessor, NG_VALUE_ACCESSOR, FormGroupName, FormArray, AbstractControl, FormControl } from '@angular/forms';
 import { Filter } from './query-filter.model';
 import { SupportedFilterTypesService } from '../../../../supported-filter-types-service/supported-filter-types.service';
 
@@ -19,11 +19,15 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() availableEntityFields: Array<string>;
   @Output() deleteFilterEvent = new EventEmitter();
 
+  filterValues: Array<string>;
+
   operators: string[];
 
   constructor(private formBuilder: FormBuilder, private operatorsService: SupportedFilterTypesService) {
     this.getOperators();
   }
+
+  get values(): FormArray { return this.filterFormGroup.get('values') as FormArray; }
 
   getOperators() {
     this.operatorsService.getSupportedFilterTypes().subscribe(
@@ -34,6 +38,9 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log(this.filterFormGroup);
+    console.log(this.values);
+    this.values.push(this.formBuilder.control({value: null}));
   }
 
   ngAfterViewInit(): void {

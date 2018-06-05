@@ -1,5 +1,5 @@
 <div formGroupName="queryForm">
-<button type="button" class="ui labeled top attached icon basic compact button" (click)="addFilter()">
+<button type="button" class="ui labeled top attached icon basic blue compact button" (click)="addFilter()">
   <i class="plus icon"></i>Add Filter</button>
 <div class="ui attached list" formArrayName="filters">
   <div *ngFor="let filter of filters.controls; index as i">
