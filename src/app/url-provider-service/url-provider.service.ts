@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class UrlProviderService {
 
-  // private domain = 'vatopedi.di.uoa.gr';
-  private domain = 'localhost';
+  private domain;
   private port = '8080';
   private protocol = 'http';
 
   private url: string;
 
   constructor() {
+    this.domain = location.hostname;
     this.url = this.protocol + '://' + this.domain + ':' + this.port;
   }
 
