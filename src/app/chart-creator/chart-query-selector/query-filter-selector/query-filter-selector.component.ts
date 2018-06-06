@@ -22,7 +22,7 @@ export class QueryFilterSelectorComponent implements OnInit {
   addFilter() {
     this.filters.push(this.formBuilder.group({
       field: [null],
-      operator: [null],
+      type: [null],
       values: this.formBuilder.array([])
     }));
     console.log('New filter added!');

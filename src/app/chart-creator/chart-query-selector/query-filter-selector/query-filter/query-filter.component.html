@@ -3,14 +3,19 @@
     <select-attribute formControlName="field" [chosenEntity]="chosenEntity" [availableEntityFields]="availableEntityFields" ></select-attribute>
   </div>
   <div class="field">
-    <select class="ui dropdown" formControlName="operator">
+    <select class="ui dropdown" formControlName="type">
+    <!-- <select class="ui dropdown" formControlName="operator"> -->
         <option value=null>Select Operator</option>
         <option *ngFor="let operator of operators" value='{{operator}}'>{{operator | titlecase}}</option>
     </select>
   </div>
-  <div class="fields"formArrayName="values">
-    <div class=" field" *ngFor="let value of values.controls; index as i" [formGroupName]="i">
-      <input type="text" name="filterValue" placeholder="Value"> 
+  <div class="fields" formArrayName="values">
+    <div class="field" *ngFor="let filterValue of values.controls; index as i">
+      <!-- <div class="ui action input"> -->
+        <input [formControlName]="i" type="text" name="filterValue" placeholder="Value"> 
+        <!-- <button (click)="deleteFilterValue(i)" type="button" 
+        class="ui icon compact button"><i class="close icon"></i></button> -->
+      <!-- </div> -->
     </div>
   </div>
   <button (click)="deleteFilterEvent.emit()" type="button" 

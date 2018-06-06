@@ -40,7 +40,15 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     console.log(this.filterFormGroup);
     console.log(this.values);
-    this.values.push(this.formBuilder.control({value: null}));
+    this.addFilterValue();
+  }
+
+  addFilterValue() {
+    this.values.push(new FormControl());
+  }
+
+  deleteFilterValue(index: number) {
+    this.values.removeAt(index);
   }
 
   ngAfterViewInit(): void {
