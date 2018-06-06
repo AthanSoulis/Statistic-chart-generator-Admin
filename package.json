@@ -4,7 +4,9 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "pstart": "ng serve --watch --host panormos.di.uoa.gr --port 4200",
+    "vstart": "ng serve --watch --host vatopedi.di.uoa.gr --port 4200",
+    "start": "ng serve --watch",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
