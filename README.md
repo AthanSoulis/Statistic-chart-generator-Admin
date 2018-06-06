@@ -38,3 +38,13 @@ Finally from the root folder get the project up and running, listening to **loca
 cd ../
 npm start
 ```
+
+If you are a cool guy you can also try :
+
+ ```
+ npm pstart   //p for panormos
+ ```
+ or
+ ```
+ npm vstart   //v for vatopedi
+ ```
