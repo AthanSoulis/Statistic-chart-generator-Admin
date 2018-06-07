@@ -42,9 +42,9 @@ npm start
 If you are a cool guy you can also try :
 
  ```
- npm pstart   //p for panormos
+ npm run pstart   //p for panormos
  ```
  or
  ```
- npm vstart   //v for vatopedi
+ npm run vstart   //v for vatopedi
  ```
