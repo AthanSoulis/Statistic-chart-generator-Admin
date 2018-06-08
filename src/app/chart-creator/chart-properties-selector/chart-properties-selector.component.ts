@@ -24,7 +24,7 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
   formPlaceholders = {
     library : '',
     chartTitle : 'Title',
-    chartType : 'Type'
+    chartType : ''
   };
 
   constructor(formBuilder: FormBuilder,

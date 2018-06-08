@@ -10,7 +10,10 @@
     
     <div class="required field">
     <label>Chart Type</label>
-    <input type="text" formControlName="type" placeholder='{{formPlaceholders.chartType}}' >
+    <select class="ui dropdown " id="select" formControlName="type">    
+        <option value={{formPlaceholders.chartType}} >Select Chart Type</option>
+        <option *ngFor="let type of supportedChartTypes" value='{{type}}'>{{type | titlecase}}</option>
+    </select>
     </div>
 
     <div class="field">
