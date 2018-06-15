@@ -19,11 +19,11 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit {
   @Input() queryForm: FormGroup;
   // @Input() chartForm: FormGroup;
 
-  chosenEntity: string;
+  chosenEntity: string = null;
 
   availableEntities: Array<string>;
   availableAggregates: Array<string>;
-  availableEntityFields: Object;
+  availableEntityFields: Object[];
 
   constructor(private formBuilder: FormBuilder,
     private dbSchemaService: DbSchemaService,
@@ -32,6 +32,8 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit {
       this.getAvailableEntities();
       this.getAvailableAggregates();
   }
+
+  ngOnInit() {}
 
   getAvailableEntities() {
     this.dbSchemaService.getAvailableEntities().subscribe(
@@ -62,6 +64,10 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit {
   entityChanged(entity: string) {
     this.chosenEntity = entity;
     this.getAvailableEntityFields(entity);
+
+    this.selectXs.reset();
+    this.selectY.reset();
+    jQuery('.ui.aggregate.dropdown').dropdown('restore defaults');
   }
 
   get entity(): FormControl { return this.queryForm.get('entity') as FormControl; }
@@ -73,10 +79,8 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit {
     console.log('you submitted value: ', value);
   }
 
-  ngOnInit() {
-  }
-
   ngAfterViewInit(): void {
-    jQuery('.ui.dropdown').dropdown();
+    jQuery('.ui.entity.dropdown').dropdown();
+    jQuery('.ui.aggregate.dropdown').dropdown();
   }
 }

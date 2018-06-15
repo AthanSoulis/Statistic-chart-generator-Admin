@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, AfterViewInit, EventEmitter, OnDestroy, forwardRef } from '@angular/core';
+import { Component, OnInit, Output, Input, AfterViewInit, EventEmitter, OnDestroy, forwardRef, OnChanges, SimpleChanges } from '@angular/core';
 import { ControlContainer, FormGroupDirective, FormBuilder, FormGroup,
    Validators, ControlValueAccessor, NG_VALUE_ACCESSOR, FormGroupName, FormArray, AbstractControl, FormControl } from '@angular/forms';
 import { Filter } from './query-filter.model';
@@ -12,11 +12,10 @@ declare var jQuery: any;
   styleUrls: ['./query-filter.component.css'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy {
+export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   @Input() filterFormGroup: FormGroup;
   @Input() chosenEntity: string;
-  @Input() availableEntityFields: Array<string>;
   @Output() deleteFilterEvent = new EventEmitter();
 
   filterValues: Array<string>;
@@ -28,6 +27,7 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   get values(): FormArray { return this.filterFormGroup.get('values') as FormArray; }
+  get type(): FormControl { return this.filterFormGroup.get('type') as FormControl; }
 
   getOperators() {
     this.operatorsService.getSupportedFilterTypes().subscribe(
@@ -43,6 +43,26 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy {
     this.addFilterValue();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    for (const changedField of Object.keys(changes)) {
+      const change = changes[changedField];
+
+      switch (changedField) {
+
+        case 'chosenEntity': {
+          // jQuery('.ui.type.dropdown').dropdown('restore default value	');
+          // jQuery('.ui.type.dropdown').dropdown('restore default text	');
+
+          break;
+        }
+        default : {
+          break;
+        }
+      }
+
+    }
+  }
+
   addFilterValue() {
     this.values.push(new FormControl());
   }
@@ -52,7 +72,7 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    jQuery('.ui.dropdown').dropdown();
+    jQuery('.ui.type.dropdown').dropdown();
   }
 
   ngOnDestroy() {

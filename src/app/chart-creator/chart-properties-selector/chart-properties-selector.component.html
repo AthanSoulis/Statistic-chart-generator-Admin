@@ -2,7 +2,7 @@
     
     <div class="required field" >
     <label>Library</label>
-    <select class="ui dropdown " id="select" formControlName="library">    
+    <select class="ui library dropdown " formControlName="library">    
         <option value={{formPlaceholders.library}} >Select Library</option>
         <option *ngFor="let library of supportedLibraries" value='{{library}}'>{{library}}</option>
     </select>
@@ -10,7 +10,7 @@
     
     <div class="required field">
     <label>Chart Type</label>
-    <select class="ui dropdown " id="select" formControlName="type">    
+    <select class="ui chart-type dropdown " formControlName="type">    
         <option value={{formPlaceholders.chartType}} >Select Chart Type</option>
         <option *ngFor="let type of supportedChartTypes" value='{{type}}'>{{type | titlecase}}</option>
     </select>

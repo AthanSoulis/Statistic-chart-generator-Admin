@@ -51,7 +51,8 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
   }
 
   ngAfterViewInit(): void {
-    jQuery('#select').dropdown();
+    jQuery('ui.library.dropdown').dropdown();
+    jQuery('ui.chart-type.dropdown').dropdown();
   }
 
   ngOnDestroy() {
