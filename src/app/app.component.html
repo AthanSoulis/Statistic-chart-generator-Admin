@@ -1,9 +1,10 @@
 <div class="ui sixteen stackable padded grid">
     <div class="ui five wide column container">
-        <chart-creator (chartSubmit)="handleChartObject($event)"></chart-creator>
+        <chart-creator (chartSubmit)="handleChartObject($event)" (tableSubmit)="handleTableObject($event)"></chart-creator>
     </div>
     <div class="ui eleven wide column container">
         <chart-frame [chart]="chartObject"></chart-frame>
-        <chart-data-presentation-table [chart]="chartObject"></chart-data-presentation-table>
+        <span class="ui hidden horizontal divider"></span>
+        <chart-data-presentation-table [table]="chartObject"></chart-data-presentation-table>
     </div>
 </div>

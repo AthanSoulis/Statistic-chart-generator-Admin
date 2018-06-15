@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
 
   chartObject: Object;
+  tableObject: Object;
 
   ngOnInit() {
   }
@@ -16,5 +17,11 @@ export class AppComponent implements OnInit {
     console.log('Handle chart Object called!');
     this.chartObject = $event.value;
     console.log(this.chartObject);
+  }
+
+  handleTableObject($event) {
+    console.log('Handle table Object called!');
+    this.tableObject = $event.value;
+    console.log(this.tableObject);
   }
 }

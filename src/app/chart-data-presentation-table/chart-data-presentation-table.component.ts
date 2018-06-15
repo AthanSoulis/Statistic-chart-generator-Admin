@@ -1,5 +1,6 @@
 import { Component, OnInit, SecurityContext, Input, OnChanges } from '@angular/core';
 import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
+import { UrlProviderService } from '../url-provider-service/url-provider.service';
 
 @Component({
   selector: 'chart-data-presentation-table',
@@ -8,22 +9,28 @@ import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browse
 })
 export class ChartDataPresentationTableComponent implements OnInit, OnChanges {
 
-  @Input() chart: Object;
+  @Input() table: Object;
   rows: Array<Array<any>>;
   columnHeaders: Array<string>;
   frameUrl: SafeResourceUrl;
+  frameHeight: number;
 
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor(private sanitizer: DomSanitizer, private urlProvider: UrlProviderService) {
+    this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/table?json=""');
+  }
 
   ngOnInit() {
+
+    this.frameHeight = (2 * window.outerHeight) / 5;
+
     this.rows = [['This', 'is', 'my', 'BOOMSTICK'], ['This', 'is', 'my', 'BOOMSTICK'], ['This', 'is', 'my', 'BOOMSTICK']];
     this.columnHeaders = ['Header1', 'Header2', 'Header3', 'Header4'];
   }
   ngOnChanges() {
-    this.frameUrl = this.getSanitizedFrameUrl + '/?json=' + JSON.stringify(this.chart);
+    // this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl()) + '/?json=' + JSON.stringify(this.table);
   }
-  getSanitizedFrameUrl() {
-    return this.sanitizer.bypassSecurityTrustResourceUrl('http://localhost:8080/chart');
+  getSanitizedFrameUrl(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
 
