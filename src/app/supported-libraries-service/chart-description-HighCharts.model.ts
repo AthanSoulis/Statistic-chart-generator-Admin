@@ -1,4 +1,4 @@
-import { Query } from '../chart-creator/chart-query-selector/chart-query.model';
+    import { Query } from '../chart-creator/chart-query-selector/chart-query.model';
 
 export class HighChartsChart {
     library: string;
@@ -15,11 +15,13 @@ class HighChartsDescription {
     title: HCtitle;
     yAxis: HCyaxis;
     series: Array<HCseriesInstance> = [];
+    lang: HCLang;
 
     constructor() {
         this.chart = new HCchart();
         this.title = new HCtitle();
         this.yAxis = new HCyaxis();
+        this.lang = new HCLang();
     }
 }
 
@@ -32,12 +34,19 @@ class HCtitle {
 class HCyaxis {
     title: HCtitle;
 }
+class HCLang {
+    noData = 'No Data available for the Query';
+}
 
 export class HCseriesInstance {
     name: string;
     query: Query;
 
-    constructor() {
-        this.query = new Query();
+    constructor(query?: Query ) {
+        this.query = query;
+        this.name = null;
+        if (query === undefined) {
+            this.query = new Query();
+        }
     }
 }
