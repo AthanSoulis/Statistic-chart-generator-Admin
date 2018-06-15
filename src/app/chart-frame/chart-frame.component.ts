@@ -19,12 +19,12 @@ export class ChartFrameComponent implements OnInit, OnChanges {
   frameUrl: SafeResourceUrl;
 
   constructor(private sanitizer: DomSanitizer, private urlProvider: UrlProviderService) {
-    this.frameUrl = this.getSanitizedFrameUrl(urlProvider.getUrl() + '/chart?json=""');
+    this.frameUrl = this.getSanitizedFrameUrl(urlProvider.getUrl() + '/chart');
     // this.frameUrl = this.getSanitizedFrameUrl('http://vatopedi.di.uoa.gr:8080/chart?json=""');
   }
 
   ngOnInit() {
-    this.frameHeight = 630;
+    this.frameHeight = (3 * window.outerHeight) / 5;
   }
 
   ngOnChanges(changes: SimpleChanges) {
