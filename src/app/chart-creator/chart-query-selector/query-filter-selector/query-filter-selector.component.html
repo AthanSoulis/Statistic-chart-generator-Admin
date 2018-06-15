@@ -5,7 +5,7 @@
   <div *ngFor="let filter of filters.controls; index as i">
     
       <query-filter (deleteFilterEvent)="removeFilter(i)" [filterFormGroup]="filter"
-       [chosenEntity]="chosenEntity" [availableEntityFields]="availableEntityFields"></query-filter>
+       [chosenEntity]="chosenEntity" ></query-filter>
   </div>
 </div>
 </div>

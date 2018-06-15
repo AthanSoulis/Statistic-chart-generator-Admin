@@ -7,7 +7,7 @@
     "pstart": "ng serve --watch --host panormos.di.uoa.gr --port 4200",
     "vstart": "ng serve --watch --host vatopedi.di.uoa.gr --port 4200",
     "start": "ng serve --watch",
-    "build": "ng build",
+    "build": "ng build --prod --aot --build-optimizer",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -15,11 +15,13 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^6.0.1",
+    "@angular/cdk": "^6.2.1",
     "@angular/common": "^6.0.1",
     "@angular/compiler": "^6.0.1",
     "@angular/core": "^6.0.1",
     "@angular/forms": "^6.0.1",
     "@angular/http": "^6.0.1",
+    "@angular/material": "^6.2.1",
     "@angular/platform-browser": "^6.0.1",
     "@angular/platform-browser-dynamic": "^6.0.1",
     "@angular/router": "^6.0.1",

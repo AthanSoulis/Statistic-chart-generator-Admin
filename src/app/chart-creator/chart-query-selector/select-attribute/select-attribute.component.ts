@@ -1,8 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, forwardRef, Injectable, OnChanges, SimpleChanges } from '@angular/core';
 import { ITreeOptions, TREE_ACTIONS, IActionMapping } from 'angular-tree-component';
 import { TreeNode } from 'angular-tree-component/dist/defs/api';
 import { FormGroup, ControlContainer, FormGroupDirective, FormBuilder, FormGroupName, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { MatTreeNestedDataSource, MatTreeNodeOutlet } from '@angular/material/tree';
+
 import { FieldTypes } from '../../../supported-filter-types-service/supported-filter-types.service';
+import { DbSchemaService, EntityNode, FieldNode, EntityTreeNode } from '../../../db-schema-service/db-schema.service';
+
+import {BehaviorSubject, of as observableOf} from 'rxjs';
+
 
 @Component({
   selector: 'select-attribute',
@@ -13,10 +20,12 @@ import { FieldTypes } from '../../../supported-filter-types-service/supported-fi
   ],
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SelectAttributeComponent), multi: true }]
 })
-export class SelectAttributeComponent implements OnInit, ControlValueAccessor {
+export class SelectAttributeComponent implements OnInit, ControlValueAccessor, OnChanges {
+
+  nestedEntityTreeControl: NestedTreeControl<EntityTreeNode>;
+  nestedEntityDataSource: MatTreeNestedDataSource<EntityTreeNode>;
 
   @Input() chosenEntity: string;
-  @Input() availableEntityFields: Object;
   @Output() fieldTypeSelected = new EventEmitter<FieldTypes>();
 
   treeOptions: ITreeOptions = { childrenField: 'relations' };
@@ -27,13 +36,59 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor {
   selectedField: string;
   selectedFieldType: string;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private dbSchemaService: DbSchemaService) {
 
-  _onChange = (_: any) => {};
+    this.nestedEntityTreeControl = new NestedTreeControl<EntityTreeNode>(this.getChildren);
+    this.nestedEntityDataSource = new MatTreeNestedDataSource();
+  }
 
   ngOnInit() {}
 
+  private getChildren = (node: EntityTreeNode) => {
+    if (node.fields !== undefined ) {
+      return observableOf(node.relations);
+    } else {
+      return observableOf(null);
+    }}
+
+  hasNestedChild = (_: number, nodeData: EntityTreeNode) => {
+    if (nodeData.relations !== undefined && nodeData.fields !== undefined) {
+      return (nodeData.relations.length !== 0 || nodeData.fields.length !== 0);
+    } else {
+      return false; }
+    }
+
+  _onChange = (_: any) => {};
+
+  ngOnChanges(changes: SimpleChanges) {
+
+    for (const changedField of Object.keys(changes)) {
+
+      const change = changes[changedField];
+      // console.log('Got ' + changedField.toString() + ' : ' + change.previousValue + ' -> ' + change.currentValue);
+
+      if (changedField === 'chosenEntity') {
+
+        this.dbSchemaService.getEntityFields(this.chosenEntity).subscribe(
+          (value: EntityNode) => {
+            if (value !== null) {
+              this.dbSchemaService.getEntityTree(value)
+              .subscribe(
+                (rootTreeNode: EntityTreeNode) => {
+                  if (rootTreeNode !== null) {
+                    const initArray = new Array<EntityTreeNode>();
+                    initArray.push(rootTreeNode);
+                    this.nestedEntityDataSource.data = initArray; }});
+
+            this.selectedFieldChanged(null);
+           }}
+        );
+      }
+    }
+  }
+
   selectedFieldChanged(value: string) {
+    this.selectedField = value;
     this._onChange(this.selectedField);
   }
 
@@ -53,38 +108,23 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor {
     return;
   }
 
-  onExpanded(event) {
-    console.log(event);
-    this.expandNodes(event);
+  onExpanded(node: EntityTreeNode) {
+    console.log(node);
+    this.parentPath = this.traverseParentPath(node);
   }
 
-  traverseParentPath(node: TreeNode): string {
-    if (node.parent.data.virtual) {
-      return this.chosenEntity + '.' + node.data.name;
+  traverseParentPath(node: EntityTreeNode): string {
+    if (node.parent === null) {
+      return node.name;
     } else {
-      return this.traverseParentPath(node.parent) + '.' + node.data.name;
+      return this.traverseParentPath(node.parent) + '.' + node.name;
     }
   }
 
-  nodeActivated(event) {
-    this.treeFields = event.node.data.fields;
-    this.parentPath = this.traverseParentPath(event.node);
-    console.log(this.parentPath);
+  nodeSelected(field: FieldNode) {
+    this.selectedField = this.parentPath + '.' + field.name;
+    this.selectedFieldChanged(this.selectedField);
+    console.log(this.selectedField + ':' + field.type);
   }
 
-  nodeSelected(event) {
-    this.selectedField = this.parentPath + '.' + event.node.data.name;
-    this._onChange(this.selectedField);
-    console.log(this.selectedField + ':' + event.node.data.type);
-  }
-
-  expandNodes(event) {
-    if (event.isExpanded) {
-      this.nodeActivated(event);
-    } else {
-      this.treeFields = null;
-    }
-    event.isActive = !event.isActive;
-    console.log(this.treeFields);
-  }
 }

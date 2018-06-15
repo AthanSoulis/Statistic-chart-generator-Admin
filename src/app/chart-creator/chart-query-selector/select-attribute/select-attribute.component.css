@@ -1,0 +1,15 @@
+.data-tree-invisible {
+    display: none;
+  }
+  
+.data-tree ul,
+.data-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+
+#data-tree-button {
+    /* border: none; */
+    background-color: white;
+}

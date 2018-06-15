@@ -1,10 +1,9 @@
 <div class="ui equal width form clearing segment" [formGroup]="filterFormGroup">
   <div class="field">
-    <select-attribute formControlName="field" [chosenEntity]="chosenEntity" [availableEntityFields]="availableEntityFields" ></select-attribute>
+    <select-attribute formControlName="field" [chosenEntity]="chosenEntity"></select-attribute>
   </div>
   <div class="field">
-    <select class="ui dropdown" formControlName="type">
-    <!-- <select class="ui dropdown" formControlName="operator"> -->
+    <select class="ui type dropdown" formControlName="type">
         <option value=null>Select Operator</option>
         <option *ngFor="let operator of operators" value='{{operator}}'>{{operator | titlecase}}</option>
     </select>

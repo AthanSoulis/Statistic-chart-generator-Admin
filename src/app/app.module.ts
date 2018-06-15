@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
 import { ChartFrameComponent } from './chart-frame/chart-frame.component';
@@ -41,7 +44,10 @@ import { TreeModule } from 'angular-tree-component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    TreeModule
+    TreeModule,
+    NoopAnimationsModule,
+    MatTreeModule,
+    MatIconModule
   ],
   providers: [SupportedLibrariesService, DbSchemaService, SupportedFilterTypesService,
      SupportedAggregateFunctionsService, SupportedChartTypesService, UrlProviderService],
