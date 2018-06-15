@@ -17,6 +17,7 @@ declare var jQuery: any;
 export class ChartCreatorComponent implements OnInit, AfterViewInit {
 
   @Output() chartSubmit: EventEmitter<Object> = new EventEmitter();
+  @Output() tableSubmit: EventEmitter<Object> = new EventEmitter();
   chartForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
@@ -51,6 +52,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
   onSubmit() {
     console.log(this.chartForm.value);
 
+    let hchartObj = null;
     const library: string = this.properties.get('library').value;
     this.supportedLibrariesService.getSupportedLibraries().subscribe(
       (data: Array<string>) =>  {
@@ -59,39 +61,57 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
           switch (library) {
 
             case('HighCharts'): {
-              const chartObj = new HighChartsChart();
-              chartObj.chartDescription.title.text = this.properties.get('title').value as string;
-              chartObj.chartDescription.chart.type = this.properties.get('type').value as string;
-
-              const series = new HCseriesInstance();
-              series.query.entity = this.queryForm.get('entity').value as string;
-
-              const selectXs = this.queryForm.get('selectXs').value as Array<Select>;
-              selectXs.forEach(selectElement => {
-                series.query.select.push(selectElement);
-              });
-
-              series.query.select.push(this.queryForm.get('selectY').value);
-
-              const filters = this.queryForm.get('filters').value as Array<Filter>;
-              filters.forEach(filterElement => {
-                series.query.filters.push(filterElement);
-              });
-
-              chartObj.chartDescription.series.push(series);
+              hchartObj = this.createHighChartsChart(this.properties, this.queryForm);
 
               console.log('Creating a ' + library + ' chart!');
-              console.log(chartObj);
-              this.chartSubmit.emit({value: chartObj});
+              console.log(hchartObj);
+              this.chartSubmit.emit({value: hchartObj});
               break;
             }
             case('GoogleCharts'): {
+              const gchartObj = null;
+
               console.log('Creating a ' + library + ' chart!');
+              this.chartSubmit.emit({value: gchartObj});
               break;
             }
             default: {}
           }
         }});
+
+    if (hchartObj === null) { hchartObj = this.createHighChartsChart(this.properties, this.queryForm); }
+    this.tableSubmit.emit({value: hchartObj});
+  }
+
+  createHighChartsChart(properties: FormGroup, queryForm: FormGroup): HighChartsChart {
+    const chartObj = new HighChartsChart();
+    chartObj.chartDescription.title.text = properties.get('title').value as string;
+    chartObj.chartDescription.chart.type = properties.get('type').value as string;
+
+    const series = new HCseriesInstance(this.getFormQuery(queryForm));
+
+    chartObj.chartDescription.series.push(series);
+    return chartObj;
+  }
+
+  getFormQuery(queryForm: FormGroup): Query {
+    const query = new Query();
+
+    query.entity = queryForm.get('entity').value as string;
+
+    const selectXs = queryForm.get('selectXs').value as Array<Select>;
+    selectXs.forEach(selectElement => {
+      query.select.push(selectElement);
+    });
+
+    query.select.push(queryForm.get('selectY').value);
+
+    const filters = queryForm.get('filters').value as Array<Filter>;
+    filters.forEach(filterElement => {
+      query.filters.push(filterElement);
+    });
+
+    return query;
   }
 
   isFormInvalid(): boolean {
