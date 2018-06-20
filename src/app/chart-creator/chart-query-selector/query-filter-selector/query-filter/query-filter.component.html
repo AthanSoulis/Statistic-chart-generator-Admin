@@ -1,20 +1,52 @@
-<div class="ui equal width form clearing segment" [formGroup]="filterFormGroup">
+<div class="ui equal width form clearing segment" [formGroup]="filterFormGroup" #filterOperator>
   <div class="field">
-    <select-attribute formControlName="field" [chosenEntity]="chosenEntity"></select-attribute>
+    <select-attribute formControlName="field" [chosenEntity]="chosenEntity"
+    [entityTreeNode]="entityTreeNode" (fieldTypeSelected)=fieldTypeChanged($event)></select-attribute>
   </div>
   <div class="field">
-    <select class="ui type dropdown" formControlName="type">
+    <select class="ui filter type dropdown" [id]=filterIndex formControlName="type" (change)=operatorChanged($event.target.value)>
         <option value=null>Select Operator</option>
-        <option *ngFor="let operator of operators" value='{{operator}}'>{{operator | titlecase}}</option>
+        <option *ngFor="let operator of operators" value='{{operator.filterOperator}}'>{{operator.filterName}}</option>
     </select>
   </div>
-  <div class="fields" formArrayName="values">
-    <div class="field" *ngFor="let filterValue of values.controls; index as i">
-      <!-- <div class="ui action input"> -->
-        <input [formControlName]="i" type="text" name="filterValue" placeholder="Value"> 
-        <!-- <button (click)="deleteFilterValue(i)" type="button" 
-        class="ui icon compact button"><i class="close icon"></i></button> -->
-      <!-- </div> -->
+  <div class="field" formArrayName="values">
+    <div [ngSwitch]="this.fieldType">
+        <ng-container *ngSwitchCase="0">
+          <div *ngFor="let filterValue of values.controls; index as i">
+            <div [ngClass]=" this.filterOperator ? 'ui action input' : 'ui action disabled input'">
+              <input [formControlName]="i" type="text" name="filterValue" placeholder="Value">
+              <button (click)="deleteFilterValue(i)" type="button" 
+              class="ui icon compact button"><i class="close icon"></i></button>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="1">
+          <div *ngFor="let filterValue of values.controls; index as i">
+            <div [ngClass]=" this.filterOperator ? 'ui action input' : 'ui action disabled input'">
+              <input [formControlName]="i" type="number" name="filterValue" placeholder="Value"> 
+              <button (click)="deleteFilterValue(i)" type="button" 
+              class="ui icon compact button"><i class="close icon"></i></button>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="2">
+          <div *ngFor="let filterValue of values.controls; index as i">
+              <div [ngClass]=" this.filterOperator ? 'ui action input' : 'ui action disabled input'">
+                <input [formControlName]="i" type="number" name="filterValue" placeholder="Value"> 
+                <button (click)="deleteFilterValue(i)" type="button" 
+                class="ui icon compact button"><i class="close icon"></i></button>
+              </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="3">
+          <div *ngFor="let filterValue of values.controls; index as i">
+              <div [ngClass]=" this.filterOperator ? 'ui action input' : 'ui action disabled input'">
+                <input [formControlName]="i" type="date" name="filterValue" placeholder="Value"> 
+                <button (click)="deleteFilterValue(i)" type="button" 
+                class="ui icon compact button"><i class="close icon"></i></button>
+              </div>
+          </div>
+        </ng-container>
     </div>
   </div>
   <button (click)="deleteFilterEvent.emit()" type="button" 

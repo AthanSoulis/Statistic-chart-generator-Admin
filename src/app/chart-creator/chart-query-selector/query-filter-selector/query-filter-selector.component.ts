@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ControlContainer, FormGroupDirective, FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { Filter } from '../../chart-query-selector/query-filter-selector/query-filter/query-filter.model';
+import { EntityTreeNode } from '../../../db-schema-service/db-schema.service';
 
 @Component({
   selector: 'query-filter-selector',
@@ -13,7 +14,7 @@ import { Filter } from '../../chart-query-selector/query-filter-selector/query-f
 export class QueryFilterSelectorComponent implements OnInit {
 
   @Input() chosenEntity: string;
-  @Input() availableEntityFields: Array<string>;
+  @Input() entityTreeNode: EntityTreeNode;
   @Input() filters: FormArray;
 
   constructor(private formBuilder: FormBuilder) {
@@ -29,9 +30,9 @@ export class QueryFilterSelectorComponent implements OnInit {
   }
 
   removeFilter(index: number) {
-    console.log('Removing:');
-    console.log(this.filters.at(index));
-    this.filters.removeAt(index);
+      console.log('Removing:' + index);
+      console.log(this.filters.at(index));
+      this.filters.removeAt(index);
   }
 
   ngOnInit() {
