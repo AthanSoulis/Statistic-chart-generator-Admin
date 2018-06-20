@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { ControlContainer, FormGroupDirective, FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
-import { DbSchemaService } from '../../db-schema-service/db-schema.service';
+import { DbSchemaService, EntityTreeNode, EntityNode } from '../../db-schema-service/db-schema.service';
 import { Query, Select } from './chart-query.model';
 import { SupportedAggregateFunctionsService } from '../../supported-aggregate-functions-service/supported-aggregate-functions.service';
 
@@ -20,6 +20,7 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit {
   // @Input() chartForm: FormGroup;
 
   chosenEntity: string = null;
+  entityTreeRoot: EntityTreeNode = null;
 
   availableEntities: Array<string>;
   availableAggregates: Array<string>;
@@ -61,12 +62,33 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit {
     return this.availableEntityFields;
   }
 
+  getEntityTreeNode(entity: string) {
+    if (entity === this.chosenEntity) {
+      this.dbSchemaService.getEntityFields(this.chosenEntity).subscribe(
+        (value: EntityNode) => {
+          if (value !== null) {
+            this.dbSchemaService.getEntityTree(value)
+            .subscribe(
+              (rootTreeNode: EntityTreeNode) => {
+                if (rootTreeNode !== null) {
+                  this.entityTreeRoot = rootTreeNode;
+                  return this.entityTreeRoot;
+                 }});
+         }}
+      );
+    }
+    this.entityTreeRoot = null;
+    return this.entityTreeRoot;
+  }
+
   entityChanged(entity: string) {
     this.chosenEntity = entity;
-    this.getAvailableEntityFields(entity);
+    // this.getAvailableEntityFields(entity);
+    this.getEntityTreeNode(entity);
 
     this.selectXs.reset();
     this.selectY.reset();
+    this.filters.reset();
     jQuery('.ui.aggregate.dropdown').dropdown('restore defaults');
   }
 

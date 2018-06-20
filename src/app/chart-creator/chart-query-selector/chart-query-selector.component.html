@@ -1,7 +1,7 @@
 <div class="ui form" formGroupName="queryForm">
   <h4 class="ui dividing header">Y Axis</h4>
   <div class="required inline field">
-    <select class="ui search entity dropdown" formControlName="entity" (change)=entityChanged($event.target.value)>
+    <select class="ui entity dropdown" formControlName="entity" (change)=entityChanged($event.target.value)>
       <option value="">Select Entity</option>
       <option *ngFor="let availableEntity of availableEntities" value='{{availableEntity}}'>{{availableEntity | titlecase}}</option>
     </select>
@@ -19,17 +19,17 @@
       </div>
       <span class="ui hidden horizontal divider"> of </span>
       <div class="field">
-        <select-attribute formControlName="field" [chosenEntity]="chosenEntity"  ></select-attribute>
+        <select-attribute formControlName="field" [chosenEntity]="chosenEntity" [entityTreeNode]="entityTreeRoot"></select-attribute>
       </div>
     </div>
 
     <h4 class="ui dividing header">X Axis</h4>
     <div formArrayName="selectXs">
       <div *ngFor="let selectX of selectXs.controls; index as i" [formGroupName]="i">
-        <select-attribute formControlName="field" [chosenEntity]="chosenEntity"  ></select-attribute>
+        <select-attribute formControlName="field" [chosenEntity]="chosenEntity" [entityTreeNode]="entityTreeRoot"></select-attribute>
       </div>
     </div>
   <h4 class="ui dividing header">Filters</h4>
-  <query-filter-selector [filters]="filters" [chosenEntity]="chosenEntity" [availableEntityFields]="availableEntityFields"></query-filter-selector>
+  <query-filter-selector [filters]="filters" [chosenEntity]="chosenEntity" [entityTreeNode]="entityTreeRoot"></query-filter-selector>
   </div>
 </div>

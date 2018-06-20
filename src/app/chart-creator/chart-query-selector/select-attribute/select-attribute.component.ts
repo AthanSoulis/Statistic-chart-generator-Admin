@@ -1,15 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef, Injectable, OnChanges, SimpleChanges } from '@angular/core';
-import { ITreeOptions, TREE_ACTIONS, IActionMapping } from 'angular-tree-component';
-import { TreeNode } from 'angular-tree-component/dist/defs/api';
+import { Component, OnInit, Input, Output, EventEmitter, forwardRef, Injectable, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
 import { FormGroup, ControlContainer, FormGroupDirective, FormBuilder, FormGroupName, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource, MatTreeNodeOutlet } from '@angular/material/tree';
 
-import { FieldTypes } from '../../../supported-filter-types-service/supported-filter-types.service';
+import { FieldType } from '../../../supported-filter-types-service/supported-filter-types.service';
 import { DbSchemaService, EntityNode, FieldNode, EntityTreeNode } from '../../../db-schema-service/db-schema.service';
 
 import {BehaviorSubject, of as observableOf} from 'rxjs';
 
+declare var jQuery: any;
 
 @Component({
   selector: 'select-attribute',
@@ -20,17 +19,14 @@ import {BehaviorSubject, of as observableOf} from 'rxjs';
   ],
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SelectAttributeComponent), multi: true }]
 })
-export class SelectAttributeComponent implements OnInit, ControlValueAccessor, OnChanges {
+export class SelectAttributeComponent implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit {
 
   nestedEntityTreeControl: NestedTreeControl<EntityTreeNode>;
   nestedEntityDataSource: MatTreeNestedDataSource<EntityTreeNode>;
 
   @Input() chosenEntity: string;
-  @Output() fieldTypeSelected = new EventEmitter<FieldTypes>();
-
-  treeOptions: ITreeOptions = { childrenField: 'relations' };
-  fieldsOptions: ITreeOptions = { childrenField: 'fields' };
-  treeFields: Array<Object>;
+  @Input() entityTreeNode: EntityTreeNode;
+  @Output() fieldTypeSelected = new EventEmitter<FieldType>();
 
   parentPath: string;
   selectedField: string;
@@ -65,26 +61,20 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
     for (const changedField of Object.keys(changes)) {
 
       const change = changes[changedField];
-      // console.log('Got ' + changedField.toString() + ' : ' + change.previousValue + ' -> ' + change.currentValue);
 
-      if (changedField === 'chosenEntity') {
-
-        this.dbSchemaService.getEntityFields(this.chosenEntity).subscribe(
-          (value: EntityNode) => {
-            if (value !== null) {
-              this.dbSchemaService.getEntityTree(value)
-              .subscribe(
-                (rootTreeNode: EntityTreeNode) => {
-                  if (rootTreeNode !== null) {
-                    const initArray = new Array<EntityTreeNode>();
-                    initArray.push(rootTreeNode);
-                    this.nestedEntityDataSource.data = initArray; }});
-
-            this.selectedFieldChanged(null);
-           }}
-        );
+      if (changedField === 'entityTreeNode') {
+        const initArray = new Array<EntityTreeNode>();
+        if (this.entityTreeNode !== null) {
+          initArray.push(this.entityTreeNode);
+        }
+        this.nestedEntityDataSource.data = initArray;
+        this.selectedFieldChanged(null);
       }
     }
+  }
+
+  ngAfterViewInit() {
+    jQuery('.ui.fluid.selection.dropdown').dropdown();
   }
 
   selectedFieldChanged(value: string) {
@@ -94,7 +84,7 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
 
   // Writes a new value from the form model into the view or (if needed) DOM property.
   writeValue(value: string) {
-    console.log('Writing values: ' + value);
+    // console.log('Writing values: ' + value);
     if (value) {
       this.selectedField = value;
     }
@@ -124,6 +114,7 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
   nodeSelected(field: FieldNode) {
     this.selectedField = this.parentPath + '.' + field.name;
     this.selectedFieldChanged(this.selectedField);
+    this.fieldTypeSelected.emit(FieldType[field.type]);
     console.log(this.selectedField + ':' + field.type);
   }
 

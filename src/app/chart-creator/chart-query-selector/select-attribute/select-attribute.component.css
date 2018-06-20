@@ -13,3 +13,7 @@
     /* border: none; */
     background-color: white;
 }
+
+.ui.fluid.selection.dropdown .menu {
+    max-height: 300px !important;
+}
