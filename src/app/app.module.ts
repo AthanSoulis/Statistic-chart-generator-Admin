@@ -24,8 +24,6 @@ import { SupportedAggregateFunctionsService } from './supported-aggregate-functi
 import { SupportedChartTypesService } from './supported-chart-types-service/supported-chart-types.service';
 import { UrlProviderService } from './url-provider-service/url-provider.service';
 
-import { TreeModule } from 'angular-tree-component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +42,6 @@ import { TreeModule } from 'angular-tree-component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    TreeModule,
     NoopAnimationsModule,
     MatTreeModule,
     MatIconModule
