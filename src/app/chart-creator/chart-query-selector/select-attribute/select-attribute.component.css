@@ -10,10 +10,26 @@
 }
 
 #data-tree-button {
-    /* border: none; */
     background-color: white;
 }
 
+/* Every mat-nested-tree-node li wraps around its content */
+.mat-nested-tree-node li{
+    width: fit-content !important;
+}
+
+/* Makes the dropdown menu bigger and enables the horizontal scroll bar */
 .ui.fluid.selection.dropdown .menu {
     max-height: 300px !important;
+    overflow-x: auto !important;
+}
+
+/* Makes the selected item's background white, while selected */
+.ui.dropdown .menu .selected.item, .ui.dropdown.selected {
+    background: white ;
+}
+
+/* Same as above, but while on hover */
+.ui.dropdown .menu>.item:hover {
+    background: white ;
 }
