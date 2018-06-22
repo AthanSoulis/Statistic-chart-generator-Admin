@@ -11,15 +11,17 @@
   <div [ngClass]="(chosenEntity == null) ? 'disabled field' : 'enabled'">
     <div formGroupName="selectY">
         <div class="required inline field">
-          <select class="ui aggregate dropdown " formControlName="aggregate">
+          <select class="ui aggregate dropdown" formControlName="aggregate">
             <option value=null>Select Aggregate</option>
             <option *ngFor="let availableAggregate of availableAggregates" value='{{availableAggregate}}'>{{availableAggregate | titlecase}}</option>
           </select>
           <label></label>
       </div>
-      <span class="ui hidden horizontal divider"> of </span>
-      <div class="field">
-        <select-attribute formControlName="field" [chosenEntity]="chosenEntity" [entityTreeNode]="entityTreeRoot"></select-attribute>
+      <div [ngClass]="(totalAggregateEnabled()) ? 'disabled field' : 'enabled field'">
+        <span class="ui hidden horizontal divider"> of </span>
+        <div class="field">
+          <select-attribute formControlName="field" [chosenEntity]="chosenEntity" [entityTreeNode]="entityTreeRoot"></select-attribute>
+        </div>
       </div>
     </div>
 
@@ -29,7 +31,9 @@
         <select-attribute formControlName="field" [chosenEntity]="chosenEntity" [entityTreeNode]="entityTreeRoot"></select-attribute>
       </div>
     </div>
-  <h4 class="ui dividing header">Filters</h4>
-  <query-filter-selector [filters]="filters" [chosenEntity]="chosenEntity" [entityTreeNode]="entityTreeRoot"></query-filter-selector>
+
+    <h4 class="ui dividing header">Filters</h4>
+    <query-filter-selector [filters]="filters" [chosenEntity]="chosenEntity" [entityTreeNode]="entityTreeRoot"></query-filter-selector>
+
   </div>
 </div>

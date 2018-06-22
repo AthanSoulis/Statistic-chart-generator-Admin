@@ -104,7 +104,15 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
       query.select.push(selectElement);
     });
 
-    query.select.push(queryForm.get('selectY').value);
+    if (queryForm.get('selectY').get('aggregate').value === 'total') {
+      const totalSelectY = new Select();
+      totalSelectY.field = queryForm.get('entity').value;
+      totalSelectY.aggregate = 'count';
+
+      query.select.push(totalSelectY);
+    } else {
+      query.select.push(queryForm.get('selectY').value);
+    }
 
     const filters = queryForm.get('filters').value as Array<Filter>;
     filters.forEach(filterElement => {

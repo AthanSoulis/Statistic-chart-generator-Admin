@@ -92,10 +92,16 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit {
     jQuery('.ui.aggregate.dropdown').dropdown('restore defaults');
   }
 
+  totalAggregateEnabled() {
+    return this.YaxisAggregate !== null && this.YaxisAggregate.value === 'total';
+  }
+
   get entity(): FormControl { return this.queryForm.get('entity') as FormControl; }
   get selectY(): FormGroup { return this.queryForm.get('selectY') as FormGroup; }
   get selectXs(): FormArray { return this.queryForm.get('selectXs') as FormArray; }
   get filters(): FormArray { return this.queryForm.get('filters') as FormArray; }
+
+  get YaxisAggregate(): FormControl { return this.selectY.get('aggregate') as FormControl; }
 
   onSubmit(value: string): void {
     console.log('you submitted value: ', value);
