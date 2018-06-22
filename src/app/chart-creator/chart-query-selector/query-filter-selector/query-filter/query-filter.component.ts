@@ -57,12 +57,20 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy, O
     console.log(this.filterFormGroup);
     console.log(this.values);
     console.log('Index: ' + this.filterIndex);
-    this.addFilterValue();
+    // this.addFilterValue();
   }
 
   operatorChanged(operatorValue: string) {
     console.log('Operator Changed: ' + operatorValue);
+    this.deleteAllFilterValues();
     this.filterOperator = this.operators.find(( element: FilterType) => element.filterOperator === operatorValue);
+    if (this.filterOperator) {
+      this.addFilterValue();
+      if (this.filterOperator.filterName === 'Between') {
+        this.addFilterValue();
+      }
+    }
+
   }
 
   fieldTypeChanged(fieldType: FieldType) {
@@ -103,8 +111,15 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy, O
   }
 
   deleteFilterValue(index: number) {
-    if (index !== 0) {
-      this.values.removeAt(index);
+    if (this.filterOperator.filterName !== 'Between' || index !== 1 ) {
+      if (index !== 0 ) {
+        this.values.removeAt(index);
+      }}
+  }
+
+  deleteAllFilterValues() {
+    while (this.values.length) {
+      this.values.removeAt(0);
     }
   }
 
