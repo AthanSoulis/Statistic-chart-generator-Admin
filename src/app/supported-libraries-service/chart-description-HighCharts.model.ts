@@ -1,4 +1,4 @@
-    import { Query } from '../chart-creator/chart-query-selector/chart-query.model';
+import { Query } from '../chart-creator/chart-query-selector/chart-query.model';
 
 export class HighChartsChart {
     library: string;
@@ -33,6 +33,10 @@ class HCtitle {
 }
 class HCyaxis {
     title: HCtitle;
+
+    constructor() {
+        this.title = new HCtitle();
+    }
 }
 class HCLang {
     noData = 'No Data available for the Query';

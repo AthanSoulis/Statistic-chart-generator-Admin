@@ -4,6 +4,7 @@ import { Query, Select } from './chart-query-selector/chart-query.model';
 import { ChartProperties } from './chart-properties-selector/chart-properties.model';
 import { SupportedLibrariesService } from '../supported-libraries-service/supported-libraries.service';
 import { HighChartsChart, HCseriesInstance } from '../supported-libraries-service/chart-description-HighCharts.model';
+import { GoogleChartsChart } from '../supported-libraries-service/chart-description-GoogleCharts.model';
 import { Filter } from './chart-query-selector/query-filter-selector/query-filter/query-filter.model';
 import { element } from 'protractor';
 
@@ -69,9 +70,10 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
               break;
             }
             case('GoogleCharts'): {
-              const gchartObj = null;
+              const gchartObj = this.createGoogleChartsChart(this.properties, this.queryForm);
 
               console.log('Creating a ' + library + ' chart!');
+              console.log(gchartObj);
               this.chartSubmit.emit({value: gchartObj});
               break;
             }
@@ -79,16 +81,39 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
           }
         }});
 
-    if (hchartObj === null) { hchartObj = this.createHighChartsChart(this.properties, this.queryForm); }
-    this.tableSubmit.emit({value: hchartObj});
+    // if (hchartObj === null) { hchartObj = this.createHighChartsChart(this.properties, this.queryForm); }
+    // this.tableSubmit.emit({value: hchartObj});
+  }
+
+  createGoogleChartsChart(properties: FormGroup, queryForm: FormGroup) {
+    const chartObj = new GoogleChartsChart();
+    const chartDescription = chartObj.chartDescription;
+
+    chartDescription.queries.push(this.getFormQuery(queryForm));
+    chartDescription.GoogleChartType = properties.get('type').value as string;
+    chartDescription.columns.push(properties.get('yaxisName').value as string);
+    chartDescription.columns.push(properties.get('xaxisName').value as string);
+
+    chartDescription.options.title = properties.get('title').value as string;
+    chartDescription.options.hAxis = null;
+
+    if (!chartDescription.chartType || chartDescription.columns || chartDescription.columns.length === 0) {
+      console.log('GoogleChart: Something is missing!');
+      console.log(chartObj);
+      // return null;
+    }
+
+    return chartObj;
   }
 
   createHighChartsChart(properties: FormGroup, queryForm: FormGroup): HighChartsChart {
     const chartObj = new HighChartsChart();
     chartObj.chartDescription.title.text = properties.get('title').value as string;
     chartObj.chartDescription.chart.type = properties.get('type').value as string;
+    chartObj.chartDescription.yAxis.title.text = properties.get('yaxisName').value as string;
 
     const series = new HCseriesInstance(this.getFormQuery(queryForm));
+    series.name = properties.get('xaxisName').value as string;
 
     chartObj.chartDescription.series.push(series);
     return chartObj;

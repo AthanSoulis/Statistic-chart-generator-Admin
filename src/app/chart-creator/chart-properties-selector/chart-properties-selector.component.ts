@@ -24,7 +24,9 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
   formPlaceholders = {
     library : '',
     chartTitle : 'Title',
-    chartType : ''
+    chartType : '',
+    yaxisName : 'Y Axis',
+    xaxisName : 'X Axis'
   };
 
   constructor(formBuilder: FormBuilder,
@@ -45,6 +47,8 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
   get library() { return this.propertiesForm.get('library'); }
   get chartTitle() { return this.propertiesForm.get('chartTitle'); }
   get chartType() { return this.propertiesForm.get('chartType'); }
+  get yaxisName() { return this.propertiesForm.get('yaxisName'); }
+  get xaxisName() { return this.propertiesForm.get('xaxisName'); }
 
   ngOnInit() {
     console.log('Properties Selector initialized');
