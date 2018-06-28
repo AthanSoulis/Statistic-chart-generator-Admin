@@ -6,7 +6,9 @@ import { MatTreeNestedDataSource, MatTreeNodeOutlet } from '@angular/material/tr
 import { FieldType } from '../../../supported-filter-types-service/supported-filter-types.service';
 import { DbSchemaService, EntityNode, FieldNode, EntityTreeNode } from '../../../db-schema-service/db-schema.service';
 
-import {BehaviorSubject, of as observableOf} from 'rxjs';
+import {BehaviorSubject, of as observableOf, Observable} from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 declare var jQuery: any;
 
@@ -26,7 +28,7 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
 
   @Input() chosenEntity: string;
   @Input() entityTreeNode: EntityTreeNode;
-  @Output() fieldTypeSelected = new EventEmitter<FieldType>();
+  @Output() fieldChanged = new EventEmitter<FieldNode>();
 
   parentPath: string;
   selectedField: string;
@@ -114,8 +116,14 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
   nodeSelected(field: FieldNode) {
     this.selectedField = this.parentPath + '.' + field.name;
     this.selectedFieldChanged(this.selectedField);
-    this.fieldTypeSelected.emit(FieldType[field.type]);
-    console.log(this.selectedField + ':' + field.type);
+    // Set the field to full path and emit it
+    const selectedFieldNode = new FieldNode();
+
+    selectedFieldNode.name = this.selectedField;
+    selectedFieldNode.type = field.type;
+    this.fieldChanged.emit(selectedFieldNode);
+
+    console.log(field.name + ':' + field.type);
   }
 
 }
