@@ -1,9 +1,12 @@
-import { Component, OnInit, Output, Input, AfterViewInit, EventEmitter, OnDestroy, forwardRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Output, Input, AfterViewInit, EventEmitter, OnDestroy, forwardRef, OnChanges, SimpleChanges, ViewChild, ElementRef, ViewChildren } from '@angular/core';
 import { ControlContainer, FormGroupDirective, FormBuilder, FormGroup,
    Validators, ControlValueAccessor, NG_VALUE_ACCESSOR, FormGroupName, FormArray, AbstractControl, FormControl } from '@angular/forms';
 import { Filter } from './query-filter.model';
 import { SupportedFilterTypesService, FilterType, FieldType } from '../../../../supported-filter-types-service/supported-filter-types.service';
-import { EntityTreeNode } from '../../../../db-schema-service/db-schema.service';
+import { EntityTreeNode, FieldNode } from '../../../../db-schema-service/db-schema.service';
+
+import { Observable, of, fromEvent } from 'rxjs';
+import { FieldAutocompleteService, AutocompleteResponse } from '../../../../field-autocomplete-service/field-autocomplete.service';
 
 declare var jQuery: any;
 
@@ -26,11 +29,15 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy, O
   // Event emitter for the deletion of this filter
   @Output() deleteFilterEvent = new EventEmitter();
 
+
   operators: Array<FilterType>;
   filterOperator: FilterType;
-  fieldType: FieldType;
+  selectedField: FieldNode = null;
+  fieldType: FieldType = null;
 
-  constructor(private formBuilder: FormBuilder, private operatorsService: SupportedFilterTypesService) {
+
+  constructor(private formBuilder: FormBuilder, private operatorsService: SupportedFilterTypesService,
+    private fieldAutocompleteService: FieldAutocompleteService) {
     console.log('New query filter created !');
     this.getOperators();
   }
@@ -57,38 +64,16 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy, O
     console.log(this.filterFormGroup);
     console.log(this.values);
     console.log('Index: ' + this.filterIndex);
-    // this.addFilterValue();
-  }
-
-  operatorChanged(operatorValue: string) {
-    console.log('Operator Changed: ' + operatorValue);
-    this.deleteAllFilterValues();
-    this.filterOperator = this.operators.find(( element: FilterType) => element.filterOperator === operatorValue);
-    if (this.filterOperator) {
-      this.addFilterValue();
-      if (this.filterOperator.filterName === 'Between') {
-        this.addFilterValue();
-      }
-    }
-
-  }
-
-  fieldTypeChanged(fieldType: FieldType) {
-    console.log('FieldType Changed : ' + FieldType[fieldType]);
-    if ( fieldType !== this.fieldType ) {
-      this.fieldType = fieldType;
-      this.getOperatorsOfType(this.fieldType);
-      jQuery('#' + this.filterIndex.toString()).dropdown('restore defaults');
-    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
     for (const changedField of Object.keys(changes)) {
       const change = changes[changedField];
+
       if (!change.isFirstChange()) {
         switch (changedField) {
 
-          case 'chosenEntity': {
+          case 'chosenEntity':
             console.log('ngOnChanges');
             this.values.reset();
 
@@ -97,17 +82,55 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy, O
             jQuery('#' + this.filterIndex.toString()).dropdown('restore defaults');
 
             break;
-          }
-          default : {
+
+          default :
             break;
-          }
-        }
-      }
+      }}
     }
   }
 
+  fieldChanged(field: FieldNode) {
+
+    const newfieldType = FieldType[field.type];
+    jQuery('#' + this.filterIndex.toString()).dropdown('restore defaults');
+
+    if (this.selectedField === null || field.name !== this.selectedField.name) {
+      this.selectedField = field;
+    }
+
+    if ( newfieldType !== this.fieldType ) {
+      this.fieldType = newfieldType;
+      console.log('FieldType Changed : ' + FieldType[newfieldType]);
+      this.getOperatorsOfType(this.fieldType);
+    }
+    console.log('After jquery: ' + this.filterIndex.toString());
+  }
+
+  operatorChanged(operatorValue: string) {
+    console.log('Operator Changed: ' + operatorValue);
+    this.deleteAllFilterValues();
+    this.filterOperator = this.operators.find(( element: FilterType) => element.filterOperator === operatorValue);
+    this.addFilterValue();
+  }
+
   addFilterValue() {
+    if (!this.filterOperator) { return; }
+
     this.values.push(new FormControl());
+    if (this.filterOperator.filterName === 'Between') {
+      this.values.push(new FormControl());
+    }
+  }
+
+  applicableDivider(index: number) {
+    if (!this.filterOperator) { return false; }
+
+    if ( index !== this.values.controls.length - 1) {
+      if (this.filterOperator.filterName === 'Between') {
+        return index % 2 !== 0;
+      }
+      return true;
+    }
   }
 
   deleteFilterValue(index: number) {

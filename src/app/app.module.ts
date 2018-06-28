@@ -3,8 +3,11 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 
 import { AppComponent } from './app.component';
 import { ChartFrameComponent } from './chart-frame/chart-frame.component';
@@ -23,6 +26,8 @@ import { SupportedFilterTypesService } from './supported-filter-types-service/su
 import { SupportedAggregateFunctionsService } from './supported-aggregate-functions-service/supported-aggregate-functions.service';
 import { SupportedChartTypesService } from './supported-chart-types-service/supported-chart-types.service';
 import { UrlProviderService } from './url-provider-service/url-provider.service';
+import { FieldAutocompleteService } from './field-autocomplete-service/field-autocomplete.service';
+import { AutocompleteInputFieldComponent } from './chart-creator/chart-query-selector/query-filter-selector/query-filter/autocomplete-input-field/autocomplete-input-field.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +40,8 @@ import { UrlProviderService } from './url-provider-service/url-provider.service'
     ChartCreatorComponent,
     QueryFilterSelectorComponent,
     QueryFilterComponent,
-    SelectAttributeComponent
+    SelectAttributeComponent,
+    AutocompleteInputFieldComponent
   ],
   imports: [
     BrowserModule,
@@ -44,10 +50,12 @@ import { UrlProviderService } from './url-provider-service/url-provider.service'
     ReactiveFormsModule,
     NoopAnimationsModule,
     MatTreeModule,
-    MatIconModule
+    MatIconModule,
+    MatAutocompleteModule
   ],
   providers: [SupportedLibrariesService, DbSchemaService, SupportedFilterTypesService,
-     SupportedAggregateFunctionsService, SupportedChartTypesService, UrlProviderService],
+     SupportedAggregateFunctionsService, SupportedChartTypesService, UrlProviderService,
+     FieldAutocompleteService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,48 +1,46 @@
-<div class="ui equal width form clearing segment" [formGroup]="filterFormGroup" #filterOperator>
+<div class="ui equal width form clearing segment" [formGroup]="filterFormGroup">
   <div class="field">
     <select-attribute formControlName="field" [chosenEntity]="chosenEntity"
-    [entityTreeNode]="entityTreeNode" (fieldTypeSelected)=fieldTypeChanged($event)></select-attribute>
+    [entityTreeNode]="entityTreeNode" (fieldChanged)=fieldChanged($event)></select-attribute>
   </div>
   <div class="field">
-    <select class="ui filter type dropdown" [id]=filterIndex formControlName="type" (change)=operatorChanged($event.target.value)>
+    <select *ngIf="this.selectedField" class="ui filter type dropdown" [id]=filterIndex formControlName="type" (change)=operatorChanged($event.target.value)>
         <option value=null>Select Operator</option>
         <option *ngFor="let operator of operators" value='{{operator.filterOperator}}'>{{operator.filterName}}</option>
     </select>
   </div>
   <div class="field" formArrayName="values">
-    <div [ngSwitch]="this.fieldType">
-      <div *ngFor="let filterValue of values.controls; index as i">
-        <ng-container *ngSwitchCase="0">
-          <div [ngClass]=" this.filterOperator ? 'ui action input' : 'ui action disabled input'">
-            <input [formControlName]="i" type="text" name="filterValue" placeholder="Value">
-            <button (click)="deleteFilterValue(i)" type="button" 
-            class="ui icon compact button"><i class="close icon"></i></button>
-          </div>
-        </ng-container>
-        <ng-container *ngSwitchCase="1">
-          <div [ngClass]=" this.filterOperator ? 'ui action input' : 'ui action disabled input'">
-            <input [formControlName]="i" type="number" name="filterValue" placeholder="Value"> 
-            <button (click)="deleteFilterValue(i)" type="button" 
-            class="ui icon compact button"><i class="close icon"></i></button>
-          </div>
-        </ng-container>
-        <ng-container *ngSwitchCase="2">
-          <div [ngClass]=" this.filterOperator ? 'ui action input' : 'ui action disabled input'">
-            <input [formControlName]="i" type="number" name="filterValue" placeholder="Value"> 
-            <button (click)="deleteFilterValue(i)" type="button" 
-            class="ui icon compact button"><i class="close icon"></i></button>
-          </div>
-        </ng-container>
-        <ng-container *ngSwitchCase="3">
-          <div [ngClass]=" this.filterOperator ? 'ui action input' : 'ui action disabled input'">
-            <input [formControlName]="i" type="date" name="filterValue" placeholder="Value"> 
-            <button (click)="deleteFilterValue(i)" type="button" 
-            class="ui icon compact button"><i class="close icon"></i></button>
-          </div>
-        </ng-container>
+    <div *ngFor="let filterValue of values.controls; index as i">
+      <div [ngSwitch]="this.fieldType">
+        <div [ngClass]=" this.filterOperator ? 'ui action input' : 'ui action disabled input'">
+
+          <ng-container *ngSwitchCase="0">          
+            
+            <autocomplete-input-field class="ui input" [inputFormGroup]="filterValue" [filterValueIndex]="i" 
+            [filterfield]="this.selectedField.name"></autocomplete-input-field>
+            
+          </ng-container>
+          <ng-container *ngSwitchCase="1">
+              <input [formControlName]="i" type="number" name="filterValue" placeholder="Value"> 
+          </ng-container>
+          <ng-container *ngSwitchCase="2">
+              <input [formControlName]="i" type="number" name="filterValue" placeholder="Value"> 
+          </ng-container>
+          <ng-container *ngSwitchCase="3">
+              <input [formControlName]="i" type="date" name="filterValue" placeholder="Value"> 
+          </ng-container>
+
+          <button (click)="deleteFilterValue(i)" type="button" 
+          class="ui icon compact button"><i class="close icon"></i></button>
+        </div>
+        <span *ngIf="applicableDivider(i)" class="ui horizontal divider">OR</span>
+
       </div>
     </div>
   </div>
+  <button (click)="addFilterValue()" type="button" 
+  class="circular ui icon basic blue compact left floated button">OR</button>
+
   <button (click)="deleteFilterEvent.emit()" type="button" 
   class="circular ui icon basic compact right floated button"><i class="close icon"></i></button>
 </div>

@@ -1,0 +1,18 @@
+<div [ngClass]="loading ? 'ui right icon input loading' : 'ui right icon input gone'">
+  <input #autoInputField [formControl]="inputFormGroup" type="text" name="filterValue" placeholder="Value" [matAutocomplete]="auto">
+  <i class="icon"></i>
+    <mat-autocomplete  #auto="matAutocomplete">
+    <mat-option *ngIf="(possibleFieldValues | async).length === 0" [value]=null>
+        <span class="autocomplete field">No results</span>
+    </mat-option>
+    <mat-option *ngIf="(possibleFieldValues | async) === null" [value]=null>
+        <span class="autocomplete field">Give a more verbose input!</span>
+    </mat-option>
+    <mat-option *ngIf="numberOfpossibleFieldValues < 0" [value]=null>
+        <span class="autocomplete field">Could not fetch values</span>
+    </mat-option>
+    <mat-option *ngFor="let value of possibleFieldValues | async" [value]="value">
+      <span class="autocomplete field">{{ value }}</span>
+    </mat-option>
+  </mat-autocomplete>
+</div>
