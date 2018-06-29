@@ -16,7 +16,7 @@ declare var jQuery: any;
   styleUrls: ['./query-filter.component.css'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+export class QueryFilterComponent implements OnInit, OnDestroy, OnChanges {
 
   // Reference to the parent FormGroup
   @Input() filterFormGroup: FormGroup;
@@ -38,8 +38,9 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy, O
 
   constructor(private formBuilder: FormBuilder, private operatorsService: SupportedFilterTypesService,
     private fieldAutocompleteService: FieldAutocompleteService) {
+
     console.log('New query filter created !');
-    this.getOperators();
+    // this.getOperators();
   }
 
   get values(): FormArray { return this.filterFormGroup.get('values') as FormArray; }
@@ -61,14 +62,13 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy, O
   }
 
   ngOnInit() {
-    console.log(this.filterFormGroup);
-    console.log(this.values);
-    console.log('Index: ' + this.filterIndex);
+    console.log('Filter Created : ' + this.filterIndex);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     for (const changedField of Object.keys(changes)) {
       const change = changes[changedField];
+      console.log('Changed: ' + changedField);
 
       if (!change.isFirstChange()) {
         switch (changedField) {
@@ -76,10 +76,10 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy, O
           case 'chosenEntity':
             console.log('ngOnChanges');
             this.values.reset();
-
-            // jQuery('#' + this.filterIndex.toString()).dropdown('restore default value');
-            // Bugged by Semantic UI
-            jQuery('#' + this.filterIndex.toString()).dropdown('restore defaults');
+            this.type.reset();
+            this.deleteAllFilterValues();
+            this.selectedField = null;
+            this.operators = null;
 
             break;
 
@@ -92,7 +92,6 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy, O
   fieldChanged(field: FieldNode) {
 
     const newfieldType = FieldType[field.type];
-    jQuery('#' + this.filterIndex.toString()).dropdown('restore defaults');
 
     if (this.selectedField === null || field.name !== this.selectedField.name) {
       this.selectedField = field;
@@ -103,10 +102,10 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy, O
       console.log('FieldType Changed : ' + FieldType[newfieldType]);
       this.getOperatorsOfType(this.fieldType);
     }
-    console.log('After jquery: ' + this.filterIndex.toString());
   }
 
   operatorChanged(operatorValue: string) {
+
     console.log('Operator Changed: ' + operatorValue);
     this.deleteAllFilterValues();
     this.filterOperator = this.operators.find(( element: FilterType) => element.filterOperator === operatorValue);
@@ -146,13 +145,7 @@ export class QueryFilterComponent implements OnInit, AfterViewInit, OnDestroy, O
     }
   }
 
-  ngAfterViewInit(): void {
-    console.log('AfterViewInit');
-    jQuery('#' + this.filterIndex.toString()).dropdown();
-
-  }
-
   ngOnDestroy() {
-    console.log('Filter Component Destroyed!');
+    console.log('Filter Destroyed : ' + this.filterIndex);
   }
 }

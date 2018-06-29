@@ -1,14 +1,19 @@
 <div class="ui equal width form clearing segment" [formGroup]="filterFormGroup">
+  
   <div class="field">
     <select-attribute formControlName="field" [chosenEntity]="chosenEntity"
     [entityTreeNode]="entityTreeNode" (fieldChanged)=fieldChanged($event)></select-attribute>
   </div>
-  <div class="field">
-    <select *ngIf="this.selectedField" class="ui filter type dropdown" [id]=filterIndex formControlName="type" (change)=operatorChanged($event.target.value)>
-        <option value=null>Select Operator</option>
-        <option *ngFor="let operator of operators" value='{{operator.filterOperator}}'>{{operator.filterName}}</option>
-    </select>
+
+  <div *ngIf="this.selectedField " class="field">
+    <sui-select class="selection" formControlName="type" placeholder="Select Operator" 
+    [options]="operators" (selectedOptionChange)=operatorChanged($event)
+    labelField="filterName" valueField="filterOperator" #operatorSelect>
+    
+      <sui-select-option *ngFor="let operator of operatorSelect.filteredOptions" [value]="operator"></sui-select-option>
+    </sui-select>
   </div>
+
   <div class="field" formArrayName="values">
     <div *ngFor="let filterValue of values.controls; index as i">
       <div [ngSwitch]="this.fieldType">
@@ -38,6 +43,7 @@
       </div>
     </div>
   </div>
+
   <button (click)="addFilterValue()" type="button" 
   class="circular ui icon basic blue compact left floated button">OR</button>
 

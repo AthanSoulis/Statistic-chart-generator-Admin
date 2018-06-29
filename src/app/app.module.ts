@@ -8,7 +8,6 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-
 import { AppComponent } from './app.component';
 import { ChartFrameComponent } from './chart-frame/chart-frame.component';
 import { ChartPropertiesSelectorComponent } from './chart-creator/chart-properties-selector/chart-properties-selector.component';
@@ -29,6 +28,8 @@ import { UrlProviderService } from './url-provider-service/url-provider.service'
 import { FieldAutocompleteService } from './field-autocomplete-service/field-autocomplete.service';
 import { AutocompleteInputFieldComponent } from './chart-creator/chart-query-selector/query-filter-selector/query-filter/autocomplete-input-field/autocomplete-input-field.component';
 
+import { SuiModule } from 'ng2-semantic-ui';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +45,7 @@ import { AutocompleteInputFieldComponent } from './chart-creator/chart-query-sel
     AutocompleteInputFieldComponent
   ],
   imports: [
+    SuiModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
