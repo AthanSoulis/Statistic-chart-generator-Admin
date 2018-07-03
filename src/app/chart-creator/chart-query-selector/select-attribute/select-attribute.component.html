@@ -1,6 +1,20 @@
 <div class="simple segment">
   <div class="ui fluid selection dropdown">
-        {{selectedField === null ? 'Select Entity Field' : selectedField}}<i class="dropdown icon"></i>
+
+    <div *ngIf="selectedField !== null; else nullSelectedField">
+      <div class="ui breadcrumb" #selectedFieldLength *ngFor="let field of selectedField.split('.'); let i = index">
+        <div *ngIf="i !== selectedField.split('.').length - 1 ; else activeField">
+          <span class="section">{{field | titlecase}}</span>
+          <div class="divider"> > </div>
+        </div>
+        <ng-template #activeField>
+          <span class="active section">{{field | titlecase}}</span>
+        </ng-template>
+      </div>
+    </div>
+    <ng-template #nullSelectedField>Select Entity Field</ng-template>
+
+    <i class="dropdown icon"></i>
     
     <div class="menu">
     <div class="ui item">
