@@ -29,12 +29,10 @@ export class QueryFilterComponent implements OnInit, OnDestroy, OnChanges {
   // Event emitter for the deletion of this filter
   @Output() deleteFilterEvent = new EventEmitter();
 
-
   operators: Array<FilterType>;
   filterOperator: FilterType;
   selectedField: FieldNode = null;
   fieldType: FieldType = null;
-
 
   constructor(private formBuilder: FormBuilder, private operatorsService: SupportedFilterTypesService,
     private fieldAutocompleteService: FieldAutocompleteService) {

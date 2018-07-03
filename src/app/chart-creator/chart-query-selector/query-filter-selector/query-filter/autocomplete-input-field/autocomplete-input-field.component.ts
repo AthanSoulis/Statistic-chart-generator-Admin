@@ -21,12 +21,15 @@ export class AutocompleteInputFieldComponent implements OnInit, AfterViewInit {
   @ViewChild('autoInputField') valueInput: ElementRef;
 
   possibleFieldValues: Observable<Array<string>>;
-  numberOfpossibleFieldValues = 0;
-  loading = false;
+  numberOfpossibleFieldValues: number;
+  loading: boolean;
+  typeToSearchDelay: number;
 
   constructor(private fieldAutocompleteService: FieldAutocompleteService) {
     this.possibleFieldValues = of([]);
-
+    this.typeToSearchDelay = 250;
+    this.loading = false;
+    this.numberOfpossibleFieldValues = 0;
   }
 
   ngOnInit() {
@@ -44,7 +47,7 @@ export class AutocompleteInputFieldComponent implements OnInit, AfterViewInit {
     fromEvent(this.valueInput.nativeElement, 'keyup').pipe(
       map((inputVal: any) => inputVal.target.value),
       filter((text: string) => text.length > 0),
-      debounceTime(250),
+      debounceTime(this.typeToSearchDelay),
       tap(() => {this.possibleFieldValues = of([]); this.loading = true; } ),
       map((queryText: string) => this.fieldAutocompleteService.getAutocompleteFields(this.filterfield, queryText)),
       switchAll())
