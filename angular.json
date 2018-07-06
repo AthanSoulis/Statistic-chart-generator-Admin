@@ -22,10 +22,12 @@
             ],
             "styles": [
               "semantic/dist/semantic.min.css",
+              "semantic/dist/components/transition.min.css",
               "src/styles.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
+              "semantic/dist/components/transition.min.js",
               "semantic/dist/semantic.min.js"
             ]
           },

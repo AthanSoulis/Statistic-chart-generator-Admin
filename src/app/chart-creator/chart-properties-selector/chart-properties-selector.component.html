@@ -1,5 +1,29 @@
 <div class="ui equal width form" formGroupName="properties">
-    
+
+    <div class="ui mapping modal">
+        <div class="header">
+          Select mapping
+        </div>
+        <div class="content">
+            <div class="ui three centered stackable cards">
+            <div class="ui card" *ngFor="let profile of profileMappings">
+                <div class="content">
+                    <div class="header"><h2>{{profile.name}}</h2></div>
+                    <div class="description">{{profile.description}}</div>
+                </div>
+                <button (click)="cardButtonAction(profile)" class="ui bottom attached basic blue button">Select</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile inline field" (click)="showProfilePicker()">
+        <label>User Profile</label>
+        <input style="border: 0" readonly type="text" value='{{profile.value===null ? null : profile.value.name}}'>
+    </div>
+
+    <div class="ui divider"></div>
+
     <div class="required field" >
     <label>Library</label>
     <select class="ui library dropdown " formControlName="library">    

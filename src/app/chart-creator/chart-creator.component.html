@@ -6,7 +6,7 @@
     <div class="ui container">
         <form class="ui form container" [formGroup]="chartForm" (ngSubmit)="onSubmit()">
             <div class="ui active tab" data-tab="tab-properties">
-                <chart-properties-selector ></chart-properties-selector>
+                <chart-properties-selector [propertiesForm]="properties" (profileChanged)="profileMappingChanged($event)"></chart-properties-selector>
             </div>
             <div class="ui tab" data-tab="tab-query">
                 <chart-query-selector [queryForm]="queryForm"></chart-query-selector>

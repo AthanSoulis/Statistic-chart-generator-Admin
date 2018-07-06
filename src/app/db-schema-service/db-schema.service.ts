@@ -5,6 +5,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject, of as observableOf } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { UrlProviderService } from '../url-provider-service/url-provider.service';
+import { Profile } from '../mapping-profiles-service/mapping-profiles.service';
 
 export class EntityNode {
   fields: FieldNode[];
@@ -35,8 +36,19 @@ export class DbSchemaService {
 
   constructor(private http: HttpClient, private urlProvider: UrlProviderService) {}
 
+  getAvailableEntities(profile: Profile): Observable<Array<string>> {
 
-  getAvailableEntities(): Observable<Array<string>> {
+    if (profile === null) { return this.getAvailableEntitiesNoMapping(); }
+
+    const entitiesUrl = this.urlProvider.getUrl() + '/schema/' + profile.name + '/entities';
+    return this.http.get< Array<string> >(entitiesUrl)
+      .pipe(
+        retry(3), // retry a failed request up to 3 times
+        catchError(this.handleError) // then handle the error
+    );
+  }
+
+  getAvailableEntitiesNoMapping(): Observable<Array<string>> {
 
     const entitiesUrl = this.urlProvider.getUrl() + '/schema/entities';
     return this.http.get< Array<string> >(entitiesUrl)

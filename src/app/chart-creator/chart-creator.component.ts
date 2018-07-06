@@ -7,6 +7,7 @@ import { HighChartsChart, HCseriesInstance } from '../supported-libraries-servic
 import { GoogleChartsChart } from '../supported-libraries-service/chart-description-GoogleCharts.model';
 import { Filter } from './chart-query-selector/query-filter-selector/query-filter/query-filter.model';
 import { element } from 'protractor';
+import { Profile } from '../mapping-profiles-service/mapping-profiles.service';
 
 declare var jQuery: any;
 
@@ -19,7 +20,9 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
 
   @Output() chartSubmit: EventEmitter<Object> = new EventEmitter();
   @Output() tableSubmit: EventEmitter<Object> = new EventEmitter();
+
   chartForm: FormGroup;
+  profileMapping: Profile = null;
 
   constructor(private formBuilder: FormBuilder,
     private supportedLibrariesService: SupportedLibrariesService) {
@@ -49,6 +52,11 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
   get filters(): FormArray { return this.queryForm.get('filters') as FormArray; }
 
   ngOnInit() {}
+
+  profileMappingChanged($event) {
+    console.log(event);
+    this.profileMapping = this.properties.get('profile').value;
+  }
 
   onSubmit() {
     console.log(this.chartForm.value);

@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroupDirective, ControlContainer, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SupportedLibrariesService } from '../../supported-libraries-service/supported-libraries.service';
 import { ChartProperties } from './chart-properties.model';
 import { SupportedChartTypesService } from '../../supported-chart-types-service/supported-chart-types.service';
+import { Profile, MappingProfilesService } from '../../mapping-profiles-service/mapping-profiles.service';
+import { Subscription } from 'rxjs';
 
 declare var jQuery: any;
 
@@ -16,10 +18,15 @@ declare var jQuery: any;
 })
 export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, AfterViewInit {
 
-  propertiesForm: FormGroup;
+  @Input() propertiesForm: FormGroup;
+  @Output() profileChanged: EventEmitter<Profile> = new EventEmitter();
+
   supportedLibraries: Array<string>;
   supportedChartTypes: Array<string>;
+  profileMappings: Array<Profile>;
   chartProperties: ChartProperties;
+
+  mappingProfileServiceSubscription: Subscription;
 
   formPlaceholders = {
     library : '',
@@ -31,7 +38,8 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
 
   constructor(formBuilder: FormBuilder,
     private librariesService: SupportedLibrariesService,
-    private chartTypesService: SupportedChartTypesService) {
+    private chartTypesService: SupportedChartTypesService,
+    private mappingProfileService: MappingProfilesService) {
 
     librariesService.getSupportedLibraries().subscribe(
       (data: Array<string>) => this.supportedLibraries = data // success path
@@ -44,22 +52,65 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
     );
   }
 
+  get profile() { return this.propertiesForm.get('profile'); }
   get library() { return this.propertiesForm.get('library'); }
   get chartTitle() { return this.propertiesForm.get('chartTitle'); }
   get chartType() { return this.propertiesForm.get('chartType'); }
   get yaxisName() { return this.propertiesForm.get('yaxisName'); }
   get xaxisName() { return this.propertiesForm.get('xaxisName'); }
 
+  cardButtonAction(profile: Profile) {
+    console.log(this.propertiesForm);
+    this.mappingProfileService.changeSelectedProfile(profile);
+
+    this.closeProfilePicker();
+  }
+
+  showProfilePicker() {
+    jQuery('.ui.mapping.modal')
+    .modal({
+      transition: 'scale',
+      closable  : false
+    })
+    .modal('show');
+  }
+
+  closeProfilePicker() {
+    jQuery('.ui.mapping.modal')
+    .modal({
+      transition: 'scale',
+      closable  : false
+    })
+    .modal('hide');
+  }
+
   ngOnInit() {
     console.log('Properties Selector initialized');
+
+    this.mappingProfileServiceSubscription = this.mappingProfileService.selectedProfile$
+    .subscribe(profile => this.profile.setValue(profile));
   }
 
   ngAfterViewInit(): void {
     jQuery('ui.library.dropdown').dropdown();
     jQuery('ui.chart-type.dropdown').dropdown();
+    this.mappingProfileService.getProfileMappings().subscribe(
+      (result: Profile[]) => {
+        this.profileMappings = result;
+        this.showProfilePicker();
+      },
+      (err: any) => {
+        console.log(err);
+
+      },
+      () => {
+
+      }
+    );
   }
 
   ngOnDestroy() {
     console.log('Properties Selector destroyed');
+    this.mappingProfileServiceSubscription.unsubscribe();
   }
 }

@@ -18,6 +18,7 @@ import { SelectAttributeComponent } from './chart-creator/chart-query-selector/s
 import { ChartCreatorComponent } from './chart-creator/chart-creator.component';
 import { QueryFilterSelectorComponent } from './chart-creator/chart-query-selector/query-filter-selector/query-filter-selector.component';
 import { QueryFilterComponent } from './chart-creator/chart-query-selector/query-filter-selector/query-filter/query-filter.component';
+import { AutocompleteInputFieldComponent } from './chart-creator/chart-query-selector/query-filter-selector/query-filter/autocomplete-input-field/autocomplete-input-field.component';
 
 import { SupportedLibrariesService } from './supported-libraries-service/supported-libraries.service';
 import { DbSchemaService } from './db-schema-service/db-schema.service';
@@ -26,7 +27,7 @@ import { SupportedAggregateFunctionsService } from './supported-aggregate-functi
 import { SupportedChartTypesService } from './supported-chart-types-service/supported-chart-types.service';
 import { UrlProviderService } from './url-provider-service/url-provider.service';
 import { FieldAutocompleteService } from './field-autocomplete-service/field-autocomplete.service';
-import { AutocompleteInputFieldComponent } from './chart-creator/chart-query-selector/query-filter-selector/query-filter/autocomplete-input-field/autocomplete-input-field.component';
+import { MappingProfilesService } from './mapping-profiles-service/mapping-profiles.service';
 
 import { SuiModule } from 'ng2-semantic-ui';
 
@@ -57,7 +58,7 @@ import { SuiModule } from 'ng2-semantic-ui';
   ],
   providers: [SupportedLibrariesService, DbSchemaService, SupportedFilterTypesService,
      SupportedAggregateFunctionsService, SupportedChartTypesService, UrlProviderService,
-     FieldAutocompleteService],
+     FieldAutocompleteService, MappingProfilesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

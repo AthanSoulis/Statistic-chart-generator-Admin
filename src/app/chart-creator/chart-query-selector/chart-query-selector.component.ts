@@ -1,8 +1,10 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, OnDestroy } from '@angular/core';
 import { ControlContainer, FormGroupDirective, FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { DbSchemaService, EntityTreeNode, EntityNode } from '../../db-schema-service/db-schema.service';
 import { Query, Select } from './chart-query.model';
 import { SupportedAggregateFunctionsService } from '../../supported-aggregate-functions-service/supported-aggregate-functions.service';
+import { Profile, MappingProfilesService } from '../../mapping-profiles-service/mapping-profiles.service';
+import { Subscription } from 'rxjs';
 
 declare var jQuery: any;
 
@@ -14,10 +16,9 @@ declare var jQuery: any;
     { provide: ControlContainer, useExisting: FormGroupDirective }
   ]
 })
-export class ChartQuerySelectorComponent implements OnInit, AfterViewInit {
+export class ChartQuerySelectorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() queryForm: FormGroup;
-  // @Input() chartForm: FormGroup;
 
   chosenEntity: string = null;
   entityTreeRoot: EntityTreeNode = null;
@@ -26,18 +27,29 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit {
   availableAggregates: Array<string>;
   availableEntityFields: Object[];
 
+  mappingProfileServiceSubscription: Subscription;
+
   constructor(private formBuilder: FormBuilder,
     private dbSchemaService: DbSchemaService,
-    private supportedAggregateFunctionsService: SupportedAggregateFunctionsService) {
+    private supportedAggregateFunctionsService: SupportedAggregateFunctionsService,
+    private mappingProfileService: MappingProfilesService) {}
 
-      this.getAvailableEntities();
-      this.getAvailableAggregates();
+  ngOnInit() {
+
+    this.mappingProfileServiceSubscription = this.mappingProfileService.selectedProfile$
+    .subscribe(profile => { this.getAvailableEntities(profile);
+                            this.entity.reset();
+                            jQuery('.ui.entity.dropdown').dropdown('restore defaults'); } );
+
+    this.getAvailableAggregates();
   }
 
-  ngOnInit() {}
+  ngOnDestroy() {
+    this.mappingProfileServiceSubscription.unsubscribe();
+  }
 
-  getAvailableEntities() {
-    this.dbSchemaService.getAvailableEntities().subscribe(
+  getAvailableEntities(profile: Profile) {
+    this.dbSchemaService.getAvailableEntities(profile).subscribe(
       (data: Array<string>) => this.availableEntities = data // success path
         // error => this.error = error // error path
     );
@@ -63,7 +75,7 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit {
   }
 
   getEntityTreeNode(entity: string) {
-    if (entity === this.chosenEntity) {
+    if (entity === this.chosenEntity && this.chosenEntity !== '') {
       this.dbSchemaService.getEntityFields(this.chosenEntity).subscribe(
         (value: EntityNode) => {
           if (value !== null) {
@@ -81,10 +93,13 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit {
     return this.entityTreeRoot;
   }
 
+
   entityChanged(entity: string) {
+    console.log('Entity changed to: ' + entity);
     this.chosenEntity = entity;
-    // this.getAvailableEntityFields(entity);
-    this.getEntityTreeNode(entity);
+    if (entity !== null) {
+      this.getEntityTreeNode(entity);
+    }
 
     this.selectXs.reset();
     this.selectY.reset();
