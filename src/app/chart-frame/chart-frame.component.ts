@@ -29,8 +29,7 @@ export class ChartFrameComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     const stringObj = JSON.stringify(changes.chart.currentValue);
-    console.log(stringObj);
-    console.log('On changes triggered!');
+    console.log('[chart-frame.component] On changes: ' + stringObj);
 
     if (changes.chart.currentValue) {
       this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/chart?json=' + encodeURI(stringObj));

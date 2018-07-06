@@ -66,13 +66,12 @@ export class QueryFilterComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     for (const changedField of Object.keys(changes)) {
       const change = changes[changedField];
-      console.log('Changed: ' + changedField);
 
       if (!change.isFirstChange()) {
         switch (changedField) {
 
           case 'chosenEntity':
-            console.log('ngOnChanges');
+            console.log('ngOnChanges: chosenEntity');
             this.values.reset();
             this.type.reset();
             this.deleteAllFilterValues();
