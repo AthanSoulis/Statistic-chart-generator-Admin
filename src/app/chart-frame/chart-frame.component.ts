@@ -20,7 +20,6 @@ export class ChartFrameComponent implements OnInit, OnChanges {
 
   constructor(private sanitizer: DomSanitizer, private urlProvider: UrlProviderService) {
     this.frameUrl = this.getSanitizedFrameUrl(urlProvider.getUrl() + '/chart');
-    // this.frameUrl = this.getSanitizedFrameUrl('http://vatopedi.di.uoa.gr:8080/chart?json=""');
   }
 
   ngOnInit() {
@@ -32,8 +31,7 @@ export class ChartFrameComponent implements OnInit, OnChanges {
     console.log('[chart-frame.component] On changes: ' + stringObj);
 
     if (changes.chart.currentValue) {
-      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/chart?json=' + encodeURI(stringObj));
-      // this.frameUrl = this.getSanitizedFrameUrl('http://vatopedi.di.uoa.gr:8080/chart?json=' + encodeURI(stringObj));
+      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/chart?json=' + encodeURIComponent(stringObj));
       console.log(this.frameUrl);
     }
   }
