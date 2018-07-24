@@ -20,14 +20,16 @@ import { QueryFilterSelectorComponent } from './chart-creator/chart-query-select
 import { QueryFilterComponent } from './chart-creator/chart-query-selector/query-filter-selector/query-filter/query-filter.component';
 import { AutocompleteInputFieldComponent } from './chart-creator/chart-query-selector/query-filter-selector/query-filter/autocomplete-input-field/autocomplete-input-field.component';
 
-import { SupportedLibrariesService } from './supported-libraries-service/supported-libraries.service';
-import { DbSchemaService } from './db-schema-service/db-schema.service';
-import { SupportedFilterTypesService } from './supported-filter-types-service/supported-filter-types.service';
-import { SupportedAggregateFunctionsService } from './supported-aggregate-functions-service/supported-aggregate-functions.service';
-import { SupportedChartTypesService } from './supported-chart-types-service/supported-chart-types.service';
-import { UrlProviderService } from './url-provider-service/url-provider.service';
-import { FieldAutocompleteService } from './field-autocomplete-service/field-autocomplete.service';
-import { MappingProfilesService } from './mapping-profiles-service/mapping-profiles.service';
+import { SupportedLibrariesService } from './services/supported-libraries-service/supported-libraries.service';
+import { DbSchemaService } from './services/db-schema-service/db-schema.service';
+import { SupportedFilterTypesService } from './services/supported-filter-types-service/supported-filter-types.service';
+import { SupportedAggregateFunctionsService } from './services/supported-aggregate-functions-service/supported-aggregate-functions.service';
+import { SupportedChartTypesService } from './services/supported-chart-types-service/supported-chart-types.service';
+import { UrlProviderService } from './services/url-provider-service/url-provider.service';
+import { FieldAutocompleteService } from './services/field-autocomplete-service/field-autocomplete.service';
+import { MappingProfilesService } from './services/mapping-profiles-service/mapping-profiles.service';
+import { ChartExportingService } from './services/chart-exporting-service/chart-exporting.service';
+import { ErrorHandlerService } from './services/error-handler-service/error-handler.service';
 
 import { SuiModule } from 'ng2-semantic-ui';
 
@@ -58,7 +60,7 @@ import { SuiModule } from 'ng2-semantic-ui';
   ],
   providers: [SupportedLibrariesService, DbSchemaService, SupportedFilterTypesService,
      SupportedAggregateFunctionsService, SupportedChartTypesService, UrlProviderService,
-     FieldAutocompleteService, MappingProfilesService],
+     FieldAutocompleteService, MappingProfilesService, ChartExportingService, ErrorHandlerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

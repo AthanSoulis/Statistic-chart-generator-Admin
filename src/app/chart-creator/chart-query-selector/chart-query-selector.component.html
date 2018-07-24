@@ -1,4 +1,12 @@
-<div class="ui form" formGroupName="queryForm">
+<div class="ui form" [formGroup]="queryForm">
+
+  <div class="introduction">
+      <h2 class="ui header">{{chartQueryDataName}}
+          <div class="ui hidden divider"></div>
+          <div class="sub header">Describe the data you want to appear on your chart</div>
+      </h2>
+  </div>
+
   <h4 class="ui dividing header">Y Axis</h4>
   <div class="required inline field">
     <select class="ui entity dropdown" formControlName="entity" (change)=entityChanged($event.target.value)>
@@ -8,7 +16,7 @@
     <label></label>
   </div>
 
-  <div [ngClass]="(chosenEntity == null) ? 'disabled field' : 'enabled'">
+  <div [ngClass]="(chosenEntity == '') ? 'disabled field' : 'enabled'">
     <div formGroupName="selectY">
         <div class="required inline field">
           <select class="ui aggregate dropdown" formControlName="aggregate">

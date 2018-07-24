@@ -3,8 +3,8 @@ import { FormGroup, ControlContainer, FormGroupDirective, FormBuilder, FormGroup
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource, MatTreeNodeOutlet } from '@angular/material/tree';
 
-import { FieldType } from '../../../supported-filter-types-service/supported-filter-types.service';
-import { DbSchemaService, EntityNode, FieldNode, EntityTreeNode } from '../../../db-schema-service/db-schema.service';
+import { FieldType } from '../../../services/supported-filter-types-service/supported-filter-types.service';
+import { DbSchemaService, EntityNode, FieldNode, EntityTreeNode } from '../../../services/db-schema-service/db-schema.service';
 
 import {BehaviorSubject, of as observableOf, Observable} from 'rxjs';
 import { map } from 'rxjs/operators';

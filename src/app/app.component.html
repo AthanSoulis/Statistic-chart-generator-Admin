@@ -1,10 +1,52 @@
+<ng-template let-popup #exportPopUp>
+    <div class="ui content">
+        <p class="ui center aligned basic segment">A JSON representation of the chart is saved!</p>
+    </div>
+</ng-template>
+
+<ng-template let-popup #loadPopUp>
+    <div class="ui content">
+        <h4 class="ui header">Load</h4>
+        
+    </div>
+</ng-template>
+
+<ng-template let-popup #publishPopUp>
+    <div class="ui content">
+
+        <h4 class="ui centered header">Generated Chart Url</h4>
+        <div class="ui small text container segment">
+            <p class="url-holder">{{chartUrl | async}}</p>
+        </div>
+
+        <h4 class="ui centered header">Generated Chart TinyUrl</h4>
+        <div class="ui small text container segment">
+            <p class="url-holder">{{chartTinyUrl | async}}</p>
+        </div>
+
+    </div>
+</ng-template>
+
+<div class="ui inverted top fixed menu">
+    <div class="header item">Statistic Chart Generator</div>
+    <a class="item" suiPopup [popupTemplate]="exportPopUp" popupTrigger="manual" #exportpopup="suiPopup"
+        (click)="exportChart(exportpopup)">Export</a>
+    <a class="item" suiPopup [popupTemplate]="loadPopUp" popupTrigger="outsideClick"
+    (click)="loadChart()">Load</a>
+    <a class="item" suiPopup [popupTemplate]="publishPopUp" popupTrigger="manual" #publishpopup="suiPopup"
+        (click)="togglePublishPopUp(publishpopup)">Publish</a>
+    <div class="right menu">
+        <a class="item">Sign Up</a>
+        <a class="item">Help</a>
+    </div>
+</div>
 <div class="ui sixteen stackable padded grid">
-    <div class="ui five wide column container">
+    <div class="ui six wide column container">
         <chart-creator (chartSubmit)="handleChartObject($event)" (tableSubmit)="handleTableObject($event)"></chart-creator>
     </div>
-    <div class="ui eleven wide column container">
+    <div class="ui ten wide column container">
         <chart-frame [chart]="chartObject"></chart-frame>
         <span class="ui hidden horizontal divider"></span>
-        <chart-data-presentation-table [table]="chartObject"></chart-data-presentation-table>
+        <!-- <chart-data-presentation-table [table]="chartObject"></chart-data-presentation-table> -->
     </div>
 </div>

@@ -1,9 +1,9 @@
 import { Component, OnInit, AfterViewInit, Input, OnDestroy } from '@angular/core';
 import { ControlContainer, FormGroupDirective, FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
-import { DbSchemaService, EntityTreeNode, EntityNode } from '../../db-schema-service/db-schema.service';
+import { DbSchemaService, EntityTreeNode, EntityNode } from '../../services/db-schema-service/db-schema.service';
 import { Query, Select } from './chart-query.model';
-import { SupportedAggregateFunctionsService } from '../../supported-aggregate-functions-service/supported-aggregate-functions.service';
-import { Profile, MappingProfilesService } from '../../mapping-profiles-service/mapping-profiles.service';
+import { SupportedAggregateFunctionsService } from '../../services/supported-aggregate-functions-service/supported-aggregate-functions.service';
+import { Profile, MappingProfilesService } from '../../services/mapping-profiles-service/mapping-profiles.service';
 import { Subscription } from 'rxjs';
 
 declare var jQuery: any;
@@ -19,6 +19,7 @@ declare var jQuery: any;
 export class ChartQuerySelectorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() queryForm: FormGroup;
+  @Input() chartQueryDataName = 'Data';
 
   chosenEntity: string = null;
   entityTreeRoot: EntityTreeNode = null;
@@ -42,6 +43,8 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit, OnDes
                             jQuery('.ui.entity.dropdown').dropdown('restore defaults'); } );
 
     this.getAvailableAggregates();
+    console.log('Initialised Chart Query Selector');
+    console.log(this.availableAggregates);
   }
 
   ngOnDestroy() {

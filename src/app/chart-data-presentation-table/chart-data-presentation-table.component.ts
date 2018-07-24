@@ -1,6 +1,6 @@
 import { Component, OnInit, SecurityContext, Input, OnChanges } from '@angular/core';
 import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
-import { UrlProviderService } from '../url-provider-service/url-provider.service';
+import { UrlProviderService } from '../services/url-provider-service/url-provider.service';
 
 @Component({
   selector: 'chart-data-presentation-table',

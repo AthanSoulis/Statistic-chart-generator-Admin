@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroupDirective, ControlContainer, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SupportedLibrariesService } from '../../supported-libraries-service/supported-libraries.service';
+import { SupportedLibrariesService } from '../../services/supported-libraries-service/supported-libraries.service';
 import { ChartProperties } from './chart-properties.model';
-import { SupportedChartTypesService } from '../../supported-chart-types-service/supported-chart-types.service';
-import { Profile, MappingProfilesService } from '../../mapping-profiles-service/mapping-profiles.service';
+import { SupportedChartTypesService } from '../../services/supported-chart-types-service/supported-chart-types.service';
+import { Profile, MappingProfilesService } from '../../services/mapping-profiles-service/mapping-profiles.service';
 import { Subscription } from 'rxjs';
 
 declare var jQuery: any;

@@ -1,24 +1,45 @@
-<div class="ui container">
-    <div class="ui fluid tabular menu">
-            <div class="active item" data-tab="tab-properties">Properties</div>
-            <div class="item" data-tab="tab-query">Data</div>
+
+<!-- form tag is this high cause of a bug in sui-tabset -->
+<!-- If I uncomment the below, every time I add a dataseries it calls onSubmit -->
+<!-- Instead I explicitly call onSubmit on the click event of the Submit button  -->
+<!-- <form class="ui form container" [formGroup]="chartForm" (ngSubmit)="onSubmit()"> -->
+<form class="ui form container" [formGroup]="chartForm">
+<sui-tabset>
+<div class="ui grid container">
+    <div class="four wide column">
+        <div class="ui vertical fluid tabular menu">
+            <a class="ui item" suiTabHeader="tab-properties">Properties</a>
+            <a class="ui item" *ngFor="let data of dataseries.controls; let i = index" [suiTabHeader]="i" [(isActive)]="dataseriesTabActive[i]">
+                <button (click)="removeDataseries(i)" class="tiny basic circular ui icon button ">
+                    <i class="icon minus"></i>
+                </button>Data</a>
+            <a class="ui item" (click)="addDataseries()">
+                <button class="tiny basic circular ui icon button ">
+                    <i class="icon plus"></i>
+                </button>Add Data</a>
+        </div>
     </div>
+    
+    <div class="twelve wide stretched column">
     <div class="ui container">
-        <form class="ui form container" [formGroup]="chartForm" (ngSubmit)="onSubmit()">
-            <div class="ui active tab" data-tab="tab-properties">
-                <chart-properties-selector [propertiesForm]="properties" (profileChanged)="profileMappingChanged($event)"></chart-properties-selector>
-            </div>
-            <div class="ui tab" data-tab="tab-query">
-                <chart-query-selector [queryForm]="queryForm"></chart-query-selector>
-            </div>
+        <div class="ui tab" suiTabContent="tab-properties">
+            <chart-properties-selector [propertiesForm]="properties" (profileChanged)="profileMappingChanged($event)"></chart-properties-selector>
+        </div>
+        <div class="ui tab" *ngFor="let data of dataseries.controls; let i = index" [suiTabContent]="i" >
+            <chart-query-selector [queryForm]="getQueryForm(i)"></chart-query-selector>
+        </div>
 
-            <div class="ui hidden divider"></div>
-            <button type="submit" 
-                [ngClass]="isFormInvalid() ?
-                'ui disabled negative basic button' : 'ui positive basic button'">Submit</button>
+        <div class="ui hidden divider"></div>
+        <button type="submit" 
+            (click)="onSubmit()"
+            [ngClass]="isFormInvalid() ?
+            'ui disabled negative basic button' : 'ui positive basic button'">Submit</button>
 
-            <div class="ui negative message" *ngIf="isFormInvalid()">Error Message</div>
-        </form> 
+        <div class="ui negative message" *ngIf="isFormInvalid()">Error Message</div>
+    </div>
     </div>
 </div>
+</sui-tabset>
+</form>
+
 

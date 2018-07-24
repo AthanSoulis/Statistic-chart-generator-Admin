@@ -1,4 +1,4 @@
-import { Profile } from '../../mapping-profiles-service/mapping-profiles.service';
+import { Profile } from '../../services/mapping-profiles-service/mapping-profiles.service';
 
 export class ChartProperties {
     profile: Profile = null;

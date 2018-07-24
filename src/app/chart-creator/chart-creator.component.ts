@@ -2,12 +2,14 @@ import { Component, OnInit, AfterViewInit, Output, EventEmitter } from '@angular
 import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
 import { Query, Select } from './chart-query-selector/chart-query.model';
 import { ChartProperties } from './chart-properties-selector/chart-properties.model';
-import { SupportedLibrariesService } from '../supported-libraries-service/supported-libraries.service';
-import { HighChartsChart, HCseriesInstance } from '../supported-libraries-service/chart-description-HighCharts.model';
-import { GoogleChartsChart } from '../supported-libraries-service/chart-description-GoogleCharts.model';
+import { SupportedLibrariesService } from '../services/supported-libraries-service/supported-libraries.service';
+import { HighChartsChart, HCseriesInstance } from '../services/supported-libraries-service/chart-description-HighCharts.model';
+import { GoogleChartsChart } from '../services/supported-libraries-service/chart-description-GoogleCharts.model';
 import { Filter } from './chart-query-selector/query-filter-selector/query-filter/query-filter.model';
 import { element } from 'protractor';
-import { Profile } from '../mapping-profiles-service/mapping-profiles.service';
+import { Profile } from '../services/mapping-profiles-service/mapping-profiles.service';
+import { ChartExportingService } from '../services/chart-exporting-service/chart-exporting.service';
+import { Observable, Subject } from 'rxjs';
 
 declare var jQuery: any;
 
@@ -23,35 +25,55 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
 
   chartForm: FormGroup;
   profileMapping: Profile = null;
+  public dataseriesTabActive: boolean[] = [];
 
   constructor(private formBuilder: FormBuilder,
     private supportedLibrariesService: SupportedLibrariesService) {
+  }
 
+  ngOnInit() {
     this.createForm();
   }
 
   createForm() {
+
     this.chartForm = this.formBuilder.group({
       properties: this.formBuilder.group(new ChartProperties()),
-      queryForm: this.formBuilder.group({
-        entity: ['', Validators.required],
-        selectY: this.formBuilder.group(new Select()),
-        selectXs: this.formBuilder.array(new Array<Select>()),
-        filters: this.formBuilder.array(new Array<Filter>())
-      })
+      dataseries: this.formBuilder.array(new Array<FormGroup>())
     });
 
-    this.selectXs.push(this.formBuilder.group(new Select()));
     console.log(this.chartForm);
   }
 
-  get properties(): FormGroup { return this.chartForm.get('properties') as FormGroup; }
-  get queryForm(): FormGroup { return this.chartForm.get('queryForm') as FormGroup; }
-  get selectY(): FormGroup { return this.queryForm.get('selectY') as FormGroup; }
-  get selectXs(): FormArray { return this.queryForm.get('selectXs') as FormArray; }
-  get filters(): FormArray { return this.queryForm.get('filters') as FormArray; }
+  addDataseries() {
+    this.dataseries.push(
+        this.formBuilder.group({
+        entity: ['', Validators.required],
+        selectY: this.formBuilder.group(new Select()),
+        selectXs: this.formBuilder.array(new Array<Select>()),
+        filters: this.formBuilder.array(new Array<Filter>())})
+    );
 
-  ngOnInit() {}
+    this.getSelectXs(this.dataseries.length - 1).push(this.formBuilder.group(new Select()));
+
+    this.dataseriesTabActive.push(true);
+    console.log('Added dataseries: ' + this.dataseries.length);
+  }
+
+  removeDataseries(index: number) {
+    if (index > -1) {
+      this.dataseries.removeAt(index);
+      this.dataseriesTabActive.splice(index, 1);
+    }
+  }
+
+  get chartFormValue(): Object { return this.chartForm.value as Object; }
+  get properties(): FormGroup { return this.chartForm.get('properties') as FormGroup; }
+  get dataseries(): FormArray { return this.chartForm.get('dataseries') as FormArray; }
+  getQueryForm(index: number): FormGroup { return this.dataseries.at(index) as FormGroup; }
+  getSelectY(index: number): FormGroup { return this.getQueryForm(index).get('selectY') as FormGroup; }
+  getSelectXs(index: number): FormArray { return this.getQueryForm(index).get('selectXs') as FormArray; }
+  getFilters(index: number): FormArray { return this.getQueryForm(index).get('filters') as FormArray; }
 
   profileMappingChanged($event) {
     console.log(event);
@@ -59,9 +81,25 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    console.log(this.chartForm.value);
+    console.log('On Submit called');
+    console.log(this.chartFormValue);
 
-    let hchartObj = null;
+    const chartObj$ = this.createChart();
+    chartObj$.subscribe(
+      (chartObj: any) => {
+        this.chartSubmit.emit({value: chartObj});
+        chartObj$.unsubscribe();
+      }
+    );
+
+
+    // if (hchartObj === null) { hchartObj = this.createHighChartsChart(this.properties, this.queryForm); }
+    // this.tableSubmit.emit({value: hchartObj});
+  }
+
+  createChart(): Subject<Object> {
+
+    const chartObj: Subject<Object> = new Subject();
     const library: string = this.properties.get('library').value;
     this.supportedLibrariesService.getSupportedLibraries().subscribe(
       (data: Array<string>) =>  {
@@ -70,27 +108,30 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
           switch (library) {
 
             case('HighCharts'): {
-              hchartObj = this.createHighChartsChart(this.properties, this.queryForm);
+              const hchartObj = this.createHighChartsChart(this.properties, this.getQueryForm(0));
 
               console.log('Creating a ' + library + ' chart!');
               console.log(hchartObj);
-              this.chartSubmit.emit({value: hchartObj});
+
+              chartObj.next(hchartObj);
               break;
             }
             case('GoogleCharts'): {
-              const gchartObj = this.createGoogleChartsChart(this.properties, this.queryForm);
+              const gchartObj = this.createGoogleChartsChart(this.properties, this.getQueryForm(0));
 
               console.log('Creating a ' + library + ' chart!');
               console.log(gchartObj);
-              this.chartSubmit.emit({value: gchartObj});
+
+              chartObj.next(gchartObj);
               break;
             }
-            default: {}
+            default: {
+              chartObj.next(null);
+              break;
+            }
           }
         }});
-
-    // if (hchartObj === null) { hchartObj = this.createHighChartsChart(this.properties, this.queryForm); }
-    // this.tableSubmit.emit({value: hchartObj});
+    return chartObj;
   }
 
   createGoogleChartsChart(properties: FormGroup, queryForm: FormGroup) {
@@ -160,7 +201,6 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    jQuery('.tabular.menu .item').tab();
     jQuery('.ui.dropdown').dropdown();
   }
 

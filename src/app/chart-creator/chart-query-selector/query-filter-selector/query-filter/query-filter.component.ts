@@ -2,11 +2,11 @@ import { Component, OnInit, Output, Input, AfterViewInit, EventEmitter, OnDestro
 import { ControlContainer, FormGroupDirective, FormBuilder, FormGroup,
    Validators, ControlValueAccessor, NG_VALUE_ACCESSOR, FormGroupName, FormArray, AbstractControl, FormControl } from '@angular/forms';
 import { Filter } from './query-filter.model';
-import { SupportedFilterTypesService, FilterType, FieldType } from '../../../../supported-filter-types-service/supported-filter-types.service';
-import { EntityTreeNode, FieldNode } from '../../../../db-schema-service/db-schema.service';
+import { SupportedFilterTypesService, FilterType, FieldType } from '../../../../services/supported-filter-types-service/supported-filter-types.service';
+import { EntityTreeNode, FieldNode } from '../../../../services/db-schema-service/db-schema.service';
 
 import { Observable, of, fromEvent } from 'rxjs';
-import { FieldAutocompleteService, AutocompleteResponse } from '../../../../field-autocomplete-service/field-autocomplete.service';
+import { FieldAutocompleteService, AutocompleteResponse } from '../../../../services/field-autocomplete-service/field-autocomplete.service';
 
 declare var jQuery: any;
 

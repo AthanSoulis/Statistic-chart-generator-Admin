@@ -21,9 +21,14 @@
 
           <ng-container *ngSwitchCase="0">          
             
-            <autocomplete-input-field class="ui icon input" [inputFormGroup]="filterValue" [filterValueIndex]="i" 
-            [filterfield]="this.selectedField.name"></autocomplete-input-field>
-            
+            <div class="ui icon input" *ngIf="(this.filterOperator.filterName === 'Equals') || (this.filterOperator.filterName === 'Not equals'); else plainStringInput">
+              <autocomplete-input-field  class="ui icon input" [inputFormGroup]="filterValue" [filterValueIndex]="i" 
+              [filterfield]="this.selectedField.name"></autocomplete-input-field>
+            </div>
+            <ng-template #plainStringInput>
+              <input [formControlName]="i" type="text" name="filterValue" placeholder="Value"> 
+            </ng-template>
+
           </ng-container>
           <ng-container *ngSwitchCase="1">
               <input [formControlName]="i" type="number" name="filterValue" placeholder="Value"> 
