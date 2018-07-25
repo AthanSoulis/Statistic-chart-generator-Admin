@@ -200,8 +200,6 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
     return false; // this.chartForm.invalid && (this.chartForm.touched || this.chartForm.dirty);
   }
 
-  ngAfterViewInit(): void {
-    jQuery('.ui.dropdown').dropdown();
-  }
+  ngAfterViewInit(): void {}
 
 }

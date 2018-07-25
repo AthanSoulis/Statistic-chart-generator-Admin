@@ -92,8 +92,6 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
   }
 
   ngAfterViewInit(): void {
-    jQuery('ui.library.dropdown').dropdown();
-    jQuery('ui.chart-type.dropdown').dropdown();
     this.mappingProfileService.getProfileMappings().subscribe(
       (result: Profile[]) => {
         this.profileMappings = result;
@@ -107,6 +105,10 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
 
       }
     );
+  }
+
+  dropdownFormatter(option: string, query?: string): string {
+    return option.charAt(0).toUpperCase() + option.slice(1);
   }
 
   ngOnDestroy() {

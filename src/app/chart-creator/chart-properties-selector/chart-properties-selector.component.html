@@ -35,18 +35,23 @@
 
     <div class="required field" >
     <label>Library</label>
-    <select class="ui library dropdown " formControlName="library">    
-        <option value={{formPlaceholders.library}} >Select Library</option>
-        <option *ngFor="let library of supportedLibraries" value='{{library}}'>{{library}}</option>
-    </select>
+    <sui-select class="selection" formControlName="library"
+                [options]="supportedLibraries"
+                placeholder="Select Library"
+                #librarySelect>    
+        <sui-select-option *ngFor="let library of librarySelect.filteredOptions" [value]='library'></sui-select-option>
+    </sui-select>
     </div>
     
     <div class="required field">
     <label>Chart Type</label>
-    <select class="ui chart-type dropdown " formControlName="type">    
-        <option value={{formPlaceholders.chartType}} >Select Chart Type</option>
-        <option *ngFor="let type of supportedChartTypes" value='{{type}}'>{{type | titlecase}}</option>
-    </select>
+    <sui-select class="selection" formControlName="type"
+                [options]="supportedChartTypes"
+                placeholder="Select Chart Type"
+                [optionFormatter]="dropdownFormatter"
+                #chartTypeSelect>
+        <sui-select-option *ngFor="let type of chartTypeSelect.filteredOptions" [value]='type'>{{type | titlecase}}</sui-select-option>
+    </sui-select>
     </div>
 
     <div class="fields">
