@@ -11,8 +11,6 @@ import { Profile } from '../services/mapping-profiles-service/mapping-profiles.s
 import { ChartExportingService } from '../services/chart-exporting-service/chart-exporting.service';
 import { Observable, Subject } from 'rxjs';
 
-declare var jQuery: any;
-
 @Component({
   selector: 'chart-creator',
   templateUrl: './chart-creator.component.html',

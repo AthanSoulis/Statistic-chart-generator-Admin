@@ -6,11 +6,8 @@ import { MatTreeNestedDataSource, MatTreeNodeOutlet } from '@angular/material/tr
 import { FieldType } from '../../../services/supported-filter-types-service/supported-filter-types.service';
 import { DbSchemaService, EntityNode, FieldNode, EntityTreeNode } from '../../../services/db-schema-service/db-schema.service';
 
-import {BehaviorSubject, of as observableOf, Observable} from 'rxjs';
+import { BehaviorSubject, of as observableOf, Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
-
-
-declare var jQuery: any;
 
 @Component({
   selector: 'select-attribute',
@@ -75,9 +72,7 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
     }
   }
 
-  ngAfterViewInit() {
-    jQuery('.ui.fluid.selection.dropdown').dropdown();
-  }
+  ngAfterViewInit() {}
 
   selectedFieldChanged(value: string) {
     this.selectedField = value;

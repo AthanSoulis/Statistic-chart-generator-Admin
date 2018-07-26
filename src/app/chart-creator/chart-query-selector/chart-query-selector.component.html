@@ -9,20 +9,33 @@
 
   <h4 class="ui dividing header">Y Axis</h4>
   <div class="required inline field">
-    <select class="ui entity dropdown" formControlName="entity" (change)=entityChanged($event.target.value)>
-      <option value="">Select Entity</option>
-      <option *ngFor="let availableEntity of availableEntities" value='{{availableEntity}}'>{{availableEntity | titlecase}}</option>
-    </select>
+    <ng-template let-option #entityOptionTemplate>
+        {{ option | titlecase }}
+    </ng-template>
+    <sui-select class="selection" formControlName="entity"
+                placeholder="Select Entity" 
+                [options]="availableEntities"
+                [optionTemplate]="entityOptionTemplate"
+                (selectedOptionChange)=entityChanged($event)
+                #entitySelection>
+      <sui-select-option *ngFor="let availableEntity of entitySelection.filteredOptions" [value]="availableEntity"></sui-select-option>
+    </sui-select>
     <label></label>
   </div>
 
   <div [ngClass]="(chosenEntity == '') ? 'disabled field' : 'enabled'">
     <div formGroupName="selectY">
         <div class="required inline field">
-          <select class="ui aggregate dropdown" formControlName="aggregate">
-            <option value=null>Select Aggregate</option>
-            <option *ngFor="let availableAggregate of availableAggregates" value='{{availableAggregate}}'>{{availableAggregate | titlecase}}</option>
-          </select>
+            <ng-template let-option #aggregateOptionTemplate>
+                {{ option | titlecase }}
+            </ng-template>
+            <sui-select class="selection" formControlName="aggregate"
+                        placeholder="Select Aggregate" 
+                        [options]="availableAggregates"
+                        [optionTemplate]="aggregateOptionTemplate"
+                        #aggregateSelection>
+              <sui-select-option *ngFor="let availableAggregate of aggregateSelection.filteredOptions" [value]="availableAggregate"></sui-select-option>
+            </sui-select>
           <label></label>
       </div>
       <div [ngClass]="(totalAggregateEnabled()) ? 'disabled field' : 'enabled field'">

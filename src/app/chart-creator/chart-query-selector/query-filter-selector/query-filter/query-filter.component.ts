@@ -8,8 +8,6 @@ import { EntityTreeNode, FieldNode } from '../../../../services/db-schema-servic
 import { Observable, of, fromEvent } from 'rxjs';
 import { FieldAutocompleteService, AutocompleteResponse } from '../../../../services/field-autocomplete-service/field-autocomplete.service';
 
-declare var jQuery: any;
-
 @Component({
   selector: 'query-filter',
   templateUrl: './query-filter.component.html',

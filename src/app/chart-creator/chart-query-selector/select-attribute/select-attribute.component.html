@@ -1,5 +1,5 @@
 <div class="simple segment">
-  <div class="ui fluid selection dropdown">
+  <div class="ui fluid selection dropdown link item" suiDropdown>
 
     <div *ngIf="selectedField !== null; else nullSelectedField">
       <div class="ui breadcrumb" #selectedFieldLength *ngFor="let field of selectedField.split('.'); let i = index">
@@ -16,7 +16,7 @@
 
     <i class="dropdown icon"></i>
     
-    <div class="menu">
+    <div class="menu" suiDropdownMenu>
     <div class="ui item">
     <div class="mat-app-background basic-container">
 

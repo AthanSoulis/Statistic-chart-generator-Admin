@@ -1,8 +1,9 @@
 <div class="ui equal width form" formGroupName="properties">
 
-    <div class="ui mapping modal">
+    <!-- <ng-template  #mappingModal> -->
+    <div class="ui mapping modal"> 
         <div class="header">
-          Select mapping
+            Select mapping
         </div>
         <div class="content">
             <div class="ui three centered stackable cards">
@@ -16,6 +17,7 @@
             </div>
         </div>
     </div>
+    <!-- </ng-template> -->
 
     <div class="introduction">
         <h2 class="ui header">Properties
@@ -26,7 +28,7 @@
 
     <div class="ui hidden divider"></div>
 
-    <div class="profile inline field" (click)="showProfilePicker()">
+    <div class="profile inline field" (click)="showProfilePicker(null)">
         <label>User Profile</label>
         <input style="border: 0; text-align: center;" readonly type="text" value='{{profile.value===null ? null : profile.value.name}}'>
     </div>

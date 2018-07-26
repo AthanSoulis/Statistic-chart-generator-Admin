@@ -6,8 +6,6 @@ import { SupportedAggregateFunctionsService } from '../../services/supported-agg
 import { Profile, MappingProfilesService } from '../../services/mapping-profiles-service/mapping-profiles.service';
 import { Subscription } from 'rxjs';
 
-declare var jQuery: any;
-
 @Component({
   selector: 'chart-query-selector',
   templateUrl: './chart-query-selector.component.html',
@@ -40,7 +38,7 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit, OnDes
     this.mappingProfileServiceSubscription = this.mappingProfileService.selectedProfile$
     .subscribe(profile => { this.getAvailableEntities(profile);
                             this.entity.reset();
-                            jQuery('.ui.entity.dropdown').dropdown('restore defaults'); } );
+                            this.entityChanged(null); } );
 
     this.getAvailableAggregates();
     console.log('Initialised Chart Query Selector');
@@ -107,7 +105,7 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit, OnDes
     this.selectXs.reset();
     this.selectY.reset();
     this.filters.reset();
-    jQuery('.ui.aggregate.dropdown').dropdown('restore defaults');
+    this.YaxisAggregate.reset();
   }
 
   totalAggregateEnabled() {
@@ -125,8 +123,5 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit, OnDes
     console.log('you submitted value: ', value);
   }
 
-  ngAfterViewInit(): void {
-    jQuery('.ui.entity.dropdown').dropdown();
-    jQuery('.ui.aggregate.dropdown').dropdown();
-  }
+  ngAfterViewInit(): void {}
 }

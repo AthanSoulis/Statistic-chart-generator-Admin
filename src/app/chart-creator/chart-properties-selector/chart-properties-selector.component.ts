@@ -5,8 +5,13 @@ import { ChartProperties } from './chart-properties.model';
 import { SupportedChartTypesService } from '../../services/supported-chart-types-service/supported-chart-types.service';
 import { Profile, MappingProfilesService } from '../../services/mapping-profiles-service/mapping-profiles.service';
 import { Subscription } from 'rxjs';
+import { SuiModalService, ModalTemplate, TemplateModalConfig, SuiActiveModal } from 'ng2-semantic-ui';
 
 declare var jQuery: any;
+
+export interface IContext {
+  data: string;
+}
 
 @Component({
   selector: 'chart-properties-selector',
@@ -20,6 +25,10 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
 
   @Input() propertiesForm: FormGroup;
   @Output() profileChanged: EventEmitter<Profile> = new EventEmitter();
+
+  @ViewChild('mappingModal')
+  public modalTemplate: ModalTemplate<IContext, string, string>;
+  private activeModal: SuiActiveModal<IContext, string, string>;
 
   supportedLibraries: Array<string>;
   supportedChartTypes: Array<string>;
@@ -39,7 +48,8 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
   constructor(formBuilder: FormBuilder,
     private librariesService: SupportedLibrariesService,
     private chartTypesService: SupportedChartTypesService,
-    private mappingProfileService: MappingProfilesService) {
+    private mappingProfileService: MappingProfilesService,
+    public modalService: SuiModalService) {
 
     librariesService.getSupportedLibraries().subscribe(
       (data: Array<string>) => this.supportedLibraries = data // success path
@@ -66,22 +76,35 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
     this.closeProfilePicker();
   }
 
-  showProfilePicker() {
+  showProfilePicker(dynamicContent: string) {
+
     jQuery('.ui.mapping.modal')
     .modal({
       transition: 'scale',
       closable  : false
     })
     .modal('show');
+
+    // {1} : I would use that but the ng2-semantic-ui css is not updated so I am stuck with jQuery
+
+    // const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
+    // config.context = { data: dynamicContent };
+    //  this.activeModal = this.modalService.open(config);
+    //  this.activeModal.component.isClosable = false;
+
   }
 
   closeProfilePicker() {
+
     jQuery('.ui.mapping.modal')
     .modal({
       transition: 'scale',
       closable  : false
     })
     .modal('hide');
+
+    // {1} : I would use that but the ng2-semantic-ui css is not updated so I am stuck with jQuery
+    // this.activeModal.deny(null);
   }
 
   ngOnInit() {
@@ -95,15 +118,12 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
     this.mappingProfileService.getProfileMappings().subscribe(
       (result: Profile[]) => {
         this.profileMappings = result;
-        this.showProfilePicker();
+        this.showProfilePicker(null);
       },
       (err: any) => {
         console.log(err);
-
       },
-      () => {
-
-      }
+      () => {}
     );
   }
 
