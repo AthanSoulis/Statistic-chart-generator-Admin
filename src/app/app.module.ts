@@ -33,6 +33,8 @@ import { ErrorHandlerService } from './services/error-handler-service/error-hand
 
 import { SuiModule } from 'ng2-semantic-ui';
 
+import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from 'ngx-schema-form';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +50,7 @@ import { SuiModule } from 'ng2-semantic-ui';
     AutocompleteInputFieldComponent
   ],
   imports: [
+    SchemaFormModule.forRoot(),
     SuiModule,
     BrowserModule,
     HttpClientModule,
@@ -60,7 +63,8 @@ import { SuiModule } from 'ng2-semantic-ui';
   ],
   providers: [SupportedLibrariesService, DbSchemaService, SupportedFilterTypesService,
      SupportedAggregateFunctionsService, SupportedChartTypesService, UrlProviderService,
-     FieldAutocompleteService, MappingProfilesService, ChartExportingService, ErrorHandlerService],
+     FieldAutocompleteService, MappingProfilesService, ChartExportingService, ErrorHandlerService,
+     {provide: WidgetRegistry, useClass: DefaultWidgetRegistry}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

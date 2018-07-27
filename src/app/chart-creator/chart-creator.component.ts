@@ -10,6 +10,7 @@ import { element } from 'protractor';
 import { Profile } from '../services/mapping-profiles-service/mapping-profiles.service';
 import { ChartExportingService } from '../services/chart-exporting-service/chart-exporting.service';
 import { Observable, Subject } from 'rxjs';
+import { FormSchema } from './chart-form-schema.model';
 
 @Component({
   selector: 'chart-creator',
@@ -24,9 +25,11 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
   chartForm: FormGroup;
   profileMapping: Profile = null;
   public dataseriesTabActive: boolean[] = [];
+  fs: FormSchema;
 
   constructor(private formBuilder: FormBuilder,
     private supportedLibrariesService: SupportedLibrariesService) {
+      this.fs = new FormSchema();
   }
 
   ngOnInit() {

@@ -23,7 +23,8 @@
     <div class="twelve wide stretched column">
     <div class="ui container">
         <div class="ui tab" suiTabContent="tab-properties">
-            <chart-properties-selector [propertiesForm]="properties" (profileChanged)="profileMappingChanged($event)"></chart-properties-selector>
+            <sf-form [schema]="fs.formSchema" ></sf-form>
+            <!-- <chart-properties-selector [propertiesForm]="properties" (profileChanged)="profileMappingChanged($event)"></chart-properties-selector> -->
         </div>
         <div class="ui tab" *ngFor="let data of dataseries.controls; let i = index" [suiTabContent]="i" >
             <chart-query-selector [queryForm]="getQueryForm(i)"></chart-query-selector>
