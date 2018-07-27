@@ -30,7 +30,7 @@
 
     <div class="profile inline field" (click)="showProfilePicker(null)">
         <label>User Profile</label>
-        <input style="border: 0; text-align: center;" readonly type="text" value='{{profile.value===null ? null : profile.value.name}}'>
+        <input style="border: 0; text-align: center;" readonly type="text" value='{{profile.value===null ? "" : profile.value}}'>
     </div>
 
     <div class="ui divider"></div>

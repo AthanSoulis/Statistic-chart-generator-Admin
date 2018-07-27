@@ -111,7 +111,10 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
     console.log('Properties Selector initialized');
 
     this.mappingProfileServiceSubscription = this.mappingProfileService.selectedProfile$
-    .subscribe(profile => this.profile.setValue(profile));
+    .subscribe(profile => {
+      if (profile) {
+        this.profile.setValue(profile.name);
+      }});
   }
 
   ngAfterViewInit(): void {
