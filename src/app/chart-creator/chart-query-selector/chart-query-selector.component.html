@@ -23,7 +23,7 @@
     <label></label>
   </div>
 
-  <div [ngClass]="(chosenEntity == '') ? 'disabled field' : 'enabled'">
+  <div [ngClass]="(chosenEntity !== null) ? 'enabled' : 'disabled field'">
     <div formGroupName="selectY">
         <div class="required inline field">
             <ng-template let-option #aggregateOptionTemplate>
