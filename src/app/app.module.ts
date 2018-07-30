@@ -34,6 +34,10 @@ import { ErrorHandlerService } from './services/error-handler-service/error-hand
 import { SuiModule } from 'ng2-semantic-ui';
 
 import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from 'ngx-schema-form';
+import { GeneralPropertiesWidgetComponent } from './custom-ngx-schema-form-widgets/general-properties-widget/general-properties-widget.component';
+import { CustomWidgetRegistry } from './custom-ngx-schema-form-widgets/custom-widget-registry';
+import { PropertyWidgetComponent } from './custom-ngx-schema-form-widgets/property-widget/property-widget.component';
+import { LibrarySelectionWidgetComponent } from './custom-ngx-schema-form-widgets/library-selection-widget/library-selection-widget.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +51,10 @@ import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from 'ngx-sch
     QueryFilterSelectorComponent,
     QueryFilterComponent,
     SelectAttributeComponent,
-    AutocompleteInputFieldComponent
+    AutocompleteInputFieldComponent,
+    GeneralPropertiesWidgetComponent,
+    PropertyWidgetComponent,
+    LibrarySelectionWidgetComponent
   ],
   imports: [
     SchemaFormModule.forRoot(),
@@ -61,10 +68,24 @@ import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from 'ngx-sch
     MatIconModule,
     MatAutocompleteModule
   ],
-  providers: [SupportedLibrariesService, DbSchemaService, SupportedFilterTypesService,
-     SupportedAggregateFunctionsService, SupportedChartTypesService, UrlProviderService,
-     FieldAutocompleteService, MappingProfilesService, ChartExportingService, ErrorHandlerService,
-     {provide: WidgetRegistry, useClass: DefaultWidgetRegistry}],
+  entryComponents: [
+    GeneralPropertiesWidgetComponent,
+    PropertyWidgetComponent,
+    LibrarySelectionWidgetComponent
+  ],
+  providers: [
+    SupportedLibrariesService,
+    DbSchemaService,
+    SupportedFilterTypesService,
+    SupportedAggregateFunctionsService,
+    SupportedChartTypesService,
+    UrlProviderService,
+    FieldAutocompleteService,
+    MappingProfilesService,
+    ChartExportingService,
+    ErrorHandlerService,
+    {provide: WidgetRegistry, useClass: CustomWidgetRegistry}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
