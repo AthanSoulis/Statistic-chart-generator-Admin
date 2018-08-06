@@ -1,3 +1,60 @@
-<p>
-  filter-field-widget works!
-</p>
+<div class="ui equal width form clearing segment" >
+  
+  <div class="field">
+    <select-attribute [chosenEntity]="entityValue"></select-attribute>
+  </div>
+
+  <!-- <div *ngIf="this.selectedField " class="field">
+    <sui-select class="selection" formControlName="type" 
+                        placeholder="Select Operator" 
+                        [options]="operators"
+                        (selectedOptionChange)=operatorChanged($event)
+                        labelField="filterName"
+                        valueField="filterOperator" 
+                        #operatorSelect>
+    
+      <sui-select-option *ngFor="let operator of operatorSelect.filteredOptions" [value]="operator"></sui-select-option>
+    </sui-select>
+  </div>
+
+  <div class="field" formArrayName="values">
+    <div *ngFor="let filterValue of values.controls; index as i">
+      <div [ngSwitch]="this.fieldType">
+        <div [ngClass]=" this.filterOperator ? 'ui action input' : 'ui action disabled input'">
+
+          <ng-container *ngSwitchCase="0">          
+            
+            <div class="ui icon input" *ngIf="(this.filterOperator.filterName === 'Equals') || (this.filterOperator.filterName === 'Not equals'); else plainStringInput">
+              <autocomplete-input-field  class="ui icon input" [inputFormGroup]="filterValue" [filterValueIndex]="i" 
+              [filterfield]="this.selectedField.name"></autocomplete-input-field>
+            </div>
+            <ng-template #plainStringInput>
+              <input [formControlName]="i" type="text" name="filterValue" placeholder="Value"> 
+            </ng-template>
+
+          </ng-container>
+          <ng-container *ngSwitchCase="1">
+              <input [formControlName]="i" type="number" name="filterValue" placeholder="Value"> 
+          </ng-container>
+          <ng-container *ngSwitchCase="2">
+              <input [formControlName]="i" type="number" name="filterValue" placeholder="Value"> 
+          </ng-container>
+          <ng-container *ngSwitchCase="3">
+              <input [formControlName]="i" type="date" name="filterValue" placeholder="Value"> 
+          </ng-container>
+
+          <button (click)="deleteFilterValue(i)" type="button" 
+          class="ui icon compact button"><i class="close icon"></i></button>
+        </div>
+        <span *ngIf="applicableDivider(i)" class="ui horizontal divider">OR</span>
+
+      </div>
+    </div>
+  </div>
+
+  <button (click)="addFilterValue()" type="button" 
+  class="circular ui icon basic blue compact left floated button">OR</button>
+
+  <button (click)="deleteFilterEvent.emit()" type="button" 
+  class="circular ui icon basic compact right floated button"><i class="close icon"></i></button> -->
+</div>

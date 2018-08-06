@@ -202,7 +202,39 @@ export class FormSchema {
                             'widget' : { 'id' : 'csui-array' },
                             'items': {
                                 'type' : 'object',
-                                'widget': { 'id': 'csui-filter-field'},
+                                'widget': { 'id': 'csui-property-object'},
+                                'properties' : {
+                                    'field': {
+                                        'type' : 'string',
+                                        'placeholder' : 'Select Entity Field',
+                                        'widget': { 'id': 'csui-entity-field-select'},
+                                    },
+                                    'type': {
+                                        'type' : 'string',
+                                        'placeholder' : 'Select Aggregate',
+                                        'widget': { 'id': 'csui-aggregate-select'},
+                                    },
+                                    'values': {
+                                        'type': 'array',
+                                        'widget' : { 'id' : 'array' },
+                                        'items': {
+                                            'type' : 'string',
+                                            'placeholder' : 'Value',
+                                            'widget': {
+                                                'id': 'string'
+                                            }
+                                        }
+                                    }
+                                },
+                                'fieldsets': [
+                                    {
+                                        'fields': [
+                                            'field',
+                                            'type',
+                                            'values'
+                                        ]
+                                    }
+                                ]
                             }
                         }
                     },

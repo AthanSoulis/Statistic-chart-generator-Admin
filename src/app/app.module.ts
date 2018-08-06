@@ -92,7 +92,8 @@ import { FilterFieldWidgetComponent } from './custom-ngx-schema-form-widgets/fil
     EntitySelectionWidgetComponent,
     AggregateSelectionWidgetComponent,
     EntityFieldSelectionWidgetComponent,
-    ArrayWidgetComponent
+    ArrayWidgetComponent,
+    FilterFieldWidgetComponent
   ],
   providers: [
     SupportedLibrariesService,

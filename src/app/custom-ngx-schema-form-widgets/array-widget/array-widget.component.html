@@ -9,15 +9,14 @@
   
   <div *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex">
     
-    <div class="ui left labeled button">
-      <div class="ui basic label">
-        <sf-form-element [formProperty]="itemProperty"></sf-form-element>
-      </div>
-
-      <button (click)="removeItem()" type="button" 
-      class="ui icon basic red compact button btn btn-default array-remove-button">
-      <i class="close icon"></i></button>
+    <div class="ui equal width form clearing attached segment" >
+      <sf-form-element [formProperty]="itemProperty"></sf-form-element>
     </div>
+
+    <button (click)="removeItem()" type="button" 
+    class="ui bottom attached fluid icon basic red compact button btn btn-default array-remove-button">
+    <i class="close icon"></i></button>
+  
 
   </div>
 </div>
