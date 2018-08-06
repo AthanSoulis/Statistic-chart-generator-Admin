@@ -2,7 +2,6 @@
 
   <div class="introduction">
       <h2 class="ui header">{{chartQueryDataName}}
-          <div class="ui hidden divider"></div>
           <div class="sub header">Describe the data you want to appear on your chart</div>
       </h2>
   </div>
@@ -41,7 +40,7 @@
       <div [ngClass]="(totalAggregateEnabled()) ? 'disabled field' : 'enabled field'">
         <span class="ui hidden horizontal divider"> of </span>
         <div class="field">
-          <select-attribute formControlName="field" [chosenEntity]="chosenEntity" [entityTreeNode]="entityTreeRoot"></select-attribute>
+          <select-attribute formControlName="field" [chosenEntity]="chosenEntity"></select-attribute>
         </div>
       </div>
     </div>
@@ -49,7 +48,7 @@
     <h4 class="ui dividing header">X Axis</h4>
     <div formArrayName="selectXs">
       <div *ngFor="let selectX of selectXs.controls; index as i" [formGroupName]="i">
-        <select-attribute formControlName="field" [chosenEntity]="chosenEntity" [entityTreeNode]="entityTreeRoot"></select-attribute>
+        <select-attribute formControlName="field" [chosenEntity]="chosenEntity"></select-attribute>
       </div>
     </div>
 

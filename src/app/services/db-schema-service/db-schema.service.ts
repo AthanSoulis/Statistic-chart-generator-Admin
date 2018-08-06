@@ -69,22 +69,25 @@ export class DbSchemaService {
     );
   }
 
-  getEntityTree(rootNode: EntityNode): Observable<EntityTreeNode> {
+  getEntityTree(rootNode: EntityNode): EntityTreeNode {
 
     // console.log('RootNode:');
     // console.log(rootNode);
     const entityTree = this.createEntityLinkedTree(null, rootNode);
     // console.log(entityTree);
 
-    return observableOf(entityTree);
+    return entityTree;
   }
 
   private createEntityLinkedTree(parentNode: EntityTreeNode, recreatedNode: EntityNode): EntityTreeNode {
 
     const newEntityTreeNode = new EntityTreeNode(recreatedNode.fields, new Array<EntityTreeNode>(), recreatedNode.name, parentNode);
-    recreatedNode.relations.forEach(element => {
-      newEntityTreeNode.relations.push(this.createEntityLinkedTree(newEntityTreeNode, element));
-    });
-    return newEntityTreeNode;
+    if (recreatedNode.relations) {
+      recreatedNode.relations.forEach(element => {
+        newEntityTreeNode.relations.push(this.createEntityLinkedTree(newEntityTreeNode, element));
+      });
+      return newEntityTreeNode;
+    }
+    return null;
   }
 }

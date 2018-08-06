@@ -80,13 +80,11 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit, OnDes
       this.dbSchemaService.getEntityFields(this.chosenEntity).subscribe(
         (value: EntityNode) => {
           if (value !== null) {
-            this.dbSchemaService.getEntityTree(value)
-            .subscribe(
-              (rootTreeNode: EntityTreeNode) => {
-                if (rootTreeNode !== null) {
-                  this.entityTreeRoot = rootTreeNode;
-                  return this.entityTreeRoot;
-                 }});
+            const rootTreeNode = this.dbSchemaService.getEntityTree(value);
+            if (rootTreeNode !== null) {
+              this.entityTreeRoot = rootTreeNode;
+              return this.entityTreeRoot;
+              }
          }}
       );
     }

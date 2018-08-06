@@ -8,6 +8,7 @@ import { DbSchemaService, EntityNode, FieldNode, EntityTreeNode } from '../../..
 
 import { BehaviorSubject, of as observableOf, Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ErrorHandlerService } from '../../../services/error-handler-service/error-handler.service';
 
 @Component({
   selector: 'select-attribute',
@@ -18,26 +19,26 @@ import { map } from 'rxjs/operators';
   ],
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SelectAttributeComponent), multi: true }]
 })
-export class SelectAttributeComponent implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit {
+export class SelectAttributeComponent implements ControlValueAccessor, OnChanges {
 
   nestedEntityTreeControl: NestedTreeControl<EntityTreeNode>;
   nestedEntityDataSource: MatTreeNestedDataSource<EntityTreeNode>;
 
-  @Input() chosenEntity: string;
-  @Input() entityTreeNode: EntityTreeNode;
+  @Input() chosenEntity: string = null;
   @Output() fieldChanged = new EventEmitter<FieldNode>();
 
-  parentPath: string;
-  selectedField: string;
-  selectedFieldType: string;
+  entityTreeNode: EntityTreeNode = null;
+  parentPath: string = null;
+  selectedField: string = null;
+  selectedFieldType: string = null;
 
-  constructor(private formBuilder: FormBuilder, private dbSchemaService: DbSchemaService) {
+  constructor(private formBuilder: FormBuilder,
+    private dbSchemaService: DbSchemaService,
+    private errorHandlerService: ErrorHandlerService) {
 
     this.nestedEntityTreeControl = new NestedTreeControl<EntityTreeNode>(this.getChildren);
     this.nestedEntityDataSource = new MatTreeNestedDataSource();
   }
-
-  ngOnInit() {}
 
   private getChildren = (node: EntityTreeNode) => {
     if (node.fields !== undefined ) {
@@ -61,18 +62,44 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
 
       const change = changes[changedField];
 
-      if (changedField === 'entityTreeNode') {
-        const initArray = new Array<EntityTreeNode>();
-        if (this.entityTreeNode !== null) {
-          initArray.push(this.entityTreeNode);
+      if (changedField === 'chosenEntity') {
+        // console.log('Entity changed from: ' + change.previousValue + ' to ' + change.currentValue);
+        if (change.currentValue !== change.previousValue) {
+          this.getEntityTreeNode(change.currentValue);
         }
-        this.nestedEntityDataSource.data = initArray;
-        this.selectedFieldChanged(null);
       }
     }
   }
 
-  ngAfterViewInit() {}
+  getEntityTreeNode(entity: string) {
+
+    if ( entity === this.chosenEntity) {
+      const dbSchemaSubscription = this.dbSchemaService.getEntityFields(this.chosenEntity).subscribe(
+        (value: EntityNode) => {
+          if (value !== null) {
+            const rootTreeNode = this.dbSchemaService.getEntityTree(value);
+            if (rootTreeNode !== null) {
+              this.entityTreeNode = rootTreeNode;
+
+              const initArray = new Array<EntityTreeNode>();
+              if (this.entityTreeNode !== null) {
+                initArray.push(this.entityTreeNode);
+              }
+              this.nestedEntityDataSource.data = initArray;
+              this.selectedFieldChanged(null);
+
+              return this.entityTreeNode;
+            }
+         }},
+         error => {
+           this.entityTreeNode = null;
+           dbSchemaSubscription.unsubscribe();
+           return this.entityTreeNode;
+         },
+         () => dbSchemaSubscription.unsubscribe()
+      );
+    }
+  }
 
   selectedFieldChanged(value: string) {
     this.selectedField = value;
@@ -96,7 +123,7 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
   }
 
   onExpanded(node: EntityTreeNode) {
-    console.log(node);
+    // console.log(node);
     this.parentPath = this.traverseParentPath(node);
   }
 
@@ -118,7 +145,7 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
     selectedFieldNode.type = field.type;
     this.fieldChanged.emit(selectedFieldNode);
 
-    console.log(field.name + ':' + field.type);
+    // console.log(field.name + ':' + field.type);
   }
 
 }

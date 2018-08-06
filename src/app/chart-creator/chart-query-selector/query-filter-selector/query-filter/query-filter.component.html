@@ -2,7 +2,7 @@
   
   <div class="field">
     <select-attribute formControlName="field" [chosenEntity]="chosenEntity"
-    [entityTreeNode]="entityTreeNode" (fieldChanged)=fieldChanged($event)></select-attribute>
+     (fieldChanged)=fieldChanged($event)></select-attribute>
   </div>
 
   <div *ngIf="this.selectedField " class="field">
