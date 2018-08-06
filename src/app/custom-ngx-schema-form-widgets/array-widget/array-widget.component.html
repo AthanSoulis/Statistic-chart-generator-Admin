@@ -1,0 +1,23 @@
+<div class="widget form-group field">
+    <h4 class="ui dividing header horizontal control-label" [attr.for]="id" > {{ schema.title }}
+      <div class="sub header formHelp" *ngIf="schema.description">{{ schema.description }}</div>
+    </h4>
+    
+  <button type="button" (click)="addItem()"
+  class="ui labeled icon basic blue compact button btn btn-default array-add-button">
+      <i class="plus icon"></i>Add {{schema.itemName}}</button>
+  
+  <div *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex">
+    
+    <div class="ui left labeled button">
+      <div class="ui basic label">
+        <sf-form-element [formProperty]="itemProperty"></sf-form-element>
+      </div>
+
+      <button (click)="removeItem()" type="button" 
+      class="ui icon basic red compact button btn btn-default array-remove-button">
+      <i class="close icon"></i></button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="widget form-group field">
+  <label [attr.for]="id" class="horizontal control-label">
+    {{schema.title}}
+  </label>
+  <span *ngIf="schema.description" class="formHelp">
+    {{schema.description}}
+  </span>
+  <input *ngIf="schema.readOnly; else chartTypeSelection" [attr.name]="name" type="hidden" [formControl]="control">
+  <ng-template #chartTypeSelection>
+    <ng-template let-option #chartTypeOptionTemplate>
+        {{ option | titlecase }}
+    </ng-template>
+    <sui-select class="selection" [formControl]="control"
+    [attr.name]="name" [attr.disabled]="schema.readOnly"
+                placeholder={{schema.placeholder}} 
+                [options]="supportedChartTypes"
+                [optionTemplate]="chartTypeOptionTemplate"
+                #chartTypeSelect>
+      <sui-select-option *ngFor="let chartType of chartTypeSelect.filteredOptions" [value]="chartType"></sui-select-option>
+    </sui-select>
+  </ng-template>
+</div>

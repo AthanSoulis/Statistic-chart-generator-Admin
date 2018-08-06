@@ -27,6 +27,9 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
   public dataseriesTabActive: boolean[] = [];
   fs: FormSchema;
 
+  valueProperties: string;
+  valueDataseries: string;
+
   constructor(private formBuilder: FormBuilder,
     private supportedLibrariesService: SupportedLibrariesService) {
       this.fs = new FormSchema();
@@ -49,7 +52,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
   addDataseries() {
     this.dataseries.push(
         this.formBuilder.group({
-        entity: ['', Validators.required],
+        entity: [null, Validators.required],
         selectY: this.formBuilder.group(new Select()),
         selectXs: this.formBuilder.array(new Array<Select>()),
         filters: this.formBuilder.array(new Array<Filter>())})

@@ -9,6 +9,7 @@
     <div class="four wide column">
         <div class="ui vertical fluid tabular menu">
             <a class="ui item" suiTabHeader="tab-properties">Properties</a>
+            <a class="ui item" suiTabHeader="tab-dataseries">Dataseries</a>
             <a class="ui item" *ngFor="let data of dataseries.controls; let i = index" [suiTabHeader]="i" [(isActive)]="dataseriesTabActive[i]">
                 <button (click)="removeDataseries(i)" class="tiny basic circular ui icon button ">
                     <i class="icon minus"></i>
@@ -23,8 +24,10 @@
     <div class="twelve wide stretched column">
     <div class="ui container">
         <div class="ui tab" suiTabContent="tab-properties">
-            <sf-form [schema]="fs.formSchema" ></sf-form>
-            <!-- <chart-properties-selector [propertiesForm]="properties" (profileChanged)="profileMappingChanged($event)"></chart-properties-selector> -->
+            <sf-form [schema]="fs.propertiesFormSchema" (onChange)="valueProperties=$event.value"></sf-form>{{valueProperties | json}}
+        </div>
+        <div class="ui tab" suiTabContent="tab-dataseries">
+            <sf-form [schema]="fs.dataseriesFormSchema" (onChange)="valueDataseries=$event.value"></sf-form>{{valueDataseries | json}}            
         </div>
         <div class="ui tab" *ngFor="let data of dataseries.controls; let i = index" [suiTabContent]="i" >
             <chart-query-selector [queryForm]="getQueryForm(i)"></chart-query-selector>

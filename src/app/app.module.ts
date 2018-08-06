@@ -38,6 +38,14 @@ import { GeneralPropertiesWidgetComponent } from './custom-ngx-schema-form-widge
 import { CustomWidgetRegistry } from './custom-ngx-schema-form-widgets/custom-widget-registry';
 import { PropertyWidgetComponent } from './custom-ngx-schema-form-widgets/property-widget/property-widget.component';
 import { LibrarySelectionWidgetComponent } from './custom-ngx-schema-form-widgets/library-selection-widget/library-selection-widget.component';
+import { SelectionWidgetComponent } from './custom-ngx-schema-form-widgets/selection-widget/selection-widget.component';
+import { ChartTypeSelectionWidgetComponent } from './custom-ngx-schema-form-widgets/chart-type-selection-widget/chart-type-selection-widget.component';
+import { EntitySelectionWidgetComponent } from './custom-ngx-schema-form-widgets/entity-selection-widget/entity-selection-widget.component';
+import { AggregateSelectionWidgetComponent } from './custom-ngx-schema-form-widgets/aggregate-selection-widget/aggregate-selection-widget.component';
+import { EntitySelectionWidgetService } from './custom-ngx-schema-form-widgets/entity-selection-widget/entity-selection-widget.component';
+import { EntityFieldSelectionWidgetComponent } from './custom-ngx-schema-form-widgets/entity-field-selection-widget/entity-field-selection-widget.component';
+import { ArrayWidgetComponent } from './custom-ngx-schema-form-widgets/array-widget/array-widget.component';
+import { FilterFieldWidgetComponent } from './custom-ngx-schema-form-widgets/filter-field-widget/filter-field-widget.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +62,14 @@ import { LibrarySelectionWidgetComponent } from './custom-ngx-schema-form-widget
     AutocompleteInputFieldComponent,
     GeneralPropertiesWidgetComponent,
     PropertyWidgetComponent,
-    LibrarySelectionWidgetComponent
+    LibrarySelectionWidgetComponent,
+    SelectionWidgetComponent,
+    ChartTypeSelectionWidgetComponent,
+    EntitySelectionWidgetComponent,
+    AggregateSelectionWidgetComponent,
+    EntityFieldSelectionWidgetComponent,
+    ArrayWidgetComponent,
+    FilterFieldWidgetComponent
   ],
   imports: [
     SchemaFormModule.forRoot(),
@@ -71,7 +86,13 @@ import { LibrarySelectionWidgetComponent } from './custom-ngx-schema-form-widget
   entryComponents: [
     GeneralPropertiesWidgetComponent,
     PropertyWidgetComponent,
-    LibrarySelectionWidgetComponent
+    LibrarySelectionWidgetComponent,
+    SelectionWidgetComponent,
+    ChartTypeSelectionWidgetComponent,
+    EntitySelectionWidgetComponent,
+    AggregateSelectionWidgetComponent,
+    EntityFieldSelectionWidgetComponent,
+    ArrayWidgetComponent
   ],
   providers: [
     SupportedLibrariesService,
@@ -84,7 +105,9 @@ import { LibrarySelectionWidgetComponent } from './custom-ngx-schema-form-widget
     MappingProfilesService,
     ChartExportingService,
     ErrorHandlerService,
-    {provide: WidgetRegistry, useClass: CustomWidgetRegistry}
+    {provide: WidgetRegistry, useClass: CustomWidgetRegistry},
+
+    EntitySelectionWidgetService
   ],
   bootstrap: [AppComponent]
 })
