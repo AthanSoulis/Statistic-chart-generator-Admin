@@ -211,8 +211,8 @@ export class FormSchema {
                                     },
                                     'type': {
                                         'type' : 'string',
-                                        'placeholder' : 'Select Aggregate',
-                                        'widget': { 'id': 'csui-aggregate-select'},
+                                        'placeholder' : 'Select Operator',
+                                        'widget': { 'id': 'csui-operator-select'},
                                     },
                                     'values': {
                                         'type': 'array',

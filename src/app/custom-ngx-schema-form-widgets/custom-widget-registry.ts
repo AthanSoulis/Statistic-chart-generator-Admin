@@ -9,6 +9,7 @@ import { EntityFieldSelectionWidgetComponent } from './entity-field-selection-wi
 import { ArrayWidgetComponent } from './array-widget/array-widget.component';
 import { FilterFieldWidgetComponent } from './filter-field-widget/filter-field-widget.component';
 import { DefaultWidgetRegistry } from 'ngx-schema-form';
+import { OperatorSelectionWidgetComponent } from './operator-selection-widget/operator-selection-widget.component';
 
 export class CustomWidgetRegistry extends DefaultWidgetRegistry {
   constructor() {
@@ -21,6 +22,7 @@ export class CustomWidgetRegistry extends DefaultWidgetRegistry {
     this.register('csui-entity-select',  EntitySelectionWidgetComponent);
     this.register('csui-entity-field-select', EntityFieldSelectionWidgetComponent);
     this.register('csui-aggregate-select', AggregateSelectionWidgetComponent);
+    this.register('csui-operator-select', OperatorSelectionWidgetComponent);
     this.register('csui-select', SelectionWidgetComponent);
     this.register('csui-filter-field', FilterFieldWidgetComponent);
     this.register('csui-array', ArrayWidgetComponent);

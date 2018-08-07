@@ -46,6 +46,7 @@ import { EntitySelectionWidgetService } from './custom-ngx-schema-form-widgets/e
 import { EntityFieldSelectionWidgetComponent } from './custom-ngx-schema-form-widgets/entity-field-selection-widget/entity-field-selection-widget.component';
 import { ArrayWidgetComponent } from './custom-ngx-schema-form-widgets/array-widget/array-widget.component';
 import { FilterFieldWidgetComponent } from './custom-ngx-schema-form-widgets/filter-field-widget/filter-field-widget.component';
+import { OperatorSelectionWidgetComponent } from './custom-ngx-schema-form-widgets/operator-selection-widget/operator-selection-widget.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { FilterFieldWidgetComponent } from './custom-ngx-schema-form-widgets/fil
     AggregateSelectionWidgetComponent,
     EntityFieldSelectionWidgetComponent,
     ArrayWidgetComponent,
-    FilterFieldWidgetComponent
+    FilterFieldWidgetComponent,
+    OperatorSelectionWidgetComponent
   ],
   imports: [
     SchemaFormModule.forRoot(),
@@ -93,7 +95,8 @@ import { FilterFieldWidgetComponent } from './custom-ngx-schema-form-widgets/fil
     AggregateSelectionWidgetComponent,
     EntityFieldSelectionWidgetComponent,
     ArrayWidgetComponent,
-    FilterFieldWidgetComponent
+    FilterFieldWidgetComponent,
+    OperatorSelectionWidgetComponent
   ],
   providers: [
     SupportedLibrariesService,
