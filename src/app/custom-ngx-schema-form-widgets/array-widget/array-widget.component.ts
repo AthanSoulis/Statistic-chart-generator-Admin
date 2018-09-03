@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { ArrayLayoutWidget } from 'ngx-schema-form';
+import { FormProperty, PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
 
 @Component({
   selector: 'array-widget',
@@ -12,16 +13,15 @@ export class ArrayWidgetComponent extends ArrayLayoutWidget {
     super();
    }
 
-   addItem() {
-     this.formProperty.addItem();
-   }
+  addItem() {
+    this.formProperty.addItem();
+  }
 
-   removeItem(index: number) {
-    this.formProperty.removeItem(index);
+  removeItem(index: number) {
+  this.formProperty.removeItem(index);
   }
 
   trackByIndex(index: number, item: any) {
     return index;
   }
-
 }

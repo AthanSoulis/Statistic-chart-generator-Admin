@@ -5,7 +5,7 @@
     
   <button type="button" (click)="addItem()"
   class="ui labeled icon basic blue compact button btn btn-default array-add-button">
-      <i class="plus icon"></i>Add {{schema.itemName}}</button>
+      <i class="plus icon"></i> Add {{schema.itemName}}</button>
   
   <div class="ui segments" *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex">
     
@@ -13,7 +13,7 @@
       <sf-form-element [formProperty]="itemProperty"></sf-form-element>
     </div>
 
-    <button (click)="removeItem()" type="button" 
+    <button (click)="removeItem(i)" type="button" 
     class="ui bottom attached fluid icon basic red compact button btn btn-default array-remove-button">
     <i class="close icon"></i></button>
 
