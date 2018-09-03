@@ -131,9 +131,9 @@ export class FormSchema {
     private _dataseriesFormSchema = {
         'type': 'array',
         'description': 'Dataseries',
+        'widget' : { 'id' : 'csui-array' },
         'items': {
             'type' : 'object',
-            'title' : 'Dataseries',
             'description' : 'Describe the data you want to appear on your chart',
             'widget' : { 'id' : 'csui-general-properties-object' },
             'properties' : {
@@ -202,7 +202,7 @@ export class FormSchema {
                             'widget' : { 'id' : 'csui-array' },
                             'items': {
                                 'type' : 'object',
-                                'widget': { 'id': 'csui-property-object'},
+                                'widget': { 'id': 'csui-filter-property-object'},
                                 'properties' : {
                                     'field': {
                                         'type' : 'string',
@@ -212,7 +212,7 @@ export class FormSchema {
                                     'type': {
                                         'type' : 'string',
                                         'placeholder' : 'Select Operator',
-                                        'widget': { 'id': 'csui-operator-select'},
+                                        'widget': { 'id': 'csui-operator-select'}
                                     },
                                     'values': {
                                         'type': 'array',
@@ -225,6 +225,9 @@ export class FormSchema {
                                             }
                                         }
                                     }
+                                },
+                                'dependencies': {
+                                    'type': { 'required': ['field'] }
                                 },
                                 'fieldsets': [
                                     {
