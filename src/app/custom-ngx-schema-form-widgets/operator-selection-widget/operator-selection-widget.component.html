@@ -7,11 +7,12 @@
   </span>
   <input *ngIf="schema.readOnly; else operatorSelection" [attr.name]="name" type="hidden" [formControl]="control">
   <ng-template #operatorSelection>
-    <ng-template let-option #operatorOptionTemplate>
-        {{ option | titlecase }}
-    </ng-template>
-    <sui-select class="selection" [options]="operators" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly"
-      placeholder={{schema.placeholder}} [optionTemplate]="operatorOptionTemplate" #operatorsSelect>    
+    <sui-select class="selection" [options]="operators"
+          [formControl]="control" [attr.name]="name" 
+          [attr.disabled]="schema.readOnly" placeholder={{schema.placeholder}}
+          labelField="filterName" valueField="filterOperator" 
+          (selectedOptionChange)=operatorChanged($event)
+           #operatorsSelect>    
       <sui-select-option *ngFor="let operator of operatorsSelect.filteredOptions" [value]='operator'></sui-select-option>
     </sui-select>
   </ng-template>
