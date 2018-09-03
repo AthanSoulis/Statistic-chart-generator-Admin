@@ -42,7 +42,6 @@ import { SelectionWidgetComponent } from './custom-ngx-schema-form-widgets/selec
 import { ChartTypeSelectionWidgetComponent } from './custom-ngx-schema-form-widgets/chart-type-selection-widget/chart-type-selection-widget.component';
 import { EntitySelectionWidgetComponent } from './custom-ngx-schema-form-widgets/entity-selection-widget/entity-selection-widget.component';
 import { AggregateSelectionWidgetComponent } from './custom-ngx-schema-form-widgets/aggregate-selection-widget/aggregate-selection-widget.component';
-import { EntitySelectionWidgetService } from './custom-ngx-schema-form-widgets/entity-selection-widget/entity-selection-widget.component';
 import { EntityFieldSelectionWidgetComponent } from './custom-ngx-schema-form-widgets/entity-field-selection-widget/entity-field-selection-widget.component';
 import { ArrayWidgetComponent } from './custom-ngx-schema-form-widgets/array-widget/array-widget.component';
 import { FilterFieldWidgetComponent } from './custom-ngx-schema-form-widgets/filter-field-widget/filter-field-widget.component';
@@ -113,8 +112,6 @@ import { FilterPropertyWidgetComponent } from './custom-ngx-schema-form-widgets/
     ChartExportingService,
     ErrorHandlerService,
     {provide: WidgetRegistry, useClass: CustomWidgetRegistry},
-
-    EntitySelectionWidgetService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
-import { EntitySelectionWidgetService } from '../entity-selection-widget/entity-selection-widget.component';
 import { Observable, Subscription, Subject } from 'rxjs';
 import { ObjectProperty } from 'ngx-schema-form/lib/model/objectproperty';
 import { PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
