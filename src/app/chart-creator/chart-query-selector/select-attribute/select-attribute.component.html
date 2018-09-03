@@ -1,9 +1,9 @@
 <div class="simple segment">
   <div class="ui fluid selection dropdown link item" suiDropdown>
 
-    <div *ngIf="selectedField !== null; else nullSelectedField">
-      <div class="ui breadcrumb" #selectedFieldLength *ngFor="let field of selectedField.split('.'); let i = index">
-        <div *ngIf="i !== selectedField.split('.').length - 1 ; else activeField">
+    <div *ngIf="selectedNode !== null; else nullSelectedField">
+      <div class="ui breadcrumb" #selectedFieldLength *ngFor="let field of selectedNode.name.split('.'); let i = index">
+        <div *ngIf="i !== selectedNode.name.split('.').length - 1 ; else activeField">
           <span class="section">{{field | titlecase}}</span>
           <div class="divider"> > </div>
         </div>

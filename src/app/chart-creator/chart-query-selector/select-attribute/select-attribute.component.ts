@@ -29,8 +29,7 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
 
   entityTreeNode: EntityTreeNode = null;
   parentPath: string = null;
-  selectedField: string = null;
-  selectedFieldType: string = null;
+  selectedNode: FieldNode = null;
 
   constructor(private formBuilder: FormBuilder,
     private dbSchemaService: DbSchemaService,
@@ -71,7 +70,7 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
     }
   }
 
-  getEntityTreeNode(entity: string) {
+  getEntityTreeNode(entity: string, resetSelectField?: boolean) {
 
     if ( entity === this.chosenEntity) {
       const dbSchemaSubscription = this.dbSchemaService.getEntityFields(this.chosenEntity).subscribe(
@@ -86,7 +85,9 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
                 initArray.push(this.entityTreeNode);
               }
               this.nestedEntityDataSource.data = initArray;
-              this.selectedFieldChanged(null);
+              if (resetSelectField) {
+                this.selectedFieldChanged(null);
+              }
 
               return this.entityTreeNode;
             }
@@ -101,16 +102,24 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
     }
   }
 
-  selectedFieldChanged(value: string) {
-    this.selectedField = value;
-    this._onChange(this.selectedField);
+  selectedFieldChanged(value: FieldNode) {
+
+    if (value) {
+      console.log('Field changed to: ' + (value === null ? null : '{' + value.name + ' , ' + value.type + '}')
+      + ' from: ' + (this.selectedNode === null ? null : '{' + this.selectedNode.name + ' , ' + this.selectedNode.type + '}'));
+    }
+
+    this.selectedNode = value;
+
+    this._onChange(value);
+
   }
 
   // Writes a new value from the form model into the view or (if needed) DOM property.
-  writeValue(value: string) {
+  writeValue(value: FieldNode) {
     // console.log('Writing values: ' + value);
     if (value) {
-      this.selectedField = value;
+      this.selectedNode = value;
     }
   }
 
@@ -135,17 +144,16 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
     }
   }
 
-  nodeSelected(field: FieldNode) {
-    this.selectedField = this.parentPath + '.' + field.name;
-    this.selectedFieldChanged(this.selectedField);
+  nodeSelected(field: FieldNode, pathOnly?: boolean) {
+
     // Set the field to full path and emit it
     const selectedFieldNode = new FieldNode();
 
-    selectedFieldNode.name = this.selectedField;
+    selectedFieldNode.name = this.parentPath + '.' + field.name;
     selectedFieldNode.type = field.type;
+
     this.fieldChanged.emit(selectedFieldNode);
 
-    // console.log(field.name + ':' + field.type);
+    this.selectedFieldChanged(selectedFieldNode);
   }
-
 }
