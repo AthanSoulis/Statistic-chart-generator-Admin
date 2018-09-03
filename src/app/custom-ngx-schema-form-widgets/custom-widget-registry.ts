@@ -10,6 +10,7 @@ import { ArrayWidgetComponent } from './array-widget/array-widget.component';
 import { FilterFieldWidgetComponent } from './filter-field-widget/filter-field-widget.component';
 import { DefaultWidgetRegistry } from 'ngx-schema-form';
 import { OperatorSelectionWidgetComponent } from './operator-selection-widget/operator-selection-widget.component';
+import { FilterPropertyWidgetComponent } from './filter-property-widget/filter-property-widget.component';
 
 export class CustomWidgetRegistry extends DefaultWidgetRegistry {
   constructor() {
@@ -17,6 +18,7 @@ export class CustomWidgetRegistry extends DefaultWidgetRegistry {
 
     this.register('csui-general-properties-object',  GeneralPropertiesWidgetComponent);
     this.register('csui-property-object',  PropertyWidgetComponent);
+    this.register('csui-filter-property-object',  FilterPropertyWidgetComponent);
     this.register('csui-library-select',  LibrarySelectionWidgetComponent);
     this.register('csui-chart-type-select',  ChartTypeSelectionWidgetComponent);
     this.register('csui-entity-select',  EntitySelectionWidgetComponent);
