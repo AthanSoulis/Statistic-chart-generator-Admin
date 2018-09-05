@@ -13,14 +13,16 @@ export class HighChartsChart {
 class HighChartsDescription {
     chart: HCchart;
     title: HCtitle;
-    yAxis: HCyaxis;
+    yAxis: HCaxis;
+    xAxis: HCaxis;
     series: Array<HCseriesInstance> = [];
     lang: HCLang;
 
     constructor() {
         this.chart = new HCchart();
         this.title = new HCtitle();
-        this.yAxis = new HCyaxis();
+        this.yAxis = new HCaxis();
+        this.xAxis = new HCaxis();
         this.lang = new HCLang();
     }
 }
@@ -31,7 +33,7 @@ class HCchart {
 class HCtitle {
     text: string;
 }
-class HCyaxis {
+class HCaxis {
     title: HCtitle;
 
     constructor() {
