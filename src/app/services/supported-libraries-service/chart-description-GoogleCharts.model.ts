@@ -47,13 +47,15 @@ class GoogleChartsDescription {
 
 class GoogleChartsOptions {
     title: string;
-    hAxis: GoogleChartsHAxis;
+    hAxis: GoogleChartsAxis;
+    vAxis: GoogleChartsAxis;
 
     constructor() {
-        this.hAxis = new GoogleChartsHAxis();
+        this.hAxis = new GoogleChartsAxis();
+        this.vAxis = new GoogleChartsAxis();
     }
 }
 
-class GoogleChartsHAxis {
+class GoogleChartsAxis {
     title: string;
 }

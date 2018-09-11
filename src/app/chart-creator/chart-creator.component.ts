@@ -144,11 +144,13 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
 
     chartDescription.queries.push(this.getFormQuery(queryForm));
     chartDescription.GoogleChartType = properties.get('type').value as string;
-    chartDescription.columns.push(properties.get('yaxisName').value as string);
-    chartDescription.columns.push(properties.get('xaxisName').value as string);
+    // TODO This does NOT take into account multiple Dataseries
+    chartDescription.columns.push(null);
+    chartDescription.columns.push(null);
 
     chartDescription.options.title = properties.get('title').value as string;
-    chartDescription.options.hAxis = null;
+    chartDescription.options.vAxis.title = properties.get('yaxisName').value as string;
+    chartDescription.options.hAxis.title = properties.get('xaxisName').value as string;
 
     if (!chartDescription.chartType || chartDescription.columns || chartDescription.columns.length === 0) {
       console.log('GoogleChart: Something is missing!');
@@ -159,14 +161,15 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
     return chartObj;
   }
 
+  // TODO This does NOT take into account multiple Dataseries
   createHighChartsChart(properties: FormGroup, queryForm: FormGroup): HighChartsChart {
     const chartObj = new HighChartsChart();
     chartObj.chartDescription.title.text = properties.get('title').value as string;
     chartObj.chartDescription.chart.type = properties.get('type').value as string;
     chartObj.chartDescription.yAxis.title.text = properties.get('yaxisName').value as string;
+    chartObj.chartDescription.xAxis.title.text = properties.get('xaxisName').value as string;
 
     const series = new HCseriesInstance(this.getFormQuery(queryForm));
-    series.name = properties.get('xaxisName').value as string;
 
     chartObj.chartDescription.series.push(series);
     return chartObj;
