@@ -11,6 +11,11 @@
 
 #data-tree-button {
     background-color: white;
+    padding: 0em !important
+}
+
+#data-tree-entity-field {
+    font-weight: bold;
 }
 
 /* Every mat-nested-tree-node li wraps around its content */
