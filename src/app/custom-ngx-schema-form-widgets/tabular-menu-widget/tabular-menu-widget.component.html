@@ -1,0 +1,37 @@
+<sui-tabset>
+    <div class="ui two column grid fluid container">
+      <div class="three wide column">
+          <div class="ui secondary vertical fluid pointing menu">
+
+              <div style="padding-left: 0; padding-right: 0" class="ui centered grid link" *ngFor="let itemProperty of formProperty.properties; let i = index"
+               [suiTabHeader]="i" >
+                <h4 style="word-break: break-all; padding-left: 0; padding-right: 0" class="ui item"> {{getDataSeriesName(i) | async}} </h4>  
+                <div class="ui item" *ngIf="menuArrayLength > 1">
+                    <button (click)="removeItem(i)" class="small circular ui icon basic button ">
+                        <i class="icon minus"></i>
+                    </button>
+                  </div>
+              </div>
+              
+              <div class="ui center aligned item animated fade compact button" (click)="addItem()">
+                  <div class="visible content"><i class="icon plus"></i></div>
+                  <div class="hidden content">Add Data</div>
+              </div>
+              <!-- <a class="ui item" (click)="addItem()">
+                  <button class="tiny basic circular ui icon button ">
+                      <i class="icon plus"></i>
+                  </button>Add Data</a> -->
+  
+          </div>
+      </div>
+      
+      <div class="thirteen wide stretched column">
+      <div class="ui container">
+
+          <div class="ui tab" *ngFor="let itemProperty of formProperty.properties; let i = index; trackBy:trackByIndex" [suiTabContent]="i">
+              <sf-form-element [formProperty]="itemProperty"></sf-form-element>
+          </div>
+      </div>
+      </div>
+  </div>
+</sui-tabset>
