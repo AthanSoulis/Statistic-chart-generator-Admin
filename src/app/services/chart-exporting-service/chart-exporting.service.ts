@@ -1,7 +1,7 @@
 import { Injectable} from '@angular/core';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { retry, catchError } from 'rxjs/operators';
+import { retry, catchError, distinctUntilChanged } from 'rxjs/operators';
 import { ErrorHandlerService } from '../error-handler-service/error-handler.service';
 import { UrlProviderService } from '../url-provider-service/url-provider.service';
 
@@ -26,7 +26,7 @@ export class ChartExportingService {
 
       this._chartUrl = new BehaviorSubject<string>(null);
       this.chartUrl$ = this._chartUrl.asObservable();
-      this.chartUrl$.subscribe(
+      this.chartUrl$.pipe(distinctUntilChanged()).subscribe(
         (chartUrl: string) => { if (chartUrl) {
                       console.log(chartUrl);
                       this.postTinyUrl(chartUrl); } }, // success path

@@ -7,7 +7,7 @@ import { FieldType } from '../../../services/supported-filter-types-service/supp
 import { DbSchemaService, EntityNode, FieldNode, EntityTreeNode } from '../../../services/db-schema-service/db-schema.service';
 
 import { BehaviorSubject, of as observableOf, Observable} from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 import { ErrorHandlerService } from '../../../services/error-handler-service/error-handler.service';
 
 @Component({
@@ -73,7 +73,7 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
   getEntityTreeNode(entity: string, resetSelectField?: boolean) {
 
     if ( entity === this.chosenEntity) {
-      const dbSchemaSubscription = this.dbSchemaService.getEntityFields(this.chosenEntity).subscribe(
+      const dbSchemaSubscription = this.dbSchemaService.getEntityFields(this.chosenEntity).pipe(distinctUntilChanged()).subscribe(
         (value: EntityNode) => {
           if (value !== null) {
             const rootTreeNode = this.dbSchemaService.getEntityTree(value);
@@ -113,6 +113,10 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
 
     this._onChange(value);
 
+  }
+
+  trackByFieldName(index: number, item: FieldNode) {
+    return item.name;
   }
 
   // Writes a new value from the form model into the view or (if needed) DOM property.
