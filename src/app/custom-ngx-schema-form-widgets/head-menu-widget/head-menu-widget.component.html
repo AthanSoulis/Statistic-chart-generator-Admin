@@ -1,0 +1,19 @@
+<form class="ui form container">
+  <sui-tabset>
+  <div class="ui grid container">
+          <div class="ui top attached tabular menu">
+              <a class="ui item" suiTabHeader="tab-properties"><h4>{{formProperty.schema.fieldsets[0].title}}</h4></a>
+              <a class="ui item" suiTabHeader="tab-dataseries"><h4>{{formProperty.schema.fieldsets[1].title}}</h4></a>
+          </div>
+      
+      <div class="ui basic fluid container segment">
+          <div class="ui tab" suiTabContent="tab-properties">
+            <sf-form-element [formProperty]="formProperty.getProperty(formProperty.schema.fieldsets[0].fields[0])"></sf-form-element>
+          </div>
+          <div class="ui tab" suiTabContent="tab-dataseries">
+            <sf-form-element [formProperty]="formProperty.getProperty(formProperty.schema.fieldsets[1].fields[0])"></sf-form-element>
+          </div>
+      </div>
+  </div>
+  </sui-tabset>
+</form>
