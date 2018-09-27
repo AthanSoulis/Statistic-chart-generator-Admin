@@ -17,6 +17,8 @@ export class Profile {
 })
 export class MappingProfilesService {
 
+  private changes = 0;
+  public firstChange = true;
   selectedProfile$: Observable<Profile>;
   private _selectedProfileSubject: BehaviorSubject<Profile>;
 
@@ -28,6 +30,10 @@ export class MappingProfilesService {
 
   changeSelectedProfile(profile: Profile) {
     console.log('Changed to: ' + profile.name);
+    this.changes++;
+    if (this.changes > 1) {
+      this.firstChange = false;
+    }
     this._selectedProfileSubject.next(profile);
   }
 
