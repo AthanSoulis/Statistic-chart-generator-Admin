@@ -1,8 +1,13 @@
 <div class="widget form-group field">
-    <h4 class="ui dividing header horizontal control-label" [attr.for]="id" > {{ schema.title }}
-      <div class="sub header formHelp" *ngIf="schema.description">{{ schema.description }}</div>
-    </h4>
+  <h4 class="ui dividing header horizontal control-label" [attr.for]="id" 
+  *ngIf="schema.title || schema.description; else no_header"> {{ schema.title }}
+    <div class="sub header formHelp" *ngIf="schema.description">{{ schema.description }}</div>
+  </h4>
     
+  <ng-template #no_header>
+    <div class="ui hidden divider"></div>
+  </ng-template>
+
   <button type="button" (click)="addItem()"
   class="ui labeled icon basic blue compact button btn btn-default array-add-button">
       <i class="plus icon"></i> Add {{schema.itemName}}</button>

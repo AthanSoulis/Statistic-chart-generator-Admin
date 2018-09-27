@@ -1,14 +1,15 @@
-import { Component, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterContentInit, ChangeDetectionStrategy } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
 import { Observable, Subscription, Subject } from 'rxjs';
 import { ObjectProperty } from 'ngx-schema-form/lib/model/objectproperty';
 import { PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
 import { FieldNode } from '../../services/db-schema-service/db-schema.service';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'entity-field-selection-widget',
   templateUrl: './entity-field-selection-widget.component.html',
-  styleUrls: ['./entity-field-selection-widget.component.css']
+  styleUrls: ['./entity-field-selection-widget.component.css'],
 })
 export class EntityFieldSelectionWidgetComponent extends ControlWidget implements OnDestroy, AfterContentInit {
 
@@ -26,7 +27,7 @@ export class EntityFieldSelectionWidgetComponent extends ControlWidget implement
       property = property.parent;
     }
     this.entitySubscription = (<PropertyGroup>(<ObjectProperty>(<ObjectProperty>property).getProperty('yaxisData')).getProperty('entity'))
-                              .valueChanges.asObservable().subscribe(
+                              .valueChanges.asObservable().pipe(distinctUntilChanged()).subscribe(
                                 (data: string) => this.entityValue = data
                               );
 

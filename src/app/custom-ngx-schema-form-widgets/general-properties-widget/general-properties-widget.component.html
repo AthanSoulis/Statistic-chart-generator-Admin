@@ -2,7 +2,7 @@
     <h2 class="ui header">{{formProperty.schema.title}}
         <div class="sub header">{{formProperty.schema.description}}</div>
     </h2>
-    <div class="ui hidden divider"></div>
+    <div *ngIf="formProperty.schema.title || formProperty.schema.description" class="ui hidden divider"></div>
 </div>
 <div *ngFor="let fieldset of formProperty.schema.fieldsets">
   <h3 class="ui dividing header" *ngIf="fieldset.title">{{fieldset.title}}

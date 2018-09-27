@@ -1,4 +1,4 @@
-<div class="widget form-group field">
+<div class="widget form-group field" *ngIf="this.formProperty.visible">
   <label [attr.for]="id" class="horizontal control-label">
     {{schema.title}}
   </label>

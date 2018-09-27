@@ -1,19 +1,20 @@
-import { Component, OnInit, AfterContentInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, AfterContentInit, OnDestroy, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
 import { SupportedFilterTypesService, FilterType, FieldType } from '../../services/supported-filter-types-service/supported-filter-types.service';
 import { FieldNode } from '../../services/db-schema-service/db-schema.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'operator-selection-widget',
   templateUrl: './operator-selection-widget.component.html',
-  styleUrls: ['./operator-selection-widget.component.css']
+  styleUrls: ['./operator-selection-widget.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OperatorSelectionWidgetComponent extends ControlWidget implements OnDestroy, AfterContentInit {
-  @Input() fieldType: string;
 
   private selectedField: FieldNode = null;
-  operators: Array<FilterType> = null ;
+  operators: Observable<Array<FilterType>> = null ;
 
   private entityFieldSub: Subscription;
 
@@ -24,9 +25,9 @@ export class OperatorSelectionWidgetComponent extends ControlWidget implements O
   ngAfterContentInit() {
 
     const dependentProperty = this.formProperty.searchProperty('field');
-    console.log(dependentProperty);
+    // console.log(dependentProperty);
 
-    this.entityFieldSub = dependentProperty.valueChanges.asObservable().subscribe(
+    this.entityFieldSub = dependentProperty.valueChanges.asObservable().pipe(distinctUntilChanged()).subscribe(
       (field: FieldNode) => this.fieldChanged(field)
       // error => this.error = error // error path
     );
@@ -36,12 +37,9 @@ export class OperatorSelectionWidgetComponent extends ControlWidget implements O
     this.entityFieldSub.unsubscribe();
   }
 
-  getOperatorsOfType(type: FieldType) {
-    const sub: Subscription = this.operatorsService.getFiltersOfType(type).subscribe(
-      (data: Array<FilterType>) => this.operators = data, // success path
-      // error => sub.unsubscribe // error path
-      () => sub.unsubscribe
-    );
+  getOperatorsOfType(type: FieldType): Observable<Array<FilterType>> {
+    this.operators =  this.operatorsService.getFiltersOfType(type).pipe(distinctUntilChanged());
+    return this.operators;
   }
 
   fieldChanged(field: FieldNode) {
@@ -54,7 +52,7 @@ export class OperatorSelectionWidgetComponent extends ControlWidget implements O
       this.getOperatorsOfType(FieldType[field.type]);
       this.selectedField = field;
       // Reset the operator
-      this.control.setValue('');
+      this.control.setValue(null);
 
     } else if ( field.name !== this.selectedField.name) {
       this.selectedField = field;
