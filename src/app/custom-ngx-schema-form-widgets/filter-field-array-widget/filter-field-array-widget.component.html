@@ -1,0 +1,44 @@
+<div *ngIf="this.filterOperator" class="widget form-group ">
+
+  <div *ngIf="filterFieldArrayLength > 0">
+    
+    <div class="ui hidden divider"></div>
+
+    <div class="ui basic segment">
+      <div *ngIf="filterOperator !== 'between'; else betweenFilterFields">
+        <div *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex">
+          
+          <div class="ui fluid action input">
+            <sf-form-element [formProperty]="itemProperty"></sf-form-element>
+
+            <button (click)="removeFilterValue(i)" type="button" 
+            class="ui icon compact button"><i class="close icon"></i></button>
+          </div>
+          
+
+          <span *ngIf="applicableDivider(i)" class="ui horizontal divider">OR</span>
+
+        </div>
+      </div>
+
+      <ng-template #betweenFilterFields>
+        <div *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex; odd as isOdd">
+                
+          <sf-form-element [formProperty]="formProperty.properties[i]"></sf-form-element>    
+          
+          <div *ngIf="isOdd">
+            <button (click)="removeFilterValue(i)" type="button" 
+                    class="fluid ui icon compact button"><i class="close icon"></i></button>
+            <span *ngIf="applicableDivider(i)" class="ui horizontal divider">OR</span>
+          </div>
+
+        </div>
+      </ng-template>
+  </div>
+  </div>
+
+  <button (click)="addFilterValue()" type="button" class="circular ui icon basic blue compact left floated button">
+    <div *ngIf="filterFieldArrayLength > 0; else addFilter">OR</div>
+    <ng-template #addFilter><i class="plus icon"></i></ng-template>
+  </button>
+</div>
