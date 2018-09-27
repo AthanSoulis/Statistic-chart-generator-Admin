@@ -1,0 +1,33 @@
+<!-- <ng-template  #mappingModal> -->
+  <div class="ui mapping modal"> 
+      <div class="header">
+          Select mapping
+      </div>
+      <div class="content">
+          <div class="ui three centered stackable cards">
+          <div class="ui card" *ngFor="let profile of profileMappings">
+              <div class="content">
+                  <div class="header"><h2>{{profile.name}}</h2></div>
+                  <div class="description">{{profile.description}}</div>
+              </div>
+              <button (click)="cardButtonAction(profile)" class="ui bottom attached basic blue button">Select</button>
+          </div>
+          </div>
+      </div>
+  </div>
+  <!-- </ng-template> -->
+
+  <div class="ui hidden divider"></div>
+
+  <div class="widget form-group field">
+    <div class="profile inline field" (click)="showProfilePicker(null)">
+      <label [attr.for]="id" class="horizontal control-label">
+        {{schema.title}}
+      </label>
+      <span *ngIf="schema.description" class="formHelp">
+        {{schema.description}}
+      </span>
+      <input style="border: 0; text-align: center;" readonly type="text" 
+      value='{{this.formProperty.value ===null ? "" : this.formProperty.value}}'>
+    </div>
+  </div>
