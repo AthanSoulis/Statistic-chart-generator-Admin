@@ -1,9 +1,9 @@
-import { Component, OnInit, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
 import { Query, Select } from './chart-query-selector/chart-query.model';
 import { ChartProperties } from './chart-properties-selector/chart-properties.model';
 import { SupportedLibrariesService } from '../services/supported-libraries-service/supported-libraries.service';
-import { HighChartsChart, HCseriesInstance } from '../services/supported-libraries-service/chart-description-HighCharts.model';
+import { HighChartsChart, HCqueriesInstance } from '../services/supported-libraries-service/chart-description-HighCharts.model';
 import { GoogleChartsChart } from '../services/supported-libraries-service/chart-description-GoogleCharts.model';
 import { Filter } from './chart-query-selector/query-filter-selector/query-filter/query-filter.model';
 import { element } from 'protractor';
@@ -21,14 +21,14 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
 
   @Output() chartSubmit: EventEmitter<Object> = new EventEmitter();
   @Output() tableSubmit: EventEmitter<Object> = new EventEmitter();
+  @Input() loadedChart: Object = null;
 
   chartForm: FormGroup;
   profileMapping: Profile = null;
   public dataseriesTabActive: boolean[] = [];
-  fs: FormSchema;
 
-  valueProperties: string;
-  valueDataseries: string;
+  fs: FormSchema;
+  formValue: string;
 
   constructor(private formBuilder: FormBuilder,
     private supportedLibrariesService: SupportedLibrariesService) {
@@ -71,7 +71,8 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
     }
   }
 
-  get chartFormValue(): Object { return this.chartForm.value as Object; }
+  get chartFormValue(): Object { return this.formValue as Object; }
+// get chartFormValue(): Object { return this.chartForm.value as Object; }
   get properties(): FormGroup { return this.chartForm.get('properties') as FormGroup; }
   get dataseries(): FormArray { return this.chartForm.get('dataseries') as FormArray; }
   getQueryForm(index: number): FormGroup { return this.dataseries.at(index) as FormGroup; }
@@ -104,7 +105,15 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
   createChart(): Subject<Object> {
 
     const chartObj: Subject<Object> = new Subject();
-    const library: string = this.properties.get('library').value;
+    const formObj: Object = this.chartFormValue;
+
+    const generalProperties: Object = formObj.generalChartProperties;
+    const library: string = generalProperties.library;
+
+    const dataseries: Object[] = formObj.dataseries;
+
+    console.log(library);
+
     this.supportedLibrariesService.getSupportedLibraries().subscribe(
       (data: Array<string>) =>  {
         if (data.includes(library)) {
@@ -112,7 +121,8 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
           switch (library) {
 
             case('HighCharts'): {
-              const hchartObj = this.createHighChartsChart(this.properties, this.getQueryForm(0));
+              // const hchartObj = this.createHighChartsChart(this.properties, this.getQueryForm(0));
+              const hchartObj = this.createDynamicHighChartsChart(generalProperties, dataseries);
 
               console.log('Creating a ' + library + ' chart!');
               console.log(hchartObj);
@@ -161,6 +171,23 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
     return chartObj;
   }
 
+  createDynamicHighChartsChart(generalProperties: Object, dataseries: Object[]): HighChartsChart {
+    const chartObj = new HighChartsChart();
+    chartObj.chartDescription.title.text = generalProperties.title;
+    chartObj.chartDescription.xAxis.title.text = generalProperties.axisNames.xaxisName;
+    chartObj.chartDescription.yAxis.title.text = generalProperties.axisNames.yaxisName;
+
+    const queries = new Array<HCqueriesInstance>();
+
+    dataseries.forEach( dataElement => {
+      queries.push(new HCqueriesInstance(dataElement));
+    });
+
+    chartObj.chartDescription.queries = queries;
+    console.log(chartObj);
+    return chartObj;
+  }
+
   // TODO This does NOT take into account multiple Dataseries
   createHighChartsChart(properties: FormGroup, queryForm: FormGroup): HighChartsChart {
     const chartObj = new HighChartsChart();
@@ -169,9 +196,9 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
     chartObj.chartDescription.yAxis.title.text = properties.get('yaxisName').value as string;
     chartObj.chartDescription.xAxis.title.text = properties.get('xaxisName').value as string;
 
-    const series = new HCseriesInstance(this.getFormQuery(queryForm));
+    const series = new HCqueriesInstance(this.getFormQuery(queryForm));
 
-    chartObj.chartDescription.series.push(series);
+    chartObj.chartDescription.queries.push(series);
     return chartObj;
   }
 
