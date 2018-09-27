@@ -11,6 +11,10 @@ import { FilterFieldWidgetComponent } from './filter-field-widget/filter-field-w
 import { DefaultWidgetRegistry } from 'ngx-schema-form';
 import { OperatorSelectionWidgetComponent } from './operator-selection-widget/operator-selection-widget.component';
 import { FilterPropertyWidgetComponent } from './filter-property-widget/filter-property-widget.component';
+import { FilterFieldArrayWidgetComponent } from './filter-field-array-widget/filter-field-array-widget.component';
+import { ProfilePickerComponent } from './profile-picker/profile-picker.component';
+import { TabularMenuWidgetComponent } from './tabular-menu-widget/tabular-menu-widget.component';
+import { HeadMenuWidgetComponent } from './head-menu-widget/head-menu-widget.component';
 
 export class CustomWidgetRegistry extends DefaultWidgetRegistry {
   constructor() {
@@ -28,5 +32,9 @@ export class CustomWidgetRegistry extends DefaultWidgetRegistry {
     this.register('csui-select', SelectionWidgetComponent);
     this.register('csui-filter-field', FilterFieldWidgetComponent);
     this.register('csui-array', ArrayWidgetComponent);
+    this.register('csui-profile-picker', ProfilePickerComponent);
+    this.register('csui-filter-field-array', FilterFieldArrayWidgetComponent);
+    this.register('csui-tabular-menu', TabularMenuWidgetComponent);
+    this.register('csui-head-menu', HeadMenuWidgetComponent);
   }
 }

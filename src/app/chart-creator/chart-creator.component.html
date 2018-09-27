@@ -3,47 +3,48 @@
 <!-- If I uncomment the below, every time I add a dataseries it calls onSubmit -->
 <!-- Instead I explicitly call onSubmit on the click event of the Submit button  -->
 <!-- <form class="ui form container" [formGroup]="chartForm" (ngSubmit)="onSubmit()"> -->
-<form class="ui form container" [formGroup]="chartForm">
-<sui-tabset>
-<div class="ui grid container">
-    <div class="four wide column">
-        <div class="ui vertical fluid tabular menu">
-            <a class="ui item" suiTabHeader="tab-properties">Properties</a>
-            <a class="ui item" suiTabHeader="tab-dataseries">Dataseries</a>
-            <a class="ui item" *ngFor="let data of dataseries.controls; let i = index" [suiTabHeader]="i" [(isActive)]="dataseriesTabActive[i]">
-                <button (click)="removeDataseries(i)" class="tiny basic circular ui icon button ">
-                    <i class="icon minus"></i>
-                </button>Data</a>
-            <a class="ui item" (click)="addDataseries()">
-                <button class="tiny basic circular ui icon button ">
-                    <i class="icon plus"></i>
-                </button>Add Data</a>
-        </div>
-    </div>
-    
-    <div class="twelve wide stretched column">
-    <div class="ui container">
-        <div class="ui tab" suiTabContent="tab-properties">
-            <sf-form [schema]="fs.propertiesFormSchema" (onChange)="valueProperties=$event.value"></sf-form>{{valueProperties | json}}
-        </div>
-        <div class="ui tab" suiTabContent="tab-dataseries">
-            <sf-form [schema]="fs.dataseriesFormSchema" (onChange)="valueDataseries=$event.value"></sf-form>{{valueDataseries | json}}            
-        </div>
-        <div class="ui tab" *ngFor="let data of dataseries.controls; let i = index" [suiTabContent]="i" >
-            <chart-query-selector [queryForm]="getQueryForm(i)"></chart-query-selector>
-        </div>
 
-        <div class="ui hidden divider"></div>
-        <button type="submit" 
+<form class="ui form container">
+    
+    <div class="ui basic segment">        
+        <sf-form [schema]="fs.formSchema" [model]="loadedChart" (onChange)="formValue=$event.value"></sf-form>
+        <pre> {{formValue | json}} </pre>
+    </div>
+
+    <button type="submit" 
             (click)="onSubmit()"
             [ngClass]="isFormInvalid() ?
-            'ui disabled negative basic button' : 'ui positive basic button'">Submit</button>
+            'ui bottom attached fluid disabled negative basic button' :
+             'ui bottom attached fluid positive basic button'">Submit</button>
+
+    <div class="ui negative message" *ngIf="isFormInvalid()">Error Message</div>
+</form>
+
+<!-- <form class="ui form container" [formGroup]="chartForm">
+<sui-tabset>
+<div class="ui grid container">
+        <div class="ui top attached tabular menu">
+            <a class="ui item" suiTabHeader="tab-properties"><h4>Properties</h4></a>
+            <a class="ui item" suiTabHeader="tab-dataseries"><h4>Dataseries</h4></a>
+        </div>
+    
+    <div class="ui container">
+        <div class="ui tab" suiTabContent="tab-properties">
+            <sf-form [schema]="fs.propertiesFormSchema" (onChange)="valueProperties=$event.value"></sf-form>
+            <pre>{{valueProperties | json}}</pre>
+        </div>
+        <div class="ui tab" suiTabContent="tab-dataseries">
+            <sf-form [schema]="fs.dataseriesFormSchema" [model]="loadedChart" [bindings]="fs.fieldBindings" (onChange)="valueDataseries=$event.value"></sf-form>
+            <pre> {{valueDataseries | json}} </pre>
+        </div>
+
+        <button type="submit" 
+        (click)="onSubmit()"
+        [ngClass]="isFormInvalid() ?
+        'ui disabled negative basic button' : 'ui positive basic button'">Submit</button>
 
         <div class="ui negative message" *ngIf="isFormInvalid()">Error Message</div>
     </div>
-    </div>
 </div>
 </sui-tabset>
-</form>
-
-
+</form> -->

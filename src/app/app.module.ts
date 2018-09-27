@@ -47,6 +47,10 @@ import { ArrayWidgetComponent } from './custom-ngx-schema-form-widgets/array-wid
 import { FilterFieldWidgetComponent } from './custom-ngx-schema-form-widgets/filter-field-widget/filter-field-widget.component';
 import { OperatorSelectionWidgetComponent } from './custom-ngx-schema-form-widgets/operator-selection-widget/operator-selection-widget.component';
 import { FilterPropertyWidgetComponent } from './custom-ngx-schema-form-widgets/filter-property-widget/filter-property-widget.component';
+import { ProfilePickerComponent } from './custom-ngx-schema-form-widgets/profile-picker/profile-picker.component';
+import { FilterFieldArrayWidgetComponent } from './custom-ngx-schema-form-widgets/filter-field-array-widget/filter-field-array-widget.component';
+import { TabularMenuWidgetComponent } from './custom-ngx-schema-form-widgets/tabular-menu-widget/tabular-menu-widget.component';
+import { HeadMenuWidgetComponent } from './custom-ngx-schema-form-widgets/head-menu-widget/head-menu-widget.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +76,11 @@ import { FilterPropertyWidgetComponent } from './custom-ngx-schema-form-widgets/
     ArrayWidgetComponent,
     FilterFieldWidgetComponent,
     OperatorSelectionWidgetComponent,
-    FilterPropertyWidgetComponent
+    FilterPropertyWidgetComponent,
+    ProfilePickerComponent,
+    FilterFieldArrayWidgetComponent,
+    TabularMenuWidgetComponent,
+    HeadMenuWidgetComponent
   ],
   imports: [
     SchemaFormModule.forRoot(),
@@ -98,7 +106,11 @@ import { FilterPropertyWidgetComponent } from './custom-ngx-schema-form-widgets/
     ArrayWidgetComponent,
     FilterFieldWidgetComponent,
     OperatorSelectionWidgetComponent,
-    FilterPropertyWidgetComponent
+    FilterPropertyWidgetComponent,
+    ProfilePickerComponent,
+    FilterFieldArrayWidgetComponent,
+    TabularMenuWidgetComponent,
+    HeadMenuWidgetComponent
   ],
   providers: [
     SupportedLibrariesService,

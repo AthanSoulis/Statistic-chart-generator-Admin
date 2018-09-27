@@ -1,4 +1,7 @@
+import { FormProperty, PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
+
 export class FormSchema {
+
     private _propertiesFormSchema = {
         'type' : 'object',
         'title' : 'General Properties',
@@ -10,7 +13,7 @@ export class FormSchema {
                 'placeholder' : 'No Profile Selected',
                 'title' : 'User Profile',
                 'widget': {
-                    'id': 'string'
+                    'id': 'csui-profile-picker'
                 }
             },
             'library' : {
@@ -21,7 +24,6 @@ export class FormSchema {
                     'id': 'csui-library-select'
                 },
             },
-            // 'type' : {}, !!This should be on chart properties
             'axisNames' : {
                 'type' : 'object',
                 'widget' : { 'id' : 'csui-property-object' },
@@ -131,15 +133,15 @@ export class FormSchema {
     private _dataseriesFormSchema = {
         'type': 'array',
         'description': 'Dataseries',
-        'widget' : { 'id' : 'csui-array' },
+        'widget' : { 'id' : 'csui-tabular-menu' },
         'items': {
             'type' : 'object',
-            'description' : 'Describe the data you want to appear on your chart',
             'widget' : { 'id' : 'csui-general-properties-object' },
             'properties' : {
                 'data' : {
                     'type' : 'object',
                     'title' : 'Data Selection',
+                    'description' : 'Describe the data you want to appear on your chart',
                     'widget' : { 'id' : 'csui-property-object' },
                     'properties' : {
                         'yaxisData' : {
@@ -162,6 +164,9 @@ export class FormSchema {
                                     'placeholder' : 'Select Entity Field',
                                     'title' : 'Entity Field',
                                     'widget': { 'id': 'csui-entity-field-select'},
+                                    'visibleIf': {
+                                        'yaxisAggregate': ['count', 'min', 'max', 'avg', 'null']
+                                      }
                                 }
                             },
                             'fieldsets': [
@@ -176,24 +181,29 @@ export class FormSchema {
                             ]
                         },
                         'xaxisData' : {
-                            'type' : 'object',
-                            'widget' : { 'id' : 'csui-property-object' },
-                            'properties' : {
-                                'xaxisEntityField' : {
-                                    'type' : 'string',
-                                    'placeholder' : 'Select Entity Field',
-                                    'title' : 'Entity Field',
-                                    'widget': { 'id': 'csui-entity-field-select'},
-                                }
-                            },
-                            'fieldsets': [
-                                {
-                                    'title' : 'X Axis',
-                                    'fields': [
-                                        'xaxisEntityField'
-                                    ]
-                                }
-                            ]
+                            'type': 'array',
+                            'title': 'X axis',
+                            'itemName': 'Group By',
+                            'widget' : { 'id' : 'csui-array' },
+                            'items': {
+                                'type' : 'object',
+                                'widget' : { 'id' : 'csui-property-object' },
+                                'properties' : {
+                                    'xaxisEntityField' : {
+                                        'type' : 'string',
+                                        'placeholder' : 'Select Entity Field',
+                                        'title' : 'Entity Field',
+                                        'widget': { 'id': 'csui-entity-field-select'},
+                                    }
+                                },
+                                'fieldsets': [
+                                    {
+                                        'fields': [
+                                            'xaxisEntityField'
+                                        ]
+                                    }
+                                ]
+                            }
                         },
                         'filters' : {
                             'type': 'array',
@@ -216,13 +226,11 @@ export class FormSchema {
                                     },
                                     'values': {
                                         'type': 'array',
-                                        'widget' : { 'id' : 'array' },
+                                        'widget' : { 'id' : 'csui-filter-field-array' },
                                         'items': {
                                             'type' : 'string',
                                             'placeholder' : 'Value',
-                                            'widget': {
-                                                'id': 'string'
-                                            }
+                                            'widget': {'id': 'csui-filter-field'},
                                         }
                                     }
                                 },
@@ -254,8 +262,26 @@ export class FormSchema {
                 'chartProperties' : {
                     'type' : 'object',
                     'title' : 'Chart Properties',
+                    'description' : 'Customize the way data appear on your chart',
                     'widget' : { 'id' : 'csui-property-object' },
                     'properties' : {
+                        'dataseriesColor' : {
+                            'type' : 'string',
+                            'pattern': '^#[0-9a-fA-F]{6}$',
+                            'title' : 'Dataseries Color',
+                            'widget': {
+                                'id': 'color'
+                            }
+                        },
+                        'dataseriesName' : {
+                            'type' : 'string',
+                            'placeholder' : 'Dataseries',
+                            'default' : 'Data',
+                            'title' : 'Dataseries Name',
+                            'widget': {
+                                'id': 'string'
+                            }
+                        },
                         'chartType' : {
                             'type' : 'string',
                             'placeholder' : 'Select Chart Type',
@@ -268,7 +294,9 @@ export class FormSchema {
                     'fieldsets': [
                         {
                             'fields': [
-                                'chartType'
+                                'dataseriesName',
+                                'chartType',
+                                'dataseriesColor'
                             ]
                         }
                     ]
@@ -284,6 +312,27 @@ export class FormSchema {
             ]
         }
     };
+
+    private _SCGAFormSchema = {
+        'type' : 'object',
+        'widget' : { 'id' : 'csui-head-menu' },
+        'properties' : {
+            'generalChartProperties' : this._propertiesFormSchema ,
+            'dataseries' : this._dataseriesFormSchema
+        },
+        'fieldsets': [
+            {
+                'title': 'Properties',
+                'fields': ['generalChartProperties']
+            },
+            {
+                'title': 'Dataseries',
+                'fields': ['dataseries']
+            }
+        ]
+    };
+
+    get formSchema() { return this._SCGAFormSchema; }
     get propertiesFormSchema() { return this._propertiesFormSchema; }
     get dataseriesFormSchema() { return this._dataseriesFormSchema; }
 }
