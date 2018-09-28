@@ -6,10 +6,8 @@ import { SupportedLibrariesService } from '../services/supported-libraries-servi
 import { HighChartsChart, HCqueriesInstance } from '../services/supported-libraries-service/chart-description-HighCharts.model';
 import { GoogleChartsChart } from '../services/supported-libraries-service/chart-description-GoogleCharts.model';
 import { Filter } from './chart-query-selector/query-filter-selector/query-filter/query-filter.model';
-import { element } from 'protractor';
 import { Profile } from '../services/mapping-profiles-service/mapping-profiles.service';
-import { ChartExportingService } from '../services/chart-exporting-service/chart-exporting.service';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { FormSchema } from './chart-form-schema.model';
 
 @Component({
@@ -105,9 +103,9 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
   createChart(): Subject<Object> {
 
     const chartObj: Subject<Object> = new Subject();
-    const formObj: Object = this.chartFormValue;
+    const formObj: any = this.chartFormValue;
 
-    const generalProperties: Object = formObj.generalChartProperties;
+    const generalProperties: any = formObj.generalChartProperties;
     const library: string = generalProperties.library;
 
     const dataseries: Object[] = formObj.dataseries;
@@ -171,7 +169,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
     return chartObj;
   }
 
-  createDynamicHighChartsChart(generalProperties: Object, dataseries: Object[]): HighChartsChart {
+  createDynamicHighChartsChart(generalProperties: any, dataseries: Object[]): HighChartsChart {
     const chartObj = new HighChartsChart();
     chartObj.chartDescription.title.text = generalProperties.title;
     chartObj.chartDescription.xAxis.title.text = generalProperties.axisNames.xaxisName;
@@ -203,7 +201,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
   }
 
   getFormQuery(queryForm: FormGroup): Query {
-    const query = new Query();
+    const query = new Query(null);
 
     query.entity = queryForm.get('entity').value as string;
 

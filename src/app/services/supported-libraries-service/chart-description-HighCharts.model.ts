@@ -59,7 +59,7 @@ export class HCqueriesInstance {
     //     }
     // }
 
-    constructor(dataseriesElement: Object) {
+    constructor(dataseriesElement: any) {
         this.name = dataseriesElement.chartProperties.dataseriesName;
         this.type = dataseriesElement.chartProperties.chartType;
         this.query = new Query(dataseriesElement.data);

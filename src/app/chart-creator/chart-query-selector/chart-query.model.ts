@@ -5,7 +5,7 @@ export class Query {
     select: Array<Select> = [];
     filters: Array<Filter> = [];
 
-    constructor(dataseriesData: Object) {
+    constructor(dataseriesData: any) {
         this.entity = dataseriesData.yaxisData.entity;
 
         const yaxisSelect = new Select();
