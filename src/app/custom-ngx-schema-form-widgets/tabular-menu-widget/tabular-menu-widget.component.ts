@@ -28,7 +28,11 @@ export class TabularMenuWidgetComponent extends ArrayLayoutWidget implements Aft
   }
 
   addItem() {
-    this.formProperty.addItem();
+    if ( (<FormProperty[]>this.formProperty.properties).length < this.schema.maxItems) {
+      this.formProperty.addItem();
+    } else if (this.schema.maxItems === undefined ) {
+      this.formProperty.addItem();
+    }
   }
 
   removeItem(index: number) {

@@ -184,6 +184,7 @@ export class FormSchema {
                             'type': 'array',
                             'title': 'X axis',
                             'itemName': 'Group By',
+                            'maxItems': 2,
                             'widget' : { 'id' : 'csui-array' },
                             'items': {
                                 'type' : 'object',

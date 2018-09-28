@@ -38,12 +38,22 @@ export class FilterFieldArrayWidgetComponent extends ArrayLayoutWidget implement
   }
 
   addFilterValue() {
-    if (!this.filterOperator) { return; }
 
-    this.formProperty.addItem();
-    if (this.filterOperator === 'between') {
+    const addFilter = function () {
+      if (!this.filterOperator) { return; }
+
       this.formProperty.addItem();
+      if (this.filterOperator === 'between') {
+        this.formProperty.addItem();
+      }
+    };
+
+    if ( (<FormProperty[]>this.formProperty.properties).length < this.schema.maxItems) {
+      addFilter();
+    } else if (this.schema.maxItems === undefined ) {
+      addFilter();
     }
+
   }
 
   removeFilterValue(index: number) {
