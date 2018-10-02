@@ -25,6 +25,7 @@ export class FilterFieldArrayWidgetComponent extends ArrayLayoutWidget implement
     this.operatorSub = dependentOperatorProperty.valueChanges.asObservable().pipe(distinctUntilChanged()).subscribe(
       (operator: string) => {
         this.filterOperator = operator;
+        console.log('Operator: ' + this.filterOperator);
         if (this.filterOperator === null) {
           this.formProperty.reset([], false);
         }
@@ -39,7 +40,7 @@ export class FilterFieldArrayWidgetComponent extends ArrayLayoutWidget implement
 
   addFilterValue() {
 
-    const addFilter = function () {
+    const addFilter = function (filterOperator) {
       if (!this.filterOperator) { return; }
 
       this.formProperty.addItem();
@@ -49,9 +50,9 @@ export class FilterFieldArrayWidgetComponent extends ArrayLayoutWidget implement
     };
 
     if ( (<FormProperty[]>this.formProperty.properties).length < this.schema.maxItems) {
-      addFilter();
+      addFilter.call(this);
     } else if (this.schema.maxItems === undefined ) {
-      addFilter();
+      addFilter.call(this);
     }
 
   }
