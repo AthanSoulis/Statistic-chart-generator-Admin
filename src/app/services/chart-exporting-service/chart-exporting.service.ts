@@ -1,6 +1,6 @@
 import { Injectable} from '@angular/core';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { retry, catchError, distinctUntilChanged } from 'rxjs/operators';
 import { ErrorHandlerService } from '../error-handler-service/error-handler.service';
 import { UrlProviderService } from '../url-provider-service/url-provider.service';
@@ -27,9 +27,10 @@ export class ChartExportingService {
       this._chartUrl = new BehaviorSubject<string>(null);
       this.chartUrl$ = this._chartUrl.asObservable();
       this.chartUrl$.pipe(distinctUntilChanged()).subscribe(
-        (chartUrl: string) => { if (chartUrl) {
-                      console.log(chartUrl);
-                      this.postTinyUrl(chartUrl); } }, // success path
+        (chartUrl: string) => {
+                    if (chartUrl) {
+                      this.postTinyUrl(chartUrl);
+                    } }, // success path
           error => this.errorHandler.handleError(error) // error path
       );
 
@@ -38,7 +39,7 @@ export class ChartExportingService {
     }
 
   changeChartUrl(chartObject: Object) {
-    console.log(chartObject);
+
     if (!chartObject) { return; }
 
     const stringObj = JSON.stringify(chartObject);
@@ -52,23 +53,27 @@ export class ChartExportingService {
   private postTinyUrl(chartUrl: string) {
 
     this._loadingChartTinyUrl.next(true);
-    const getUrl = 'https://tinyurl.com/api-create.php?url=' + encodeURIComponent(chartUrl);
 
-    this.http.get(getUrl, {responseType: 'text'})
-    .pipe(
-      retry(3), // retry a failed request up to 3 times
-      catchError(this.errorHandler.handleError) // then handle the error
-    ).subscribe(
+    const postUrl = this.urlProvider.getUrl() + '/chart/shorten';
+
+    const postHeaders = new HttpHeaders();
+    postHeaders.append('Content-Type', 'application/json');
+
+    this.http.post(postUrl,
+      {'url' : encodeURIComponent(chartUrl) },
+      {headers: postHeaders})
+      .subscribe(
       // success path
-      (chartTinyUrl: string) => {
-        console.log(chartTinyUrl);
-        this._loadingChartTinyUrl.next(false);
-        this.changeChartTinyUrl(chartTinyUrl); },
+      (response: ShortenUrlResponse) => this.changeChartTinyUrl(response.shortUrl),
       // error path
-      error => { this._loadingChartTinyUrl.next(false);
-        this.errorHandler.handleError(error); },
+      error => this.errorHandler.handleError(error),
       // complete path
       () => this._loadingChartTinyUrl.next(false)
     );
   }
+}
+
+export class ShortenUrlResponse {
+  public shortUrl: string;
+
 }
