@@ -1,6 +1,8 @@
 .url-holder {
     overflow-wrap: break-word;
     text-align: center;
+    max-height: 2cm;
+    overflow-y: auto
 }
 
 .export-description {
