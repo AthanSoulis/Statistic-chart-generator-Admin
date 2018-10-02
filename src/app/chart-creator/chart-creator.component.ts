@@ -110,8 +110,6 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
 
     const dataseries: Object[] = formObj.dataseries;
 
-    console.log(library);
-
     this.supportedLibrariesService.getSupportedLibraries().subscribe(
       (data: Array<string>) =>  {
         if (data.includes(library)) {
@@ -182,7 +180,6 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
     });
 
     chartObj.chartDescription.queries = queries;
-    console.log(chartObj);
     return chartObj;
   }
 

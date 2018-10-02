@@ -37,9 +37,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.chartUrl = this.chartExportingService.chartUrl$;
     this.chartTinyUrl = this.chartExportingService.chartTinyUrl$;
     this.loadingChartTinyUrl = this.chartExportingService.loadingChartTinyUrl$;
-    this.loadingChartTinyUrl.subscribe(
-      (loading: boolean) => console.log('Loading Tiny Url: ' + loading)
-    );
   }
 
   handleChartObject($event) {
@@ -198,7 +195,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     const chartObj$ = this.childChartCreator.createChart();
     chartObj$.subscribe(
       (chartObj: any) => {
-        console.log(chartObj);
         this.chartExportingService.changeChartUrl(chartObj);
         chartObj$.unsubscribe();
       }
