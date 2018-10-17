@@ -6,6 +6,7 @@ import { catchError, retry } from 'rxjs/operators';
 
 import { UrlProviderService } from '../url-provider-service/url-provider.service';
 import { ErrorHandlerService } from '../error-handler-service/error-handler.service';
+import { MappingProfilesService, Profile } from '../mapping-profiles-service/mapping-profiles.service';
 
 export class AutocompleteResponse {
   count: number =  null;
@@ -17,12 +18,16 @@ export class AutocompleteResponse {
 })
 export class FieldAutocompleteService {
 
-  constructor(private http: HttpClient, private urlProvider: UrlProviderService, private errorHandler: ErrorHandlerService) {}
+  constructor(private http: HttpClient, private urlProvider: UrlProviderService,
+     private errorHandler: ErrorHandlerService, private profileMappingService: MappingProfilesService) {}
 
   getAutocompleteFields(field: string, text: string): Observable<AutocompleteResponse> {
 
+    const profile: Profile = this.profileMappingService.selectedProfile$.value;
+
     let autocompleteFieldTextUrl = this.urlProvider.getUrl()
-    + '/schema/fields/' + field + (text === null ? '' : '/' + text);
+    + '/schema/' + (profile === null ? '' : profile.name)
+    + '/fields/' + field + (text === null ? '' : '/' + text);
 
     autocompleteFieldTextUrl = encodeURI(autocompleteFieldTextUrl);
 

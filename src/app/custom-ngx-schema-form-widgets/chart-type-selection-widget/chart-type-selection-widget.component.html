@@ -1,4 +1,6 @@
-<div class="widget form-group field">
+<div [ngClass]="!schema.requiredField ? 
+'widget form-group field' : 
+(control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'">
   <label [attr.for]="id" class="horizontal control-label">
     {{schema.title}}
   </label>

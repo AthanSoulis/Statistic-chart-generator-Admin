@@ -5,6 +5,7 @@ import { ChartExportingService } from './services/chart-exporting-service/chart-
 import { IPopup } from 'ng2-semantic-ui';
 import { Observable, of } from 'rxjs';
 import { SuiPopupController } from 'ng2-semantic-ui/dist';
+import { ChartLoadingService } from './services/chart-loading-service/chart-loading.service';
 
 @Component({
   selector: 'app-root',
@@ -21,13 +22,15 @@ export class AppComponent implements OnInit, AfterViewInit {
   chartModel: Object;
   chartObject: Object;
   tableObject: Object;
+  loadedChartFile: File = null;
 
   chartUrl: Observable<string>;
   chartTinyUrl: Observable<string>;
   loadingChartTinyUrl: Observable<boolean>;
 
   constructor(private urlProvider: UrlProviderService,
-    private chartExportingService: ChartExportingService) {}
+    protected chartExportingService: ChartExportingService,
+    protected chartLoadingService: ChartLoadingService) {}
 
   ngOnInit() {}
 
@@ -89,100 +92,29 @@ export class AppComponent implements OnInit, AfterViewInit {
     document.body.removeChild(element);
   }
 
-  private loadChart(chart: Object) {
+  private initiateFilePicker() {
+    const fileElem = document.getElementById('fileElem');
+    if (fileElem) {
+      fileElem.click();
+    }
+  }
 
-    // tslint:disable-next-line:max-line-length
-    // chart = [ { "data": { "yaxisData": { "entity": "publication", "yaxisAggregate": "min", "yaxisEntityField": { "name": "publication.journal", "type": "text" } }, "xaxisData": { "xaxisEntityField": { "name": "publication.project.acronym", "type": "text" } }, "filters": [ { "field": { "name": "publication.classification", "type": "text" }, "type": "ends_with", "values": [ "idi", "nahui" ] } ] } }, { "data": { "yaxisData": { "entity": "organization", "yaxisAggregate": "total" }, "xaxisData": { "xaxisEntityField": { "name": "organization.software.title", "type": "text" } }, "filters": [ { "field": { "name": "organization.project.acronym", "type": "text" }, "type": "!=", "values": [ "pizdet" ] } ] } } ];
-    // chart = [ { "data": { "yaxisData": { "entity": "dataset" }, "filters": [ { "field": { "name": "dataset.title", "type": "text" }, "type": "starts_with", "values": [ "asdaedas", "edasdadsa", "ededede" ] } ] } } ]
-    chart =    {
-      "generalChartProperties": {
-        "profile": "OpenAIRE mapping",
-        "library": "HighCharts",
-        "axisNames": {
-          "yaxisName": "Example of Y Axis",
-          "xaxisName": "Example of X Axis"
-        },
-        "title": "Title example",
-        "results": {
-          "resultsLimit": 30
-        }
-      },
-      "dataseries": [
-        {
-          "data": {
-            "yaxisData": {
-              "entity": "publication",
-              "yaxisAggregate": "total"
-            },
-            "xaxisData": [
-              {
-                "xaxisEntityField": {
-                  "name": "publication.year",
-                  "type": "int"
-                }
-              },
-              {
-                "xaxisEntityField": {
-                  "name": "publication.access mode",
-                  "type": "text"
-                }
-              }
-            ],
-            "filters": [
-              {
-                "field": {
-                  "name": "publication.year",
-                  "type": "int"
-                },
-                "type": "between",
-                "values": [
-                  2000,
-                  2018
-                ]
-              }
-            ]
-          },
-          "chartProperties": {
-            "chartType": "column"
-          }
-        },
-        {
-          "data": {
-            "yaxisData": {
-              "entity": "publication",
-              "yaxisAggregate": "total"
-            },
-            "xaxisData": [
-              {
-                "xaxisEntityField": {
-                  "name": "publication.year",
-                  "type": "int"
-                }
-              }
-            ],
-            "filters": [
-              {
-                "field": {
-                  "name": "publication.year",
-                  "type": "int"
-                },
-                "type": "between",
-                "values": [
-                  2000,
-                  2018
-                ]
-              }
-            ]
-          },
-          "chartProperties": {
-            "dataseriesName": "Total",
-            "chartType": "column"
-          }
-        }
-      ]
-    } ;
-    // TODO Read and Load the chart file
-    this.chartModel = chart;
+  private loadChart(event: any) {
+
+    this.loadedChartFile = null;
+    if (event) {
+
+      const fr: FileReader = new FileReader();
+
+      fr.onload = () => {
+        const loadedChart: Object = JSON.parse(fr.result);
+        this.chartModel = loadedChart;
+      };
+      fr.onloadstart = () => { this.chartLoadingService.chartLoadingStatus = true;  };
+      fr.onloadend = () => { this.loadedChartFile = event.target.files[0]; };
+
+      fr.readAsText(event.target.files[0]);
+    }
   }
 
   private publishChart() {

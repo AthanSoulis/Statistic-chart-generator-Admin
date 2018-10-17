@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, OnDestroy, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, AfterContentInit, ChangeDetectorRef } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
 import { TemplateModalConfig, ModalTemplate, SuiActiveModal, SuiModalService } from 'ng2-semantic-ui';
 import { MappingProfilesService, Profile } from '../../services/mapping-profiles-service/mapping-profiles.service';
-import { Subscription } from 'rxjs';
+import { Subscription, BehaviorSubject } from 'rxjs';
+import { ArrayProperty } from 'ngx-schema-form/lib/model/arrayproperty';
 
 declare var jQuery: any;
 
@@ -15,61 +16,65 @@ export interface IContext {
   templateUrl: './profile-picker.component.html',
   styleUrls: ['./profile-picker.component.css']
 })
-export class ProfilePickerComponent extends ControlWidget implements OnInit, OnDestroy, AfterContentInit {
+export class ProfilePickerComponent extends ControlWidget implements OnDestroy, AfterContentInit {
 
   @ViewChild('mappingModal')
   public modalTemplate: ModalTemplate<IContext, string, string>;
   private activeModal: SuiActiveModal<IContext, string, string>;
 
-  mappingProfileServiceSubscription: Subscription;
+  subscriptions: Array<Subscription>;
 
-  profileMappings: Array<Profile>;
-
-  constructor(private mappingProfileService: MappingProfilesService,
-              public modalService: SuiModalService) {
+  constructor(protected mappingProfileService: MappingProfilesService,
+              public modalService: SuiModalService,
+              protected cdr: ChangeDetectorRef) {
     super();
-
-  }
-
-  ngOnInit() {
-
-    this.mappingProfileServiceSubscription = this.mappingProfileService.selectedProfile$
-    .subscribe(profile => {
-      if (profile) {
-        this.formProperty.setValue(profile.name, true);
-        // this.profile.setValue(profile.name);
-      }});
+    this.subscriptions = new Array();
   }
 
   ngAfterContentInit() {
-    this.mappingProfileService.getProfileMappings().subscribe(
-      (result: Profile[]) => {
-        this.profileMappings = result;
-        this.showProfilePicker(null);
-      },
-      (err: any) => {
-        console.log(err);
-      },
-      () => {}
-    );
+    const dataseriesArray = <ArrayProperty>this.formProperty.searchProperty('/dataseries');
+
+    this.subscriptions.push(
+    (<BehaviorSubject<string>> this.formProperty.valueChanges)
+    .subscribe(profile => {
+      if (profile) {
+        this.mappingProfileService.changeSelectedProfile(profile);
+        dataseriesArray.reset([{'data': {'xaxisData': [], 'filters': []}, 'chartProperties': {'dataseriesName': 'Data'}}] );
+      }
+    }));
+
+    this.showProfilePicker(null);
   }
 
   ngOnDestroy() {
-    this.mappingProfileServiceSubscription.unsubscribe();
+    this.subscriptions.forEach(element => {
+      element.unsubscribe();
+    });
   }
 
   cardButtonAction(profile: Profile) {
 
-    this.mappingProfileService.changeSelectedProfile(profile);
+    this.formProperty.setValue(profile.name, false);
     this.closeProfilePicker();
   }
 
   showProfilePicker(dynamicContent: string) {
 
+    const control = this.control;
+    const cdrRef = this.cdr;
     jQuery('.ui.mapping.modal')
     .modal({
       transition: 'scale',
-      closable  : false
+      // closable  : false
+      onHide: function() {
+        control.markAsTouched();
+        // console.log(control.status);
+        // console.log(control.errors);
+        // console.log('Value: ' + control.value);
+        cdrRef.detectChanges();
+
+        return true;
+      }
     })
     .modal('show');
 
@@ -84,10 +89,21 @@ export class ProfilePickerComponent extends ControlWidget implements OnInit, OnD
 
   closeProfilePicker() {
 
+    const control = this.control;
+    const cdrRef = this.cdr;
+
     jQuery('.ui.mapping.modal')
     .modal({
       transition: 'scale',
-      closable  : false
+      // closable  : false
+      onApprove: function() {
+        control.markAsDirty();
+        console.log(this.control.status);
+        console.log(this.control.errors);
+        console.log('Value: ' + this.control.value);
+        cdrRef.detectChanges();
+        return true;
+      }
     })
     .modal('hide');
 

@@ -16,36 +16,39 @@ export class Profile {
   providedIn: 'root'
 })
 export class MappingProfilesService {
-
-  private changes = 0;
-  public firstChange = true;
-  selectedProfile$: Observable<Profile>;
-  private _selectedProfileSubject: BehaviorSubject<Profile>;
+  mappingProfiles$: BehaviorSubject<Array<Profile>>;
+  selectedProfile$: BehaviorSubject<Profile>;
 
   constructor(private http: HttpClient, private urlProvider: UrlProviderService, private errorHandler: ErrorHandlerService) {
+      this.selectedProfile$ = new BehaviorSubject<Profile>(null);
+      this.mappingProfiles$ = new BehaviorSubject<Array<Profile>>([]);
 
-      this._selectedProfileSubject = new BehaviorSubject<Profile>(null);
-      this.selectedProfile$ = this._selectedProfileSubject.asObservable();
+      const sub = this.getProfileMappings().subscribe(
+        (result: Profile[]) => {
+          this.mappingProfiles$.next(result);
+        },
+        (err: any) => {
+          errorHandler.handleError(err);
+        },
+        () => {
+          sub.unsubscribe();
+        }
+      );
   }
 
-  changeSelectedProfile(profile: Profile) {
-    console.log('Changed to: ' + profile.name);
-    this.changes++;
-    if (this.changes > 1) {
-      this.firstChange = false;
-    }
-    this._selectedProfileSubject.next(profile);
+  changeSelectedProfile(profile: string) {
+
+    this.selectedProfile$.next(
+      this.mappingProfiles$.value.find(
+      (e: Profile) => e.name === profile
+    ));
   }
 
-  getProfileMappings(): Observable<Array<Profile>> {
+  private getProfileMappings(): Observable<Array<Profile>> {
 
     const profileMappingsUrl = this.urlProvider.getUrl() + '/schema/profiles';
 
-    return this.http.get<Array<Profile>>(profileMappingsUrl)
-    .pipe(
-      retry(3), // retry a failed request up to 3 times
-      catchError(this.errorHandler.handleError) // then handle the error
-    );
+    return this.http.get<Array<Profile>>(profileMappingsUrl);
   }
 
 }

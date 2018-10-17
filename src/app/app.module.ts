@@ -30,6 +30,7 @@ import { FieldAutocompleteService } from './services/field-autocomplete-service/
 import { MappingProfilesService } from './services/mapping-profiles-service/mapping-profiles.service';
 import { ChartExportingService } from './services/chart-exporting-service/chart-exporting.service';
 import { ErrorHandlerService } from './services/error-handler-service/error-handler.service';
+import { ChartLoadingService } from './services/chart-loading-service/chart-loading.service';
 
 import { SuiModule } from 'ng2-semantic-ui';
 
@@ -123,6 +124,7 @@ import { HeadMenuWidgetComponent } from './custom-ngx-schema-form-widgets/head-m
     MappingProfilesService,
     ChartExportingService,
     ErrorHandlerService,
+    ChartLoadingService,
     {provide: WidgetRegistry, useClass: CustomWidgetRegistry},
   ],
   bootstrap: [AppComponent]

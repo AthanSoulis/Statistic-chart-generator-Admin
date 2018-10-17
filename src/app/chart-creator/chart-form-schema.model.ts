@@ -1,4 +1,5 @@
 import { FormProperty, PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
+import { ObjectProperty } from 'ngx-schema-form/lib/model/objectproperty';
 
 export class FormSchema {
 
@@ -12,6 +13,8 @@ export class FormSchema {
                 'type' : 'string',
                 'placeholder' : 'No Profile Selected',
                 'title' : 'User Profile',
+                'requiredField' : true,
+                'minLength' : 1,
                 'widget': {
                     'id': 'csui-profile-picker'
                 }
@@ -20,6 +23,8 @@ export class FormSchema {
                 'type' : 'string',
                 'placeholder' : 'Select Library',
                 'title' : 'Library',
+                'requiredField' : true,
+                'minLength' : 1,
                 'widget': {
                     'id': 'csui-library-select'
                 },
@@ -127,7 +132,8 @@ export class FormSchema {
                     'results'
                 ]
             }
-          ]
+          ],
+          'required': [ 'library', 'profile' ]
     };
 
     private _dataseriesFormSchema = {
@@ -150,24 +156,41 @@ export class FormSchema {
                             'properties' : {
                                 'entity' : {
                                     'type' : 'string',
+                                    'requiredField' : true,
+                                    'minLength' : 1,
                                     'placeholder' : 'Select Entity',
                                     'title' : 'Entity',
                                     'widget': { 'id': 'csui-entity-select'},
                                 },
                                 'yaxisAggregate' : {
                                     'type' : 'string',
+                                    'requiredField' : true,
+                                    'minLength' : 1,
                                     'placeholder' : 'Select Aggregate',
+                                    'title' : 'Y axis Aggregate',
                                     'widget': { 'id': 'csui-aggregate-select'},
                                 },
-                                'yaxisEntityField' : {
-                                    'type' : 'string',
+                                'yaxisEntityField': {
+                                    'type' : 'object',
+                                    // 'requiredField' : true,
                                     'placeholder' : 'Select Entity Field',
                                     'title' : 'Entity Field',
                                     'widget': { 'id': 'csui-entity-field-select'},
+                                    'properties' : {
+                                        'name': {
+                                            'type' : 'string',
+                                            'minLength': 1,
+                                        },
+                                        'type': {
+                                            'type' : 'string',
+                                            'minLength': 1,
+                                        }
+                                    },
+                                    'required': ['name'],
                                     'visibleIf': {
                                         'yaxisAggregate': ['count', 'min', 'max', 'avg', 'null']
-                                      }
-                                }
+                                    }
+                                },
                             },
                             'fieldsets': [
                                 {
@@ -178,12 +201,16 @@ export class FormSchema {
                                         'yaxisEntityField'
                                     ]
                                 }
-                            ]
+                            ],
+                            'required': [ 'entity', 'yaxisAggregate']
                         },
                         'xaxisData' : {
                             'type': 'array',
                             'title': 'X axis',
                             'itemName': 'Group By',
+                            // Seems like we have to make charts without X values.
+                            //
+                            // 'minItems': 1,
                             'maxItems': 2,
                             'widget' : { 'id' : 'csui-array' },
                             'items': {
@@ -191,10 +218,22 @@ export class FormSchema {
                                 'widget' : { 'id' : 'csui-property-object' },
                                 'properties' : {
                                     'xaxisEntityField' : {
-                                        'type' : 'string',
+                                        'type' : 'object',
+                                        'requiredField' : true,
                                         'placeholder' : 'Select Entity Field',
                                         'title' : 'Entity Field',
                                         'widget': { 'id': 'csui-entity-field-select'},
+                                        'properties' : {
+                                            'name': {
+                                                'type' : 'string',
+                                                'minLength': 1,
+                                            },
+                                            'type': {
+                                                'type' : 'string',
+                                                'minLength': 1,
+                                            }
+                                        },
+                                        'required': ['name', 'type']
                                     }
                                 },
                                 'fieldsets': [
@@ -203,7 +242,8 @@ export class FormSchema {
                                             'xaxisEntityField'
                                         ]
                                     }
-                                ]
+                                ],
+                                'required': ['xaxisEntityField']
                             }
                         },
                         'filters' : {
@@ -216,27 +256,59 @@ export class FormSchema {
                                 'widget': { 'id': 'csui-filter-property-object'},
                                 'properties' : {
                                     'field': {
-                                        'type' : 'string',
+                                        'type' : 'object',
+                                        'requiredField' : true,
                                         'placeholder' : 'Select Entity Field',
+                                        'title' : 'Entity Field',
                                         'widget': { 'id': 'csui-entity-field-select'},
+                                        'properties' : {
+                                            'name': {
+                                                'type' : 'string',
+                                                'minLength': 1,
+                                            },
+                                            'type': {
+                                                'type' : 'string',
+                                                'minLength': 1,
+                                            }
+                                        },
+                                        'required': ['name', 'type']
                                     },
                                     'type': {
                                         'type' : 'string',
+                                        'requiredField' : true,
+                                        'minLength': 1,
                                         'placeholder' : 'Select Operator',
+                                        'title' : 'Filter Operator',
                                         'widget': { 'id': 'csui-operator-select'}
+                                        // Ideally I would have inserted this:
+                                        //
+                                        // 'invisibleIf': {
+                                        //     'field': ['$ANY$']
+                                        //   }
+                                        //
+                                        // But 'field' returns an object and ngx-schema-form
+                                        // does not support this for object values
                                     },
                                     'values': {
                                         'type': 'array',
+                                        'minItems': 1,
                                         'widget' : { 'id' : 'csui-filter-field-array' },
                                         'items': {
+                                            // Cannot support multiple type items
+                                            //
+                                            // 'anyOf': [
+                                            //     {
+                                            //         'type' : 'string',
+                                            //     },
+                                            //     {
+                                            //         'type' : 'number',
+                                            //     }
+                                            //   ],
                                             'type' : 'string',
                                             'placeholder' : 'Value',
-                                            'widget': {'id': 'csui-filter-field'},
+                                            'widget': {'id': 'csui-filter-field'}
                                         }
                                     }
-                                },
-                                'dependencies': {
-                                    'type': { 'required': ['field'] }
                                 },
                                 'fieldsets': [
                                     {
@@ -246,8 +318,9 @@ export class FormSchema {
                                             'values'
                                         ]
                                     }
-                                ]
-                            }
+                                ],
+                                'required': ['type', 'values']
+                            },
                         }
                     },
                     'fieldsets': [
@@ -258,7 +331,8 @@ export class FormSchema {
                                 'filters'
                             ]
                         }
-                    ]
+                    ],
+                    'required': ['yaxisData', 'xaxisData', 'filters']
                 },
                 'chartProperties' : {
                     'type' : 'object',
@@ -285,6 +359,8 @@ export class FormSchema {
                         },
                         'chartType' : {
                             'type' : 'string',
+                            'requiredField' : true,
+                            'minLength': 1,
                             'placeholder' : 'Select Chart Type',
                             'title' : 'Chart Type',
                             'widget': {
@@ -300,7 +376,8 @@ export class FormSchema {
                                 'dataseriesColor'
                             ]
                         }
-                    ]
+                    ],
+                    'required': ['chartType']
                 }
             },
             'fieldsets': [
@@ -315,6 +392,7 @@ export class FormSchema {
     };
 
     private _SCGAFormSchema = {
+        '$schema': 'http://json-schema.org/draft-04/hyper-schema#',
         'type' : 'object',
         'widget' : { 'id' : 'csui-head-menu' },
         'properties' : {
@@ -330,10 +408,25 @@ export class FormSchema {
                 'title': 'Dataseries',
                 'fields': ['dataseries']
             }
-        ]
+        ],
+        'required': ['generalChartProperties', 'dataseries']
     };
 
     get formSchema() { return this._SCGAFormSchema; }
     get propertiesFormSchema() { return this._propertiesFormSchema; }
     get dataseriesFormSchema() { return this._dataseriesFormSchema; }
+
+      // Declare a mapping between action ids and their implementations
+  get myValidators() {
+      return {
+
+    '/generalChartProperties/axisNames/yaxisName': (value, property: FormProperty, form: PropertyGroup) => {
+        // console.log(property);
+        // console.log(form);
+        // console.log('Value: ' + value);
+
+        return null;
+    }
+
+    }; }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
 import { SupportedLibrariesService } from '../../services/supported-libraries-service/supported-libraries.service';
 
@@ -18,6 +18,4 @@ export class LibrarySelectionWidgetComponent extends ControlWidget {
         // error => this.error = error // error path
     );
   }
-
-
 }

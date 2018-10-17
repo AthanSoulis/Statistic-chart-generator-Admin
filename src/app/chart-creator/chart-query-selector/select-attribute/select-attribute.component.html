@@ -1,7 +1,7 @@
 <div class="simple segment">
-  <div class="ui fluid selection dropdown link item" suiDropdown>
+  <div class="ui fluid selection dropdown link item" suiDropdown (isOpenChange)="this._onTouched($event)" >
 
-    <div *ngIf="selectedNode !== null; else nullSelectedField">
+    <div *ngIf="this.checkValidFieldNode(selectedNode) !== null; else nullSelectedField">
       <div class="ui breadcrumb" #selectedFieldLength *ngFor="let field of selectedNode.name.split('.'); let i = index">
         <div *ngIf="i !== selectedNode.name.split('.').length - 1 ; else activeField">
           <span class="section">{{field | titlecase}}</span>

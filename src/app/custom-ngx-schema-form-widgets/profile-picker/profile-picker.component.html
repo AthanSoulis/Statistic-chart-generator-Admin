@@ -5,7 +5,7 @@
       </div>
       <div class="content">
           <div class="ui three centered stackable cards">
-          <div class="ui card" *ngFor="let profile of profileMappings">
+          <div class="ui card" *ngFor="let profile of (this.mappingProfileService.mappingProfiles$ | async )">
               <div class="content">
                   <div class="header"><h2>{{profile.name}}</h2></div>
                   <div class="description">{{profile.description}}</div>
@@ -19,15 +19,14 @@
 
   <div class="ui hidden divider"></div>
 
-  <div class="widget form-group field">
-    <div class="profile inline field" (click)="showProfilePicker(null)">
-      <label [attr.for]="id" class="horizontal control-label">
+  <div [ngClass]="!schema.requiredField ? 'widget form-group profile inline field' : 
+    (control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required profile inline field error' : 'widget form-group required profile inline field '">
+      <label [attr.for]="id" class="horizontal control-label" (click)="showProfilePicker(null)">
         {{schema.title}}
       </label>
       <span *ngIf="schema.description" class="formHelp">
         {{schema.description}}
       </span>
-      <input style="border: 0; text-align: center;" readonly type="text" 
-      value='{{this.formProperty.value ===null ? "" : this.formProperty.value}}'>
-    </div>
+      <input (click)="showProfilePicker(null)" style=" text-align: center;" readonly type="text" 
+      value='{{this.formProperty.value === null ? "" : this.formProperty.value}}'>
   </div>

@@ -3,7 +3,11 @@ import { ControlWidget } from 'ngx-schema-form';
 import { DbSchemaService } from '../../services/db-schema-service/db-schema.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { MappingProfilesService } from '../../services/mapping-profiles-service/mapping-profiles.service';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
+import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
+import { ErrorHandlerService } from '../../services/error-handler-service/error-handler.service';
+import { ArrayProperty } from 'ngx-schema-form/lib/model/arrayproperty';
+import { Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'entity-selection-widget',
@@ -16,30 +20,72 @@ export class EntitySelectionWidgetComponent extends ControlWidget implements OnI
 
   entities: Array<string>;
   mappingProfileServiceSubscription: Subscription;
+  dbSchemaServiceSubscription: Subscription;
+  valueChangesSubscription: Subscription;
 
-  constructor(private dbSchemaService: DbSchemaService, private mappingProfileService: MappingProfilesService) {
+  constructor(private dbSchemaService: DbSchemaService,
+    private mappingProfileService: MappingProfilesService,
+    private chartLoadingService: ChartLoadingService,
+    private errorHandler: ErrorHandlerService) {
     super();
   }
 
   ngOnInit() {
+
+    const yAxisDataProperty = this.formProperty.parent;
+    const xAxisData = <ArrayProperty>yAxisDataProperty.searchProperty('xaxisData');
+    const filters = <ArrayProperty>yAxisDataProperty.searchProperty('filters');
+
+    // Reset the GroupBys and Filters when an Entity changes
+    this.valueChangesSubscription = this.formProperty.valueChanges.subscribe(
+      (data) => {
+
+        if (!this.chartLoadingService.chartLoadingStatus) {
+          xAxisData.reset([]);
+          filters.reset([]);
+        }});
+
+    // Subscribe to the mappingProfileService in order to get notified of any mapping profile changes
     this.mappingProfileServiceSubscription = this.mappingProfileService.selectedProfile$
     .subscribe(profile => {
 
-      this.dbSchemaService.getAvailableEntities(profile).pipe(distinctUntilChanged()).subscribe(
+      // We want to avoid certain functionality when a chart is Loading
+      // so notify that this Dataseries is loading
+      if (this.chartLoadingService.chartLoadingStatus) {
+        this.chartLoadingService.increaseLoadingObs();
+      }
+
+      this.dbSchemaServiceSubscription = this.dbSchemaService.getAvailableEntities(profile).pipe(distinctUntilChanged()).subscribe(
         // success path
         (data: Array<string>) => {
-          if (!this.mappingProfileService.firstChange) {
-             this.formProperty.reset(null, false);
+
+          // Reset the entity when a profile changes and its not loading a chart
+          if (!this.chartLoadingService.chartLoadingStatus) {
+            this.formProperty.reset(null, false);
           }
+          // Get a hold of the new entities
           this.entities = data;
+        },
+        (error) => this.errorHandler.handleError(error),
+        () => {
+          // We want to avoid certain functionality when a chart is Loading
+          // so notify that this Dataseries stopped loading
+          if ( this.chartLoadingService.chartLoadingStatus) {
+            this.chartLoadingService.decreaseLoadingObs();
+          }
+          this.dbSchemaServiceSubscription.unsubscribe();
         }
-        // error => this.error = error // error path
       );
     });
   }
 
   ngOnDestroy() {
+    this.valueChangesSubscription.unsubscribe();
     this.mappingProfileServiceSubscription.unsubscribe();
+
+    if (this.dbSchemaServiceSubscription && !this.chartLoadingService.chartLoadingStatus) {
+      this.dbSchemaServiceSubscription.unsubscribe();
+    }
   }
 
   ngAfterContentInit() {}

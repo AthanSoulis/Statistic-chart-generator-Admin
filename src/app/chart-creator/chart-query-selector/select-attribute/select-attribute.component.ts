@@ -1,14 +1,16 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef, Injectable, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
-import { FormGroup, ControlContainer, FormGroupDirective, FormBuilder, FormGroupName, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, forwardRef, Injectable, OnChanges, SimpleChanges, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { FormGroup, ControlContainer, FormGroupDirective, FormBuilder, FormGroupName, ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource, MatTreeNodeOutlet } from '@angular/material/tree';
 
 import { FieldType } from '../../../services/supported-filter-types-service/supported-filter-types.service';
 import { DbSchemaService, EntityNode, FieldNode, EntityTreeNode } from '../../../services/db-schema-service/db-schema.service';
 
-import { BehaviorSubject, of as observableOf, Observable} from 'rxjs';
+import { BehaviorSubject, of as observableOf, Observable, Subscription} from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 import { ErrorHandlerService } from '../../../services/error-handler-service/error-handler.service';
+import { MappingProfilesService, Profile } from '../../../services/mapping-profiles-service/mapping-profiles.service';
+import { ChartLoadingService } from '../../../services/chart-loading-service/chart-loading.service';
 
 @Component({
   selector: 'select-attribute',
@@ -19,24 +21,47 @@ import { ErrorHandlerService } from '../../../services/error-handler-service/err
   ],
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SelectAttributeComponent), multi: true }]
 })
-export class SelectAttributeComponent implements ControlValueAccessor, OnChanges {
+export class SelectAttributeComponent implements ControlValueAccessor, OnChanges, AfterViewInit {
 
   nestedEntityTreeControl: NestedTreeControl<EntityTreeNode>;
   nestedEntityDataSource: MatTreeNestedDataSource<EntityTreeNode>;
 
+  @Input() formControl: FormControl;
   @Input() chosenEntity: string = null;
   @Output() fieldChanged = new EventEmitter<FieldNode>();
 
-  entityTreeNode: EntityTreeNode = null;
   parentPath: string = null;
   selectedNode: FieldNode = null;
 
   constructor(private formBuilder: FormBuilder,
     private dbSchemaService: DbSchemaService,
-    private errorHandlerService: ErrorHandlerService) {
+    private errorHandlerService: ErrorHandlerService,
+    private profileMappingService: MappingProfilesService,
+    private chartLoadingService: ChartLoadingService,
+    private cdr: ChangeDetectorRef) {
 
     this.nestedEntityTreeControl = new NestedTreeControl<EntityTreeNode>(this.getChildren);
     this.nestedEntityDataSource = new MatTreeNestedDataSource();
+  }
+
+  ngAfterViewInit() {
+    this.registerOnChange(this.handleChange);
+    this.registerOnTouched(this.handleTouch);
+  }
+
+  _onChange = (arg: any) => {};
+  _onTouched = () => {};
+
+  handleChange(arg: FieldNode) {
+    if (this.checkValidFieldNode(arg) !== null) {
+      this.formControl.markAsDirty();
+    }
+  }
+
+  handleTouch(opened: boolean) {
+    if (!opened) {
+      this.formControl.markAsTouched();
+    }
   }
 
   private getChildren = (node: EntityTreeNode) => {
@@ -53,8 +78,6 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
       return false; }
     }
 
-  _onChange = (_: any) => {};
-
   ngOnChanges(changes: SimpleChanges) {
 
     for (const changedField of Object.keys(changes)) {
@@ -64,7 +87,11 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
       if (changedField === 'chosenEntity') {
         // console.log('Entity changed from: ' + change.previousValue + ' to ' + change.currentValue);
         if (change.currentValue !== change.previousValue) {
-          this.getEntityTreeNode(change.currentValue);
+          if (this.chartLoadingService.chartLoadingStatus) {
+            this.getEntityTreeNode(change.currentValue, false);
+          } else {
+            this.getEntityTreeNode(change.currentValue, true);
+          }
         }
       }
     }
@@ -72,45 +99,49 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
 
   getEntityTreeNode(entity: string, resetSelectField?: boolean) {
 
+    if (entity === null) {
+
+      this.nestedEntityDataSource.data = [];
+      this.selectedFieldChanged(null);
+      return;
+    }
+
     if ( entity === this.chosenEntity) {
-      const dbSchemaSubscription = this.dbSchemaService.getEntityFields(this.chosenEntity).pipe(distinctUntilChanged()).subscribe(
-        (value: EntityNode) => {
-          if (value !== null) {
-            const rootTreeNode = this.dbSchemaService.getEntityTree(value);
-            if (rootTreeNode !== null) {
-              this.entityTreeNode = rootTreeNode;
 
-              const initArray = new Array<EntityTreeNode>();
-              if (this.entityTreeNode !== null) {
-                initArray.push(this.entityTreeNode);
-              }
-              this.nestedEntityDataSource.data = initArray;
-              if (resetSelectField) {
-                this.selectedFieldChanged(null);
-              }
+          const dbSchemaSubscription: Subscription =
+          this.dbSchemaService.getEntityFields(this.chosenEntity, this.profileMappingService.selectedProfile$.value)
+          .pipe(distinctUntilChanged()).subscribe(
+            (value: EntityNode) => {
+              if (value !== null) {
+                const rootTreeNode: EntityTreeNode = this.dbSchemaService.getEntityTree(value);
+                if (rootTreeNode !== null) {
+                  const initArray = new Array<EntityTreeNode>();
+                  initArray.push(rootTreeNode);
+                  this.nestedEntityDataSource.data = initArray;
 
-              return this.entityTreeNode;
-            }
-         }},
-         error => {
-           this.entityTreeNode = null;
-           dbSchemaSubscription.unsubscribe();
-           return this.entityTreeNode;
-         },
-         () => dbSchemaSubscription.unsubscribe()
-      );
+                  if (resetSelectField) {
+                    this.selectedFieldChanged(null);
+                  }
+                  return rootTreeNode;
+                }
+              }},
+              error => {
+                dbSchemaSubscription.unsubscribe();
+                return null;
+              },
+              () => dbSchemaSubscription.unsubscribe()
+          );
     }
   }
 
   selectedFieldChanged(value: FieldNode) {
 
-    if (value) {
-      console.log('Field changed to: ' + (value === null ? null : '{' + value.name + ' , ' + value.type + '}')
-      + ' from: ' + (this.selectedNode === null ? null : '{' + this.selectedNode.name + ' , ' + this.selectedNode.type + '}'));
-    }
+    // if (value) {
+    //   console.log('Field changed to: ' + (value === null ? null : '{' + value.name + ' , ' + value.type + '}')
+    //   + ' from: ' + (this.selectedNode === null ? null : '{' + this.selectedNode.name + ' , ' + this.selectedNode.type + '}'));
+    // }
 
     this.selectedNode = value;
-
     this._onChange(value);
 
   }
@@ -121,22 +152,25 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
 
   // Writes a new value from the form model into the view or (if needed) DOM property.
   writeValue(value: FieldNode) {
-    // console.log('Writing values: ' + value);
-    if (value) {
-      this.selectedNode = value;
+    console.log('Updating DOM from model value: ', value);
+    if (this.checkValidFieldNode(value)) {
+      this.selectedFieldChanged(value);
+      this.cdr.detectChanges();
     }
   }
 
   registerOnChange(fn: (_: any) => void): void {
+    // console.log('On Change method updated');
     this._onChange = fn;
   }
 
-  registerOnTouched(_fn: any): void {
-    return;
+  registerOnTouched(fn: any): void {
+    // console.log('On Touched method updated');
+    this._onTouched = fn;
   }
 
   onExpanded(node: EntityTreeNode) {
-    // console.log(node);
+    // console.log('Node expanded: ',node);
     this.parentPath = this.traverseParentPath(node);
   }
 
@@ -150,14 +184,22 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
 
   nodeSelected(field: FieldNode, pathOnly?: boolean) {
 
-    // Set the field to full path and emit it
+    // Set the field to full path, change the control into the updated value and emit it
     const selectedFieldNode = new FieldNode();
 
     selectedFieldNode.name = this.parentPath + '.' + field.name;
     selectedFieldNode.type = field.type;
 
-    this.fieldChanged.emit(selectedFieldNode);
+    this.formControl.setValue(selectedFieldNode);
 
-    this.selectedFieldChanged(selectedFieldNode);
+    this.fieldChanged.emit(selectedFieldNode);
+  }
+
+  protected checkValidFieldNode(e: FieldNode) {
+
+    if (e !== null && (e.name && e.type)) {
+      return e;
+    }
+    return null;
   }
 }

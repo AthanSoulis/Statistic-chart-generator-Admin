@@ -1,4 +1,5 @@
-<div *ngIf="this.filterOperator" class="widget form-group ">
+<div *ngIf="this.filterOperator" [ngClass]="!schema.requiredField ? 'widget form-group field' : 
+(control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'">
 
   <div *ngIf="filterFieldArrayLength > 0">
     

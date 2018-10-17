@@ -25,7 +25,7 @@ export class FilterFieldArrayWidgetComponent extends ArrayLayoutWidget implement
     this.operatorSub = dependentOperatorProperty.valueChanges.asObservable().pipe(distinctUntilChanged()).subscribe(
       (operator: string) => {
         this.filterOperator = operator;
-        console.log('Operator: ' + this.filterOperator);
+        // console.log('Operator: ' + this.filterOperator);
         if (this.filterOperator === null) {
           this.formProperty.reset([], false);
         }

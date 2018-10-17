@@ -31,8 +31,10 @@ export class FilterFieldWidgetComponent extends ControlWidget implements OnDestr
 
     this.entityFieldSub = dependentFieldProperty.valueChanges.asObservable().pipe(distinctUntilChanged()).subscribe(
       (field: FieldNode) => {
-        this.selectedField = field;
-        this.fieldType = FieldType[field.type];
+          if (field) {
+            this.selectedField = field;
+            this.fieldType = FieldType[field.type];
+          }
       }
       // error => this.error = error // error path
     );
@@ -45,5 +47,6 @@ export class FilterFieldWidgetComponent extends ControlWidget implements OnDestr
 
   ngOnDestroy() {
     this.entityFieldSub.unsubscribe();
+    this.operatorSub.unsubscribe();
   }
 }

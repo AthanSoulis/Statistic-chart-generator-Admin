@@ -34,11 +34,11 @@ export class AutocompleteInputFieldComponent implements OnInit, AfterViewInit, O
   }
 
   ngOnInit() {
-    console.log('Autocomplete:');
-    console.log(this.inputFormGroup);
-    console.log(this.filterValueIndex);
-
+    // console.log('Autocomplete:');
+    // console.log(this.inputFormGroup);
+    // console.log(this.filterValueIndex);
   }
+
   ngAfterViewInit() {
     this.setupAutocompleteInputField();
   }

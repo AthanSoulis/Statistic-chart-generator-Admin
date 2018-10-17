@@ -1,12 +1,16 @@
 import { Filter } from './query-filter-selector/query-filter/query-filter.model';
 
 export class Query {
+    limit: string;
+    profile: string;
     entity: string;
     select: Array<Select> = [];
     filters: Array<Filter> = [];
 
-    constructor(dataseriesData: any) {
+    constructor(dataseriesData: any, profile: string, limit: string) {
         this.entity = dataseriesData.yaxisData.entity;
+        this.profile = profile;
+        this.limit = limit;
 
         const yaxisSelect = new Select();
 
@@ -43,6 +47,29 @@ export class Select {
     constructor() {
         this.field = null;
         this.aggregate = null;
+    }
+}
+
+export class ChartInfo {
+    name: string;
+    type: string;
+    color: string;
+    query: Query;
+
+    // constructor(query?: Query ) {
+    //     this.query = query;
+    //     this.name = null;
+    //     this.type = null;
+    //     if (query === undefined) {
+    //         this.query = new Query();
+    //     }
+    // }
+
+    constructor(dataseriesElement: any, profile: string, limit: string) {
+        this.name = dataseriesElement.chartProperties.dataseriesName;
+        this.type = dataseriesElement.chartProperties.chartType;
+        this.color = dataseriesElement.chartProperties.dataseriesColor;
+        this.query = new Query(dataseriesElement.data, profile, limit);
     }
 }
 

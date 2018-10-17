@@ -75,5 +75,4 @@ export class ChartExportingService {
 
 export class ShortenUrlResponse {
   public shortUrl: string;
-
 }

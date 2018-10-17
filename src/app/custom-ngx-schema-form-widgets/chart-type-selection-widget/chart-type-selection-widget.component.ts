@@ -18,5 +18,4 @@ export class ChartTypeSelectionWidgetComponent extends ControlWidget {
       // error => this.error = error // error path
     );
    }
-
 }

@@ -3,7 +3,7 @@ import { ControlWidget } from 'ngx-schema-form';
 import { SupportedFilterTypesService, FilterType, FieldType } from '../../services/supported-filter-types-service/supported-filter-types.service';
 import { FieldNode } from '../../services/db-schema-service/db-schema.service';
 import { Subscription, Observable } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component({
   selector: 'operator-selection-widget',
@@ -25,10 +25,9 @@ export class OperatorSelectionWidgetComponent extends ControlWidget implements O
   ngAfterContentInit() {
 
     const dependentProperty = this.formProperty.searchProperty('field');
-    // console.log(dependentProperty);
 
     this.entityFieldSub = dependentProperty.valueChanges.asObservable().pipe(distinctUntilChanged()).subscribe(
-      (field: FieldNode) => this.fieldChanged(field)
+      (field: FieldNode) => { this.fieldChanged(field); }
       // error => this.error = error // error path
     );
   }
@@ -43,12 +42,17 @@ export class OperatorSelectionWidgetComponent extends ControlWidget implements O
   }
 
   fieldChanged(field: FieldNode) {
-    if (!field) { return; }
+    if (!field) {
+      // Reset the operator
+      this.control.setValue(null);
+      return;
+    }
 
     if (this.selectedField === null || FieldType[field.type] !== FieldType[this.selectedField.type] ) {
 
-      console.log('FieldType Changed : ' + FieldType[field.type]);
-      console.log(field);
+      // console.log('FieldType Changed : ' + FieldType[field.type]);
+      // console.log(field);
+
       this.getOperatorsOfType(FieldType[field.type]);
       this.selectedField = field;
       // Reset the operator
