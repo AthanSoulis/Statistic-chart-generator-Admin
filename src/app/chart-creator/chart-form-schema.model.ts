@@ -29,6 +29,40 @@ export class FormSchema {
                     'id': 'csui-library-select'
                 },
             },
+            'highchartsOptions' : {
+                'type' : 'object',
+                'widget' : { 'id' : 'csui-property-object' },
+                'properties' : {
+                    'exporting' : {
+                        'type': 'boolean',
+                        'default': false,
+                        'description': 'Enable exporting'
+                    }
+                },
+                'fieldsets': [
+                    {
+                        'title' : 'Highcharts Options',
+                        'fields': ['exporting']
+                    }
+                ],
+                'visibleIf': {
+                    'library': ['HighCharts']
+                }
+            },
+            // 'googlechartsOptions' : {
+            //     'type' : 'object',
+            //     'widget' : { 'id' : 'csui-property-object' },
+            //     'properties' : {
+            //     },
+            //     'fieldsets': [
+            //         {
+            //             'title' : 'Googlecharts Options',
+            //         }
+            //     ],
+            //     'visibleIf': {
+            //         'library': ['GoogleCharts']
+            //     }
+            // },
             'axisNames' : {
                 'type' : 'object',
                 'widget' : { 'id' : 'csui-property-object' },
@@ -127,6 +161,8 @@ export class FormSchema {
                 'title': 'Chart Properties',
                 'fields': [
                     'library',
+                    'highchartsOptions',
+                    // 'googlechartsOptions',
                     'title',
                     'axisNames',
                     'results'

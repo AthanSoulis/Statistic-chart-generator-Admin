@@ -162,6 +162,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
   createDynamicHighChartsChart(generalProperties: any, dataseries: Object[]): HighChartsChart {
     const chartObj = new HighChartsChart();
     chartObj.chartDescription.title.text = generalProperties.title;
+    chartObj.chartDescription.exporting.enabled = generalProperties.highchartsOptions.exporting;
 
     if (generalProperties.axisNames) {
       chartObj.chartDescription.xAxis.title.text = generalProperties.axisNames.xaxisName;

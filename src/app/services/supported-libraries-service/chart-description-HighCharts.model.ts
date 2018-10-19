@@ -18,6 +18,7 @@ class HighChartsDescription {
     xAxis: HCaxis;
     queries: Array<ChartInfo> = [];
     lang: HCLang;
+    exporting: HCExporting;
 
     constructor() {
         this.chart = new HCchart();
@@ -25,6 +26,7 @@ class HighChartsDescription {
         this.yAxis = new HCaxis();
         this.xAxis = new HCaxis();
         this.lang = new HCLang();
+        this.exporting = new HCExporting();
     }
 }
 
@@ -43,5 +45,12 @@ class HCaxis {
 }
 class HCLang {
     noData = 'No Data available for the Query';
+}
+
+class HCExporting {
+    enabled: boolean;
+    constructor() {
+        this.enabled = false;
+    }
 }
 
