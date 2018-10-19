@@ -145,6 +145,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
 
     chartDescription.GoogleChartType = baseChartType;
     chartDescription.options.title = generalProperties.title;
+    chartDescription.options.exporting = generalProperties.googlechartsOptions.exporting;
 
     if (generalProperties.axisNames) {
       chartDescription.options.hAxis.title = generalProperties.axisNames.xaxisName;

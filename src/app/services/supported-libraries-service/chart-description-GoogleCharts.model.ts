@@ -51,11 +51,13 @@ class GoogleChartsOptions {
     hAxis: GoogleChartsAxis;
     vAxis: GoogleChartsAxis;
     series: GoogleChartSeries [];
+    exporting: boolean;
 
     constructor() {
         this.hAxis = new GoogleChartsAxis();
         this.vAxis = new GoogleChartsAxis();
         this.series = [];
+        this.exporting = false;
     }
 }
 
