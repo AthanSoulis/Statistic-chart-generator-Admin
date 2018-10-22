@@ -1,4 +1,5 @@
 import { Filter } from './query-filter-selector/query-filter/query-filter.model';
+import { DataseriesFormSchema, DataFormSchema } from '../chart-form-schema.model';
 
 export class Query {
     limit: string;
@@ -7,7 +8,7 @@ export class Query {
     select: Array<Select> = [];
     filters: Array<Filter> = [];
 
-    constructor(dataseriesData: any, profile: string, limit: string) {
+    constructor(dataseriesData: DataFormSchema, profile: string, limit: string) {
         this.entity = dataseriesData.yaxisData.entity;
         this.profile = profile;
         this.limit = limit;
@@ -65,11 +66,11 @@ export class ChartInfo {
     //     }
     // }
 
-    constructor(dataseriesElement: any, profile: string, limit: string) {
+    constructor(dataseriesElement: DataseriesFormSchema, profile: string, limit: number) {
         this.name = dataseriesElement.chartProperties.dataseriesName;
         this.type = dataseriesElement.chartProperties.chartType;
         this.color = dataseriesElement.chartProperties.dataseriesColor;
-        this.query = new Query(dataseriesElement.data, profile, limit);
+        this.query = new Query(dataseriesElement.data, profile, limit.toString());
     }
 }
 

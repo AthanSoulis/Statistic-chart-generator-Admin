@@ -8,7 +8,7 @@ import { GoogleChartsChart } from '../services/supported-libraries-service/chart
 import { Filter } from './chart-query-selector/query-filter-selector/query-filter/query-filter.model';
 import { Profile } from '../services/mapping-profiles-service/mapping-profiles.service';
 import { Subject } from 'rxjs';
-import { FormSchema } from './chart-form-schema.model';
+import { FormSchema, SCGAFormSchema, PropertiesFormSchema, DataseriesFormSchema } from './chart-form-schema.model';
 
 @Component({
   selector: 'chart-creator',
@@ -25,7 +25,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
   public dataseriesTabActive: boolean[] = [];
 
   fs: FormSchema;
-  formValue: string;
+  formValue: SCGAFormSchema;
   private _isFormValid;
 
   constructor(private formBuilder: FormBuilder,
@@ -37,7 +37,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {}
 
-  get chartFormValue(): Object { return this.formValue as Object; }
+  get chartFormValue(): SCGAFormSchema { return this.formValue as SCGAFormSchema; }
 
   dynamicFormChanged($event) {
     this.formValue = $event.value;
@@ -63,12 +63,12 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
   createChart(): Subject<Object> {
 
     const chartObj: Subject<Object> = new Subject();
-    const formObj: any = this.chartFormValue;
+    const formObj: SCGAFormSchema = this.chartFormValue;
 
-    const generalProperties: any = formObj.generalChartProperties;
+    const generalProperties: PropertiesFormSchema = formObj.generalChartProperties;
     const library: string = generalProperties.library;
 
-    const dataseries: Object[] = formObj.dataseries;
+    const dataseries = formObj.dataseries;
 
     this.supportedLibrariesService.getSupportedLibraries().subscribe(
       (data: Array<string>) =>  {
@@ -127,17 +127,17 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
     return chartObj;
   }
 
-  createDynamicGoogleChartsChart(generalProperties: any, dataseries: Object[]): GoogleChartsChart {
+  createDynamicGoogleChartsChart(generalProperties: PropertiesFormSchema, dataseries: DataseriesFormSchema[]): GoogleChartsChart {
     const chartObj = new GoogleChartsChart();
     const chartDescription = chartObj.chartDescription;
 
-    let baseChartType: any;
+    let baseChartType: string;
     if (dataseries.length > 0) {
-      baseChartType = (<any>dataseries[0]).chartProperties.chartType;
+      baseChartType = dataseries[0].chartProperties.chartType;
 
       for (let index = 0; index < dataseries.length; index++) {
         const element = dataseries[index];
-        if (baseChartType !== (<any>element).chartProperties.chartType ) {
+        if (baseChartType !== element.chartProperties.chartType ) {
           baseChartType = 'combo';
           break;
         }
@@ -160,7 +160,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
     return chartObj;
   }
 
-  createDynamicHighChartsChart(generalProperties: any, dataseries: Object[]): HighChartsChart {
+  createDynamicHighChartsChart(generalProperties: PropertiesFormSchema, dataseries: DataseriesFormSchema[]): HighChartsChart {
     const chartObj = new HighChartsChart();
     chartObj.chartDescription.title.text = generalProperties.title;
     chartObj.chartDescription.exporting.enabled = generalProperties.highchartsOptions.exporting;
@@ -180,7 +180,9 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
     return chartObj;
   }
 
-  set isFormValid(isValid: boolean) { console.log('Form Valid: ' + this._isFormValid); this._isFormValid = isValid; }
+  set isFormValid(isValid: boolean) {
+    //  console.log('Form Valid: ' + this._isFormValid);
+     this._isFormValid = isValid; }
   get isFormValid() { return this._isFormValid; }
 
   errorsChange(arg: any) {
@@ -189,7 +191,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
       return;
     }
     this.isFormValid = false;
-    console.log('Errors Change: ', arg);
+    // console.log('Errors Change: ', arg);
   }
 
 }

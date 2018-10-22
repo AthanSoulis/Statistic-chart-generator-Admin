@@ -1,6 +1,66 @@
 import { FormProperty, PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
 import { ObjectProperty } from 'ngx-schema-form/lib/model/objectproperty';
 
+export interface SCGAFormSchema {
+    generalChartProperties: PropertiesFormSchema;
+    dataseries: DataseriesFormSchema[];
+}
+export interface DataseriesFormSchema {
+    data: DataFormSchema;
+    chartProperties: ChartPropertiesFormSchema;
+}
+export interface DataFormSchema {
+    yaxisData: YaxisDataFormSchema;
+    xaxisData: XaxisDataFormSchema[];
+    filters: FilterFormSchema[];
+}
+export interface YaxisDataFormSchema {
+    entity: string;
+    yaxisAggregate: string;
+    yaxisEntityField?: EntityFieldFormSchema;
+}
+export interface XaxisDataFormSchema {
+    xaxisEntityField: EntityFieldFormSchema;
+}
+export interface FilterFormSchema {
+    field: EntityFieldFormSchema;
+    type: string;
+    values: string[];
+}
+export interface EntityFieldFormSchema {
+    name: string;
+    type?: string;
+}
+export interface ChartPropertiesFormSchema {
+    chartType: string;
+    dataseriesColor?: string;
+    dataseriesName?: string;
+}
+export interface PropertiesFormSchema {
+    profile: string;
+    library: string;
+
+    highchartsOptions ?: HighchartsOptionsFormSchema;
+    googlechartsOptions ?: GooglechartsOptionsFormSchema;
+    axisNames ?: AxisNamesFormSchema;
+    title ?: string;
+    results ?: ResultsOptionsFormSchema;
+}
+export interface ResultsOptionsFormSchema {
+    resultsLimit ?: number;
+    orderByAxis ?: string;
+}
+export interface AxisNamesFormSchema {
+    yaxisName ?: string;
+    xaxisName ?: string;
+}
+export interface GooglechartsOptionsFormSchema {
+    exporting ?: boolean;
+}
+export interface HighchartsOptionsFormSchema {
+    exporting ?: boolean;
+}
+
 export class FormSchema {
 
     private _propertiesFormSchema = {
@@ -361,7 +421,7 @@ export class FormSchema {
                                         ]
                                     }
                                 ],
-                                'required': ['type', 'values']
+                                'required': ['field', 'type', 'values']
                             },
                         }
                     },
@@ -429,7 +489,8 @@ export class FormSchema {
                         'chartProperties'
                     ]
                 }
-            ]
+            ],
+            'required': ['data', 'chartProperties']
         }
     };
 
