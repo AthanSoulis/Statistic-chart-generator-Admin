@@ -1,11 +1,11 @@
-<h3 class="ui dividing header" *ngIf="formProperty.schema.title">{{formProperty.schema.title}}
+<h2 class="ui dividing header" *ngIf="formProperty.schema.title">{{formProperty.schema.title}}
   <div class="sub header" *ngIf="formProperty.schema.description">{{formProperty.schema.description}}</div>
-</h3>
+</h2>
 <div *ngFor="let fieldset of formProperty.schema.fieldsets">
-  <h4 class="ui dividing header" *ngIf="fieldset.title">{{fieldset.title}}
+  <h3 class="ui dividing header" *ngIf="fieldset.title">{{fieldset.title}}
     <div class="sub header" *ngIf="fieldset.description">{{fieldset.description}}</div>
-  </h4>
-  <div class="field" *ngFor="let fieldId of fieldset.fields">
+  </h3>
+  <div class="ui field basic segment" *ngFor="let fieldId of fieldset.fields">
       <sf-form-element [formProperty]="formProperty.getProperty(fieldId)"></sf-form-element>
   </div>
   <div class="ui hidden divider"></div>

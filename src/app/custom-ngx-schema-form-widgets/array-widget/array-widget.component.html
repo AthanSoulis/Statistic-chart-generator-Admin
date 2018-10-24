@@ -1,10 +1,10 @@
 <div [ngClass]="!schema.requiredField ? 
 'widget form-group field' : 
 (control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'" >
-  <h4 class="ui dividing header horizontal control-label" [attr.for]="id" 
+  <h3 class="ui dividing header horizontal control-label" [attr.for]="id" 
   *ngIf="schema.title || schema.description; else no_header"> {{ schema.title }}
     <div class="sub header formHelp" *ngIf="schema.description">{{ schema.description }}</div>
-  </h4>
+  </h3>
     
   <ng-template #no_header>
     <div class="ui hidden divider"></div>
