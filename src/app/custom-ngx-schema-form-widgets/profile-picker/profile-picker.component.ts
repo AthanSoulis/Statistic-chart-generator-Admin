@@ -21,6 +21,10 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
   @ViewChild('mappingModal')
   public modalTemplate: ModalTemplate<IContext, string, string>;
   private activeModal: SuiActiveModal<IContext, string, string>;
+  private _hasBeenInitialized = false;
+
+  set hasBeenInitialized(init: boolean) { this._hasBeenInitialized = init; }
+  get hasBeenInitialized() { return this._hasBeenInitialized; }
 
   subscriptions: Array<Subscription>;
 
@@ -39,6 +43,7 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
     .subscribe(profile => {
       if (profile) {
         this.mappingProfileService.changeSelectedProfile(profile);
+        this.cdr.detectChanges();
         dataseriesArray.reset([{'data': {'xaxisData': [], 'filters': []}, 'chartProperties': {'dataseriesName': 'Data'}}] );
       }
     }));
@@ -54,26 +59,32 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
 
   cardButtonAction(profile: Profile) {
 
-    this.formProperty.setValue(profile.name, false);
-    this.closeProfilePicker();
+    if ( this.formProperty.value !== profile.name ) {
+      this.formProperty.setValue(profile.name, false);
+    }
+    this.hideProfilePicker();
   }
 
   showProfilePicker(dynamicContent: string) {
 
     const control = this.control;
     const cdrRef = this.cdr;
+    const caller = this;
+
     jQuery('.ui.mapping.modal')
     .modal({
       transition: 'scale',
       // closable  : false
-      onHide: function() {
+      onHide: (element: any) => {
         control.markAsTouched();
-        // console.log(control.status);
-        // console.log(control.errors);
-        // console.log('Value: ' + control.value);
         cdrRef.detectChanges();
 
         return true;
+      },
+      onHidden: () => {
+        if (this.formProperty.value !== null) {
+          caller.hasBeenInitialized = true;
+        }
       }
     })
     .modal('show');
@@ -87,24 +98,9 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
 
   }
 
-  closeProfilePicker() {
-
-    const control = this.control;
-    const cdrRef = this.cdr;
+  hideProfilePicker() {
 
     jQuery('.ui.mapping.modal')
-    .modal({
-      transition: 'scale',
-      // closable  : false
-      onApprove: function() {
-        control.markAsDirty();
-        console.log(this.control.status);
-        console.log(this.control.errors);
-        console.log('Value: ' + this.control.value);
-        cdrRef.detectChanges();
-        return true;
-      }
-    })
     .modal('hide');
 
     // {1} : I would use that but the ng2-semantic-ui css is not updated so I am stuck with jQuery
