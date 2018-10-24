@@ -486,8 +486,8 @@ export class FormSchema {
             'fieldsets': [
                 {
                     'fields': [
-                        'data',
-                        'chartProperties'
+                        'chartProperties',
+                        'data'
                     ]
                 }
             ],
