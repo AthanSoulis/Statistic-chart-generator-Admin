@@ -84,6 +84,7 @@ export class FormSchema {
                 'placeholder' : 'Select Library',
                 'title' : 'Library',
                 'requiredField' : true,
+                'default' : 'HighCharts',
                 'minLength' : 1,
                 'widget': {
                     'id': 'csui-library-select'
