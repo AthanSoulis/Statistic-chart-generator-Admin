@@ -2,9 +2,9 @@
 <form class="ui form container">
     
     <div class="ui basic segment">        
-        <sf-form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.myValidators"
+        <sf-form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.customValidators"
         (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>
-        <pre> {{formValue | json}} </pre>
+        <!-- <pre> {{formValue | json}} </pre> -->
     </div>
 
     <button type="submit" 
@@ -13,5 +13,9 @@
             'ui bottom attached fluid positive basic button' : 
             'ui bottom attached fluid disabled negative basic button'">Submit</button>
 
-    <div class="ui negative message" *ngIf="!isFormValid">Error Message</div>
+    <div class="ui negative message" *ngIf="!isFormValid">
+        <ul>
+            <li *ngFor="let error of formErrors.value">{{error.message}}</li>
+        </ul>
+    </div>
 </form>

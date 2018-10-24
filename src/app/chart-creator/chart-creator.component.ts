@@ -26,6 +26,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
 
   fs: FormSchema;
   formValue: SCGAFormSchema;
+  formErrors: any;
   private _isFormValid;
 
   constructor(private formBuilder: FormBuilder,
@@ -185,13 +186,14 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
      this._isFormValid = isValid; }
   get isFormValid() { return this._isFormValid; }
 
-  errorsChange(arg: any) {
-    if (arg.value === null) {
+  errorsChange(formErrorsObj: any) {
+    if (formErrorsObj.value === null) {
       this.isFormValid = true;
       return;
     }
     this.isFormValid = false;
-    // console.log('Errors Change: ', arg);
+    this.formErrors = formErrorsObj;
+    // console.log('Errors Change: ', formErrorsObj);
   }
 
 }
