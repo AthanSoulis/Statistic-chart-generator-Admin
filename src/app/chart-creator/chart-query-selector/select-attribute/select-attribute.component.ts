@@ -119,6 +119,9 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
                   initArray.push(rootTreeNode);
                   this.nestedEntityDataSource.data = initArray;
 
+                  // Expand root node
+                  this.nestedEntityTreeControl.expand(rootTreeNode);
+
                   if (resetSelectField) {
                     this.selectedFieldChanged(null);
                   }

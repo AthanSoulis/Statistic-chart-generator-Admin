@@ -25,11 +25,10 @@
       <mat-tree [dataSource]="nestedEntityDataSource" [treeControl]="nestedEntityTreeControl" class="data-tree" >
 
         <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
-          <li class="mat-tree-node" id="data-tree-entity-field">
-            <button type="button" id="data-tree-button" class="ui compact icon button" 
-                mat-icon-button matTreeNodeToggle 
-                [attr.aria-label]="'toggle ' + node.name"
-                (click)="onExpanded(node)">
+          <li (click)="onExpanded(node)" class="mat-tree-node" id="data-tree-entity-field"
+          matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+          
+            <button type="button" id="data-tree-button" class="ui compact icon button" mat-icon-button>
               <mat-icon class="mat-icon-rtl-mirror">
                 {{nestedEntityTreeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
               </mat-icon>
