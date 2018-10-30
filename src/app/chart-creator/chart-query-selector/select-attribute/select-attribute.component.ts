@@ -121,6 +121,7 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
 
                   // Expand root node
                   this.nestedEntityTreeControl.expand(rootTreeNode);
+                  this.onExpanded(rootTreeNode);
 
                   if (resetSelectField) {
                     this.selectedFieldChanged(null);
