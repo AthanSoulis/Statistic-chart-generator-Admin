@@ -7,11 +7,13 @@
         <!-- <pre> {{formValue | json}} </pre> -->
     </div>
 
+    <div [ngClass]="isFormValid ? '': 'not-allowed' ">
     <button type="submit" 
             (click)="onSubmit()"
             [ngClass]="isFormValid ?
             'ui bottom attached fluid positive basic button' : 
-            'ui bottom attached fluid negative basic button'">Submit</button>
+            'ui bottom attached fluid disabled negative basic button'">Submit</button>
+    </div>
 
     <div class="ui negative message" *ngIf="!isFormValid">
         <ul>

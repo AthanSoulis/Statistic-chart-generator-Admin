@@ -48,17 +48,19 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
     console.log('On Submit called');
     console.log(this.chartFormValue);
 
-    const chartObj$ = this.createChart();
-    chartObj$.subscribe(
-      (chartObj: any) => {
-        this.chartSubmit.emit({value: chartObj});
-        chartObj$.unsubscribe();
-      }
-    );
+    if (this.isFormValid) {
+      const chartObj$ = this.createChart();
+      chartObj$.subscribe(
+        (chartObj: any) => {
+          this.chartSubmit.emit({value: chartObj});
+          chartObj$.unsubscribe();
+        }
+      );
 
 
-    // if (hchartObj === null) { hchartObj = this.createHighChartsChart(this.properties, this.queryForm); }
-    // this.tableSubmit.emit({value: hchartObj});
+      // if (hchartObj === null) { hchartObj = this.createHighChartsChart(this.properties, this.queryForm); }
+      // this.tableSubmit.emit({value: hchartObj});
+    }
   }
 
   createChart(): Subject<Object> {
