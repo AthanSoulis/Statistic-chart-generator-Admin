@@ -1,26 +1,34 @@
 <sui-tabset>
-    <div class="ui two column grid fluid container">
-      <div class="three wide column">
+    <div class="ui two column grid noleftpadding fluid container">
+      <div class="noleftpadding three wide column">
           <div class="ui secondary vertical fluid pointing menu">
 
-              <div style="padding-left: 0; padding-right: 0" class="ui centered grid link" *ngFor="let itemProperty of formProperty.properties; let i = index"
-               [suiTabHeader]="i" >
-                <h4 style="word-break: break-all; padding-left: 0; padding-right: 0" class="ui item"> {{getDataSeriesName(i) | async}} </h4>  
-                <div class="ui item" *ngIf="menuArrayLength > 1">
-                    <button (click)="removeItem(i)" class="small circular ui icon basic button ">
+            <div class="ui centered grid link noleftpadding item" *ngFor="let itemProperty of formProperty.properties; let i = index"
+            [suiTabHeader]="i" >
+                <!-- <h4 style="word-break: break-all; padding-left: 0; padding-right: 0" class="ui item"> {{getDataSeriesName(i) | async}} </h4> -->
+                <div [ngClass]="menuArrayLength > 1 ? 'ui noleftpadding action input ' : 'ui noleftpadding norightpadding input'  ">
+
+                    <input type="text" [readOnly]="!editable[i]" (dblclick)="enableEditable(i)" (blur)="disableEditable(i)"
+                    [value]="getDataSeriesName(i) | async" (change)="setDataSeriesName(i, $event.target.value)">
+
+                    <button *ngIf="menuArrayLength > 1" (click)="removeItem(i)" class="mini circular ui icon basic button ">
                         <i class="icon minus"></i>
                     </button>
-                  </div>
-              </div>
+                </div>
+                
+                <!-- <input class="ui attached segment" type="text" [readOnly]="!editable[i]" (dblclick)="enableEditable(i)" (blur)="disableEditable(i)"
+                [value]="getDataSeriesName(i) | async" (change)="setDataSeriesName(i, $event.target.value)">
+
+                <button *ngIf="menuArrayLength > 1" (click)="removeItem(i)" class="mini fluid ui icon basic bottom attached button ">
+                    <i class="icon minus"></i>
+                </button> -->
+
+            </div>
               
-              <div class="ui center aligned item animated fade compact button" (click)="addItem()">
-                  <div class="visible content"><i class="icon plus"></i></div>
-                  <div class="hidden content">Add Data</div>
-              </div>
-              <!-- <a class="ui item" (click)="addItem()">
-                  <button class="tiny basic circular ui icon button ">
-                      <i class="icon plus"></i>
-                  </button>Add Data</a> -->
+            <div class="ui center aligned item animated fade compact button" (click)="addItem()">
+                <div class="visible content"><i class="icon plus"></i></div>
+                <div class="hidden content">Add Data</div>
+            </div>
   
           </div>
       </div>

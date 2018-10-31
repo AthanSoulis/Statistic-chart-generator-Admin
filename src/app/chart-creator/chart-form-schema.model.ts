@@ -456,9 +456,13 @@ export class FormSchema {
                             'placeholder' : 'Dataseries',
                             'default' : 'Data',
                             'title' : 'Dataseries Name',
-                            'widget': {
-                                'id': 'string'
-                            }
+                            'widget': 'hidden'
+                            // Widget is hidden because the dataseriesName
+                            // is getting handled in tabular-menu-widget
+                            //
+                            // 'widget': {
+                            //     'id': 'string'
+                            // }
                         },
                         'chartType' : {
                             'type' : 'string',
