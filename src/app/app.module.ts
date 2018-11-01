@@ -8,6 +8,8 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
+import { MatButtonModule } from '@angular/material/button';
+
 import { AppComponent } from './app.component';
 import { ChartFrameComponent } from './chart-frame/chart-frame.component';
 import { ChartPropertiesSelectorComponent } from './chart-creator/chart-properties-selector/chart-properties-selector.component';

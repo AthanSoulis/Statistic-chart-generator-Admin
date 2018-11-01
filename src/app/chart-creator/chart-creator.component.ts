@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter, Input, AfterContentInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
 import { Query, Select, ChartInfo } from './chart-query-selector/chart-query.model';
 import { ChartProperties } from './chart-properties-selector/chart-properties.model';
@@ -10,12 +10,14 @@ import { Profile } from '../services/mapping-profiles-service/mapping-profiles.s
 import { Subject } from 'rxjs';
 import { FormSchema, SCGAFormSchema, PropertiesFormSchema, DataseriesFormSchema } from './chart-form-schema.model';
 
+declare var jQuery: any;
+
 @Component({
   selector: 'chart-creator',
   templateUrl: './chart-creator.component.html',
   styleUrls: ['./chart-creator.component.css']
 })
-export class ChartCreatorComponent implements OnInit, AfterViewInit {
+export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterContentInit {
 
   @Output() chartSubmit: EventEmitter<Object> = new EventEmitter();
   @Output() tableSubmit: EventEmitter<Object> = new EventEmitter();
@@ -37,6 +39,15 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit(): void {}
+
+  ngAfterContentInit(): void {
+    console.log('Calling jquery');
+    jQuery('.ui.sticky')
+    .sticky({
+      // context: '#formContainer',
+      pushing: true
+    });
+  }
 
   get chartFormValue(): SCGAFormSchema { return this.formValue as SCGAFormSchema; }
 

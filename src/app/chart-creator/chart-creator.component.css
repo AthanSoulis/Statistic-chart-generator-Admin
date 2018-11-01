@@ -1,3 +1,18 @@
 .not-allowed {
     cursor: not-allowed !important; 
 }
+
+.app-fab--absolute {
+    position: fixed;
+    bottom: 0rem;
+    left: 18.875%;
+    transform: translate(-50%, -50%);
+  }
+  
+  @media(min-width: 1024px) {
+     .app-fab--absolute {
+      bottom: 0rem;
+      left: 18.875%;
+      transform: translate(-50%, -50%);
+    }
+  }

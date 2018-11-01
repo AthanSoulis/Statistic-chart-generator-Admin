@@ -1,23 +1,38 @@
 
-<form class="ui form container">
-    
-    <div class="ui basic segment">        
+<form class="ui form container" >
+    <div class="ui basic segment" id="formContainer" >
+
         <sf-form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.customValidators"
         (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>
         <!-- <pre> {{formValue | json}} </pre> -->
-    </div>
 
-    <div [ngClass]="isFormValid ? '': 'not-allowed' ">
-    <button type="submit" 
-            (click)="onSubmit()"
-            [ngClass]="isFormValid ?
-            'ui bottom attached fluid positive basic button' : 
-            'ui bottom attached fluid disabled negative basic button'">Submit</button>
+        <div class="ui sticky">
+            <div [ngClass]="isFormValid ? '': 'not-allowed' ">
+            <button type="submit" 
+                    (click)="onSubmit()"
+                    [ngClass]="isFormValid ?
+                    'ui bottom attached fluid positive basic button' : 
+                    'ui bottom attached fluid disabled negative basic button'">Submit</button>
+            </div>
+            <div class="ui negative message" *ngIf="!isFormValid">
+                <ul>
+                    <li *ngFor="let error of formErrors.value">{{error.message}}</li>
+                </ul>
+            </div>
+        </div>
     </div>
-
-    <div class="ui negative message" *ngIf="!isFormValid">
-        <ul>
-            <li *ngFor="let error of formErrors.value">{{error.message}}</li>
-        </ul>
-    </div>
+    <!-- <div class="mdc-fab mdc-fab--extended app-fab--absolute">
+        <div class="ui negative message" *ngIf="!isFormValid">
+            <ul>
+                <li *ngFor="let error of formErrors.value">{{error.message}}</li>
+            </ul>
+        </div>
+        <div [ngClass]="isFormValid ? '': 'not-allowed' ">
+        <button type="submit" 
+                (click)="onSubmit()"
+                [ngClass]="isFormValid ?
+                'ui bottom attached fluid large positive button' : 
+                'ui bottom attached fluid large disabled negative button'">Submit</button>
+        </div>
+    </div> -->
 </form>
