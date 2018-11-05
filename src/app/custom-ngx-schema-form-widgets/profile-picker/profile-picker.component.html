@@ -6,13 +6,16 @@
       <div class="content">
         <div *ngIf="this.hasBeenInitialized" class="ui warning message">
                 <i class="icon warning"></i>
-                Choosing a new View will delete all your changes!
+                Choosing a new View will delete all your <b>Dataseries</b> changes!
         </div>
         <div class="ui three centered stackable cards">
         <div class="ui card" *ngFor="let profile of (this.mappingProfileService.mappingProfiles$ | async )">
             <div class="content">
                 <div class="header"><h2>{{profile.name}}</h2></div>
                 <div class="description">{{profile.description}}</div>
+            </div>
+            <div class="extra content">
+              Blah blah
             </div>
             <button (click)="cardButtonAction(profile)" class="ui bottom attached basic blue button">Select</button>
         </div>
