@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ChartCreatorComponent } from './chart-creator/chart-creator.component';
 import { UrlProviderService } from './services/url-provider-service/url-provider.service';
 import { ChartExportingService } from './services/chart-exporting-service/chart-exporting.service';
-import { IPopup } from 'ng2-semantic-ui';
+import { IPopup, PopupPlacement } from 'ng2-semantic-ui';
 import { Observable, of } from 'rxjs';
 import { SuiPopupController } from 'ng2-semantic-ui/dist';
 import { ChartLoadingService } from './services/chart-loading-service/chart-loading.service';
@@ -27,6 +27,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   chartUrl: Observable<string>;
   chartTinyUrl: Observable<string>;
   loadingChartTinyUrl: Observable<boolean>;
+
+  popupPlacement = PopupPlacement.BottomRight;
 
   constructor(private urlProvider: UrlProviderService,
     protected chartExportingService: ChartExportingService,
@@ -107,7 +109,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       const fr: FileReader = new FileReader();
 
       fr.onload = () => {
-        const loadedChart: Object = JSON.parse(fr.result);
+        const loadedChart: Object = JSON.parse(<string>fr.result);
         this.chartModel = loadedChart;
       };
       fr.onloadstart = () => { this.chartLoadingService.chartLoadingStatus = true;  };

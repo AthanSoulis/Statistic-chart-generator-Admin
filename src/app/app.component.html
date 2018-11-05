@@ -41,17 +41,18 @@
     </div>
 </ng-template>
 
-<div class="ui massive inverted fixed pointing menu">
+<div class="ui massive fixed pointing menu">
     <div class="header item">Statistic Chart Generator</div>
-    <a class="item" suiPopup [popupTemplate]="exportPopUp" popupTrigger="outsideClick" #exportpopup="suiPopup"
-        (click)="exportChart(exportpopup)">Export</a>
-    <a class="item" suiPopup [popupTemplate]="loadPopUp" popupTrigger="outsideClick"
-    (click)="loadChart()">Load</a>
-    <a class="item" suiPopup [popupTemplate]="publishPopUp" popupTrigger="outsideClick" #publishpopup="suiPopup"
-        (click)="togglePublishPopUp(publishpopup)">Publish</a>
+    
     <div class="right menu">
-        <a class="item">Sign Up</a>
-        <a class="item">Help</a>
+        <a class="item" suiPopup [popupTemplate]="publishPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #publishpopup="suiPopup"
+        (click)="togglePublishPopUp(publishpopup)">Publish</a>
+        <a class="item" suiPopup [popupTemplate]="loadPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick"
+        (click)="loadChart()">Load</a>
+        <a class="item" suiPopup [popupTemplate]="exportPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #exportpopup="suiPopup"
+        (click)="exportChart(exportpopup)" >Export</a>
+        <!-- <a class="item">Sign Up</a>
+        <a class="item">Help</a> -->
     </div>
 </div>
 
@@ -60,7 +61,10 @@
         <chart-creator [loadedChart]="chartModel" (chartSubmit)="handleChartObject($event)" (tableSubmit)="handleTableObject($event)"></chart-creator>
     </div>
     <div class="ui nine wide column container">
+
+        <div id="iframeBlocker" style="position: absolute; top: 0; left: 0; width:95%; height:95%;z-index:2"></div>
         <chart-frame [chart]="chartObject"></chart-frame>
+        
         <span class="ui hidden horizontal divider"></span>
         <!-- <chart-data-presentation-table [table]="chartObject"></chart-data-presentation-table> -->
     </div>
