@@ -4,6 +4,7 @@
           <div class="ui top attached tabular menu">
               <a class="ui item" suiTabHeader="tab-properties"><h3>{{formProperty.schema.fieldsets[0].title}}</h3></a>
               <a class="ui item" suiTabHeader="tab-dataseries"><h3>{{formProperty.schema.fieldsets[1].title}}</h3></a>
+              <a class="ui item" suiTabHeader="tab-appearance"><h3>{{formProperty.schema.fieldsets[2].title}}</h3></a>
           </div>
       
       <div class="ui basic fluid container segment">
@@ -12,6 +13,9 @@
           </div>
           <div class="ui tab" suiTabContent="tab-dataseries">
             <sf-form-element [formProperty]="formProperty.getProperty(formProperty.schema.fieldsets[1].fields[0])"></sf-form-element>
+          </div>
+          <div class="ui tab" suiTabContent="tab-appearance">
+            <sf-form-element [formProperty]="formProperty.getProperty(formProperty.schema.fieldsets[2].fields[0])"></sf-form-element>
           </div>
       </div>
   </div>
