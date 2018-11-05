@@ -1,38 +1,41 @@
+<form class="ui form grid" id="formContainer">
 
-<form class="ui form container" >
-    <div class="ui basic segment" id="formContainer" >
-
-        <sf-form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.customValidators"
-        (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>
+    <div class="fourteen wide column" >
+        <div class="ui basic segment">
+            <sf-form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.myValidators"
+            (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>        
+        </div>
         <!-- <pre> {{formValue | json}} </pre> -->
-
-        <div class="ui sticky">
-            <div [ngClass]="isFormValid ? '': 'not-allowed' ">
-            <button type="submit" 
-                    (click)="onSubmit()"
-                    [ngClass]="isFormValid ?
-                    'ui bottom attached fluid positive basic button' : 
-                    'ui bottom attached fluid disabled negative basic button'">Submit</button>
-            </div>
-            <div class="ui negative message" *ngIf="!isFormValid">
-                <ul>
-                    <li *ngFor="let error of formErrors.value">{{error.message}}</li>
-                </ul>
-            </div>
-        </div>
     </div>
-    <!-- <div class="mdc-fab mdc-fab--extended app-fab--absolute">
-        <div class="ui negative message" *ngIf="!isFormValid">
-            <ul>
-                <li *ngFor="let error of formErrors.value">{{error.message}}</li>
-            </ul>
+
+
+    <div class="two wide column">
+
+        <div *ngIf="isFormValid; else invalidForm" class="mdc-fab mdc-fab--extended app-fab--absolute" >
+            <button type="submit" (click)="onSubmit()"
+                    class="ui bottom attached large positive button">Submit</button>
         </div>
-        <div [ngClass]="isFormValid ? '': 'not-allowed' ">
-        <button type="submit" 
-                (click)="onSubmit()"
-                [ngClass]="isFormValid ?
-                'ui bottom attached fluid large positive button' : 
-                'ui bottom attached fluid large disabled negative button'">Submit</button>
-        </div>
-    </div> -->
+        <ng-template #invalidForm>
+            <div class="mdc-fab mdc-fab--extended app-fab--absolute" data-position="bottom center"
+                data-tooltip="Some obligatory fields are not selected !">
+                <button type="submit" class="ui bottom attached large basic negative not-allowed button">
+                    Submit</button>
+            </div>
+        </ng-template>
+
+        <!-- <div class="ui sticky fixed top">
+            
+            <div *ngIf="isFormValid; else invalidForm">
+                <button type="submit" (click)="onSubmit()"
+                        class="ui bottom attached large positive button">Submit</button>
+            </div>
+            <ng-template #invalidForm>
+                <div  data-tooltip="Some obligatory fields are not selected !" data-position="bottom center">
+                    <button type="submit" class="ui bottom attached basic large negative not-allowed button">
+                        Submit</button>
+                </div>
+            </ng-template>            
+        </div> -->
+
+    </div>
 </form>

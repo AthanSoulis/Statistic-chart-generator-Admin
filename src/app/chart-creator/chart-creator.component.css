@@ -3,16 +3,23 @@
 }
 
 .app-fab--absolute {
-    position: fixed;
-    bottom: 0rem;
-    left: 18.875%;
-    transform: translate(-50%, -50%);
-  }
+  position: fixed;
+  margin-top: 1.5rem;
+  left: 39.875%;
+  transform: translate(-50%, -50%);
+}
   
   @media(min-width: 1024px) {
-     .app-fab--absolute {
-      bottom: 0rem;
-      left: 18.875%;
-      transform: translate(-50%, -50%);
-    }
+    .app-fab--absolute {
+    margin-top: 1.5rem;
+    left: 39.875%;
+    transform: translate(-50%, -50%);
   }
+}
+
+.ui.sticky {
+   margin-top: 60px;
+   margin-right: 1rem;
+   margin-bottom: 15px;
+   position: fixed;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Output, EventEmitter, Input, AfterContentInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter, Input, AfterContentInit, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
 import { Query, Select, ChartInfo } from './chart-query-selector/chart-query.model';
 import { ChartProperties } from './chart-properties-selector/chart-properties.model';
@@ -8,9 +8,9 @@ import { GoogleChartsChart } from '../services/supported-libraries-service/chart
 import { Filter } from './chart-query-selector/query-filter-selector/query-filter/query-filter.model';
 import { Profile } from '../services/mapping-profiles-service/mapping-profiles.service';
 import { Subject } from 'rxjs';
-import { FormSchema, SCGAFormSchema, PropertiesFormSchema, DataseriesFormSchema } from './chart-form-schema.model';
+import { FormSchema, SCGAFormSchema, PropertiesFormSchema, DataseriesFormSchema, AppearanceFormSchema } from './chart-form-schema.model';
 
-declare var jQuery: any;
+// declare var jQuery: any;
 
 @Component({
   selector: 'chart-creator',
@@ -29,7 +29,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
   fs: FormSchema;
   formValue: SCGAFormSchema;
   formErrors: any;
-  private _isFormValid;
+  private _isFormValid = true;
 
   constructor(private formBuilder: FormBuilder,
     private supportedLibrariesService: SupportedLibrariesService) {
@@ -41,18 +41,19 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
   ngAfterViewInit(): void {}
 
   ngAfterContentInit(): void {
-    console.log('Calling jquery');
-    jQuery('.ui.sticky')
-    .sticky({
-      // context: '#formContainer',
-      pushing: true
-    });
+    // console.log('Calling jquery');
+    // jQuery('.ui.sticky')
+    // .sticky({
+    //   offset: 60
+    // });
   }
 
   get chartFormValue(): SCGAFormSchema { return this.formValue as SCGAFormSchema; }
 
   dynamicFormChanged($event) {
     this.formValue = $event.value;
+    // recalculates offsets
+    // jQuery('.ui.sticky').sticky('refresh');
   }
 
   onSubmit() {
@@ -82,7 +83,8 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     const generalProperties: PropertiesFormSchema = formObj.generalChartProperties;
     const library: string = generalProperties.library;
 
-    const dataseries = formObj.dataseries;
+    const dataseries: DataseriesFormSchema[] = formObj.dataseries;
+    const appearanceOptions: AppearanceFormSchema = formObj.appearance;
 
     this.supportedLibrariesService.getSupportedLibraries().subscribe(
       (data: Array<string>) =>  {
@@ -92,7 +94,8 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
 
             case('HighCharts'): {
               // const hchartObj = this.createHighChartsChart(this.properties, this.getQueryForm(0));
-              const hchartObj = this.createDynamicHighChartsChart(generalProperties, dataseries);
+              console.log('Appearance', appearanceOptions);
+              const hchartObj = this.createDynamicHighChartsChart(generalProperties, dataseries, appearanceOptions);
 
               console.log('Creating a ' + library + ' chart!');
               console.log(hchartObj);
@@ -101,7 +104,8 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
               break;
             }
             case('GoogleCharts'): {
-              const gchartObj = this.createDynamicGoogleChartsChart(generalProperties, dataseries);
+              console.log('Appearance', appearanceOptions);
+              const gchartObj = this.createDynamicGoogleChartsChart(generalProperties, dataseries, appearanceOptions);
 
               console.log('Creating a ' + library + ' chart!');
               console.log(gchartObj);
@@ -141,7 +145,9 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     return chartObj;
   }
 
-  createDynamicGoogleChartsChart(generalProperties: PropertiesFormSchema, dataseries: DataseriesFormSchema[]): GoogleChartsChart {
+  createDynamicGoogleChartsChart(generalProperties: PropertiesFormSchema,
+    dataseries: DataseriesFormSchema[], appearanceOptions: AppearanceFormSchema): GoogleChartsChart {
+
     const chartObj = new GoogleChartsChart();
     const chartDescription = chartObj.chartDescription;
 
@@ -159,7 +165,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
 
     chartDescription.GoogleChartType = baseChartType;
     chartDescription.options.title = generalProperties.title;
-    chartDescription.options.exporting = generalProperties.googlechartsOptions.exporting;
+    chartDescription.options.exporting = appearanceOptions.googlechartsAppearanceOptions.exporting;
 
     if (generalProperties.axisNames) {
       chartDescription.options.hAxis.title = generalProperties.axisNames.xaxisName;
@@ -174,10 +180,11 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     return chartObj;
   }
 
-  createDynamicHighChartsChart(generalProperties: PropertiesFormSchema, dataseries: DataseriesFormSchema[]): HighChartsChart {
+  createDynamicHighChartsChart(generalProperties: PropertiesFormSchema,
+    dataseries: DataseriesFormSchema[], appearanceOptions: AppearanceFormSchema): HighChartsChart {
     const chartObj = new HighChartsChart();
     chartObj.chartDescription.title.text = generalProperties.title;
-    chartObj.chartDescription.exporting.enabled = generalProperties.highchartsOptions.exporting;
+    chartObj.chartDescription.exporting.enabled = appearanceOptions.highchartsAppearanceOptions.exporting;
 
     if (generalProperties.axisNames) {
       chartObj.chartDescription.xAxis.title.text = generalProperties.axisNames.xaxisName;
