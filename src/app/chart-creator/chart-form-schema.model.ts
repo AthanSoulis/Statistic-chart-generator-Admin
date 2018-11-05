@@ -4,6 +4,7 @@ import { ObjectProperty } from 'ngx-schema-form/lib/model/objectproperty';
 export interface SCGAFormSchema {
     generalChartProperties: PropertiesFormSchema;
     dataseries: DataseriesFormSchema[];
+    appearance: AppearanceFormSchema;
 }
 export interface DataseriesFormSchema {
     data: DataFormSchema;
@@ -40,8 +41,6 @@ export interface PropertiesFormSchema {
     profile: string;
     library: string;
 
-    highchartsOptions ?: HighchartsOptionsFormSchema;
-    googlechartsOptions ?: GooglechartsOptionsFormSchema;
     axisNames ?: AxisNamesFormSchema;
     title ?: string;
     results ?: ResultsOptionsFormSchema;
@@ -54,10 +53,32 @@ export interface AxisNamesFormSchema {
     yaxisName ?: string;
     xaxisName ?: string;
 }
-export interface GooglechartsOptionsFormSchema {
-    exporting ?: boolean;
+
+export interface AppearanceFormSchema {
+    highchartsAppearanceOptions ?: HighchartsOptionsFormSchema;
+    googlechartsAppearanceOptions ?: GooglechartsOptionsFormSchema;
 }
 export interface HighchartsOptionsFormSchema {
+    exporting ?: boolean;
+    hcCABackGroundColor ?: string;
+    hcCABorderWidth ?: number;
+    hcCABorderCornerRadius ?: number;
+    hcCABorderColor ?: string;
+    hcPABackgroundColor ?: string;
+    hcPABackgroundImageURL ?: string;
+    hcPABorderWidth ?: number;
+    hcPABorderColor ?: string;
+    hcSubtitle ?: string;
+    hcEnableDataLabels ?: boolean;
+    hcEnableLegend ?: boolean;
+    hcLegendLayout ?: string;
+    hcLegendHorizontalAlignment ?: string;
+    hcLegendVerticalAlignment ?: string;
+    hcEnableCredits ?: boolean;
+    hcCreditsText ?: string;
+    hcCreditsLink ?: string;
+}
+export interface GooglechartsOptionsFormSchema {
     exporting ?: boolean;
 }
 
@@ -67,7 +88,7 @@ export class FormSchema {
         'type' : 'object',
         'title' : 'General Properties',
         'description' : 'Set the general attributes of your chart',
-        'widget' : { 'id' : 'csui-general-properties-object' },
+        'widget' : { 'id' : 'csui-property-object' },
         'properties' : {
             'profile' : {
                 'type' : 'string',
@@ -89,46 +110,6 @@ export class FormSchema {
                 'widget': {
                     'id': 'csui-library-select'
                 },
-            },
-            'highchartsOptions' : {
-                'type' : 'object',
-                'widget' : { 'id' : 'csui-property-object' },
-                'properties' : {
-                    'exporting' : {
-                        'type': 'boolean',
-                        'default': false,
-                        'description': 'Enable exporting'
-                    }
-                },
-                'fieldsets': [
-                    {
-                        'title' : 'Highcharts Options',
-                        'fields': ['exporting']
-                    }
-                ],
-                'visibleIf': {
-                    'library': ['HighCharts']
-                }
-            },
-            'googlechartsOptions' : {
-                'type' : 'object',
-                'widget' : { 'id' : 'csui-property-object' },
-                'properties' : {
-                    'exporting' : {
-                        'type': 'boolean',
-                        'default': false,
-                        'description': 'Enable exporting'
-                    }
-                },
-                'fieldsets': [
-                    {
-                        'title' : 'Googlecharts Options',
-                        'fields': ['exporting']
-                    }
-                ],
-                'visibleIf': {
-                    'library': ['GoogleCharts']
-                }
             },
             'axisNames' : {
                 'type' : 'object',
@@ -177,30 +158,22 @@ export class FormSchema {
                         'type' : 'number',
                         'title' : 'Results Limit',
                         'default' : 30,
-                        'widget' : {
-                            'id' : 'number'
-                        }
+                        'widget' : {'id' : 'number'}
                     },
                     'orderByAxis' : {
                         'type' : 'string',
                         'title' : 'Order By',
-                        'widget' : {
-                            'id' : 'csui-select'
-                        },
+                        'widget' : {'id' : 'csui-select'},
                         'oneOf': [
                             {
-                            'description': 'X Axis',
-                            'value' : 'xaxis',
-                            'enum': [
-                                'xaxis'
-                                ]
+                                'description': 'X Axis',
+                                'value' : 'xaxis',
+                                'enum': ['xaxis']
                             },
                             {
-                            'description': 'Y Axis',
-                            'value' : 'yaxis',
-                            'enum': [
-                                'yaxis'
-                                ]
+                                'description': 'Y Axis',
+                                'value' : 'yaxis',
+                                'enum': ['yaxis']
                             }
                         ]
                     }
@@ -228,8 +201,6 @@ export class FormSchema {
                 'title': 'Chart Properties',
                 'fields': [
                     'library',
-                    'highchartsOptions',
-                    'googlechartsOptions',
                     'title',
                     'axisNames',
                     'results'
@@ -499,22 +470,259 @@ export class FormSchema {
         }
     };
 
+    private _appearanceFormSchema = {
+        'type' : 'object',
+        'title' : 'Appearance',
+        'description' : 'Customise the way your chart looks',
+        'widget' : { 'id' : 'csui-property-object' },
+        'properties' : {
+            'highchartsAppearanceOptions': {
+                'type' : 'object',
+                'widget' : { 'id' : 'csui-property-object' },
+                'title': 'Highcharts Appearance Options',
+                'properties' : {
+                    'hcCABackGroundColor': {
+                        'type' : 'string',
+                        'pattern': '^#[0-9a-fA-F]{6}$',
+                        'default': '#FFFFFF',
+                        'title' : 'Background Color',
+                        'widget': {'id': 'color'}
+                    },
+                    'hcCABorderWidth': {
+                        'type' : 'number',
+                        'default': 0,
+                        'title' : 'Border Width',
+                        'widget': {'id': 'number'}
+                    },
+                    'hcCABorderCornerRadius': {
+                        'type' : 'number',
+                        'default': 0,
+                        'title' : 'Border Corner Radius',
+                        'widget': {'id': 'number'}
+                    },
+                    'hcCABorderColor': {
+                        'type' : 'string',
+                        'pattern': '^#[0-9a-fA-F]{6}$',
+                        'default': '#335cad',
+                        'title' : 'Border Color',
+                        'widget': {'id': 'color'}
+                    },
+                    'hcPABackgroundColor': {
+                        'type' : 'string',
+                        'default': 'auto',
+                        'title' : 'Background Color',
+                        'widget': {'id': 'color'}
+                    },
+                    'hcPABackgroundImageURL': {
+                        'type' : 'string',
+                        'title' : 'Background Image URL',
+                        'widget': {'id': 'url'}
+                    },
+                    'hcPABorderWidth': {
+                        'type' : 'number',
+                        'default': 0,
+                        'title' : 'Border Width',
+                        'widget': {'id': 'number'}
+                    },
+                    'hcPABorderColor': {
+                        'type' : 'string',
+                        'pattern': '^#[0-9a-fA-F]{6}$',
+                        'default': '#cccccc',
+                        'title' : 'Border Color',
+                        'widget': {'id': 'color'}
+                    },
+                    'hcSubtitle': {
+                        'type': 'string',
+                        'placeholder': 'Subtitle',
+                        'title' : 'Subtitle',
+                        'widget' : {
+                            'id': 'string'
+                        }
+                    },
+                    'hcEnableDataLabels' : {
+                        'type': 'boolean',
+                        'default': false,
+                        'description': 'Enable data labels for all series'
+                    },
+                    'hcEnableLegend' : {
+                        'type': 'boolean',
+                        'default': true,
+                        'description': 'Enable Legend'
+                    },
+                    'hcLegendLayout' : {
+                        'type': 'string',
+                        'widget' : {'id' : 'csui-select'},
+                        'description': 'Item Layout',
+                        'oneOf': [
+                            {
+                                'enum': ['horizontal'],
+                                'value' : 'horizontal',
+                                'description': 'Horizontal'
+                            },
+                            {
+                                'enum': ['vertical'],
+                                'value' : 'vertical',
+                                'description': 'Vertical'
+                            }
+                        ],
+                        'default': 'horizontal'
+                    },
+                    'hcLegendHorizontalAlignment' : {
+                        'type': 'string',
+                        'widget' : {'id' : 'csui-select'},
+                        'description': 'Horizontal Alignment',
+                        'oneOf': [
+                            {
+                                'enum': ['left'],
+                                'value' : 'left',
+                                'description': 'Left'
+                            },
+                            {
+                                'enum': ['center'],
+                                'value' : 'center',
+                                'description': 'Center'
+                            },
+                            {
+                                'enum': ['right'],
+                                'value' : 'right',
+                                'description': 'Right'
+                            }
+                        ],
+                        'default': 'center'
+                    },
+                    'hcLegendVerticalAlignment' : {
+                        'type': 'string',
+                        'widget' : {'id' : 'csui-select'},
+                        'description': 'Vertical Alignment',
+                        'oneOf': [
+                            {
+                                'enum': ['top'],
+                                'value' : 'top',
+                                'description': 'Top'
+                            },
+                            {
+                                'enum': ['middle'],
+                                'value' : 'middle',
+                                'description': 'Middle'
+                            },
+                            {
+                                'enum': ['bottom'],
+                                'value' : 'bottom',
+                                'description': 'Bottom'
+                            }
+                        ],
+                        'default': 'bottom'
+                    },
+                    'exporting' : {
+                        'type': 'boolean',
+                        'default': false,
+                        'description': 'Enable Exporting'
+                    },
+                    'hcEnableCredits' : {
+                        'type': 'boolean',
+                        'default': true,
+                        'description': 'Enable Credits'
+                    },
+                    'hcCreditsText' : {
+                        'type': 'string',
+                        'default': 'Made by the OpenAIRE Statistic Chart Generator',
+                        'title' : 'Credits Text',
+                        'widget' : {'id': 'string'}
+                    },
+                    'hcCreditsLink': {
+                        'type' : 'string',
+                        'title' : 'Credits Link',
+                        'default': 'https://www.openaire.eu/',
+                        'widget': {'id': 'url'}
+                    },
+                },
+                'fieldsets': [
+                    {
+                        'title' : 'Titles',
+                        'fields': ['hcSubtitle']
+                    },
+                    {
+                        'title' : 'Exporting',
+                        'fields': ['exporting']
+                    },
+                    {
+                        'title' : 'Value Labels',
+                        'fields': ['hcEnableDataLabels']
+                    },
+                    {
+                        'title' : 'Legend',
+                        'fields': ['hcEnableLegend', 'hcLegendLayout', 'hcLegendHorizontalAlignment', 'hcLegendVerticalAlignment']
+                    },
+                    {
+                        'title' : 'Chart Area',
+                        'fields': ['hcCABackGroundColor', 'hcCABorderWidth', 'hcCABorderCornerRadius', 'hcCABorderColor']
+                    },
+                    {
+                        'title' : 'Plot Area',
+                        'fields': ['hcPABackgroundColor', 'hcPABackgroundImageURL', 'hcPABorderWidth', 'hcPABorderColor']
+                    },
+                    {
+                        'title' : 'Credits',
+                        'fields': ['hcEnableCredits', 'hcCreditsText', 'hcCreditsLink']
+                    },
+                ],
+                'visibleIf': {
+                    '/generalChartProperties/library': ['HighCharts']
+                }
+            },
+            'googlechartsAppearanceOptions': {
+                'type' : 'object',
+                'widget' : { 'id' : 'csui-property-object' },
+                'title': 'Googlecharts Appearance Options',
+                'properties' : {
+                    'exporting' : {
+                        'type': 'boolean',
+                        'default': false,
+                        'description': 'Enable exporting'
+                    }
+                },
+                'fieldsets': [
+                    {
+                        'title' : 'Exporting',
+                        'fields': ['exporting']
+                    }
+                ],
+                'visibleIf': {
+                    '/generalChartProperties/library': ['GoogleCharts']
+                }
+            },
+        },
+        'fieldsets': [
+            {
+                'fields': [
+                    'highchartsAppearanceOptions',
+                    'googlechartsAppearanceOptions'
+                ]
+            }
+        ]
+    };
+
     private _SCGAFormSchema = {
         '$schema': 'http://json-schema.org/draft-04/hyper-schema#',
         'type' : 'object',
         'widget' : { 'id' : 'csui-head-menu' },
         'properties' : {
             'generalChartProperties' : this._propertiesFormSchema ,
-            'dataseries' : this._dataseriesFormSchema
+            'dataseries' : this._dataseriesFormSchema,
+            'appearance' : this._appearanceFormSchema
         },
         'fieldsets': [
             {
-                'title': 'Properties',
+                'title': 'General',
                 'fields': ['generalChartProperties']
             },
             {
                 'title': 'Dataseries',
                 'fields': ['dataseries']
+            },
+            {
+                'title': 'Appearance',
+                'fields': ['appearance']
             }
         ],
         'required': ['generalChartProperties', 'dataseries']
