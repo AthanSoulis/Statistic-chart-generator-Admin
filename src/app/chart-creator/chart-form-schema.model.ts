@@ -53,7 +53,6 @@ export interface AxisNamesFormSchema {
     yaxisName ?: string;
     xaxisName ?: string;
 }
-
 export interface AppearanceFormSchema {
     highchartsAppearanceOptions ?: HighchartsOptionsFormSchema;
     googlechartsAppearanceOptions ?: GooglechartsOptionsFormSchema;
@@ -509,13 +508,13 @@ export class FormSchema {
                     },
                     'hcPABackgroundColor': {
                         'type' : 'string',
-                        'default': 'auto',
                         'title' : 'Background Color',
                         'widget': {'id': 'color'}
                     },
                     'hcPABackgroundImageURL': {
                         'type' : 'string',
                         'title' : 'Background Image URL',
+                        'placeholder': 'https://domain.com/picture.png',
                         'widget': {'id': 'url'}
                     },
                     'hcPABorderWidth': {
@@ -655,11 +654,11 @@ export class FormSchema {
                     },
                     {
                         'title' : 'Chart Area',
-                        'fields': ['hcCABackGroundColor', 'hcCABorderWidth', 'hcCABorderCornerRadius', 'hcCABorderColor']
+                        'fields': ['hcCABackGroundColor', 'hcCABorderColor', 'hcCABorderWidth', 'hcCABorderCornerRadius']
                     },
                     {
                         'title' : 'Plot Area',
-                        'fields': ['hcPABackgroundColor', 'hcPABackgroundImageURL', 'hcPABorderWidth', 'hcPABorderColor']
+                        'fields': ['hcPABackgroundColor', 'hcPABorderColor', 'hcPABackgroundImageURL', 'hcPABorderWidth']
                     },
                     {
                         'title' : 'Credits',

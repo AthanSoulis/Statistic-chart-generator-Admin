@@ -184,7 +184,37 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     dataseries: DataseriesFormSchema[], appearanceOptions: AppearanceFormSchema): HighChartsChart {
     const chartObj = new HighChartsChart();
     chartObj.chartDescription.title.text = generalProperties.title;
-    chartObj.chartDescription.exporting.enabled = appearanceOptions.highchartsAppearanceOptions.exporting;
+
+    if (appearanceOptions.highchartsAppearanceOptions !== undefined && appearanceOptions.highchartsAppearanceOptions !== null) {
+      // Exporting
+      chartObj.chartDescription.exporting.enabled = appearanceOptions.highchartsAppearanceOptions.exporting;
+
+      // Legend Options
+      chartObj.chartDescription.legend.enabled = appearanceOptions.highchartsAppearanceOptions.hcEnableLegend;
+      chartObj.chartDescription.legend.align = appearanceOptions.highchartsAppearanceOptions.hcLegendHorizontalAlignment;
+      chartObj.chartDescription.legend.verticalAlign = appearanceOptions.highchartsAppearanceOptions.hcLegendVerticalAlignment;
+      chartObj.chartDescription.legend.layout = appearanceOptions.highchartsAppearanceOptions.hcLegendLayout;
+
+      // Credits Options
+      chartObj.chartDescription.credits.enabled = appearanceOptions.highchartsAppearanceOptions.hcEnableCredits;
+      chartObj.chartDescription.credits.href = appearanceOptions.highchartsAppearanceOptions.hcCreditsLink;
+      chartObj.chartDescription.credits.text = appearanceOptions.highchartsAppearanceOptions.hcCreditsText;
+
+      chartObj.chartDescription.subtitle.text = appearanceOptions.highchartsAppearanceOptions.hcSubtitle;
+      chartObj.chartDescription.plotOptions.series.dataLabels.enabled = appearanceOptions.highchartsAppearanceOptions.hcEnableDataLabels;
+
+      // Chart Area Options
+      chartObj.chartDescription.chart.backgroundColor = appearanceOptions.highchartsAppearanceOptions.hcCABackGroundColor;
+      chartObj.chartDescription.chart.borderColor = appearanceOptions.highchartsAppearanceOptions.hcCABorderColor;
+      chartObj.chartDescription.chart.borderRadius = appearanceOptions.highchartsAppearanceOptions.hcCABorderCornerRadius;
+      chartObj.chartDescription.chart.borderWidth = appearanceOptions.highchartsAppearanceOptions.hcCABorderWidth;
+
+      // Plot Area Options
+      chartObj.chartDescription.chart.plotBackgroundColor = appearanceOptions.highchartsAppearanceOptions.hcPABackgroundColor;
+      chartObj.chartDescription.chart.plotBackgroundImage = appearanceOptions.highchartsAppearanceOptions.hcPABackgroundImageURL;
+      chartObj.chartDescription.chart.plotBorderColor = appearanceOptions.highchartsAppearanceOptions.hcPABorderColor;
+      chartObj.chartDescription.chart.plotBorderWidth = appearanceOptions.highchartsAppearanceOptions.hcPABorderWidth;
+    }
 
     if (generalProperties.axisNames) {
       chartObj.chartDescription.xAxis.title.text = generalProperties.axisNames.xaxisName;
