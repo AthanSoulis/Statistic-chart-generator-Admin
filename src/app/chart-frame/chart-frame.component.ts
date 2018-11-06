@@ -39,8 +39,5 @@ export class ChartFrameComponent implements OnInit, OnChanges {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
-  submitChartPreferences(preferences: Object ) {
-
-  }
-
+  submitChartPreferences(preferences: Object ) {}
 }

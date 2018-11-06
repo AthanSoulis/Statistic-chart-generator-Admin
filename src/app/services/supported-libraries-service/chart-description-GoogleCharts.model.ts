@@ -11,6 +11,7 @@ export class GoogleChartsChart {
 }
 
 class GoogleChartsDescription {
+    tableForm?: boolean;
     chartType: string;
     columns: string[];
     queriesInfo: ChartInfo[];

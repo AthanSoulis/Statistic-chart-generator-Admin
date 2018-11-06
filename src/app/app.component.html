@@ -23,18 +23,27 @@
 <ng-template let-popup #publishPopUp >
     <div class="ui content">
 
-        <h4 class="ui centered header">Generated Chart Url</h4>
+        <!-- <h4 class="ui centered header">Generated Chart Url</h4>
         <div class="ui small text container segment">
-            <p class="url-holder">{{chartUrl | async}}</p>
-        </div>
+            <p class="url-holder">{{chartExportingService.chartUrl$ | async}}</p>
+        </div> -->
 
         <h4 class="ui centered header">Generated Chart TinyUrl</h4>
         <div class="ui small text container segment">
-            <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingChartTinyUrl$ | async); else tinyUrlNotLoading">
+            <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingChartTinyUrl$ | async); else chartTinyUrlNotLoading">
 
             </div>
-            <ng-template #tinyUrlNotLoading>
-                <p class="url-holder">{{chartTinyUrl | async}}</p> 
+            <ng-template #chartTinyUrlNotLoading>
+                <p class="url-holder">{{chartExportingService.chartTinyUrl$ | async}}</p> 
+            </ng-template>
+        </div>
+        <h4 class="ui centered header">Generated Table TinyUrl</h4>
+        <div class="ui small text container segment">
+            <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingTableTinyUrl$ | async); else tableTinyUrlNotLoading">
+
+            </div>
+            <ng-template #tableTinyUrlNotLoading>
+                <p class="url-holder">{{chartExportingService.tableTinyUrl$ | async}}</p> 
             </ng-template>
         </div>
 
@@ -45,7 +54,7 @@
     <div class="header item">Statistic Chart Generator</div>
     
     <div class="right menu">
-        <a class="item" suiPopup [popupTemplate]="publishPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #publishpopup="suiPopup"
+        <a class="item" suiPopup (onOpen)="handlePopUpOpen($event)" [popupTemplate]="publishPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #publishpopup="suiPopup"
         (click)="togglePublishPopUp(publishpopup)">Publish</a>
         <a class="item" suiPopup [popupTemplate]="loadPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick"
         (click)="loadChart()">Load</a>
@@ -62,10 +71,10 @@
     </div>
     <div class="ui nine wide column container">
 
-        <div id="iframeBlocker" style="position: absolute; top: 0; left: 0; width:95%; height:95%;z-index:2"></div>
+        <div  id="iframeBlocker" style="position: absolute; top: 0; left: 0; width:95%; height:95%;z-index:2"></div>
         <chart-frame [chart]="chartObject"></chart-frame>
         
-        <span class="ui hidden horizontal divider"></span>
-        <!-- <chart-data-presentation-table [table]="chartObject"></chart-data-presentation-table> -->
+        <div class="ui hidden horizontal divider"></div>
+        <chart-data-presentation-table [table]="tableObject"></chart-data-presentation-table>
     </div>
 </div>

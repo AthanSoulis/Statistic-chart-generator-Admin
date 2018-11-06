@@ -4,7 +4,7 @@ import { UrlProviderService } from './services/url-provider-service/url-provider
 import { ChartExportingService } from './services/chart-exporting-service/chart-exporting.service';
 import { IPopup, PopupPlacement } from 'ng2-semantic-ui';
 import { Observable, of } from 'rxjs';
-import { SuiPopupController } from 'ng2-semantic-ui/dist';
+import { SuiPopupController, SuiPopup } from 'ng2-semantic-ui/dist';
 import { ChartLoadingService } from './services/chart-loading-service/chart-loading.service';
 
 @Component({
@@ -24,9 +24,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   tableObject: Object;
   loadedChartFile: File = null;
 
-  chartUrl: Observable<string>;
-  chartTinyUrl: Observable<string>;
-  loadingChartTinyUrl: Observable<boolean>;
+  activePopUp: SuiPopup;
 
   popupPlacement = PopupPlacement.BottomRight;
 
@@ -39,9 +37,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // Popup is closed initially
     this._publishPopUpCondition = false;
-    this.chartUrl = this.chartExportingService.chartUrl$;
-    this.chartTinyUrl = this.chartExportingService.chartTinyUrl$;
-    this.loadingChartTinyUrl = this.chartExportingService.loadingChartTinyUrl$;
+  }
+
+  handlePopUpOpen(event: any) {
+    console.log(event);
   }
 
   handleChartObject($event) {
@@ -126,12 +125,21 @@ export class AppComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const chartObj$ = this.childChartCreator.createChart();
-    chartObj$.subscribe(
-      (chartObj: any) => {
-        this.chartExportingService.changeChartUrl(chartObj);
-        chartObj$.unsubscribe();
-      }
-    );
+    if (this.childChartCreator.isFormValid) {
+      const chartObj$ = this.childChartCreator.createChart();
+      chartObj$.subscribe(
+        (chartObj: any) => {
+          this.chartExportingService.changeChartUrl(chartObj);
+          chartObj$.unsubscribe();
+        }
+      );
+
+      const tableObj$ = this.childChartCreator.createTable();
+      tableObj$.subscribe(
+        (tableObj: any) => {
+          this.chartExportingService.changeTableUrl(tableObj);
+          tableObj$.unsubscribe();
+        }
+      ); }
   }
 }

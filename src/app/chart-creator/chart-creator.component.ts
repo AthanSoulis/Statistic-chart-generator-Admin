@@ -7,7 +7,7 @@ import { HighChartsChart} from '../services/supported-libraries-service/chart-de
 import { GoogleChartsChart } from '../services/supported-libraries-service/chart-description-GoogleCharts.model';
 import { Filter } from './chart-query-selector/query-filter-selector/query-filter/query-filter.model';
 import { Profile } from '../services/mapping-profiles-service/mapping-profiles.service';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { FormSchema, SCGAFormSchema, PropertiesFormSchema, DataseriesFormSchema, AppearanceFormSchema } from './chart-form-schema.model';
 
 // declare var jQuery: any;
@@ -61,6 +61,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     console.log(this.chartFormValue);
 
     if (this.isFormValid) {
+
       const chartObj$ = this.createChart();
       chartObj$.subscribe(
         (chartObj: any) => {
@@ -69,9 +70,13 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
         }
       );
 
-
-      // if (hchartObj === null) { hchartObj = this.createHighChartsChart(this.properties, this.queryForm); }
-      // this.tableSubmit.emit({value: hchartObj});
+      const tableObj$ = this.createTable();
+      tableObj$.subscribe(
+        (tableObj: any) => {
+          this.tableSubmit.emit({value: tableObj});
+          tableObj$.unsubscribe();
+        }
+      );
     }
   }
 
@@ -143,6 +148,38 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     }
 
     return chartObj;
+  }
+
+  createTable(): Subject<Object> {
+
+    const formObj: SCGAFormSchema = this.chartFormValue;
+    const generalProperties: PropertiesFormSchema = formObj.generalChartProperties;
+    const dataseries: DataseriesFormSchema[] = formObj.dataseries;
+
+    const tableObj = new GoogleChartsChart();
+    const chartDescription = tableObj.chartDescription;
+
+    let baseChartType: string;
+    if (dataseries.length > 0) {
+      baseChartType = dataseries[0].chartProperties.chartType;
+
+      for (let index = 0; index < dataseries.length; index++) {
+        const element = dataseries[index];
+        if (baseChartType !== element.chartProperties.chartType ) {
+          baseChartType = 'combo';
+          break;
+        }
+    }}
+
+    chartDescription.GoogleChartType = baseChartType;
+    chartDescription.tableForm = true;
+
+    dataseries.forEach( dataElement => {
+      chartDescription.queriesInfo.push(
+        new ChartInfo(dataElement, generalProperties.profile, generalProperties.results.resultsLimit));
+    });
+
+    return new BehaviorSubject(tableObj);
   }
 
   createDynamicGoogleChartsChart(generalProperties: PropertiesFormSchema,
