@@ -13,12 +13,12 @@
 
         <div *ngIf="isFormValid; else invalidForm" class="mdc-fab mdc-fab--extended app-fab--absolute" >
             <button type="submit" (click)="onSubmit()"
-                    class="ui bottom attached large positive button">Submit</button>
+                    class="ui bottom attached large primary button">Submit</button>
         </div>
         <ng-template #invalidForm>
             <div class="mdc-fab mdc-fab--extended app-fab--absolute" data-position="bottom right"
                 data-tooltip="Some obligatory fields are not selected !">
-                <button type="submit" class="ui bottom attached large basic negative not-allowed button">
+                <button type="submit" class="ui bottom attached large basic primary not-allowed button">
                     Submit</button>
             </div>
         </ng-template>

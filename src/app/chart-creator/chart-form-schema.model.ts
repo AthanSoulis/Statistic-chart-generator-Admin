@@ -87,7 +87,7 @@ export class FormSchema {
         'type' : 'object',
         'title' : 'General Properties',
         'description' : 'Set the general attributes of your chart',
-        'widget' : { 'id' : 'csui-property-object' },
+        'widget' : { 'id' : 'csui-general-properties-object' },
         'properties' : {
             'profile' : {
                 'type' : 'string',
@@ -478,7 +478,7 @@ export class FormSchema {
             'highchartsAppearanceOptions': {
                 'type' : 'object',
                 'widget' : { 'id' : 'csui-property-object' },
-                'title': 'Highcharts Appearance Options',
+                // 'title': 'Highcharts Appearance Options',
                 'properties' : {
                     'hcCABackGroundColor': {
                         'type' : 'string',
@@ -672,7 +672,7 @@ export class FormSchema {
             'googlechartsAppearanceOptions': {
                 'type' : 'object',
                 'widget' : { 'id' : 'csui-property-object' },
-                'title': 'Googlecharts Appearance Options',
+                // 'title': 'Googlecharts Appearance Options',
                 'properties' : {
                     'exporting' : {
                         'type': 'boolean',
