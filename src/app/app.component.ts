@@ -112,7 +112,11 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.chartModel = loadedChart;
       };
       fr.onloadstart = () => { this.chartLoadingService.chartLoadingStatus = true;  };
-      fr.onloadend = () => { this.loadedChartFile = event.target.files[0]; };
+      fr.onloadend = () => {
+        this.loadedChartFile = event.target.files[0];
+        this.chartObject = undefined;
+        this.tableObject = undefined;
+      };
 
       fr.readAsText(event.target.files[0]);
     }

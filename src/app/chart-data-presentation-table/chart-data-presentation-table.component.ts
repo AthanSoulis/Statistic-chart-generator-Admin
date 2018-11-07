@@ -32,6 +32,8 @@ export class ChartDataPresentationTableComponent implements OnInit, OnChanges {
     if (changes.table.currentValue) {
       this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/chart?json=' + encodeURIComponent(stringObj));
       console.log(this.frameUrl);
+    } else {
+      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/chart');
     }
   }
   getSanitizedFrameUrl(url: string) {
