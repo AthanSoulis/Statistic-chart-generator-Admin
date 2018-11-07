@@ -92,7 +92,7 @@ export class FormSchema {
             'profile' : {
                 'type' : 'string',
                 'placeholder' : 'No Profile Selected',
-                'title' : 'User Profile',
+                'title' : 'Selected View',
                 'requiredField' : true,
                 'minLength' : 1,
                 'widget': {
@@ -190,7 +190,7 @@ export class FormSchema {
         },
         'fieldsets': [
             {
-                'title': 'Profile Mapping',
+                'title': 'Data View',
                 'description' : 'Shows what type of data interests the user most',
                 'fields': [
                     'profile'

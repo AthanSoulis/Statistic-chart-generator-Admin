@@ -10,6 +10,9 @@ import { ErrorHandlerService } from '../error-handler-service/error-handler.serv
 export class Profile {
   name: string;
   description: string;
+  usage: string;
+  shareholders: string[];
+  complexity: number;
 }
 
 @Injectable({
