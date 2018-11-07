@@ -13,7 +13,7 @@
             <input id="fileElem" type="file" style="display:none" accept=".json" (change)="loadChart($event)">
             <div class="ui labeled button" (click)="initiateFilePicker()">
                 <div class="ui basic icon button"><i class="plus icon"></i></div>
-                <div id="fileName" class="ui basic label">{{ (this.loadedChartFile !== null) ? this.loadedChartFile.name : 'Select File'}}</div>
+                <div id="fileName" class="ui basic label">{{ ((this.loadedChartFile !== null) ? this.loadedChartFile.name : 'Select File') | slice:0:20 }}</div>
             </div>
         </div>
         <!-- <p class="ui center aligned basic segment">Chart model is loaded!</p> -->
