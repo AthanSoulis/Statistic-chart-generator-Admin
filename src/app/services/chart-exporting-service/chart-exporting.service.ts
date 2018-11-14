@@ -80,7 +80,7 @@ export class ChartExportingService {
     if (!tableObject) { return; }
 
     const stringObj = JSON.stringify(tableObject);
-    this._tableUrl.next(this.urlProvider.getUrl() + '/chart?json=' + encodeURIComponent(stringObj));
+    this._tableUrl.next(this.urlProvider.getUrl() + '/table?json=' + encodeURIComponent(stringObj));
   }
 
   protected changeTableTinyUrl(generatedTableTinyUrl: string) {

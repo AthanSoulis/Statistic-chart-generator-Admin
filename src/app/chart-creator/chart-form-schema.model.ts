@@ -732,13 +732,17 @@ export class FormSchema {
     get dataseriesFormSchema() { return this._dataseriesFormSchema; }
 
       // Declare a mapping between action ids and their implementations
-  get myValidators() {
+  get customValidators() {
       return {
 
-    '/generalChartProperties/axisNames/yaxisName': (value, property: FormProperty, form: PropertyGroup) => {
-        // console.log(property);
-        // console.log(form);
-        // console.log('Value: ' + value);
+    'generalChartProperties/library': (value: any, formProperty: FormProperty, form: PropertyGroup) => {
+        if (value === undefined || value === null || value === '') {
+            formProperty.extendErrors({ 'generalChartProperties/library': { 'expectedValue': '' }});
+            return null ;
+        }
+        console.log('Value: ' + value);
+        console.log(formProperty);
+        console.log(form);
 
         return null;
     }

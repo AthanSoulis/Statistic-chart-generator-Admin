@@ -127,29 +127,6 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     return chartObj;
   }
 
-  createGoogleChartsChart(properties: FormGroup, queryForm: FormGroup) {
-    const chartObj = new GoogleChartsChart();
-    const chartDescription = chartObj.chartDescription;
-
-    // chartDescription.queries.push(this.getFormQuery(queryForm));
-    chartDescription.GoogleChartType = properties.get('type').value as string;
-    // TODO This does NOT take into account multiple Dataseries
-    chartDescription.columns.push(null);
-    chartDescription.columns.push(null);
-
-    chartDescription.options.title = properties.get('title').value as string;
-    chartDescription.options.vAxis.title = properties.get('yaxisName').value as string;
-    chartDescription.options.hAxis.title = properties.get('xaxisName').value as string;
-
-    if (!chartDescription.chartType || chartDescription.columns || chartDescription.columns.length === 0) {
-      console.log('GoogleChart: Something is missing!');
-      console.log(chartObj);
-      // return null;
-    }
-
-    return chartObj;
-  }
-
   createTable(): Subject<Object> {
 
     const formObj: SCGAFormSchema = this.chartFormValue;

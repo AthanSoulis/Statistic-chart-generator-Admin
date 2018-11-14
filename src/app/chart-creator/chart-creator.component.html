@@ -2,7 +2,7 @@
 
     <div class="fourteen wide column" >
         <div class="ui basic segment">
-            <sf-form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.myValidators"
+            <sf-form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.customValidators"
             (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>        
         </div>
         <!-- <pre> {{formValue | json}} </pre> -->

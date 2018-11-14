@@ -10,30 +10,28 @@ import { UrlProviderService } from '../services/url-provider-service/url-provide
 export class ChartDataPresentationTableComponent implements OnInit, OnChanges {
 
   @Input() table: Object;
-  rows: Array<Array<any>>;
-  columnHeaders: Array<string>;
   frameUrl: SafeResourceUrl;
+
   frameHeight: number;
 
   constructor(private sanitizer: DomSanitizer, private urlProvider: UrlProviderService) {
-    this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/chart');
+    this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/table');
   }
 
   ngOnInit() {
-
-    this.frameHeight = (2 * window.outerHeight) / 5;
-
+    // this.frameHeight = (2 * window.outerHeight) / 5;
   }
+
   ngOnChanges(changes: SimpleChanges) {
 
     const stringObj = JSON.stringify(changes.table.currentValue);
     console.log('[table-frame.component] On changes: ' + stringObj);
 
     if (changes.table.currentValue) {
-      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/chart?json=' + encodeURIComponent(stringObj));
+      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/table?json=' + encodeURIComponent(stringObj));
       console.log(this.frameUrl);
     } else {
-      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/chart');
+      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/table');
     }
   }
   getSanitizedFrameUrl(url: string) {
