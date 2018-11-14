@@ -13,7 +13,8 @@
             <input id="fileElem" type="file" style="display:none" accept=".json" (change)="loadChart($event)">
             <div class="ui labeled button" (click)="initiateFilePicker()">
                 <div class="ui basic icon button"><i class="plus icon"></i></div>
-                <div id="fileName" class="ui basic label">{{ ((this.loadedChartFile !== null) ? this.loadedChartFile.name : 'Select File') | slice:0:20 }}</div>
+                <div id="fileName" class="ui basic label">
+                    {{ ((this.loadedChartFile !== null) ? this.loadedChartFile.name : 'Select File') | slice:0:20 }}</div>
             </div>
         </div>
         <!-- <p class="ui center aligned basic segment">Chart model is loaded!</p> -->
@@ -29,21 +30,23 @@
         </div> -->
 
         <h4 class="ui centered header">Generated Chart TinyUrl</h4>
-        <div class="ui small text container segment">
+        <div class="ui small text container fluid segment">
             <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingChartTinyUrl$ | async); else chartTinyUrlNotLoading">
 
             </div>
             <ng-template #chartTinyUrlNotLoading>
-                <p class="url-holder">{{chartExportingService.chartTinyUrl$ | async}}</p> 
+                <a target="_blank" rel="noopener noreferrer" href="{{chartExportingService.chartTinyUrl$ | async}}"
+                class="url-holder">{{chartExportingService.chartTinyUrl$ | async}}</a> 
             </ng-template>
         </div>
         <h4 class="ui centered header">Generated Table TinyUrl</h4>
-        <div class="ui small text container segment">
+        <div class="ui small text container fluid segment">
             <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingTableTinyUrl$ | async); else tableTinyUrlNotLoading">
 
             </div>
             <ng-template #tableTinyUrlNotLoading>
-                <p class="url-holder">{{chartExportingService.tableTinyUrl$ | async}}</p> 
+                <a target="_blank" rel="noopener noreferrer" href="{{chartExportingService.tableTinyUrl$ | async}}" 
+                class="url-holder">{{chartExportingService.tableTinyUrl$ | async}}</a> 
             </ng-template>
         </div>
 
@@ -58,11 +61,11 @@
     
     <div class="right menu">
         <a class="item" suiPopup (onOpen)="handlePopUpOpen($event)" [popupTemplate]="publishPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #publishpopup="suiPopup"
-        (click)="togglePublishPopUp(publishpopup)">Publish</a>
+        (click)="togglePublishPopUp(publishpopup)"><h3>Publish</h3></a>
         <a class="item" suiPopup [popupTemplate]="loadPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick"
-        (click)="loadChart()">Load</a>
+        (click)="loadChart()"><h3>Load</h3></a>
         <a class="item" suiPopup [popupTemplate]="exportPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #exportpopup="suiPopup"
-        (click)="exportChart(exportpopup)" >Export</a>
+        (click)="exportChart(exportpopup)"><h3>Export</h3></a>
         <!-- <a class="item">Sign Up</a>
         <a class="item">Help</a> -->
     </div>

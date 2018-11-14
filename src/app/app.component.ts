@@ -26,7 +26,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   activePopUp: SuiPopup;
 
-  popupPlacement = PopupPlacement.BottomRight;
+  popupPlacement = PopupPlacement.Bottom;
 
   constructor(private urlProvider: UrlProviderService,
     protected chartExportingService: ChartExportingService,
