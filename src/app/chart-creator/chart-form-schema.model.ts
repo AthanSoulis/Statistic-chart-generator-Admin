@@ -39,7 +39,6 @@ export interface ChartPropertiesFormSchema {
 }
 export interface PropertiesFormSchema {
     profile: string;
-    library: string;
 
     axisNames ?: AxisNamesFormSchema;
     title ?: string;
@@ -54,6 +53,8 @@ export interface AxisNamesFormSchema {
     xaxisName ?: string;
 }
 export interface AppearanceFormSchema {
+    library: string;
+
     highchartsAppearanceOptions ?: HighchartsOptionsFormSchema;
     googlechartsAppearanceOptions ?: GooglechartsOptionsFormSchema;
 }
@@ -98,17 +99,6 @@ export class FormSchema {
                 'widget': {
                     'id': 'csui-profile-picker'
                 }
-            },
-            'library' : {
-                'type' : 'string',
-                'placeholder' : 'Select Library',
-                'title' : 'Library',
-                'requiredField' : true,
-                'default' : 'HighCharts',
-                'minLength' : 1,
-                'widget': {
-                    'id': 'csui-library-select'
-                },
             },
             'axisNames' : {
                 'type' : 'object',
@@ -198,15 +188,15 @@ export class FormSchema {
             },
             {
                 'title': 'Chart Properties',
+                'description' : 'Basic attributes of a chart',
                 'fields': [
-                    'library',
                     'title',
                     'axisNames',
                     'results'
                 ]
             }
           ],
-          'required': [ 'library', 'profile' ]
+          'required': [ 'profile' ]
     };
 
     private _dataseriesFormSchema = {
@@ -473,8 +463,19 @@ export class FormSchema {
         'type' : 'object',
         'title' : 'Appearance',
         'description' : 'Customise the way your chart looks',
-        'widget' : { 'id' : 'csui-property-object' },
+        'widget' : { 'id' : 'csui-general-properties-object' },
         'properties' : {
+            'library' : {
+                'type' : 'string',
+                'placeholder' : 'Select Library',
+                'title' : 'Selected Library',
+                'requiredField' : true,
+                'default' : 'HighCharts',
+                'minLength' : 1,
+                'widget': {
+                    'id': 'csui-library-select'
+                },
+            },
             'highchartsAppearanceOptions': {
                 'type' : 'object',
                 'widget' : { 'id' : 'csui-property-object' },
@@ -666,7 +667,7 @@ export class FormSchema {
                     },
                 ],
                 'visibleIf': {
-                    '/generalChartProperties/library': ['HighCharts']
+                    'library': ['HighCharts']
                 }
             },
             'googlechartsAppearanceOptions': {
@@ -687,18 +688,26 @@ export class FormSchema {
                     }
                 ],
                 'visibleIf': {
-                    '/generalChartProperties/library': ['GoogleCharts']
+                    'library': ['GoogleCharts']
                 }
             },
         },
         'fieldsets': [
+            {
+                'title': 'Visualisation Library',
+                'description' : 'Select one of the supported libraries for chart visualisation',
+                'fields': [
+                    'library'
+                ]
+            },
             {
                 'fields': [
                     'highchartsAppearanceOptions',
                     'googlechartsAppearanceOptions'
                 ]
             }
-        ]
+        ],
+        'required': [ 'library' ]
     };
 
     private _SCGAFormSchema = {
@@ -724,7 +733,7 @@ export class FormSchema {
                 'fields': ['appearance']
             }
         ],
-        'required': ['generalChartProperties', 'dataseries']
+        'required': ['generalChartProperties', 'dataseries', 'appearance']
     };
 
     get formSchema() { return this._SCGAFormSchema; }

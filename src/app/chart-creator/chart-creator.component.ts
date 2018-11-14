@@ -86,7 +86,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     const formObj: SCGAFormSchema = this.chartFormValue;
 
     const generalProperties: PropertiesFormSchema = formObj.generalChartProperties;
-    const library: string = generalProperties.library;
+    const library: string = formObj.appearance.library;
 
     const dataseries: DataseriesFormSchema[] = formObj.dataseries;
     const appearanceOptions: AppearanceFormSchema = formObj.appearance;
