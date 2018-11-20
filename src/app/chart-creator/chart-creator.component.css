@@ -2,6 +2,10 @@
     cursor: not-allowed !important; 
 }
 
+.large.text {
+  font-size: 1.3rem;
+}
+
 .app-fab--absolute {
   position: fixed;
   margin-top: 1.5rem;

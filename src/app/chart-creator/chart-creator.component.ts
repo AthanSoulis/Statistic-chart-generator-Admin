@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Output, EventEmitter, Input, AfterContentInit, OnChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter, Input, AfterContentInit, OnChanges, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
 import { Query, Select, ChartInfo } from './chart-query-selector/chart-query.model';
 import { ChartProperties } from './chart-properties-selector/chart-properties.model';
@@ -9,8 +9,9 @@ import { Filter } from './chart-query-selector/query-filter-selector/query-filte
 import { Profile } from '../services/mapping-profiles-service/mapping-profiles.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { FormSchema, SCGAFormSchema, PropertiesFormSchema, DataseriesFormSchema, AppearanceFormSchema } from './chart-form-schema.model';
+import { FormComponent } from 'ngx-schema-form';
 
-// declare var jQuery: any;
+declare var jQuery: any;
 
 @Component({
   selector: 'chart-creator',
@@ -21,6 +22,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
 
   @Output() chartSubmit: EventEmitter<Object> = new EventEmitter();
   @Output() tableSubmit: EventEmitter<Object> = new EventEmitter();
+  @Output() formClear: EventEmitter<Object> = new EventEmitter();
   @Input() loadedChart: Object = null;
 
   profileMapping: Profile = null;
@@ -30,30 +32,40 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
   formValue: SCGAFormSchema;
   formErrors: any;
   private _isFormValid = true;
+  private _resetFormValue = null;
 
   constructor(private formBuilder: FormBuilder,
-    private supportedLibrariesService: SupportedLibrariesService) {
+    private supportedLibrariesService: SupportedLibrariesService,
+    protected cdr: ChangeDetectorRef) {
       this.fs = new FormSchema();
   }
 
   ngOnInit() {}
 
-  ngAfterViewInit(): void {}
-
-  ngAfterContentInit(): void {
-    // console.log('Calling jquery');
-    // jQuery('.ui.sticky')
-    // .sticky({
-    //   offset: 60
-    // });
+  ngAfterViewInit(): void {
+    this._resetFormValue = this.formValue;
   }
+
+  ngAfterContentInit(): void {}
 
   get chartFormValue(): SCGAFormSchema { return this.formValue as SCGAFormSchema; }
 
   dynamicFormChanged($event) {
-    this.formValue = $event.value;
-    // recalculates offsets
-    // jQuery('.ui.sticky').sticky('refresh');
+    if ($event) {
+      this.formValue = $event.value;
+    }
+  }
+
+  reset(form: FormComponent) {
+
+    form.rootProperty.reset(this._resetFormValue, true);
+    this.formClear.emit();
+    this.cdr.detectChanges();
+  }
+
+  onClear() {
+    jQuery('.ui.formClear.modal')
+    .modal('show');
   }
 
   onSubmit() {
@@ -98,7 +110,6 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
           switch (library) {
 
             case('HighCharts'): {
-              // const hchartObj = this.createHighChartsChart(this.properties, this.getQueryForm(0));
               console.log('Appearance', appearanceOptions);
               const hchartObj = this.createDynamicHighChartsChart(generalProperties, dataseries, appearanceOptions);
 
@@ -135,21 +146,6 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
 
     const tableObj = new GoogleChartsChart();
     const chartDescription = tableObj.chartDescription;
-
-    let baseChartType: string;
-    if (dataseries.length > 0) {
-      baseChartType = dataseries[0].chartProperties.chartType;
-
-      for (let index = 0; index < dataseries.length; index++) {
-        const element = dataseries[index];
-        if (baseChartType !== element.chartProperties.chartType ) {
-          baseChartType = 'combo';
-          break;
-        }
-    }}
-
-    chartDescription.GoogleChartType = baseChartType;
-    chartDescription.tableForm = true;
 
     dataseries.forEach( dataElement => {
       chartDescription.queriesInfo.push(

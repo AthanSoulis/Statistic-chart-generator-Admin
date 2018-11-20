@@ -41,5 +41,5 @@
         {{schema.description}}
       </span>
       <input (click)="showProfilePicker(null)" style=" text-align: center;" readonly type="text" 
-      value='{{this.formProperty.value === null ? "" : this.formProperty.value}}'>
+      value='{{ (this.formProperty.valueChanges | async) === null ? "" : this.formProperty.value}}'>
   </div>

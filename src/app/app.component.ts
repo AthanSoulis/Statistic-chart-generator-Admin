@@ -55,6 +55,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     console.log(this.tableObject);
   }
 
+  handleClearForm() {
+    this.chartObject = undefined;
+    this.tableObject = undefined;
+  }
+
   public togglePublishPopUp(popup: IPopup) {
 
     if (!this._publishPopUpCondition) {
@@ -114,8 +119,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       fr.onloadstart = () => { this.chartLoadingService.chartLoadingStatus = true;  };
       fr.onloadend = () => {
         this.loadedChartFile = event.target.files[0];
-        this.chartObject = undefined;
-        this.tableObject = undefined;
+        this.handleClearForm();
       };
 
       fr.readAsText(event.target.files[0]);

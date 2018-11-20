@@ -10,14 +10,12 @@ import { UrlProviderService } from '../url-provider-service/url-provider.service
 })
 export class ChartExportingService {
 
-  chartUrl$: Observable<string>;
   private _chartUrl: BehaviorSubject<string>;
   chartTinyUrl$: Observable<string>;
   private _chartTinyUrl: BehaviorSubject<string>;
   loadingChartTinyUrl$: Observable<boolean>;
   private _loadingChartTinyUrl: BehaviorSubject<boolean>;
 
-  tableUrl$: Observable<string>;
   private _tableUrl: BehaviorSubject<string>;
   tableTinyUrl$: Observable<string>;
   private _tableTinyUrl: BehaviorSubject<string>;
@@ -27,17 +25,15 @@ export class ChartExportingService {
   constructor(private http: HttpClient, private errorHandler: ErrorHandlerService,
      private urlProvider: UrlProviderService) {
 
-      const context = this;
       // Chart Url Loader
       this._loadingChartTinyUrl = new BehaviorSubject<boolean>(false);
       this.loadingChartTinyUrl$ = this._loadingChartTinyUrl.asObservable();
 
       this._chartUrl = new BehaviorSubject<string>(null);
-      this.chartUrl$ = this._chartUrl.asObservable();
       this._chartTinyUrl = new BehaviorSubject<string>(null);
       this.chartTinyUrl$ = this._chartTinyUrl.asObservable();
 
-      this.chartUrl$.pipe(distinctUntilChanged()).subscribe(
+      this._chartUrl.pipe(distinctUntilChanged()).subscribe(
         (chartUrl: string) => {
                     if (chartUrl) {
                       this.postTinyUrl(chartUrl, this._loadingChartTinyUrl, this._chartTinyUrl);
@@ -53,8 +49,7 @@ export class ChartExportingService {
       this.loadingTableTinyUrl$ = this._loadingTableTinyUrl.asObservable();
 
       this._tableUrl = new BehaviorSubject<string>(null);
-      this.tableUrl$ = this._tableUrl.asObservable();
-      this.tableUrl$.pipe(distinctUntilChanged()).subscribe(
+      this._tableUrl.pipe(distinctUntilChanged()).subscribe(
         (tableUrl: string) => {
                     if (tableUrl) {
                       this.postTinyUrl(tableUrl, this._loadingTableTinyUrl, this._tableTinyUrl);
@@ -89,7 +84,6 @@ export class ChartExportingService {
 
   private postTinyUrl(chartUrl: string, loader: BehaviorSubject<boolean>, tinyUrlSubject: BehaviorSubject<string> ) {
 
-    // this._loadingChartTinyUrl.next(true);
     loader.next(true);
 
     const postUrl = this.urlProvider.getUrl() + '/chart/shorten';
@@ -102,11 +96,11 @@ export class ChartExportingService {
       {headers: postHeaders})
       .subscribe(
       // success path
-      (response: ShortenUrlResponse) => tinyUrlSubject.next(response.shortUrl), // this.changeChartTinyUrl(response.shortUrl),
+      (response: ShortenUrlResponse) => tinyUrlSubject.next(response.shortUrl),
       // error path
       error => this.errorHandler.handleError(error),
       // complete path
-      () => loader.next(false) // this._loadingChartTinyUrl.next(false)
+      () => loader.next(false)
     );
   }
 }
