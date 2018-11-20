@@ -82,6 +82,12 @@ export interface GooglechartsOptionsFormSchema {
     exporting ?: boolean;
 }
 
+/*
+ * Semantic UI related schema fields
+ *
+ * ~ grouping: Changes the way the fields are grouped based on this https://semantic-ui.com/collections/form.html#text-area
+ */
+
 export class FormSchema {
 
     private _propertiesFormSchema = {
@@ -124,6 +130,7 @@ export class FormSchema {
                 'fieldsets': [
                     {
                         'title': 'Axis Names',
+                        'grouping': 'equal width fields',
                         'fields': [
                             'yaxisName',
                             'xaxisName'
@@ -170,6 +177,7 @@ export class FormSchema {
                 'fieldsets': [
                     {
                         'title': 'Results',
+                        'grouping': 'equal width fields',
                         'fields': [
                             'resultsLimit',
                             'orderByAxis'
@@ -258,11 +266,15 @@ export class FormSchema {
                             'fieldsets': [
                                 {
                                     'title' : 'Y Axis',
+                                    'grouping': 'equal width fields',
                                     'fields': [
                                         'entity',
-                                        'yaxisAggregate',
-                                        'yaxisEntityField'
+                                        'yaxisAggregate'
                                     ]
+                                },
+                                {
+                                    'grouping': 'inline grouped fields',
+                                    'fields': ['yaxisEntityField']
                                 }
                             ],
                             'required': [ 'entity', 'yaxisAggregate']
@@ -701,6 +713,8 @@ export class FormSchema {
                 ]
             },
             {
+                'title': 'Visualisation Options',
+                'description' : 'Available options based on the selected Visualisation Library',
                 'fields': [
                     'highchartsAppearanceOptions',
                     'googlechartsAppearanceOptions'
