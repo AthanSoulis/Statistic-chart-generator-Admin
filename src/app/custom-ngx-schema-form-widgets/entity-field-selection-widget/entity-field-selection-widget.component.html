@@ -1,0 +1,15 @@
+<div [ngClass]="!schema.requiredField ? 
+'widget form-group field' : 
+(control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'">
+	<label [attr.for]="id" class="horizontal control-label">
+		{{ schema.title }}
+	</label>
+	<span *ngIf="schema.description" class="formHelp">
+		{{schema.description}}
+	</span>
+  <input *ngIf="schema.readOnly; else entityFieldSelection" [attr.name]="name" type="hidden" [formControl]="control">
+  <ng-template #entityFieldSelection>
+    <select-attribute [chosenEntity]="entityValue" [formControl]="control"
+    [attr.name]="name" [attr.disabled]="schema.readOnly" ></select-attribute>
+  </ng-template>
+</div>

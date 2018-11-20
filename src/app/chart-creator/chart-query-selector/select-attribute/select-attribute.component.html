@@ -1,9 +1,9 @@
 <div class="simple segment">
-  <div class="ui fluid selection dropdown link item" suiDropdown>
+  <div class="ui fluid selection dropdown link item" suiDropdown (isOpenChange)="this._onTouched($event)" >
 
-    <div *ngIf="selectedField !== null; else nullSelectedField">
-      <div class="ui breadcrumb" #selectedFieldLength *ngFor="let field of selectedField.split('.'); let i = index">
-        <div *ngIf="i !== selectedField.split('.').length - 1 ; else activeField">
+    <div *ngIf="this.checkValidFieldNode(selectedNode) !== null; else nullSelectedField">
+      <div class="ui breadcrumb" #selectedFieldLength *ngFor="let field of selectedNode.name.split('.'); let i = index">
+        <div *ngIf="i !== selectedNode.name.split('.').length - 1 ; else activeField">
           <span class="section">{{field | titlecase}}</span>
           <div class="divider"> > </div>
         </div>
@@ -12,7 +12,9 @@
         </ng-template>
       </div>
     </div>
-    <ng-template #nullSelectedField>Select Entity Field</ng-template>
+    <ng-template #nullSelectedField>
+      <div class="default text">Select Entity Field</div>
+    </ng-template>
 
     <i class="dropdown icon"></i>
     
@@ -23,24 +25,21 @@
       <mat-tree [dataSource]="nestedEntityDataSource" [treeControl]="nestedEntityTreeControl" class="data-tree" >
 
         <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
-          <li>
-          <div class="mat-tree-node">
-            <button type="button" id="data-tree-button" class="ui compact icon button" 
-                mat-icon-button matTreeNodeToggle 
-                [attr.aria-label]="'toggle ' + node.name"
-                (click)="onExpanded(node)">
+          <li (click)="onExpanded(node)" class="mat-tree-node" id="data-tree-entity-field"
+          matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+          
+            <button type="button" id="data-tree-button" class="ui compact icon button" mat-icon-button>
               <mat-icon class="mat-icon-rtl-mirror">
                 {{nestedEntityTreeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
               </mat-icon>
             </button>
             {{node.name | titlecase}}
-          </div>
           </li>
 
           <ul [class.data-tree-invisible]="!nestedEntityTreeControl.isExpanded(node)">
-            <li *ngFor="let field of node.fields">
-              <div class="mat-tree-node" >
-                <span (click)="nodeSelected(field)" style="cursor: pointer;">{{field.name | titlecase}}</span>
+            <li *ngFor="let field of node.fields; trackBy:trackByFieldName" (click)="nodeSelected(field)">
+              <div class="mat-tree-node">
+                <span style="cursor: pointer;">{{field.name | titlecase}}</span>
               </div>
             </li>
 

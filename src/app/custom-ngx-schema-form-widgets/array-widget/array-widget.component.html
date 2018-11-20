@@ -1,0 +1,28 @@
+<div [ngClass]="!schema.requiredField ? 
+'widget form-group field' : 
+(control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'" >
+  <h3 class="ui dividing header horizontal control-label" [attr.for]="id" 
+  *ngIf="schema.title || schema.description; else no_header"> {{ schema.title }}
+    <div class="sub header formHelp" *ngIf="schema.description">{{ schema.description }}</div>
+  </h3>
+    
+  <ng-template #no_header>
+    <div class="ui hidden divider"></div>
+  </ng-template>
+
+  <button type="button" (click)="addItem()"
+  class="ui labeled icon basic blue compact button btn btn-default array-add-button">
+      <i class="plus icon"></i> Add {{schema.itemName}}</button>
+  
+  <div class="ui segments" *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex">
+    
+    <div class="ui equal width form clearing attached segment" >
+      <sf-form-element [formProperty]="itemProperty"></sf-form-element>
+    </div>
+
+    <button (click)="removeItem(i)" type="button" 
+    class="ui bottom attached fluid icon basic red compact button btn btn-default array-remove-button">
+    <i class="close icon"></i></button>
+
+  </div>
+</div>

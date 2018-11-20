@@ -1,0 +1,29 @@
+.not-allowed {
+    cursor: not-allowed !important; 
+}
+
+.large.text {
+  font-size: 1.3rem;
+}
+
+.app-fab--absolute {
+  position: fixed;
+  margin-top: 1.5rem;
+  left: 39.875%;
+  transform: translate(-50%, -50%);
+}
+  
+  @media(min-width: 1024px) {
+    .app-fab--absolute {
+    margin-top: 1.5rem;
+    left: 39.875%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.ui.sticky {
+   margin-top: 60px;
+   margin-right: 1rem;
+   margin-bottom: 15px;
+   position: fixed;
+}

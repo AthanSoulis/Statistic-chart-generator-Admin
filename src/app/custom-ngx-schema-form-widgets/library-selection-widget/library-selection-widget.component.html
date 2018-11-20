@@ -1,0 +1,16 @@
+<div [ngClass]="!schema.requiredField ? 'widget form-group field' : 
+(control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'">
+  <label [attr.for]="id" class="horizontal control-label">
+    {{schema.title}}
+  </label>
+  <span *ngIf="schema.description" class="formHelp">
+    {{schema.description}}
+  </span>
+  <input *ngIf="schema.readOnly; else librarySelection" [attr.name]="name" type="hidden" [formControl]="control">
+  <ng-template #librarySelection>
+    <sui-select class="selection" [options]="supportedLibraries" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly"
+      placeholder={{schema.placeholder}} #librarySelect>    
+      <sui-select-option *ngFor="let library of librarySelect.filteredOptions" [value]='library'></sui-select-option>
+    </sui-select>
+  </ng-template>
+</div>

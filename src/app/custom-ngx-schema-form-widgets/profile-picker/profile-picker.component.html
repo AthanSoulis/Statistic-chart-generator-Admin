@@ -1,0 +1,45 @@
+<!-- <ng-template  #mappingModal> -->
+  <div class="ui mapping modal"> 
+      <h2 class="ui header">
+          Select View
+      </h2>
+      <div class="content">
+        <div *ngIf="this.hasBeenInitialized" class="ui warning message">
+                <i class="icon warning"></i>
+                Choosing a new View will delete all your <b>Dataseries</b> changes!
+        </div>
+        <div class="ui three centered stackable cards">
+        <div class="ui card" *ngFor="let profile of (this.mappingProfileService.mappingProfiles$ | async )">
+            <div class="content">
+                <div class="header"><h2>{{profile.name}}</h2></div>
+                <div class="meta">{{profile.description}}</div>
+            </div>
+            <div class="content">
+                <div class="description">{{profile.usage}}</div>
+            </div>
+            <div class="extra content">
+                <div class="ui circular labels">
+                    <i class="users padded icon"></i> 
+                    <div *ngFor="let shareholder of profile.shareholders" class="ui horizontal  basic label">{{shareholder | titlecase}}</div>
+                </div>
+            </div>
+            <button (click)="cardButtonAction(profile)" class="ui bottom attached blue button">Select</button>
+        </div>
+        </div>
+    </div>
+  </div>
+  <!-- </ng-template> -->
+
+  <div class="ui hidden divider"></div>
+
+  <div [ngClass]="!schema.requiredField ? 'widget form-group profile inline field' : 
+    (control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required profile inline field error' : 'widget form-group required profile inline field '">
+      <label [attr.for]="id" class="horizontal control-label" (click)="showProfilePicker(null)">
+        {{schema.title}}
+      </label>
+      <span *ngIf="schema.description" class="formHelp">
+        {{schema.description}}
+      </span>
+      <input (click)="showProfilePicker(null)" style=" text-align: center;" readonly type="text" 
+      value='{{ (this.formProperty.valueChanges | async) === null ? "" : this.formProperty.value}}'>
+  </div>

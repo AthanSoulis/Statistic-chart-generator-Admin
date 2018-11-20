@@ -1,52 +1,103 @@
 <ng-template let-popup #exportPopUp>
     <div class="ui content">
-        <p class="ui center aligned basic segment">A JSON representation of the chart is saved!</p>
+        <p class="ui center aligned basic segment">A JSON representation of the chart has just been saved !</p>
     </div>
 </ng-template>
 
 <ng-template let-popup #loadPopUp>
     <div class="ui content">
-        <h4 class="ui header">Load</h4>
-        
+        <div class="ui center aligned basic segment">
+            <sui-dimmer class="inverted" [(isDimmed)]="this.chartLoadingService.chartLoadingStatus">
+                <div class="ui text loader">Loading Chart</div>
+            </sui-dimmer>
+            <input id="fileElem" type="file" style="display:none" accept=".json" (change)="loadChart($event)">
+            <div class="ui labeled button" (click)="initiateFilePicker()">
+                <div class="ui basic icon button"><i class="plus icon"></i></div>
+                <div id="fileName" class="ui basic label">
+                    {{ ((this.loadedChartFile !== null) ? this.loadedChartFile.name : 'Select File') | slice:0:20 }}</div>
+            </div>
+        </div>
+        <!-- <p class="ui center aligned basic segment">Chart model is loaded!</p> -->
     </div>
 </ng-template>
 
-<ng-template let-popup #publishPopUp>
+<ng-template let-popup #publishPopUp >
     <div class="ui content">
 
-        <h4 class="ui centered header">Generated Chart Url</h4>
+        <!-- <h4 class="ui centered header">Generated Chart Url</h4>
         <div class="ui small text container segment">
-            <p class="url-holder">{{chartUrl | async}}</p>
-        </div>
+            <p class="url-holder">{{chartExportingService.chartUrl$ | async}}</p>
+        </div> -->
 
         <h4 class="ui centered header">Generated Chart TinyUrl</h4>
-        <div class="ui small text container segment">
-            <p class="url-holder">{{chartTinyUrl | async}}</p>
+        <div class="ui small text container fluid segment">
+            <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingChartTinyUrl$ | async); else chartTinyUrlNotLoading">
+
+            </div>
+            <ng-template #chartTinyUrlNotLoading>
+                <a target="_blank" rel="noopener noreferrer" href="{{chartExportingService.chartTinyUrl$ | async}}"
+                class="url-holder">{{chartExportingService.chartTinyUrl$ | async}}</a> 
+            </ng-template>
+        </div>
+        <h4 class="ui centered header">Generated Table TinyUrl</h4>
+        <div class="ui small text container fluid segment">
+            <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingTableTinyUrl$ | async); else tableTinyUrlNotLoading">
+
+            </div>
+            <ng-template #tableTinyUrlNotLoading>
+                <a target="_blank" rel="noopener noreferrer" href="{{chartExportingService.tableTinyUrl$ | async}}" 
+                class="url-holder">{{chartExportingService.tableTinyUrl$ | async}}</a> 
+            </ng-template>
         </div>
 
     </div>
 </ng-template>
 
-<div class="ui big inverted fixed menu">
-    <div class="header item">Statistic Chart Generator</div>
-    <a class="item" suiPopup [popupTemplate]="exportPopUp" popupTrigger="manual" #exportpopup="suiPopup"
-        (click)="exportChart(exportpopup)">Export</a>
-    <a class="item" suiPopup [popupTemplate]="loadPopUp" popupTrigger="outsideClick"
-    (click)="loadChart()">Load</a>
-    <a class="item" suiPopup [popupTemplate]="publishPopUp" popupTrigger="manual" #publishpopup="suiPopup"
-        (click)="togglePublishPopUp(publishpopup)">Publish</a>
+<div class="ui massive fixed pointing menu">
+    <div class="header item">
+        <img src="https://www.openaire.eu/images/OpenAIRE_branding/Logo_Horizontal.png" alt="OpenAIRE">
+        <!-- Statistic Chart Generator -->
+    </div>
+    
     <div class="right menu">
-        <a class="item">Sign Up</a>
-        <a class="item">Help</a>
+        <a class="item" suiPopup (onOpen)="handlePopUpOpen($event)" [popupTemplate]="publishPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #publishpopup="suiPopup"
+        (click)="togglePublishPopUp(publishpopup)"><h3>Publish</h3></a>
+        <a class="item" suiPopup [popupTemplate]="loadPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick"
+        (click)="loadChart()"><h3>Load</h3></a>
+        <a class="item" suiPopup [popupTemplate]="exportPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #exportpopup="suiPopup"
+        (click)="exportChart(exportpopup)"><h3>Export</h3></a>
+        <!-- <a class="item">Sign Up</a>
+        <a class="item">Help</a> -->
     </div>
 </div>
-<div class="ui sixteen stackable padded grid">
-    <div class="ui six wide column container">
-        <chart-creator (chartSubmit)="handleChartObject($event)" (tableSubmit)="handleTableObject($event)"></chart-creator>
+
+<div class="ui stackable two column divided padded grid">
+    <div class="ui seven wide padded column container">
+        <chart-creator [loadedChart]="chartModel" (formClear)="handleClearForm()" (chartSubmit)="handleChartObject($event)" (tableSubmit)="handleTableObject($event)"></chart-creator>
     </div>
-    <div class="ui ten wide column container">
-        <chart-frame [chart]="chartObject"></chart-frame>
-        <span class="ui hidden horizontal divider"></span>
-        <!-- <chart-data-presentation-table [table]="chartObject"></chart-data-presentation-table> -->
+    <div class="ui nine wide column container">
+
+        <!-- <div  id="iframeBlocker" style="position: absolute; top: 0; left: 0; width:95%; height:95%;z-index:2"></div> -->
+        <div style="box-shadow: 0 4px 6px 0 rgba(34,36,38,.15);border: 1px solid rgba(34,36,38,.07);">
+            <chart-frame [chart]="chartObject"></chart-frame>
+        </div>
+        
+        <div class="ui hidden horizontal divider"></div>
+        <div style="margin-top: 20px; box-shadow: 0 4px 6px 0 rgba(34,36,38,.15);border: 1px solid rgba(34,36,38,.07);">
+            <chart-data-presentation-table [table]="tableObject"></chart-data-presentation-table>
+        </div>
+    </div>
+</div>
+
+<div class="footer" style="background: #222080;padding: 30px 30px;font-size: 85%;">
+    <div style="margin-bottom: 10px;">
+        <img sizes="(min-width: 126px) 126px" data-width="126" data-height="30" class="el-image" alt="OpenAIRE" src="https://www.openaire.eu/templates/yootheme/cache/Logo_Horizontal_white_small-74927fe1.png" srcset="https://www.openaire.eu/templates/yootheme/cache/Logo_Horizontal_white_small-74927fe1.png 126w">
+    </div>
+    <div style="margin-bottom: 10px;">
+        <img src="https://www.openaire.eu/templates/yootheme/cache/flag_black_white_low-c62d292e.jpeg" srcset="https://www.openaire.eu/templates/yootheme/cache/flag_black_white_low-c62d292e.jpeg 50w, https://www.openaire.eu/templates/yootheme/cache/flag_black_white_low-77b5e7bd.jpeg 100w" sizes="(min-width: 50px) 50px" data-width="427" data-height="285" class="el-image" alt="European Commission">
+    </div>
+    <div id="" class="" style="text-align: center;color: rgba(255,255,255,.7);">
+        <a href="http://creativecommons.org/licenses/by/4.0/" rel="license"> <img src="/images/Icons/cc.svg" uk-svg="" hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" class=" uk-svg"><title></title><g data-name="Creative Commons" id="Creative_Commons"><circle cx="12" cy="12" r="11.5" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></circle><path d="M10.87,10a3.5,3.5,0,1,0,0,4" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></path><path d="M18.87,10a3.5,3.5,0,1,0,0,4" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></path></g></svg>&nbsp;<img src="/images/Icons/cc-by.svg" uk-svg="" hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" class=" uk-svg"><title></title><g id="Attribution"><g data-name="<Group>" id="_Group_"><circle cx="12" cy="5" data-name="<Path>" id="_Path_" r="1.5" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></circle><path d="M12,8a5,5,0,0,0-3.07.71,1,1,0,0,0-.43.83V15H10v5.5h4V15h1.5V9.54a1,1,0,0,0-.43-.83A5,5,0,0,0,12,8Z" data-name="<Path>" id="_Path_2" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></path></g><circle cx="12" cy="12" r="11.5" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></circle></g></svg></a>&nbsp;Unless otherwise indicated, all materials created by OpenAIRE are licenced under&nbsp;<a href="http://creativecommons.org/licenses/by/4.0/" rel="license" style="color: #fff;">CC ATTRIBUTION 4.0 INTERNATIONAL LICENSE</a>. 
+      
     </div>
 </div>

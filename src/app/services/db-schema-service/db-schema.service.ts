@@ -5,7 +5,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject, of as observableOf } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { UrlProviderService } from '../url-provider-service/url-provider.service';
-import { Profile } from '../mapping-profiles-service/mapping-profiles.service';
+import { Profile, MappingProfilesService } from '../mapping-profiles-service/mapping-profiles.service';
 import { ErrorHandlerService } from '../error-handler-service/error-handler.service';
 
 export class EntityNode {
@@ -35,7 +35,8 @@ export class EntityTreeNode {
 @Injectable()
 export class DbSchemaService {
 
-  constructor(private http: HttpClient, private urlProvider: UrlProviderService, private errorHandler: ErrorHandlerService) {}
+  constructor(private http: HttpClient, private urlProvider: UrlProviderService,
+    private profileMappingService: MappingProfilesService, private errorHandler: ErrorHandlerService) {}
 
   getAvailableEntities(profile: Profile): Observable<Array<string>> {
 
@@ -59,7 +60,19 @@ export class DbSchemaService {
     );
   }
 
-  getEntityFields(entity: string): Observable<EntityNode> {
+  getEntityFields(entity: string, profile?: Profile) {
+
+    if (profile === null) { return this.getEntityFieldsNoMapping(entity); }
+
+    const entityFieldsUrl = this.urlProvider.getUrl() + '/schema/' + profile.name + '/entities/' + entity;
+    return this.http.get<EntityNode>(entityFieldsUrl)
+      .pipe(
+        retry(3), // retry a failed request up to 3 times
+        catchError(this.errorHandler.handleError) // then handle the error
+    );
+  }
+
+  getEntityFieldsNoMapping(entity: string): Observable<EntityNode> {
 
     const entityFieldsUrl = this.urlProvider.getUrl() + '/schema/entities/' + entity;
     return this.http.get<EntityNode>(entityFieldsUrl)
@@ -69,22 +82,25 @@ export class DbSchemaService {
     );
   }
 
-  getEntityTree(rootNode: EntityNode): Observable<EntityTreeNode> {
+  getEntityTree(rootNode: EntityNode): EntityTreeNode {
 
     // console.log('RootNode:');
     // console.log(rootNode);
     const entityTree = this.createEntityLinkedTree(null, rootNode);
     // console.log(entityTree);
 
-    return observableOf(entityTree);
+    return entityTree;
   }
 
   private createEntityLinkedTree(parentNode: EntityTreeNode, recreatedNode: EntityNode): EntityTreeNode {
 
     const newEntityTreeNode = new EntityTreeNode(recreatedNode.fields, new Array<EntityTreeNode>(), recreatedNode.name, parentNode);
-    recreatedNode.relations.forEach(element => {
-      newEntityTreeNode.relations.push(this.createEntityLinkedTree(newEntityTreeNode, element));
-    });
-    return newEntityTreeNode;
+    if (recreatedNode.relations) {
+      recreatedNode.relations.forEach(element => {
+        newEntityTreeNode.relations.push(this.createEntityLinkedTree(newEntityTreeNode, element));
+      });
+      return newEntityTreeNode;
+    }
+    return null;
   }
 }

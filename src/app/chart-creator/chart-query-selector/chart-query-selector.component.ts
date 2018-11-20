@@ -5,6 +5,7 @@ import { Query, Select } from './chart-query.model';
 import { SupportedAggregateFunctionsService } from '../../services/supported-aggregate-functions-service/supported-aggregate-functions.service';
 import { Profile, MappingProfilesService } from '../../services/mapping-profiles-service/mapping-profiles.service';
 import { Subscription } from 'rxjs';
+import { ErrorHandlerService } from '../../services/error-handler-service/error-handler.service';
 
 @Component({
   selector: 'chart-query-selector',
@@ -77,16 +78,15 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit, OnDes
 
   getEntityTreeNode(entity: string) {
     if (entity === this.chosenEntity && this.chosenEntity !== '') {
+
       this.dbSchemaService.getEntityFields(this.chosenEntity).subscribe(
         (value: EntityNode) => {
           if (value !== null) {
-            this.dbSchemaService.getEntityTree(value)
-            .subscribe(
-              (rootTreeNode: EntityTreeNode) => {
-                if (rootTreeNode !== null) {
-                  this.entityTreeRoot = rootTreeNode;
-                  return this.entityTreeRoot;
-                 }});
+            const rootTreeNode = this.dbSchemaService.getEntityTree(value);
+            if (rootTreeNode !== null) {
+              this.entityTreeRoot = rootTreeNode;
+              return this.entityTreeRoot;
+              }
          }}
       );
     }

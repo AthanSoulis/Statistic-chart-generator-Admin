@@ -1,0 +1,15 @@
+input{
+    text-align:center !important;
+}
+
+input:read-only{
+    cursor: pointer !important;
+}
+
+.noleftpadding {
+    padding-left: 0 !important;
+}
+
+.norightpadding {
+    padding-right: 0 !important;
+}

@@ -8,6 +8,8 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
+import { MatButtonModule } from '@angular/material/button';
+
 import { AppComponent } from './app.component';
 import { ChartFrameComponent } from './chart-frame/chart-frame.component';
 import { ChartPropertiesSelectorComponent } from './chart-creator/chart-properties-selector/chart-properties-selector.component';
@@ -30,8 +32,28 @@ import { FieldAutocompleteService } from './services/field-autocomplete-service/
 import { MappingProfilesService } from './services/mapping-profiles-service/mapping-profiles.service';
 import { ChartExportingService } from './services/chart-exporting-service/chart-exporting.service';
 import { ErrorHandlerService } from './services/error-handler-service/error-handler.service';
+import { ChartLoadingService } from './services/chart-loading-service/chart-loading.service';
 
 import { SuiModule } from 'ng2-semantic-ui';
+
+import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from 'ngx-schema-form';
+import { GeneralPropertiesWidgetComponent } from './custom-ngx-schema-form-widgets/general-properties-widget/general-properties-widget.component';
+import { CustomWidgetRegistry } from './custom-ngx-schema-form-widgets/custom-widget-registry';
+import { PropertyWidgetComponent } from './custom-ngx-schema-form-widgets/property-widget/property-widget.component';
+import { LibrarySelectionWidgetComponent } from './custom-ngx-schema-form-widgets/library-selection-widget/library-selection-widget.component';
+import { SelectionWidgetComponent } from './custom-ngx-schema-form-widgets/selection-widget/selection-widget.component';
+import { ChartTypeSelectionWidgetComponent } from './custom-ngx-schema-form-widgets/chart-type-selection-widget/chart-type-selection-widget.component';
+import { EntitySelectionWidgetComponent } from './custom-ngx-schema-form-widgets/entity-selection-widget/entity-selection-widget.component';
+import { AggregateSelectionWidgetComponent } from './custom-ngx-schema-form-widgets/aggregate-selection-widget/aggregate-selection-widget.component';
+import { EntityFieldSelectionWidgetComponent } from './custom-ngx-schema-form-widgets/entity-field-selection-widget/entity-field-selection-widget.component';
+import { ArrayWidgetComponent } from './custom-ngx-schema-form-widgets/array-widget/array-widget.component';
+import { FilterFieldWidgetComponent } from './custom-ngx-schema-form-widgets/filter-field-widget/filter-field-widget.component';
+import { OperatorSelectionWidgetComponent } from './custom-ngx-schema-form-widgets/operator-selection-widget/operator-selection-widget.component';
+import { FilterPropertyWidgetComponent } from './custom-ngx-schema-form-widgets/filter-property-widget/filter-property-widget.component';
+import { ProfilePickerComponent } from './custom-ngx-schema-form-widgets/profile-picker/profile-picker.component';
+import { FilterFieldArrayWidgetComponent } from './custom-ngx-schema-form-widgets/filter-field-array-widget/filter-field-array-widget.component';
+import { TabularMenuWidgetComponent } from './custom-ngx-schema-form-widgets/tabular-menu-widget/tabular-menu-widget.component';
+import { HeadMenuWidgetComponent } from './custom-ngx-schema-form-widgets/head-menu-widget/head-menu-widget.component';
 
 @NgModule({
   declarations: [
@@ -45,9 +67,26 @@ import { SuiModule } from 'ng2-semantic-ui';
     QueryFilterSelectorComponent,
     QueryFilterComponent,
     SelectAttributeComponent,
-    AutocompleteInputFieldComponent
+    AutocompleteInputFieldComponent,
+    GeneralPropertiesWidgetComponent,
+    PropertyWidgetComponent,
+    LibrarySelectionWidgetComponent,
+    SelectionWidgetComponent,
+    ChartTypeSelectionWidgetComponent,
+    EntitySelectionWidgetComponent,
+    AggregateSelectionWidgetComponent,
+    EntityFieldSelectionWidgetComponent,
+    ArrayWidgetComponent,
+    FilterFieldWidgetComponent,
+    OperatorSelectionWidgetComponent,
+    FilterPropertyWidgetComponent,
+    ProfilePickerComponent,
+    FilterFieldArrayWidgetComponent,
+    TabularMenuWidgetComponent,
+    HeadMenuWidgetComponent
   ],
   imports: [
+    SchemaFormModule.forRoot(),
     SuiModule,
     BrowserModule,
     HttpClientModule,
@@ -58,9 +97,38 @@ import { SuiModule } from 'ng2-semantic-ui';
     MatIconModule,
     MatAutocompleteModule
   ],
-  providers: [SupportedLibrariesService, DbSchemaService, SupportedFilterTypesService,
-     SupportedAggregateFunctionsService, SupportedChartTypesService, UrlProviderService,
-     FieldAutocompleteService, MappingProfilesService, ChartExportingService, ErrorHandlerService],
+  entryComponents: [
+    GeneralPropertiesWidgetComponent,
+    PropertyWidgetComponent,
+    LibrarySelectionWidgetComponent,
+    SelectionWidgetComponent,
+    ChartTypeSelectionWidgetComponent,
+    EntitySelectionWidgetComponent,
+    AggregateSelectionWidgetComponent,
+    EntityFieldSelectionWidgetComponent,
+    ArrayWidgetComponent,
+    FilterFieldWidgetComponent,
+    OperatorSelectionWidgetComponent,
+    FilterPropertyWidgetComponent,
+    ProfilePickerComponent,
+    FilterFieldArrayWidgetComponent,
+    TabularMenuWidgetComponent,
+    HeadMenuWidgetComponent
+  ],
+  providers: [
+    SupportedLibrariesService,
+    DbSchemaService,
+    SupportedFilterTypesService,
+    SupportedAggregateFunctionsService,
+    SupportedChartTypesService,
+    UrlProviderService,
+    FieldAutocompleteService,
+    MappingProfilesService,
+    ChartExportingService,
+    ErrorHandlerService,
+    ChartLoadingService,
+    {provide: WidgetRegistry, useClass: CustomWidgetRegistry},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

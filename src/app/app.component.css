@@ -1,8 +1,26 @@
 .url-holder {
     overflow-wrap: break-word;
     text-align: center;
+    max-height: 2cm;
+    overflow-y: auto
 }
 
 .export-description {
     text-align: center;
+}
+
+.ui.menu {
+    padding: 5px 30px;
+}
+
+.ui.fixed.menu + .ui.grid {
+    padding-top: 9rem;
+}
+
+.ui.menu .item::before {
+    background: none;
+}
+
+.ui.menu .item > img:not(.ui) {
+    width: 200px;
 }

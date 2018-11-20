@@ -33,14 +33,13 @@ export class ChartFrameComponent implements OnInit, OnChanges {
     if (changes.chart.currentValue) {
       this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/chart?json=' + encodeURIComponent(stringObj));
       console.log(this.frameUrl);
+    } else {
+      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/chart');
     }
   }
   getSanitizedFrameUrl(url: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
-  submitChartPreferences(preferences: Object ) {
-
-  }
-
+  submitChartPreferences(preferences: Object ) {}
 }

@@ -1,104 +1,108 @@
-import { Component, OnInit, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter, Input, AfterContentInit, OnChanges, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
-import { Query, Select } from './chart-query-selector/chart-query.model';
+import { Query, Select, ChartInfo } from './chart-query-selector/chart-query.model';
 import { ChartProperties } from './chart-properties-selector/chart-properties.model';
 import { SupportedLibrariesService } from '../services/supported-libraries-service/supported-libraries.service';
-import { HighChartsChart, HCseriesInstance } from '../services/supported-libraries-service/chart-description-HighCharts.model';
+import { HighChartsChart} from '../services/supported-libraries-service/chart-description-HighCharts.model';
 import { GoogleChartsChart } from '../services/supported-libraries-service/chart-description-GoogleCharts.model';
 import { Filter } from './chart-query-selector/query-filter-selector/query-filter/query-filter.model';
-import { element } from 'protractor';
 import { Profile } from '../services/mapping-profiles-service/mapping-profiles.service';
-import { ChartExportingService } from '../services/chart-exporting-service/chart-exporting.service';
-import { Observable, Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { FormSchema, SCGAFormSchema, PropertiesFormSchema, DataseriesFormSchema, AppearanceFormSchema } from './chart-form-schema.model';
+import { FormComponent } from 'ngx-schema-form';
+
+declare var jQuery: any;
 
 @Component({
   selector: 'chart-creator',
   templateUrl: './chart-creator.component.html',
   styleUrls: ['./chart-creator.component.css']
 })
-export class ChartCreatorComponent implements OnInit, AfterViewInit {
+export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterContentInit {
 
   @Output() chartSubmit: EventEmitter<Object> = new EventEmitter();
   @Output() tableSubmit: EventEmitter<Object> = new EventEmitter();
+  @Output() formClear: EventEmitter<Object> = new EventEmitter();
+  @Input() loadedChart: Object = null;
 
-  chartForm: FormGroup;
   profileMapping: Profile = null;
   public dataseriesTabActive: boolean[] = [];
 
+  fs: FormSchema;
+  formValue: SCGAFormSchema;
+  formErrors: any;
+  private _isFormValid = true;
+  private _resetFormValue = null;
+
   constructor(private formBuilder: FormBuilder,
-    private supportedLibrariesService: SupportedLibrariesService) {
+    private supportedLibrariesService: SupportedLibrariesService,
+    protected cdr: ChangeDetectorRef) {
+      this.fs = new FormSchema();
   }
 
-  ngOnInit() {
-    this.createForm();
+  ngOnInit() {}
+
+  ngAfterViewInit(): void {
+    this._resetFormValue = this.formValue;
   }
 
-  createForm() {
+  ngAfterContentInit(): void {}
 
-    this.chartForm = this.formBuilder.group({
-      properties: this.formBuilder.group(new ChartProperties()),
-      dataseries: this.formBuilder.array(new Array<FormGroup>())
-    });
+  get chartFormValue(): SCGAFormSchema { return this.formValue as SCGAFormSchema; }
 
-    console.log(this.chartForm);
-  }
-
-  addDataseries() {
-    this.dataseries.push(
-        this.formBuilder.group({
-        entity: ['', Validators.required],
-        selectY: this.formBuilder.group(new Select()),
-        selectXs: this.formBuilder.array(new Array<Select>()),
-        filters: this.formBuilder.array(new Array<Filter>())})
-    );
-
-    this.getSelectXs(this.dataseries.length - 1).push(this.formBuilder.group(new Select()));
-
-    this.dataseriesTabActive.push(true);
-    console.log('Added dataseries: ' + this.dataseries.length);
-  }
-
-  removeDataseries(index: number) {
-    if (index > -1) {
-      this.dataseries.removeAt(index);
-      this.dataseriesTabActive.splice(index, 1);
+  dynamicFormChanged($event) {
+    if ($event) {
+      this.formValue = $event.value;
     }
   }
 
-  get chartFormValue(): Object { return this.chartForm.value as Object; }
-  get properties(): FormGroup { return this.chartForm.get('properties') as FormGroup; }
-  get dataseries(): FormArray { return this.chartForm.get('dataseries') as FormArray; }
-  getQueryForm(index: number): FormGroup { return this.dataseries.at(index) as FormGroup; }
-  getSelectY(index: number): FormGroup { return this.getQueryForm(index).get('selectY') as FormGroup; }
-  getSelectXs(index: number): FormArray { return this.getQueryForm(index).get('selectXs') as FormArray; }
-  getFilters(index: number): FormArray { return this.getQueryForm(index).get('filters') as FormArray; }
+  reset(form: FormComponent) {
 
-  profileMappingChanged($event) {
-    console.log(event);
-    this.profileMapping = this.properties.get('profile').value;
+    form.rootProperty.reset(this._resetFormValue, true);
+    this.formClear.emit();
+    this.cdr.detectChanges();
+  }
+
+  onClear() {
+    jQuery('.ui.formClear.modal')
+    .modal('show');
   }
 
   onSubmit() {
     console.log('On Submit called');
     console.log(this.chartFormValue);
 
-    const chartObj$ = this.createChart();
-    chartObj$.subscribe(
-      (chartObj: any) => {
-        this.chartSubmit.emit({value: chartObj});
-        chartObj$.unsubscribe();
-      }
-    );
+    if (this.isFormValid) {
 
+      const chartObj$ = this.createChart();
+      chartObj$.subscribe(
+        (chartObj: any) => {
+          this.chartSubmit.emit({value: chartObj});
+          chartObj$.unsubscribe();
+        }
+      );
 
-    // if (hchartObj === null) { hchartObj = this.createHighChartsChart(this.properties, this.queryForm); }
-    // this.tableSubmit.emit({value: hchartObj});
+      const tableObj$ = this.createTable();
+      tableObj$.subscribe(
+        (tableObj: any) => {
+          this.tableSubmit.emit({value: tableObj});
+          tableObj$.unsubscribe();
+        }
+      );
+    }
   }
 
   createChart(): Subject<Object> {
 
     const chartObj: Subject<Object> = new Subject();
-    const library: string = this.properties.get('library').value;
+    const formObj: SCGAFormSchema = this.chartFormValue;
+
+    const generalProperties: PropertiesFormSchema = formObj.generalChartProperties;
+    const library: string = formObj.appearance.library;
+
+    const dataseries: DataseriesFormSchema[] = formObj.dataseries;
+    const appearanceOptions: AppearanceFormSchema = formObj.appearance;
+
     this.supportedLibrariesService.getSupportedLibraries().subscribe(
       (data: Array<string>) =>  {
         if (data.includes(library)) {
@@ -106,7 +110,8 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
           switch (library) {
 
             case('HighCharts'): {
-              const hchartObj = this.createHighChartsChart(this.properties, this.getQueryForm(0));
+              console.log('Appearance', appearanceOptions);
+              const hchartObj = this.createDynamicHighChartsChart(generalProperties, dataseries, appearanceOptions);
 
               console.log('Creating a ' + library + ' chart!');
               console.log(hchartObj);
@@ -115,7 +120,8 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
               break;
             }
             case('GoogleCharts'): {
-              const gchartObj = this.createGoogleChartsChart(this.properties, this.getQueryForm(0));
+              console.log('Appearance', appearanceOptions);
+              const gchartObj = this.createDynamicGoogleChartsChart(generalProperties, dataseries, appearanceOptions);
 
               console.log('Creating a ' + library + ' chart!');
               console.log(gchartObj);
@@ -132,75 +138,122 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit {
     return chartObj;
   }
 
-  createGoogleChartsChart(properties: FormGroup, queryForm: FormGroup) {
+  createTable(): Subject<Object> {
+
+    const formObj: SCGAFormSchema = this.chartFormValue;
+    const generalProperties: PropertiesFormSchema = formObj.generalChartProperties;
+    const dataseries: DataseriesFormSchema[] = formObj.dataseries;
+
+    const tableObj = new GoogleChartsChart();
+    const chartDescription = tableObj.chartDescription;
+
+    dataseries.forEach( dataElement => {
+      chartDescription.queriesInfo.push(
+        new ChartInfo(dataElement, generalProperties.profile, generalProperties.results.resultsLimit));
+    });
+
+    return new BehaviorSubject(tableObj);
+  }
+
+  createDynamicGoogleChartsChart(generalProperties: PropertiesFormSchema,
+    dataseries: DataseriesFormSchema[], appearanceOptions: AppearanceFormSchema): GoogleChartsChart {
+
     const chartObj = new GoogleChartsChart();
     const chartDescription = chartObj.chartDescription;
 
-    chartDescription.queries.push(this.getFormQuery(queryForm));
-    chartDescription.GoogleChartType = properties.get('type').value as string;
-    // TODO This does NOT take into account multiple Dataseries
-    chartDescription.columns.push(null);
-    chartDescription.columns.push(null);
+    let baseChartType: string;
+    if (dataseries.length > 0) {
+      baseChartType = dataseries[0].chartProperties.chartType;
 
-    chartDescription.options.title = properties.get('title').value as string;
-    chartDescription.options.vAxis.title = properties.get('yaxisName').value as string;
-    chartDescription.options.hAxis.title = properties.get('xaxisName').value as string;
+      for (let index = 0; index < dataseries.length; index++) {
+        const element = dataseries[index];
+        if (baseChartType !== element.chartProperties.chartType ) {
+          baseChartType = 'combo';
+          break;
+        }
+    }}
 
-    if (!chartDescription.chartType || chartDescription.columns || chartDescription.columns.length === 0) {
-      console.log('GoogleChart: Something is missing!');
-      console.log(chartObj);
-      // return null;
+    chartDescription.GoogleChartType = baseChartType;
+    chartDescription.options.title = generalProperties.title;
+    chartDescription.options.exporting = appearanceOptions.googlechartsAppearanceOptions.exporting;
+
+    if (generalProperties.axisNames) {
+      chartDescription.options.hAxis.title = generalProperties.axisNames.xaxisName;
+      chartDescription.options.vAxis.title = generalProperties.axisNames.yaxisName;
     }
+
+    dataseries.forEach( dataElement => {
+      chartDescription.queriesInfo.push(
+        new ChartInfo(dataElement, generalProperties.profile, generalProperties.results.resultsLimit));
+    });
 
     return chartObj;
   }
 
-  // TODO This does NOT take into account multiple Dataseries
-  createHighChartsChart(properties: FormGroup, queryForm: FormGroup): HighChartsChart {
+  createDynamicHighChartsChart(generalProperties: PropertiesFormSchema,
+    dataseries: DataseriesFormSchema[], appearanceOptions: AppearanceFormSchema): HighChartsChart {
     const chartObj = new HighChartsChart();
-    chartObj.chartDescription.title.text = properties.get('title').value as string;
-    chartObj.chartDescription.chart.type = properties.get('type').value as string;
-    chartObj.chartDescription.yAxis.title.text = properties.get('yaxisName').value as string;
-    chartObj.chartDescription.xAxis.title.text = properties.get('xaxisName').value as string;
+    chartObj.chartDescription.title.text = generalProperties.title;
 
-    const series = new HCseriesInstance(this.getFormQuery(queryForm));
+    if (appearanceOptions.highchartsAppearanceOptions !== undefined && appearanceOptions.highchartsAppearanceOptions !== null) {
+      // Exporting
+      chartObj.chartDescription.exporting.enabled = appearanceOptions.highchartsAppearanceOptions.exporting;
 
-    chartObj.chartDescription.series.push(series);
+      // Legend Options
+      chartObj.chartDescription.legend.enabled = appearanceOptions.highchartsAppearanceOptions.hcEnableLegend;
+      chartObj.chartDescription.legend.align = appearanceOptions.highchartsAppearanceOptions.hcLegendHorizontalAlignment;
+      chartObj.chartDescription.legend.verticalAlign = appearanceOptions.highchartsAppearanceOptions.hcLegendVerticalAlignment;
+      chartObj.chartDescription.legend.layout = appearanceOptions.highchartsAppearanceOptions.hcLegendLayout;
+
+      // Credits Options
+      chartObj.chartDescription.credits.enabled = appearanceOptions.highchartsAppearanceOptions.hcEnableCredits;
+      chartObj.chartDescription.credits.href = appearanceOptions.highchartsAppearanceOptions.hcCreditsLink;
+      chartObj.chartDescription.credits.text = appearanceOptions.highchartsAppearanceOptions.hcCreditsText;
+
+      chartObj.chartDescription.subtitle.text = appearanceOptions.highchartsAppearanceOptions.hcSubtitle;
+      chartObj.chartDescription.plotOptions.series.dataLabels.enabled = appearanceOptions.highchartsAppearanceOptions.hcEnableDataLabels;
+
+      // Chart Area Options
+      chartObj.chartDescription.chart.backgroundColor = appearanceOptions.highchartsAppearanceOptions.hcCABackGroundColor;
+      chartObj.chartDescription.chart.borderColor = appearanceOptions.highchartsAppearanceOptions.hcCABorderColor;
+      chartObj.chartDescription.chart.borderRadius = appearanceOptions.highchartsAppearanceOptions.hcCABorderCornerRadius;
+      chartObj.chartDescription.chart.borderWidth = appearanceOptions.highchartsAppearanceOptions.hcCABorderWidth;
+
+      // Plot Area Options
+      chartObj.chartDescription.chart.plotBackgroundColor = appearanceOptions.highchartsAppearanceOptions.hcPABackgroundColor;
+      chartObj.chartDescription.chart.plotBackgroundImage = appearanceOptions.highchartsAppearanceOptions.hcPABackgroundImageURL;
+      chartObj.chartDescription.chart.plotBorderColor = appearanceOptions.highchartsAppearanceOptions.hcPABorderColor;
+      chartObj.chartDescription.chart.plotBorderWidth = appearanceOptions.highchartsAppearanceOptions.hcPABorderWidth;
+    }
+
+    if (generalProperties.axisNames) {
+      chartObj.chartDescription.xAxis.title.text = generalProperties.axisNames.xaxisName;
+      chartObj.chartDescription.yAxis.title.text = generalProperties.axisNames.yaxisName;
+    }
+
+    const queries = new Array<ChartInfo>();
+
+    dataseries.forEach( dataElement => {
+      queries.push(new ChartInfo(dataElement, generalProperties.profile, generalProperties.results.resultsLimit));
+    });
+
+    chartObj.chartDescription.queries = queries;
     return chartObj;
   }
 
-  getFormQuery(queryForm: FormGroup): Query {
-    const query = new Query();
+  set isFormValid(isValid: boolean) {
+    //  console.log('Form Valid: ' + this._isFormValid);
+     this._isFormValid = isValid; }
+  get isFormValid() { return this._isFormValid; }
 
-    query.entity = queryForm.get('entity').value as string;
-
-    const selectXs = queryForm.get('selectXs').value as Array<Select>;
-    selectXs.forEach(selectElement => {
-      query.select.push(selectElement);
-    });
-
-    if (queryForm.get('selectY').get('aggregate').value === 'total') {
-      const totalSelectY = new Select();
-      totalSelectY.field = queryForm.get('entity').value;
-      totalSelectY.aggregate = 'count';
-
-      query.select.push(totalSelectY);
-    } else {
-      query.select.push(queryForm.get('selectY').value);
+  errorsChange(formErrorsObj: any) {
+    if (formErrorsObj.value === null) {
+      this.isFormValid = true;
+      return;
     }
-
-    const filters = queryForm.get('filters').value as Array<Filter>;
-    filters.forEach(filterElement => {
-      query.filters.push(filterElement);
-    });
-
-    return query;
+    this.isFormValid = false;
+    this.formErrors = formErrorsObj;
+    // console.log('Errors Change: ', formErrorsObj);
   }
-
-  isFormInvalid(): boolean {
-    return false; // this.chartForm.invalid && (this.chartForm.touched || this.chartForm.dirty);
-  }
-
-  ngAfterViewInit(): void {}
 
 }

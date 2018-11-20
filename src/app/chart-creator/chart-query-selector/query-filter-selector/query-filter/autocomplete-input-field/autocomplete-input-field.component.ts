@@ -1,6 +1,6 @@
-import { Component, OnInit, ElementRef, ViewChild, Input, AfterViewInit } from '@angular/core';
-import { Observable, of, fromEvent } from 'rxjs';
-import { map, filter, debounceTime, tap, switchAll } from 'rxjs/operators';
+import { Component, OnInit, ElementRef, ViewChild, Input, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Observable, of, fromEvent, Subscription } from 'rxjs';
+import { map, filter, debounceTime, tap, switchAll, distinctUntilChanged } from 'rxjs/operators';
 import { FieldAutocompleteService, AutocompleteResponse } from '../../../../../services/field-autocomplete-service/field-autocomplete.service';
 import { FormControl } from '@angular/forms';
 
@@ -9,7 +9,7 @@ import { FormControl } from '@angular/forms';
   templateUrl: './autocomplete-input-field.component.html',
   styleUrls: ['./autocomplete-input-field.component.css']
 })
-export class AutocompleteInputFieldComponent implements OnInit, AfterViewInit {
+export class AutocompleteInputFieldComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // The FormGroup of the current filter
   @Input() inputFormGroup: FormControl;
@@ -24,8 +24,9 @@ export class AutocompleteInputFieldComponent implements OnInit, AfterViewInit {
   numberOfpossibleFieldValues: number;
   loading: boolean;
   typeToSearchDelay: number;
+  autocompleteSubscription: Subscription;
 
-  constructor(private fieldAutocompleteService: FieldAutocompleteService) {
+  constructor(private fieldAutocompleteService: FieldAutocompleteService, private cdr: ChangeDetectorRef) {
     this.possibleFieldValues = of([]);
     this.typeToSearchDelay = 250;
     this.loading = false;
@@ -33,22 +34,26 @@ export class AutocompleteInputFieldComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log('Autocomplete:');
-    console.log(this.inputFormGroup);
-    console.log(this.filterValueIndex);
-
+    // console.log('Autocomplete:');
+    // console.log(this.inputFormGroup);
+    // console.log(this.filterValueIndex);
   }
+
   ngAfterViewInit() {
     this.setupAutocompleteInputField();
   }
 
+  ngOnDestroy() {
+    this.autocompleteSubscription.unsubscribe();
+  }
+
   setupAutocompleteInputField(): void {
 
-    fromEvent(this.valueInput.nativeElement, 'keyup').pipe(
+    this.autocompleteSubscription = fromEvent(this.valueInput.nativeElement, 'keyup').pipe(
       map((inputVal: any) => inputVal.target.value),
       filter((text: string) => text.length > 0),
       debounceTime(this.typeToSearchDelay),
-      tap(() => {this.possibleFieldValues = of([]); this.loading = true; } ),
+      tap(() => {this.possibleFieldValues = of([]); this.loading = true; this.cdr.detectChanges(); } ),
       map((queryText: string) => this.fieldAutocompleteService.getAutocompleteFields(this.filterfield, queryText)),
       switchAll())
       .subscribe(
@@ -57,14 +62,17 @@ export class AutocompleteInputFieldComponent implements OnInit, AfterViewInit {
           this.possibleFieldValues = of(result.values);
           this.numberOfpossibleFieldValues = result.count;
           this.loading = false;
+          this.cdr.detectChanges();
         },
         (err: any) => {
           console.log(err);
           this.numberOfpossibleFieldValues = -1;
           this.loading = false;
+          this.cdr.detectChanges();
         },
         () => {
           this.loading = false;
+          this.cdr.detectChanges();
         }
       );
   }

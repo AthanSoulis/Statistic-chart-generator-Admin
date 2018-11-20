@@ -1,0 +1,44 @@
+<sui-tabset>
+    <div class="ui two column grid noleftpadding fluid container">
+      <div class="noleftpadding three wide column">
+          <div class="ui secondary vertical fluid pointing menu">
+
+            <div class="ui centered grid link noleftpadding item" *ngFor="let itemProperty of formProperty.properties; let i = index"
+            [suiTabHeader]="i" >
+                <div class="ui center aligned noleftpadding norightpadding basic segment">
+                    
+                    <div *ngIf="editable[i]; else notEditable">
+                        <input autoFocus type="text" (blur)="disableEditable(i)"
+                        [value]="getDataSeriesName(i) | async" (change)="setDataSeriesName(i, $event.target.value)">
+                    </div>
+                    <ng-template #notEditable>
+                        <h4 (dblclick)="enableEditable(i)" style="word-break: break-all; padding-left: 0; padding-right: 0"
+                        class="ui center aligned item item"> {{getDataSeriesName(i) | async}} </h4>
+                    </ng-template>
+
+                    <button *ngIf="menuArrayLength > 1" (click)="removeItem(i)" class="mini fluid ui icon basic bottom attached button ">
+                        <i class="icon minus"></i>
+                    </button>
+                    
+                </div>
+
+            </div>
+              
+            <div class="ui center aligned item animated fade compact button" (click)="addItem()">
+                <div class="visible content"><i class="icon plus"></i></div>
+                <div class="hidden content">Add Data</div>
+            </div>
+  
+          </div>
+      </div>
+      
+      <div class="thirteen wide stretched column">
+      <div class="ui container">
+
+          <div class="ui tab" *ngFor="let itemProperty of formProperty.properties; let i = index; trackBy:trackByIndex" [suiTabContent]="i">
+              <sf-form-element [formProperty]="itemProperty"></sf-form-element>
+          </div>
+      </div>
+      </div>
+  </div>
+</sui-tabset>

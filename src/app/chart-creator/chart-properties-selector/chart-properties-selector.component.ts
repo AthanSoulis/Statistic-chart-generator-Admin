@@ -48,7 +48,7 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
   constructor(formBuilder: FormBuilder,
     private librariesService: SupportedLibrariesService,
     private chartTypesService: SupportedChartTypesService,
-    private mappingProfileService: MappingProfilesService,
+    protected mappingProfileService: MappingProfilesService,
     public modalService: SuiModalService) {
 
     librariesService.getSupportedLibraries().subscribe(
@@ -71,7 +71,7 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
 
   cardButtonAction(profile: Profile) {
     console.log(this.propertiesForm);
-    this.mappingProfileService.changeSelectedProfile(profile);
+    this.mappingProfileService.changeSelectedProfile(profile.name);
 
     this.closeProfilePicker();
   }
@@ -118,16 +118,8 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
   }
 
   ngAfterViewInit(): void {
-    this.mappingProfileService.getProfileMappings().subscribe(
-      (result: Profile[]) => {
-        this.profileMappings = result;
-        this.showProfilePicker(null);
-      },
-      (err: any) => {
-        console.log(err);
-      },
-      () => {}
-    );
+
+    this.showProfilePicker(null);
   }
 
   dropdownFormatter(option: string, query?: string): string {
