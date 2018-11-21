@@ -1,6 +1,6 @@
 <sui-tabset>
     <div class="ui two column grid noleftpadding fluid container">
-      <div class="noleftpadding three wide column">
+      <div class="noleftpadding norightpadding three wide column">
           <div class="ui secondary vertical fluid pointing menu">
 
             <div class="ui centered grid link noleftpadding item" *ngFor="let itemProperty of formProperty.properties; let i = index"
@@ -32,7 +32,7 @@
           </div>
       </div>
       
-      <div class="thirteen wide stretched column">
+      <div class="thirteen wide noleftpadding norightpadding stretched column">
       <div class="ui container">
 
           <div class="ui tab" *ngFor="let itemProperty of formProperty.properties; let i = index; trackBy:trackByIndex" [suiTabContent]="i">

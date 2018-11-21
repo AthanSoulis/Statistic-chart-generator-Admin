@@ -26,8 +26,9 @@ export class FilterFieldArrayWidgetComponent extends ArrayLayoutWidget implement
       (operator: string) => {
         this.filterOperator = operator;
         // console.log('Operator: ' + this.filterOperator);
-        if (this.filterOperator === null) {
-          this.formProperty.reset([], false);
+        this.formProperty.reset([], false);
+        if (this.filterOperator !== null) {
+          this.addFilterValue();
         }
       }
       // error => this.error = error // error path
