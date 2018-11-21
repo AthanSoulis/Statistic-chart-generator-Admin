@@ -8,8 +8,8 @@
         <div class="ui fluid action input">
           <sf-form-element [formProperty]="itemProperty"></sf-form-element>
 
-          <button (click)="removeFilterValue(i)" type="button" 
-          class="ui icon compact button"><i class="close icon"></i></button>
+          <!-- <button (click)="removeFilterValue(i)" type="button" 
+          class="ui icon compact button"><i class="close icon"></i></button> -->
         </div>
         
 
@@ -24,8 +24,8 @@
         <sf-form-element [formProperty]="formProperty.properties[i]"></sf-form-element>    
         
         <div *ngIf="isOdd">
-          <button (click)="removeFilterValue(i)" type="button" 
-                  class="fluid ui icon compact button"><i class="close icon"></i></button>
+          <!-- <button (click)="removeFilterValue(i)" type="button" 
+                  class="fluid ui icon compact button"><i class="close icon"></i></button> -->
           <span *ngIf="applicableDivider(i)" class="ui horizontal divider">OR</span>
         </div>
 
@@ -33,8 +33,8 @@
     </ng-template>
   </div>
 
-  <button (click)="addFilterValue()" type="button" class="circular ui icon basic blue compact left floated button">
+  <!-- <button (click)="addFilterValue()" type="button" class="circular ui icon basic blue compact left floated button">
     <div *ngIf="filterFieldArrayLength > 0; else addFilter">OR</div>
     <ng-template #addFilter><i class="plus icon"></i></ng-template>
-  </button>
+  </button> -->
 </div>

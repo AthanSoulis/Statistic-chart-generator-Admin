@@ -114,17 +114,13 @@ export class FormSchema {
                         'type' : 'string',
                         'placeholder' : 'Yaxis',
                         'title' : 'Yaxis',
-                        'widget': {
-                            'id': 'string'
-                        }
+                        'widget': { 'id': 'string' }
                     },
                     'xaxisName' : {
                         'type' : 'string',
                         'placeholder' : 'Xaxis',
                         'title' : 'Xaxis',
-                        'widget': {
-                            'id': 'string'
-                        }
+                        'widget': { 'id': 'string' }
                     }
                 },
                 'fieldsets': [
@@ -142,9 +138,7 @@ export class FormSchema {
                 'type' : 'string',
                 'placeholder' : 'Title',
                 'title' : 'Main Title',
-                'widget': {
-                    'id': 'string'
-                }
+                'widget': {'id': 'string' }
             },
             'results' : {
                 'type' : 'object',
@@ -219,6 +213,7 @@ export class FormSchema {
                     'type' : 'object',
                     'title' : 'Data Selection',
                     'description' : 'Describe the data you want to appear on your chart',
+                    'grouping' : 'ui field basic segment',
                     'widget' : { 'id' : 'csui-property-object' },
                     'properties' : {
                         'yaxisData' : {
@@ -273,7 +268,6 @@ export class FormSchema {
                                     ]
                                 },
                                 {
-                                    'grouping': 'inline grouped fields',
                                     'fields': ['yaxisEntityField']
                                 }
                             ],
@@ -328,74 +322,108 @@ export class FormSchema {
                             'widget' : { 'id' : 'csui-array' },
                             'items': {
                                 'type' : 'object',
-                                'widget': { 'id': 'csui-filter-property-object'},
+                                'widget': { 'id': 'csui-property-object'},
                                 'properties' : {
-                                    'field': {
-                                        'type' : 'object',
-                                        'requiredField' : true,
-                                        'placeholder' : 'Select Entity Field',
-                                        'title' : 'Entity Field',
-                                        'widget': { 'id': 'csui-entity-field-select'},
-                                        'properties' : {
-                                            'name': {
-                                                'type' : 'string',
-                                                'minLength': 1,
-                                            },
-                                            'type': {
-                                                'type' : 'string',
-                                                'minLength': 1,
-                                            }
-                                        },
-                                        'required': ['name', 'type']
-                                    },
-                                    'type': {
-                                        'type' : 'string',
-                                        'requiredField' : true,
-                                        'minLength': 1,
-                                        'placeholder' : 'Select Operator',
-                                        'title' : 'Filter Operator',
-                                        'widget': { 'id': 'csui-operator-select'}
-                                        // Ideally I would have inserted this:
-                                        //
-                                        // 'invisibleIf': {
-                                        //     'field': ['$ANY$']
-                                        //   }
-                                        //
-                                        // But 'field' returns an object and ngx-schema-form
-                                        // does not support this for object values
-                                    },
-                                    'values': {
+                                    'groupFilters' : {
                                         'type': 'array',
-                                        'minItems': 1,
-                                        'widget' : { 'id' : 'csui-filter-field-array' },
+                                        'itemName': 'Rule',
+                                        'widget' : { 'id' : 'csui-array' },
                                         'items': {
-                                            // Cannot support multiple type items
-                                            //
-                                            // 'anyOf': [
-                                            //     {
-                                            //         'type' : 'string',
-                                            //     },
-                                            //     {
-                                            //         'type' : 'number',
-                                            //     }
-                                            //   ],
-                                            'type' : 'string',
-                                            'placeholder' : 'Value',
-                                            'widget': {'id': 'csui-filter-field'}
-                                        }
+                                            'type' : 'object',
+                                            'widget': { 'id': 'csui-filter-property-object'},
+                                            'properties' : {
+                                                'field': {
+                                                    'type' : 'object',
+                                                    'requiredField' : true,
+                                                    'placeholder' : 'Select Entity Field',
+                                                    'title' : 'Entity Field',
+                                                    'widget': { 'id': 'csui-entity-field-select'},
+                                                    'properties' : {
+                                                        'name': {
+                                                            'type' : 'string',
+                                                            'minLength': 1,
+                                                        },
+                                                        'type': {
+                                                            'type' : 'string',
+                                                            'minLength': 1,
+                                                        }
+                                                    },
+                                                    'required': ['name', 'type']
+                                                },
+                                                'type': {
+                                                    'type' : 'string',
+                                                    'requiredField' : true,
+                                                    'minLength': 1,
+                                                    'placeholder' : 'Select Operator',
+                                                    'title' : 'Filter Operator',
+                                                    'widget': { 'id': 'csui-operator-select'}
+                                                    // Ideally I would have inserted this:
+                                                    //
+                                                    // 'invisibleIf': {
+                                                    //     'field': ['$ANY$']
+                                                    //   }
+                                                    //
+                                                    // But 'field' returns an object and ngx-schema-form
+                                                    // does not support this for object values
+                                                },
+                                                'values': {
+                                                    'type': 'array',
+                                                    'minItems': 1,
+                                                    'maxItems': 2,
+                                                    'widget' : { 'id' : 'csui-filter-field-array' },
+                                                    'items': {
+                                                        // Cannot support multiple type items
+                                                        //
+                                                        // 'anyOf': [
+                                                        //     {
+                                                        //         'type' : 'string',
+                                                        //     },
+                                                        //     {
+                                                        //         'type' : 'number',
+                                                        //     }
+                                                        //   ],
+                                                        'type' : 'string',
+                                                        'placeholder' : 'Value',
+                                                        'widget': {'id': 'csui-filter-field'}
+                                                    }
+                                                }
+                                            },
+                                            'fieldsets': [
+                                                {
+                                                    'fields': [
+                                                        'field',
+                                                        'type',
+                                                        'values'
+                                                    ]
+                                                }
+                                            ],
+                                            'required': ['field', 'type', 'values']
+                                        },
+                                    },
+                                    'op' : {
+                                        'type': 'string',
+                                        'widget' : {'id' : 'csui-select'},
+                                        // 'description': 'Item Layout',
+                                        'oneOf': [
+                                            {
+                                                'enum': ['AND'],
+                                                'value' : 'AND',
+                                                'description': 'And'
+                                            },
+                                            {
+                                                'enum': ['OR'],
+                                                'value' : 'OR',
+                                                'description': 'Or'
+                                            }
+                                        ],
+                                        'default': 'AND'
                                     }
                                 },
                                 'fieldsets': [
                                     {
-                                        'fields': [
-                                            'field',
-                                            'type',
-                                            'values'
-                                        ]
-                                    }
-                                ],
-                                'required': ['field', 'type', 'values']
-                            },
+                                        'fields': [ 'op', 'groupFilters']
+                                    }]
+                            }
                         }
                     },
                     'fieldsets': [
@@ -413,15 +441,14 @@ export class FormSchema {
                     'type' : 'object',
                     'title' : 'Chart Properties',
                     'description' : 'Customize the way data appear on your chart',
+                    'grouping' : 'ui field basic segment',
                     'widget' : { 'id' : 'csui-property-object' },
                     'properties' : {
                         'dataseriesColor' : {
                             'type' : 'string',
                             'pattern': '^#[0-9a-fA-F]{6}$',
                             'title' : 'Dataseries Color',
-                            'widget': {
-                                'id': 'color'
-                            }
+                            'widget': { 'id': 'color' }
                         },
                         'dataseriesName' : {
                             'type' : 'string',
@@ -442,9 +469,7 @@ export class FormSchema {
                             'minLength': 1,
                             'placeholder' : 'Select Chart Type',
                             'title' : 'Chart Type',
-                            'widget': {
-                                'id': 'csui-chart-type-select'
-                            },
+                            'widget': { 'id': 'csui-chart-type-select' },
                         }
                     },
                     'fieldsets': [
@@ -663,15 +688,32 @@ export class FormSchema {
                     },
                     {
                         'title' : 'Legend',
-                        'fields': ['hcEnableLegend', 'hcLegendLayout', 'hcLegendHorizontalAlignment', 'hcLegendVerticalAlignment']
+                        'fields': ['hcEnableLegend']
+                    },
+                    {
+                        'fields': ['hcLegendLayout']
+                    },
+                    {
+                        'grouping': 'equal width fields',
+                        'fields': ['hcLegendHorizontalAlignment', 'hcLegendVerticalAlignment']
                     },
                     {
                         'title' : 'Chart Area',
-                        'fields': ['hcCABackGroundColor', 'hcCABorderColor', 'hcCABorderWidth', 'hcCABorderCornerRadius']
+                        'grouping' : 'equal width fields',
+                        'fields': ['hcCABackGroundColor', 'hcCABorderColor']
+                    },
+                    {
+                        'grouping' : 'equal width fields',
+                        'fields' : ['hcCABorderWidth', 'hcCABorderCornerRadius']
                     },
                     {
                         'title' : 'Plot Area',
-                        'fields': ['hcPABackgroundColor', 'hcPABorderColor', 'hcPABackgroundImageURL', 'hcPABorderWidth']
+                        'grouping' : 'equal width fields',
+                        'fields': ['hcPABackgroundColor', 'hcPABorderColor']
+                    },
+                    {
+                        'grouping' : 'equal width fields',
+                        'fields': ['hcPABackgroundImageURL', 'hcPABorderWidth']
                     },
                     {
                         'title' : 'Credits',
