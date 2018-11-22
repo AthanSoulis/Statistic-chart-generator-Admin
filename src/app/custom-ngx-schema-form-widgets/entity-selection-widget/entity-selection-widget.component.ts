@@ -73,7 +73,9 @@ export class EntitySelectionWidgetComponent extends ControlWidget implements OnI
           if ( this.chartLoadingService.chartLoadingStatus) {
             this.chartLoadingService.decreaseLoadingObs();
           }
-          this.dbSchemaServiceSubscription.unsubscribe();
+          if ( this.dbSchemaServiceSubscription ) {
+            this.dbSchemaServiceSubscription.unsubscribe();
+          }
         }
       );
     });

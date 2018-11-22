@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
-import { Observable, throwError, BehaviorSubject, of as observableOf } from 'rxjs';
+import { Observable, throwError, BehaviorSubject, of as observableOf, of } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { UrlProviderService } from '../url-provider-service/url-provider.service';
 import { Profile, MappingProfilesService } from '../mapping-profiles-service/mapping-profiles.service';
@@ -40,7 +40,7 @@ export class DbSchemaService {
 
   getAvailableEntities(profile: Profile): Observable<Array<string>> {
 
-    if (profile === null) { return this.getAvailableEntitiesNoMapping(); }
+    if (profile === undefined || profile === null) { return this.getAvailableEntitiesNoMapping(); }
 
     const entitiesUrl = this.urlProvider.getUrl() + '/schema/' + profile.name + '/entities';
     return this.http.get< Array<string> >(entitiesUrl)
@@ -62,7 +62,7 @@ export class DbSchemaService {
 
   getEntityFields(entity: string, profile?: Profile) {
 
-    if (profile === null) { return this.getEntityFieldsNoMapping(entity); }
+    if (profile === undefined || profile === null) { return this.getEntityFieldsNoMapping(entity); }
 
     const entityFieldsUrl = this.urlProvider.getUrl() + '/schema/' + profile.name + '/entities/' + entity;
     return this.http.get<EntityNode>(entityFieldsUrl)
