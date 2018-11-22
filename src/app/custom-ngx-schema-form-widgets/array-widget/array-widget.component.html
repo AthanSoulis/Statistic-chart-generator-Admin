@@ -14,11 +14,11 @@
   class="ui labeled icon basic blue compact button btn btn-default array-add-button">
       <i class="plus icon"></i> Add {{schema.itemName}}</button>
   
-  <div class="ui basic segment" *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex">
+  <div class="ui segments" *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex">
     
-    <!-- <div class="ui equal width form clearing attached basic segment" > -->
+    <div class="ui equal width form clearing attached segment" >
       <sf-form-element [formProperty]="itemProperty"></sf-form-element>
-    <!-- </div> -->
+    </div>
 
     <button (click)="removeItem(i)" type="button" 
     class="ui bottom attached fluid icon basic red compact button btn btn-default array-remove-button">
