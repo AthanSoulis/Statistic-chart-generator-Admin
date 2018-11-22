@@ -37,7 +37,7 @@
           </li>
 
           <ul [class.data-tree-invisible]="!nestedEntityTreeControl.isExpanded(node)">
-            <li *ngFor="let field of node.fields; trackBy:trackByFieldName" (click)="nodeSelected(field)">
+            <li *ngFor="let field of node.fields; trackBy:trackByFieldName" (click)="nodeSelected(field, node)">
               <div class="mat-tree-node">
                 <span style="cursor: pointer;">{{field.name | titlecase}}</span>
               </div>

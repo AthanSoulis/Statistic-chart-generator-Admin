@@ -175,7 +175,7 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
 
   onExpanded(node: EntityTreeNode) {
     // console.log('Node expanded: ',node);
-    this.parentPath = this.traverseParentPath(node);
+    // this.parentPath = this.traverseParentPath(node);
   }
 
   traverseParentPath(node: EntityTreeNode): string {
@@ -186,12 +186,12 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
     }
   }
 
-  nodeSelected(field: FieldNode, pathOnly?: boolean) {
+  nodeSelected(field: FieldNode, node: EntityTreeNode, pathOnly?: boolean) {
 
     // Set the field to full path, change the control into the updated value and emit it
     const selectedFieldNode = new FieldNode();
 
-    selectedFieldNode.name = this.parentPath + '.' + field.name;
+    selectedFieldNode.name = this.traverseParentPath(node) + '.' + field.name;
     selectedFieldNode.type = field.type;
 
     this.formControl.setValue(selectedFieldNode);
