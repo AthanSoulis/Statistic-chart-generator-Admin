@@ -1,16 +1,24 @@
-<div *ngIf="this.filterOperator" [ngClass]="!schema.requiredField ? 'widget form-group field' : 
-(control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'">
-
-  <div *ngIf="filterFieldArrayLength > 0" class="ui basic segment">
+<div *ngIf="filterFieldArrayLength > 0" >
+  
+  <div  [ngClass]="!schema.requiredField ? 'widget form-group field' : 
+  (control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'">
+  
+    <label [attr.for]="id" class="horizontal control-label">
+      {{schema.title}}
+    </label>
+    <span *ngIf="schema.description" class="formHelp">
+      {{schema.description}}
+    </span>
+    
     <div *ngIf="filterOperator !== 'between'; else betweenFilterFields">
       <div *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex">
         
-        <div class="ui fluid action input">
+        <!-- <div class="ui fluid action input"> -->
           <sf-form-element [formProperty]="itemProperty"></sf-form-element>
 
           <!-- <button (click)="removeFilterValue(i)" type="button" 
-          class="ui icon compact button"><i class="close icon"></i></button> -->
-        </div>
+          class="ui icon compact button"><i class="close icon"></i></button>
+        </div> -->
         
 
         <span *ngIf="applicableDivider(i)" class="ui horizontal divider">OR</span>

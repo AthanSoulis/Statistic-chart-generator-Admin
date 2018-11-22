@@ -370,6 +370,8 @@ export class FormSchema {
                                                     'type': 'array',
                                                     'minItems': 1,
                                                     'maxItems': 2,
+                                                    // 'title' : 'Filter Values',
+                                                    // 'requiredField' : true,
                                                     'widget' : { 'id' : 'csui-filter-field-array' },
                                                     'items': {
                                                         // Cannot support multiple type items
@@ -402,18 +404,18 @@ export class FormSchema {
                                     },
                                     'op' : {
                                         'type': 'string',
-                                        'widget' : {'id' : 'csui-select'},
+                                        'widget' : {'id' : 'radio'},
                                         // 'description': 'Item Layout',
                                         'oneOf': [
                                             {
                                                 'enum': ['AND'],
                                                 'value' : 'AND',
-                                                'description': 'And'
+                                                'description': 'Match all values'
                                             },
                                             {
                                                 'enum': ['OR'],
                                                 'value' : 'OR',
-                                                'description': 'Or'
+                                                'description': 'Match any of the values'
                                             }
                                         ],
                                         'default': 'AND'

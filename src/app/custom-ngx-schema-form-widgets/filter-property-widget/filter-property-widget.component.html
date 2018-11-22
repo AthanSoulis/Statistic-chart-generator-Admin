@@ -6,9 +6,13 @@
     <div class="sub header" *ngIf="fieldset.description">{{fieldset.description}}</div>
   </h4>
   
-  <div class="ui field basic segment"><sf-form-element [formProperty]="formProperty.getProperty(fieldset.fields[0])"></sf-form-element></div>
-  <div class="ui field basic segment"><sf-form-element [formProperty]="formProperty.getProperty(fieldset.fields[1])"></sf-form-element></div>
-  <div class="ui field basic segment"><sf-form-element [formProperty]="formProperty.getProperty(fieldset.fields[2])"></sf-form-element></div>
+  <div class="field "><sf-form-element [formProperty]="formProperty.getProperty(fieldset.fields[0])"></sf-form-element></div>
+  <!-- <div class="fields"> -->
+    <div class="eight wide field "><sf-form-element [formProperty]="formProperty.getProperty(fieldset.fields[1])"></sf-form-element></div>
+    <div class="field "><sf-form-element [formProperty]="formProperty.getProperty(fieldset.fields[2])"></sf-form-element></div>
+  <!-- </div> -->
+  
+  
 
   <div class="ui hidden divider"></div>
 </div>
