@@ -15,6 +15,7 @@ import { FilterFieldArrayWidgetComponent } from './filter-field-array-widget/fil
 import { ProfilePickerComponent } from './profile-picker/profile-picker.component';
 import { TabularMenuWidgetComponent } from './tabular-menu-widget/tabular-menu-widget.component';
 import { HeadMenuWidgetComponent } from './head-menu-widget/head-menu-widget.component';
+import { RadioWidgetComponent } from './radio-widget/radio-widget.component';
 
 export class CustomWidgetRegistry extends DefaultWidgetRegistry {
   constructor() {
@@ -36,5 +37,6 @@ export class CustomWidgetRegistry extends DefaultWidgetRegistry {
     this.register('csui-filter-field-array', FilterFieldArrayWidgetComponent);
     this.register('csui-tabular-menu', TabularMenuWidgetComponent);
     this.register('csui-head-menu', HeadMenuWidgetComponent);
+    this.register('csui-radio-selection', RadioWidgetComponent);
   }
 }

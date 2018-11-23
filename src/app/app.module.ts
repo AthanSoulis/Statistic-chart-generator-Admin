@@ -54,6 +54,7 @@ import { ProfilePickerComponent } from './custom-ngx-schema-form-widgets/profile
 import { FilterFieldArrayWidgetComponent } from './custom-ngx-schema-form-widgets/filter-field-array-widget/filter-field-array-widget.component';
 import { TabularMenuWidgetComponent } from './custom-ngx-schema-form-widgets/tabular-menu-widget/tabular-menu-widget.component';
 import { HeadMenuWidgetComponent } from './custom-ngx-schema-form-widgets/head-menu-widget/head-menu-widget.component';
+import { RadioWidgetComponent } from './custom-ngx-schema-form-widgets/radio-widget/radio-widget.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { HeadMenuWidgetComponent } from './custom-ngx-schema-form-widgets/head-m
     ProfilePickerComponent,
     FilterFieldArrayWidgetComponent,
     TabularMenuWidgetComponent,
-    HeadMenuWidgetComponent
+    HeadMenuWidgetComponent,
+    RadioWidgetComponent
   ],
   imports: [
     SchemaFormModule.forRoot(),
@@ -113,7 +115,8 @@ import { HeadMenuWidgetComponent } from './custom-ngx-schema-form-widgets/head-m
     ProfilePickerComponent,
     FilterFieldArrayWidgetComponent,
     TabularMenuWidgetComponent,
-    HeadMenuWidgetComponent
+    HeadMenuWidgetComponent,
+    RadioWidgetComponent
   ],
   providers: [
     SupportedLibrariesService,

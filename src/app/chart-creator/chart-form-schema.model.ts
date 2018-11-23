@@ -404,7 +404,8 @@ export class FormSchema {
                                     },
                                     'op' : {
                                         'type': 'string',
-                                        'widget' : {'id' : 'radio'},
+                                        'inline': true,
+                                        'widget' : {'id' : 'csui-radio-selection'},
                                         // 'description': 'Item Layout',
                                         'oneOf': [
                                             {
