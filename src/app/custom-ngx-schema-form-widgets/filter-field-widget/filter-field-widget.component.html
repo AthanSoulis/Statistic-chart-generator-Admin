@@ -3,8 +3,7 @@
       <ng-container *ngSwitchCase="0">          
         
         <div class="ui fluid action icon input" *ngIf="(this.filterOperator === '=') || (this.filterOperator === '!='); else plainStringInput">
-          <autocomplete-input-field  class="ui fluid action icon input" [inputFormGroup]="control" 
-          [filterfield]="this.selectedField.name"></autocomplete-input-field>
+          <autocomplete-input-field [inputFormGroup]="control" [filterfield]="this.selectedField.name"></autocomplete-input-field>
         </div>
         <ng-template #plainStringInput>
 

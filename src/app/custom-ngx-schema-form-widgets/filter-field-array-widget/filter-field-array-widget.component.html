@@ -1,11 +1,15 @@
 <div *ngIf="filterFieldArrayLength > 0" >
   
-  <div  [ngClass]="!schema.requiredField ? 'widget form-group field' : 
+  <div [ngClass]="!schema.requiredField ? 'widget form-group field' : 
   (control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'">
   
-    <label [attr.for]="id" class="horizontal control-label">
-      {{schema.title}}
+    <label *ngIf="filterFieldArrayLength > 1; else singleValue" [attr.for]="id" class="horizontal control-label">
+      Filter Values
     </label>
+    <ng-template #singleValue>
+      <label [attr.for]="id" class="horizontal control-label">Filter Value</label>
+    </ng-template>
+
     <span *ngIf="schema.description" class="formHelp">
       {{schema.description}}
     </span>

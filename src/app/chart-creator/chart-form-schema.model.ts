@@ -370,8 +370,7 @@ export class FormSchema {
                                                     'type': 'array',
                                                     'minItems': 1,
                                                     'maxItems': 2,
-                                                    // 'title' : 'Filter Values',
-                                                    // 'requiredField' : true,
+                                                    'requiredField' : true,
                                                     'widget' : { 'id' : 'csui-filter-field-array' },
                                                     'items': {
                                                         // Cannot support multiple type items

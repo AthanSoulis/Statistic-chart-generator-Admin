@@ -76,5 +76,4 @@ export class AutocompleteInputFieldComponent implements OnInit, AfterViewInit, O
         }
       );
   }
-
 }
