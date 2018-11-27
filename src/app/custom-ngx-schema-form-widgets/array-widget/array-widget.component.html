@@ -18,9 +18,12 @@
     
     <div class="ui equal width form clearing attached segment" >
       <sf-form-element [formProperty]="itemProperty"></sf-form-element>
+      <!-- <button (click)="removeItem(i)" type="button" class="circular ui icon right floated button"><i class="close icon"></i></button> -->
+      <button *ngIf="deleteButtonPosition === 'in'" (click)="removeItem(i)" type="button"
+      class="ui circular icon basic red compact button btn btn-default array-remove-button"><i class="close icon"></i></button>
     </div>
-
-    <button (click)="removeItem(i)" type="button" 
+    
+    <button *ngIf="deleteButtonPosition === 'out'" (click)="removeItem(i)" type="button" 
     class="ui bottom attached fluid icon basic red compact button btn btn-default array-remove-button">
     <i class="close icon"></i></button>
 

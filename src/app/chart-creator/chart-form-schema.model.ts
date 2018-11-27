@@ -24,6 +24,10 @@ export interface XaxisDataFormSchema {
     xaxisEntityField: EntityFieldFormSchema;
 }
 export interface FilterFormSchema {
+    groupFilters: FilterGroupSchema[];
+    op: string;
+}
+export interface FilterGroupSchema {
     field: EntityFieldFormSchema;
     type: string;
     values: string[];
@@ -327,6 +331,8 @@ export class FormSchema {
                                     'groupFilters' : {
                                         'type': 'array',
                                         'itemName': 'Rule',
+                                        'deleteButtonPosition' : 'in',
+                                        'minItems': 1,
                                         'widget' : { 'id' : 'csui-array' },
                                         'items': {
                                             'type' : 'object',
@@ -410,7 +416,7 @@ export class FormSchema {
                                             {
                                                 'enum': ['AND'],
                                                 'value' : 'AND',
-                                                'description': 'Match all values'
+                                                'description': 'Match all of the values'
                                             },
                                             {
                                                 'enum': ['OR'],

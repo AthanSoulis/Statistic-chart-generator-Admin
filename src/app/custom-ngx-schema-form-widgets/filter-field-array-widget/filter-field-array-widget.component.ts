@@ -3,6 +3,7 @@ import { ArrayLayoutWidget } from 'ngx-schema-form';
 import { FormProperty } from 'ngx-schema-form/lib/model/formproperty';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
 
 @Component({
   selector: 'filter-field-array-widget',
@@ -14,7 +15,7 @@ export class FilterFieldArrayWidgetComponent extends ArrayLayoutWidget implement
   operatorSub: Subscription;
   filterOperator: string;
 
-  constructor() {
+  constructor(private chartLoadingService: ChartLoadingService) {
     super();
    }
 
@@ -25,10 +26,22 @@ export class FilterFieldArrayWidgetComponent extends ArrayLayoutWidget implement
     this.operatorSub = dependentOperatorProperty.valueChanges.asObservable().pipe(distinctUntilChanged()).subscribe(
       (operator: string) => {
         this.filterOperator = operator;
-        // console.log('Operator: ' + this.filterOperator);
-        this.formProperty.reset([], false);
-        if (this.filterOperator !== null) {
+
+        // We want to avoid certain functionality when a chart is Loading
+        // so notify that this Dataseries is loading
+        if (this.chartLoadingService.chartLoadingStatus) {
+          this.chartLoadingService.increaseLoadingObs();
+        }
+
+        if (!this.chartLoadingService.chartLoadingStatus && this.filterOperator !== null) {
+          this.formProperty.reset([], false);
           this.addFilterValue();
+        }
+
+        // We want to avoid certain functionality when a chart is Loading
+        // so notify that this Dataseries stopped loading
+        if ( this.chartLoadingService.chartLoadingStatus) {
+          this.chartLoadingService.decreaseLoadingObs();
         }
       }
       // error => this.error = error // error path
