@@ -36,6 +36,8 @@ import { ChartLoadingService } from './services/chart-loading-service/chart-load
 
 import { SuiModule } from 'ng2-semantic-ui';
 
+import { ColorPickerModule } from 'ngx-color-picker';
+
 import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from 'ngx-schema-form';
 import { GeneralPropertiesWidgetComponent } from './custom-ngx-schema-form-widgets/general-properties-widget/general-properties-widget.component';
 import { CustomWidgetRegistry } from './custom-ngx-schema-form-widgets/custom-widget-registry';
@@ -55,6 +57,7 @@ import { FilterFieldArrayWidgetComponent } from './custom-ngx-schema-form-widget
 import { TabularMenuWidgetComponent } from './custom-ngx-schema-form-widgets/tabular-menu-widget/tabular-menu-widget.component';
 import { HeadMenuWidgetComponent } from './custom-ngx-schema-form-widgets/head-menu-widget/head-menu-widget.component';
 import { RadioWidgetComponent } from './custom-ngx-schema-form-widgets/radio-widget/radio-widget.component';
+import { ColorPickerWidgetComponent } from './custom-ngx-schema-form-widgets/color-picker-widget/color-picker-widget.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +88,8 @@ import { RadioWidgetComponent } from './custom-ngx-schema-form-widgets/radio-wid
     FilterFieldArrayWidgetComponent,
     TabularMenuWidgetComponent,
     HeadMenuWidgetComponent,
-    RadioWidgetComponent
+    RadioWidgetComponent,
+    ColorPickerWidgetComponent
   ],
   imports: [
     SchemaFormModule.forRoot(),
@@ -97,7 +101,8 @@ import { RadioWidgetComponent } from './custom-ngx-schema-form-widgets/radio-wid
     NoopAnimationsModule,
     MatTreeModule,
     MatIconModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    ColorPickerModule
   ],
   entryComponents: [
     GeneralPropertiesWidgetComponent,
@@ -116,7 +121,8 @@ import { RadioWidgetComponent } from './custom-ngx-schema-form-widgets/radio-wid
     FilterFieldArrayWidgetComponent,
     TabularMenuWidgetComponent,
     HeadMenuWidgetComponent,
-    RadioWidgetComponent
+    RadioWidgetComponent,
+    ColorPickerWidgetComponent
   ],
   providers: [
     SupportedLibrariesService,

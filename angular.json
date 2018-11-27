@@ -20,6 +20,12 @@
               "src/assets",
               "src/ARC.ico"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/scss",
+                "node_modules/@material"
+              ]
+            },
             "styles": [
               "semantic/dist/semantic.min.css",
               "semantic/dist/components/transition.min.css",

@@ -16,6 +16,7 @@ import { ProfilePickerComponent } from './profile-picker/profile-picker.componen
 import { TabularMenuWidgetComponent } from './tabular-menu-widget/tabular-menu-widget.component';
 import { HeadMenuWidgetComponent } from './head-menu-widget/head-menu-widget.component';
 import { RadioWidgetComponent } from './radio-widget/radio-widget.component';
+import { ColorPickerWidgetComponent } from './color-picker-widget/color-picker-widget.component';
 
 export class CustomWidgetRegistry extends DefaultWidgetRegistry {
   constructor() {
@@ -38,5 +39,6 @@ export class CustomWidgetRegistry extends DefaultWidgetRegistry {
     this.register('csui-tabular-menu', TabularMenuWidgetComponent);
     this.register('csui-head-menu', HeadMenuWidgetComponent);
     this.register('csui-radio-selection', RadioWidgetComponent);
+    this.register('csui-color-picker', ColorPickerWidgetComponent);
   }
 }

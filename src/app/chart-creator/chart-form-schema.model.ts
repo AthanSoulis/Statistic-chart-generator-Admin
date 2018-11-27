@@ -90,6 +90,10 @@ export interface GooglechartsOptionsFormSchema {
  * Semantic UI related schema fields
  *
  * ~ grouping: Changes the way the fields are grouped based on this https://semantic-ui.com/collections/form.html#text-area
+ *
+ * Custom related schema fields
+ *
+ * ~ deleteButtonPosition: Changes the position of the delete button relative to the array item. Available values are ['in','out']
  */
 
 export class FormSchema {
@@ -454,9 +458,9 @@ export class FormSchema {
                     'properties' : {
                         'dataseriesColor' : {
                             'type' : 'string',
-                            'pattern': '^#[0-9a-fA-F]{6}$',
+                            'pattern': '^#[0-9a-fA-F]{8}$',
                             'title' : 'Dataseries Color',
-                            'widget': { 'id': 'color' }
+                            'widget': { 'id': 'csui-color-picker' }
                         },
                         'dataseriesName' : {
                             'type' : 'string',
@@ -482,11 +486,14 @@ export class FormSchema {
                     },
                     'fieldsets': [
                         {
+                            'grouping' : 'equal width fields',
                             'fields': [
-                                'dataseriesName',
                                 'chartType',
                                 'dataseriesColor'
                             ]
+                        },
+                        {
+                            'fields': [ 'dataseriesName' ]
                         }
                     ],
                     'required': ['chartType']
@@ -528,10 +535,10 @@ export class FormSchema {
                 'properties' : {
                     'hcCABackGroundColor': {
                         'type' : 'string',
-                        'pattern': '^#[0-9a-fA-F]{6}$',
-                        'default': '#FFFFFF',
+                        'pattern': '^#[0-9a-fA-F]{8}$',
+                        'default': '#FFFFFFFF',
                         'title' : 'Background Color',
-                        'widget': {'id': 'color'}
+                        'widget': {'id': 'csui-color-picker'}
                     },
                     'hcCABorderWidth': {
                         'type' : 'number',
@@ -547,15 +554,16 @@ export class FormSchema {
                     },
                     'hcCABorderColor': {
                         'type' : 'string',
-                        'pattern': '^#[0-9a-fA-F]{6}$',
-                        'default': '#335cad',
+                        'pattern': '^#[0-9a-fA-F]{8}$',
+                        'default': '#335cadff',
                         'title' : 'Border Color',
-                        'widget': {'id': 'color'}
+                        'widget': {'id': 'csui-color-picker'}
                     },
                     'hcPABackgroundColor': {
                         'type' : 'string',
+                        'pattern': '^#[0-9a-fA-F]{8}$',
                         'title' : 'Background Color',
-                        'widget': {'id': 'color'}
+                        'widget': {'id': 'csui-color-picker'}
                     },
                     'hcPABackgroundImageURL': {
                         'type' : 'string',
@@ -571,10 +579,10 @@ export class FormSchema {
                     },
                     'hcPABorderColor': {
                         'type' : 'string',
-                        'pattern': '^#[0-9a-fA-F]{6}$',
-                        'default': '#cccccc',
+                        'pattern': '^#[0-9a-fA-F]{8}$',
+                        'default': '#ccccccff',
                         'title' : 'Border Color',
-                        'widget': {'id': 'color'}
+                        'widget': {'id': 'csui-color-picker'}
                     },
                     'hcSubtitle': {
                         'type': 'string',
