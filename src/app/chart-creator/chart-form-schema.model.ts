@@ -670,7 +670,7 @@ export class FormSchema {
                     },
                     'hcCreditsText' : {
                         'type': 'string',
-                        'default': 'Made by the OpenAIRE Statistic Chart Generator',
+                        'default': 'Created by OpenAIRE via HighCharts',
                         'title' : 'Credits Text',
                         'widget' : {'id': 'string'}
                     },
