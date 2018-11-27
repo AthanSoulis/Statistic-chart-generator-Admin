@@ -9,12 +9,16 @@
     text-align: center;
 }
 
-.ui.menu {
-    padding: 5px 30px;
+.ui.fixed.menu {
+    padding: 1rem 1rem;
+}
+
+.ui.menu .header.item {
+    padding-left: 3rem !important;
 }
 
 .ui.fixed.menu + .ui.grid {
-    padding-top: 9rem;
+    padding-top: 10rem;
 }
 
 .ui.menu .item::before {
