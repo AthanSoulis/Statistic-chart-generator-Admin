@@ -32,7 +32,8 @@ const supportedFilterTypesArray = [
   {filterOperator: '>=', filterName: 'Bigger / Equal than', filterType: [FieldType.int, FieldType.float, FieldType.date]},
   {filterOperator: '<', filterName: 'Smaller than', filterType: [FieldType.int, FieldType.float, FieldType.date]},
   {filterOperator: '<=', filterName: 'Smaller / Equal than', filterType: [FieldType.int, FieldType.float, FieldType.date]},
-  {filterOperator: 'between', filterName: 'Between', filterType: [FieldType.int, FieldType.float, FieldType.date]},
+  // Operator between no longer needed after the redisigned filters
+  // {filterOperator: 'between', filterName: 'Between', filterType: [FieldType.int, FieldType.float, FieldType.date]},
   {filterOperator: 'contains', filterName: 'Contains', filterType: [FieldType.text]},
   {filterOperator: 'starts_with', filterName: 'Starts with', filterType: [FieldType.text]},
   {filterOperator: 'ends_with', filterName: 'Ends with', filterType: [FieldType.text]}
