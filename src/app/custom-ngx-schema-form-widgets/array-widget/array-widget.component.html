@@ -9,10 +9,6 @@
   <ng-template #no_header>
     <div class="ui hidden divider"></div>
   </ng-template>
-
-  <button type="button" (click)="addItem()"
-  class="ui labeled icon basic blue compact button btn btn-default array-add-button">
-      <i class="plus icon"></i> Add {{schema.itemName}}</button>
   
   <div class="ui segments" *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex">
     
@@ -28,4 +24,9 @@
     <i class="close icon"></i></button>
 
   </div>
+
+  <button type="button" (click)="addItem()"
+  class="ui labeled icon basic blue compact button btn btn-default array-add-button">
+      <i class="plus icon"></i> Add {{schema.itemName}}</button>
+      
 </div>
