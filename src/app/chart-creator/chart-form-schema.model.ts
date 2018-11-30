@@ -593,11 +593,13 @@ export class FormSchema {
                     },
                     'hcEnableDataLabels' : {
                         'type': 'boolean',
+                        'widget' : {'id' : 'csui-boolean'},
                         'default': false,
                         'description': 'Enable data labels for all series'
                     },
                     'hcEnableLegend' : {
                         'type': 'boolean',
+                        'widget' : {'id' : 'csui-boolean'},
                         'default': true,
                         'description': 'Enable Legend'
                     },
@@ -667,11 +669,13 @@ export class FormSchema {
                     },
                     'exporting' : {
                         'type': 'boolean',
+                        'widget' : {'id' : 'csui-boolean'},
                         'default': false,
                         'description': 'Enable Exporting'
                     },
                     'hcEnableCredits' : {
                         'type': 'boolean',
+                        'widget' : {'id' : 'csui-boolean'},
                         'default': true,
                         'description': 'Enable Credits'
                     },
@@ -746,6 +750,7 @@ export class FormSchema {
                 'properties' : {
                     'exporting' : {
                         'type': 'boolean',
+                        'widget' : {'id' : 'csui-boolean'},
                         'default': false,
                         'description': 'Enable exporting'
                     }
