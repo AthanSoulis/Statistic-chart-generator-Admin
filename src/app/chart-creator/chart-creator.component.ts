@@ -58,7 +58,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
 
   reset(form: FormComponent) {
 
-    form.rootProperty.reset(this._resetFormValue, true);
+    form.rootProperty.reset(this._resetFormValue, false);
     this.formClear.emit();
     this.cdr.detectChanges();
   }
@@ -207,7 +207,6 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
 
       // Credits Options
       chartObj.chartDescription.credits.enabled = appearanceOptions.highchartsAppearanceOptions.hcEnableCredits;
-      chartObj.chartDescription.credits.href = appearanceOptions.highchartsAppearanceOptions.hcCreditsLink;
       chartObj.chartDescription.credits.text = appearanceOptions.highchartsAppearanceOptions.hcCreditsText;
 
       chartObj.chartDescription.subtitle.text = appearanceOptions.highchartsAppearanceOptions.hcSubtitle;

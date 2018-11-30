@@ -80,7 +80,6 @@ export interface HighchartsOptionsFormSchema {
     hcLegendVerticalAlignment ?: string;
     hcEnableCredits ?: boolean;
     hcCreditsText ?: string;
-    hcCreditsLink ?: string;
 }
 export interface GooglechartsOptionsFormSchema {
     exporting ?: boolean;
@@ -733,7 +732,7 @@ export class FormSchema {
                     },
                     {
                         'title' : 'Credits',
-                        'fields': ['hcEnableCredits', 'hcCreditsText', 'hcCreditsLink']
+                        'fields': ['hcEnableCredits', 'hcCreditsText']
                     },
                 ],
                 'visibleIf': {

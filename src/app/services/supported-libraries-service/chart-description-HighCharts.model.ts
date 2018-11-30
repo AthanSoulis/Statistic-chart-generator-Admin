@@ -102,5 +102,5 @@ class HCDataLabels {
 class HCCredits {
     enabled: boolean;
     text: string;
-    href: string;
+    href: string = null;
 }
