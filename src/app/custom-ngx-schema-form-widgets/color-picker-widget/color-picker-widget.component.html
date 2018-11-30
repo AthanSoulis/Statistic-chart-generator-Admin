@@ -11,7 +11,7 @@
 
     <input [name]="name" class="text-widget.id textline-widget form-control"
     [(colorPicker)]="color" [cpOutputFormat]="'hex'" [cpAlphaChannel]="'always'" 
-    [style.background]="color" (colorPickerChange)="changeColor($event)"
+    [style.background]="color" (colorPickerChange)="changeColor($event)" [cpCancelButton]="true"
     [attr.id]="id"
     [attr.readonly]="true"
     [attr.placeholder]="schema.placeholder"
