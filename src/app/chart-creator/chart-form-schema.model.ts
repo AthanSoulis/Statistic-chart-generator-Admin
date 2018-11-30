@@ -121,13 +121,13 @@ export class FormSchema {
                         'type' : 'string',
                         'placeholder' : 'Yaxis',
                         'title' : 'Yaxis',
-                        'widget': { 'id': 'string' }
+                        'widget': { 'id': 'csui-string' }
                     },
                     'xaxisName' : {
                         'type' : 'string',
                         'placeholder' : 'Xaxis',
                         'title' : 'Xaxis',
-                        'widget': { 'id': 'string' }
+                        'widget': { 'id': 'csui-string' }
                     }
                 },
                 'fieldsets': [
@@ -145,7 +145,7 @@ export class FormSchema {
                 'type' : 'string',
                 'placeholder' : 'Title',
                 'title' : 'Main Title',
-                'widget': {'id': 'string' }
+                'widget': {'id': 'csui-string' }
             },
             'results' : {
                 'type' : 'object',
@@ -568,7 +568,7 @@ export class FormSchema {
                         'type' : 'string',
                         'title' : 'Background Image URL',
                         'placeholder': 'https://domain.com/picture.png',
-                        'widget': {'id': 'url'}
+                        'widget': {'id': 'csui-string'}
                     },
                     'hcPABorderWidth': {
                         'type' : 'number',
@@ -587,9 +587,7 @@ export class FormSchema {
                         'type': 'string',
                         'placeholder': 'Subtitle',
                         'title' : 'Subtitle',
-                        'widget' : {
-                            'id': 'string'
-                        }
+                        'widget' : {'id': 'csui-string' }
                     },
                     'hcEnableDataLabels' : {
                         'type': 'boolean',
@@ -683,14 +681,8 @@ export class FormSchema {
                         'type': 'string',
                         'default': 'Created by OpenAIRE via HighCharts',
                         'title' : 'Credits Text',
-                        'widget' : {'id': 'string'}
-                    },
-                    'hcCreditsLink': {
-                        'type' : 'string',
-                        'title' : 'Credits Link',
-                        'default': 'https://www.openaire.eu/',
-                        'widget': {'id': 'url'}
-                    },
+                        'widget' : {'id': 'csui-string'}
+                    }
                 },
                 'fieldsets': [
                     {

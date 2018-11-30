@@ -19,6 +19,7 @@ import { RadioWidgetComponent } from './radio-widget/radio-widget.component';
 import { ColorPickerWidgetComponent } from './color-picker-widget/color-picker-widget.component';
 import { BooleanFieldWidgetComponent } from './boolean-field-widget/boolean-field-widget.component';
 import { NumberFieldWidgetComponent } from './number-field-widget/number-field-widget.component';
+import { StringFieldWidgetComponent } from './string-field-widget/string-field-widget.component';
 
 export class CustomWidgetRegistry extends DefaultWidgetRegistry {
   constructor() {
@@ -44,5 +45,6 @@ export class CustomWidgetRegistry extends DefaultWidgetRegistry {
     this.register('csui-color-picker', ColorPickerWidgetComponent);
     this.register('csui-boolean', BooleanFieldWidgetComponent);
     this.register('csui-number', NumberFieldWidgetComponent);
+    this.register('csui-string', StringFieldWidgetComponent);
   }
 }
