@@ -155,7 +155,7 @@ export class FormSchema {
                         'type' : 'number',
                         'title' : 'Results Limit',
                         'default' : 30,
-                        'widget' : {'id' : 'number'}
+                        'widget' : {'id' : 'csui-number'}
                     },
                     'orderByAxis' : {
                         'type' : 'string',
@@ -543,13 +543,13 @@ export class FormSchema {
                         'type' : 'number',
                         'default': 0,
                         'title' : 'Border Width',
-                        'widget': {'id': 'number'}
+                        'widget': {'id': 'csui-number'}
                     },
                     'hcCABorderCornerRadius': {
                         'type' : 'number',
                         'default': 0,
                         'title' : 'Border Corner Radius',
-                        'widget': {'id': 'number'}
+                        'widget': {'id': 'csui-number'}
                     },
                     'hcCABorderColor': {
                         'type' : 'string',
@@ -574,7 +574,7 @@ export class FormSchema {
                         'type' : 'number',
                         'default': 0,
                         'title' : 'Border Width',
-                        'widget': {'id': 'number'}
+                        'widget': {'id': 'csui-number'}
                     },
                     'hcPABorderColor': {
                         'type' : 'string',

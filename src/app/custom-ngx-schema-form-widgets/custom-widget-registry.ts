@@ -18,6 +18,7 @@ import { HeadMenuWidgetComponent } from './head-menu-widget/head-menu-widget.com
 import { RadioWidgetComponent } from './radio-widget/radio-widget.component';
 import { ColorPickerWidgetComponent } from './color-picker-widget/color-picker-widget.component';
 import { BooleanFieldWidgetComponent } from './boolean-field-widget/boolean-field-widget.component';
+import { NumberFieldWidgetComponent } from './number-field-widget/number-field-widget.component';
 
 export class CustomWidgetRegistry extends DefaultWidgetRegistry {
   constructor() {
@@ -42,5 +43,6 @@ export class CustomWidgetRegistry extends DefaultWidgetRegistry {
     this.register('csui-radio-selection', RadioWidgetComponent);
     this.register('csui-color-picker', ColorPickerWidgetComponent);
     this.register('csui-boolean', BooleanFieldWidgetComponent);
+    this.register('csui-number', NumberFieldWidgetComponent);
   }
 }

@@ -59,6 +59,7 @@ import { HeadMenuWidgetComponent } from './custom-ngx-schema-form-widgets/head-m
 import { RadioWidgetComponent } from './custom-ngx-schema-form-widgets/radio-widget/radio-widget.component';
 import { ColorPickerWidgetComponent } from './custom-ngx-schema-form-widgets/color-picker-widget/color-picker-widget.component';
 import { BooleanFieldWidgetComponent } from './custom-ngx-schema-form-widgets/boolean-field-widget/boolean-field-widget.component';
+import { NumberFieldWidgetComponent } from './custom-ngx-schema-form-widgets/number-field-widget/number-field-widget.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { BooleanFieldWidgetComponent } from './custom-ngx-schema-form-widgets/bo
     RadioWidgetComponent,
     ColorPickerWidgetComponent,
     BooleanFieldWidgetComponent,
+    NumberFieldWidgetComponent,
   ],
   imports: [
     SchemaFormModule.forRoot(),
@@ -126,6 +128,7 @@ import { BooleanFieldWidgetComponent } from './custom-ngx-schema-form-widgets/bo
     RadioWidgetComponent,
     ColorPickerWidgetComponent,
     BooleanFieldWidgetComponent,
+    NumberFieldWidgetComponent,
   ],
   providers: [
     SupportedLibrariesService,
