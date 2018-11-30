@@ -8,7 +8,16 @@ import { ControlWidget } from 'ngx-schema-form';
 })
 export class RadioWidgetComponent extends ControlWidget {
 
+  constructor(private cdr: ChangeDetectorRef) {
+    super();
+  }
+
   handleChange(value: any) {
     this.control.setValue(value);
+  }
+
+  detectChange(value: any) {
+    // console.log('Event: ', value);
+    this.cdr.detectChanges();
   }
 }
