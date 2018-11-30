@@ -604,7 +604,7 @@ export class FormSchema {
                     'hcLegendLayout' : {
                         'type': 'string',
                         'widget' : {'id' : 'csui-select'},
-                        'description': 'Item Layout',
+                        'title': 'Item Layout',
                         'oneOf': [
                             {
                                 'enum': ['horizontal'],
@@ -622,7 +622,7 @@ export class FormSchema {
                     'hcLegendHorizontalAlignment' : {
                         'type': 'string',
                         'widget' : {'id' : 'csui-select'},
-                        'description': 'Horizontal Alignment',
+                        'title': 'Horizontal Alignment',
                         'oneOf': [
                             {
                                 'enum': ['left'],
@@ -645,7 +645,7 @@ export class FormSchema {
                     'hcLegendVerticalAlignment' : {
                         'type': 'string',
                         'widget' : {'id' : 'csui-select'},
-                        'description': 'Vertical Alignment',
+                        'title': 'Vertical Alignment',
                         'oneOf': [
                             {
                                 'enum': ['top'],
