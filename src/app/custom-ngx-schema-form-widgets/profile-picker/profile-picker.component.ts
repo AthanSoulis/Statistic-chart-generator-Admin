@@ -21,10 +21,11 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
   @ViewChild('mappingModal')
   public modalTemplate: ModalTemplate<IContext, string, string>;
   private activeModal: SuiActiveModal<IContext, string, string>;
-  private _hasBeenInitialized = false;
 
-  set hasBeenInitialized(init: boolean) { this._hasBeenInitialized = init; }
-  get hasBeenInitialized() { return this._hasBeenInitialized; }
+  get hasBeenInitialized() {
+    return this.formProperty.value !== null &&
+     this.formProperty.value !== undefined &&
+     this.formProperty.value !== ''; }
 
   subscriptions: Array<Subscription>;
 
@@ -80,11 +81,6 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
         cdrRef.detectChanges();
 
         return true;
-      },
-      onHidden: () => {
-        if (this.formProperty.value !== null) {
-          caller.hasBeenInitialized = true;
-        }
       }
     })
     .modal('show');
