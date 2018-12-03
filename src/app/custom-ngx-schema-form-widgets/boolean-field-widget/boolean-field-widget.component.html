@@ -6,8 +6,12 @@
   </label>
   <div *ngIf="schema.type!='array'">
       
-      <sui-checkbox (ngModelChange)="handleChange($event)" [formControl]="control" class="toggle" [name]="name"
-      [isDisabled]="schema.readonly">{{schema.description}}</sui-checkbox>
+    <sui-checkbox (ngModelChange)="handleChange($event)" [formControl]="control" class="toggle" [name]="name"
+      [isDisabled]="schema.readonly">
+      {{schema.description}}
+      <i *ngIf="this.schema.tooltip" class="info circle icon" suiPopup popupPlacement="right"
+      popupText={{this.schema.tooltip}}></i>
+    </sui-checkbox>
       
   </div>
 </div>

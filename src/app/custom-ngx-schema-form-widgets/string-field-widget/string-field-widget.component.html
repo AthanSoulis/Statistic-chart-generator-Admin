@@ -4,8 +4,10 @@
 <div [ngClass]="!schema.requiredField ? 'widget form-group field' : 
 (control.touched || control.dirty) && (!this.control.valid)  ? 
 'widget form-group required field error' : 'widget form-group required field'">
-    <label [attr.for]="id" class="horizontal control-label">
-    	{{ schema.title }}
+    <label [attr.for]="id" class="horizontal control-label" >
+      {{ schema.title }}
+      <i *ngIf="this.schema.tooltip" class="info circle icon" suiPopup popupPlacement="right"
+      popupText={{this.schema.tooltip}}></i>
     </label>
     <span *ngIf="schema.description" class="formHelp">{{schema.description}}</span>
     <input [name]="name" [attr.readonly]="(schema.widget.id!=='color') && schema.readOnly?true:null"

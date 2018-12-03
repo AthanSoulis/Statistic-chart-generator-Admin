@@ -93,6 +93,7 @@ export interface GooglechartsOptionsFormSchema {
  * Custom related schema fields
  *
  * ~ deleteButtonPosition: Changes the position of the delete button relative to the array item. Available values are ['in','out']
+ * ~ tooltip: Enables and shows the tooltip string on a {csui-string, csui-boolean, csui-number, csui-select}
  */
 
 export class FormSchema {
@@ -537,18 +538,21 @@ export class FormSchema {
                         'pattern': '^#[0-9a-fA-F]{8}$',
                         'default': '#FFFFFFFF',
                         'title' : 'Background Color',
+                        'tooltip': 'Background color for the full chart area.',
                         'widget': {'id': 'csui-color-picker'}
                     },
                     'hcCABorderWidth': {
                         'type' : 'number',
                         'default': 0,
                         'title' : 'Border Width',
+                        'tooltip': 'The pixel width of the outer chart border.',
                         'widget': {'id': 'csui-number'}
                     },
                     'hcCABorderCornerRadius': {
                         'type' : 'number',
                         'default': 0,
                         'title' : 'Border Corner Radius',
+                        'tooltip': 'The corner radius of the outer chart border.',
                         'widget': {'id': 'csui-number'}
                     },
                     'hcCABorderColor': {
@@ -556,24 +560,28 @@ export class FormSchema {
                         'pattern': '^#[0-9a-fA-F]{8}$',
                         'default': '#335cadff',
                         'title' : 'Border Color',
+                        'tooltip': 'The color of the outer chart border.',
                         'widget': {'id': 'csui-color-picker'}
                     },
                     'hcPABackgroundColor': {
                         'type' : 'string',
                         'pattern': '^#[0-9a-fA-F]{8}$',
                         'title' : 'Background Color',
+                        'tooltip': 'Background color for the plot area, the area inside the axes.',
                         'widget': {'id': 'csui-color-picker'}
                     },
                     'hcPABackgroundImageURL': {
                         'type' : 'string',
                         'title' : 'Background Image URL',
                         'placeholder': 'https://domain.com/picture.png',
+                        'tooltip': 'The online URL for an image to use as the plot area background.',
                         'widget': {'id': 'csui-string'}
                     },
                     'hcPABorderWidth': {
                         'type' : 'number',
                         'default': 0,
                         'title' : 'Border Width',
+                        'tooltip': 'The pixel width of the plot area border.',
                         'widget': {'id': 'csui-number'}
                     },
                     'hcPABorderColor': {
@@ -581,30 +589,35 @@ export class FormSchema {
                         'pattern': '^#[0-9a-fA-F]{8}$',
                         'default': '#ccccccff',
                         'title' : 'Border Color',
+                        'tooltip': 'The color of the inner chart or plot area border.',
                         'widget': {'id': 'csui-color-picker'}
                     },
                     'hcSubtitle': {
                         'type': 'string',
                         'placeholder': 'Subtitle',
                         'title' : 'Subtitle',
+                        'tooltip': 'The chart\'s subtitle, normally displayed with smaller fonts below the main title.',
                         'widget' : {'id': 'csui-string' }
                     },
                     'hcEnableDataLabels' : {
                         'type': 'boolean',
                         'widget' : {'id' : 'csui-boolean'},
                         'default': false,
+                        'tooltip': 'Show small labels next to each data value.',
                         'description': 'Enable data labels for all series'
                     },
                     'hcEnableLegend' : {
                         'type': 'boolean',
                         'widget' : {'id' : 'csui-boolean'},
                         'default': true,
+                        'tooltip': 'Enable or disable the legend.',
                         'description': 'Enable Legend'
                     },
                     'hcLegendLayout' : {
                         'type': 'string',
                         'widget' : {'id' : 'csui-select'},
                         'title': 'Item Layout',
+                        'tooltip': 'The layout of the legend items. Can be one of "Horizontal" or "Vertical".',
                         'oneOf': [
                             {
                                 'enum': ['horizontal'],
@@ -623,6 +636,7 @@ export class FormSchema {
                         'type': 'string',
                         'widget' : {'id' : 'csui-select'},
                         'title': 'Horizontal Alignment',
+                        'tooltip': 'The horizontal alignment of the legend box within the chart area.',
                         'oneOf': [
                             {
                                 'enum': ['left'],
@@ -646,6 +660,7 @@ export class FormSchema {
                         'type': 'string',
                         'widget' : {'id' : 'csui-select'},
                         'title': 'Vertical Alignment',
+                        'tooltip': 'The vertical alignment of the legend box.',
                         'oneOf': [
                             {
                                 'enum': ['top'],
@@ -669,18 +684,21 @@ export class FormSchema {
                         'type': 'boolean',
                         'widget' : {'id' : 'csui-boolean'},
                         'default': false,
+                        'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
                         'description': 'Enable Exporting'
                     },
                     'hcEnableCredits' : {
                         'type': 'boolean',
                         'widget' : {'id' : 'csui-boolean'},
                         'default': true,
+                        'tooltip': 'Whether to show the credits text.',
                         'description': 'Enable Credits'
                     },
                     'hcCreditsText' : {
                         'type': 'string',
                         'default': 'Created by OpenAIRE via HighCharts',
                         'title' : 'Credits Text',
+                        'tooltip': 'The text for the credits label',
                         'widget' : {'id': 'csui-string'}
                     }
                 },
@@ -744,6 +762,7 @@ export class FormSchema {
                         'type': 'boolean',
                         'widget' : {'id' : 'csui-boolean'},
                         'default': false,
+                        'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
                         'description': 'Enable exporting'
                     }
                 },
