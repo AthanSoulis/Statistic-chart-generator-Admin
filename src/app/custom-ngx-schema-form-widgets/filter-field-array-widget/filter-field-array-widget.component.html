@@ -1,8 +1,7 @@
-<div *ngIf="filterFieldArrayLength > 0" >
-  
-  <div [ngClass]="!schema.requiredField ? 'widget form-group field' : 
-  (control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'">
-  
+    <div [ngClass]="!schema.requiredField ? 'widget form-group field' : 
+  (control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'"
+  *ngIf="filterFieldArrayLength > 0; else noFilterValue" >
+
     <label *ngIf="filterFieldArrayLength > 1; else singleValue" [attr.for]="id" class="horizontal control-label">
       Filter Values
     </label>
@@ -42,10 +41,18 @@
 
       </div>
     </ng-template>
+      <!-- <button (click)="addFilterValue()" type="button" class="circular ui icon basic blue compact left floated button">
+          <div *ngIf="filterFieldArrayLength > 0; else addFilter">OR</div>
+          <ng-template #addFilter><i class="plus icon"></i></ng-template>
+        </button> -->
   </div>
 
-  <!-- <button (click)="addFilterValue()" type="button" class="circular ui icon basic blue compact left floated button">
-    <div *ngIf="filterFieldArrayLength > 0; else addFilter">OR</div>
-    <ng-template #addFilter><i class="plus icon"></i></ng-template>
-  </button> -->
-</div>
+  <ng-template #noFilterValue>
+    <div [ngClass]="!schema.requiredField ? 'widget form-group disabled field' : 
+    (control.touched || control.dirty) && (!this.control.valid)  ? 
+    'widget form-group required disabled field error' : 'widget form-group required disabled field'">
+        <label [attr.for]="id" class="horizontal control-label">Filter Value</label>
+        <span *ngIf="schema.description" class="formHelp">{{schema.description}}</span>
+        <input disabled>
+    </div>
+  </ng-template>

@@ -43,4 +43,8 @@
           [attr.minLength]="schema.minLength || null"
           [attr.disabled]="(schema.widget.id=='color' && schema.readOnly)?true:null">
       </ng-container>
+      <ng-container *ngSwitchDefault>
+        <input [name]="name" class="text-widget.id textline-widget form-control"
+        [attr.id]="id"  [formControl]="control" [attr.placeholder]="schema.placeholder" disabled>
+      </ng-container>
   </div>
