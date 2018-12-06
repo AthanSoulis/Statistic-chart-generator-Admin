@@ -6,7 +6,7 @@
 'widget form-group required field error' : 'widget form-group required field'">
     <label [attr.for]="id" class="horizontal control-label" >
       {{ schema.title }}
-      <i *ngIf="this.schema.tooltip" class="info circle icon right floated" suiPopup popupPlacement="right"
+      <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" suiPopup popupPlacement="right"
       popupText={{this.schema.tooltip}}></i>
     </label>
     <span *ngIf="schema.description" class="formHelp">{{schema.description}}</span>
