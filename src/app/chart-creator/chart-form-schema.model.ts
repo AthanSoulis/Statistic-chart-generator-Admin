@@ -1,5 +1,4 @@
 import { FormProperty, PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
-import { ObjectProperty } from 'ngx-schema-form/lib/model/objectproperty';
 
 export interface SCGAFormSchema {
     generalChartProperties: PropertiesFormSchema;
@@ -285,9 +284,7 @@ export class FormSchema {
                             'type': 'array',
                             'title': 'X axis',
                             'itemName': 'Group By',
-                            // Seems like we have to make charts without X values.
-                            //
-                            // 'minItems': 1,
+                            'minItems': 1,
                             'maxItems': 2,
                             'widget' : { 'id' : 'csui-array' },
                             'items': {
@@ -334,7 +331,7 @@ export class FormSchema {
                                 'properties' : {
                                     'groupFilters' : {
                                         'type': 'array',
-                                        'itemName': 'Rule',
+                                        'itemName': 'Filter Rule',
                                         'deleteButtonPosition' : 'in',
                                         'minItems': 1,
                                         'widget' : { 'id' : 'csui-array' },
