@@ -18,34 +18,38 @@
     </div>
 </div>
 
-<form class="ui form grid" id="formContainer">
+<form class="ui form very compact grid" id="formContainer">
 
-    <div class="fourteen wide column" >
-        <div class="ui basic segment">
+    <div class="sixteen wide column norightpadding" >
+        <div class="ui basic segment norightpadding">
             <sf-form #form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.customValidators" 
-            (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>        
+            (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>  
+            
+            <div *ngIf="!isFormValid" class="ui red message">
+                <ul>
+                    <li *ngFor="let error of (this.formErrors | async)">{{error.message}}</li>
+                </ul>
+            </div>
         </div>
         <!-- <pre> {{formValue | json}} </pre> -->
+        
     </div>
 
-
-    <div class="two wide column">
-
-        <div *ngIf="isFormValid; else invalidForm" class="ui vertical buttons mdc-fab mdc-fab--extended app-fab--absolute" >
-            <button type="submit" (click)="onSubmit()"
-                    class="ui top attached large primary button">Submit</button>
+    <div *ngIf="isFormValid; else invalidForm" class="ui horizontal buttons mdc-fab mdc-fab--extended app-fab--absolute" >
+        <button type="submit" (click)="onSubmit()"
+                class="ui large primary button">Submit</button>
+        <button (click)="onClear()"
+                    class="ui large primary negative button">Clear</button>
+    </div>
+    <ng-template #invalidForm>
+        <div class="ui horizontal buttons mdc-fab mdc-fab--extended app-fab--absolute">
+            <button type="submit" class="ui large basic primary not-allowed button"
+            data-position="left center" data-tooltip="Some obligatory fields are not selected !">
+            Submit</button>
             <button (click)="onClear()"
-                     class="ui bottom attached large primary negative button">Clear</button>
+                    class="ui large primary negative button">Clear</button>
         </div>
-        <ng-template #invalidForm>
-            <div class="ui vertical buttons mdc-fab mdc-fab--extended app-fab--absolute">
-                <button type="submit" class="ui top attached large basic primary not-allowed button"
-                data-position="left center" data-tooltip="Some obligatory fields are not selected !">
-                Submit</button>
-                <button (click)="onClear()"
-                        class="ui bottom attached large primary negative button">Clear</button>
-            </div>
-        </ng-template>
+    </ng-template>
 
         <!-- <div class="ui sticky fixed top">
             
@@ -60,6 +64,4 @@
                 </div>
             </ng-template>            
         </div> -->
-
-    </div>
 </form>

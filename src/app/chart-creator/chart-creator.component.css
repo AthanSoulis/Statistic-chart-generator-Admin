@@ -9,14 +9,14 @@
 .app-fab--absolute {
   position: fixed;
   margin-top: 1.5rem;
-  left: 39.875%;
+  left: 38%;
   transform: translate(-50%, -50%);
 }
   
   @media(min-width: 1024px) {
     .app-fab--absolute {
     margin-top: 1.5rem;
-    left: 39.875%;
+    left: 38%;
     transform: translate(-50%, -50%);
   }
 }

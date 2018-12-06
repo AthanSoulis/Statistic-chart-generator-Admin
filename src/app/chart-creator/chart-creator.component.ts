@@ -30,7 +30,8 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
 
   fs: FormSchema;
   formValue: SCGAFormSchema;
-  formErrors: any;
+  formErrors: BehaviorSubject<any>;
+
   private _isFormValid = true;
   private _resetFormValue = null;
 
@@ -38,6 +39,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     private supportedLibrariesService: SupportedLibrariesService,
     protected cdr: ChangeDetectorRef) {
       this.fs = new FormSchema();
+      this.formErrors = new BehaviorSubject(null);
   }
 
   ngOnInit() {}
@@ -246,12 +248,14 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
   get isFormValid() { return this._isFormValid; }
 
   errorsChange(formErrorsObj: any) {
+
+    this.formErrors.next(formErrorsObj.value);
+
     if (formErrorsObj.value === null) {
       this.isFormValid = true;
       return;
     }
     this.isFormValid = false;
-    this.formErrors = formErrorsObj;
     // console.log('Errors Change: ', formErrorsObj);
   }
 
