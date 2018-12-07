@@ -29,6 +29,11 @@
     overflow-x: auto !important;
 }
 
+.ui.fluid.pointing.dropdown.segment {
+    padding: 0.785714em 1em !important;
+    line-height: 1em !important;
+}
+
 /* Makes the selected item's background white, while selected */
 .ui.dropdown .menu .selected.item, .ui.dropdown.selected {
     background: white ;
