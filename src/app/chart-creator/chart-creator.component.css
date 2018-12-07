@@ -8,15 +8,15 @@
 
 .app-fab--absolute {
   position: fixed;
-  margin-top: 1.5rem;
-  left: 38%;
+  margin-top: 2.5rem;
+  left: 36.5%;
   transform: translate(-50%, -50%);
 }
   
   @media(min-width: 1024px) {
     .app-fab--absolute {
-    margin-top: 1.5rem;
-    left: 38%;
+    margin-top: 2.5rem;
+    left: 36.5%;
     transform: translate(-50%, -50%);
   }
 }
