@@ -4,6 +4,7 @@ import { TemplateModalConfig, ModalTemplate, SuiActiveModal, SuiModalService } f
 import { MappingProfilesService, Profile } from '../../services/mapping-profiles-service/mapping-profiles.service';
 import { Subscription, BehaviorSubject } from 'rxjs';
 import { ArrayProperty } from 'ngx-schema-form/lib/model/arrayproperty';
+import { FormProperty } from 'ngx-schema-form/lib/model/formproperty';
 
 declare var jQuery: any;
 
@@ -42,19 +43,17 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
     this.subscriptions.push(
     (<BehaviorSubject<string>> this.formProperty.valueChanges)
     .subscribe(profile => {
-      if (profile) {
+
         this.mappingProfileService.changeSelectedProfile(profile);
         this.cdr.detectChanges();
-        dataseriesArray.reset([{'data': {'xaxisData': [], 'filters': []}, 'chartProperties': {'dataseriesName': 'Data'}}] );
-      }
-    }));
 
+    }));
     this.showProfilePicker(null);
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(element => {
-      element.unsubscribe();
+    this.subscriptions.forEach( suscription => {
+        suscription.unsubscribe();
     });
   }
 

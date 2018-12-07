@@ -8,6 +8,8 @@ import { ChartLoadingService } from '../../services/chart-loading-service/chart-
 import { ErrorHandlerService } from '../../services/error-handler-service/error-handler.service';
 import { ArrayProperty } from 'ngx-schema-form/lib/model/arrayproperty';
 import { Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { FormProperty, PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
+import { ObjectProperty } from 'ngx-schema-form/lib/model/objectproperty';
 
 @Component({
   selector: 'entity-selection-widget',
@@ -41,8 +43,19 @@ export class EntitySelectionWidgetComponent extends ControlWidget implements OnI
       (data) => {
 
         if (!this.chartLoadingService.chartLoadingStatus) {
-          xAxisData.reset([]);
-          filters.reset([]);
+          // Reset xAxis GroupBy
+          (<PropertyGroup[]> xAxisData.properties).forEach(
+            (groupBy: PropertyGroup) => groupBy.reset(null, false)
+          );
+          // Reset Filter Rules
+          (<PropertyGroup[]> filters.properties).forEach(
+            (filterGroup: PropertyGroup) => {
+              const filterRules: ArrayProperty = filterGroup.getProperty('groupFilters');
+              (<PropertyGroup[]> filterRules.properties).forEach(
+                (filterRule: PropertyGroup) => filterRule.reset(null, false)
+              );
+            }
+          );
         }});
 
     // Subscribe to the mappingProfileService in order to get notified of any mapping profile changes
