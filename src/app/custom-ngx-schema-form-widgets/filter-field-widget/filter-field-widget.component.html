@@ -2,7 +2,7 @@
     (control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'" >
       <ng-container *ngSwitchCase="0">          
         
-        <div class="ui fluid action icon input" *ngIf="(this.filterOperator === '=') || (this.filterOperator === '!='); else plainStringInput">
+        <div  *ngIf="(this.filterOperator === '=') || (this.filterOperator === '!='); else plainStringInput">
           <autocomplete-input-field [inputFormGroup]="control" [filterfield]="this.selectedField.name"></autocomplete-input-field>
         </div>
         <ng-template #plainStringInput>
