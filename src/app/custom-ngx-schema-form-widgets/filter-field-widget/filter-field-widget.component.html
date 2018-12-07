@@ -19,7 +19,7 @@
       <ng-container *ngSwitchCase="1">
 
           <input [name]="name" [attr.readonly]="(schema.widget.id!=='color') && schema.readOnly?true:null"
-          class="text-widget.id textline-widget form-control" type="number" inputmode="numeric"
+          class="text-widget.id textline-widget form-control" type="text" inputmode="numeric"
           [attr.id]="id"  [formControl]="control" [attr.placeholder]="schema.placeholder"
           [attr.maxLength]="schema.maxLength || null"
           [attr.minLength]="schema.minLength || null"
@@ -28,7 +28,7 @@
       <ng-container *ngSwitchCase="2">
 
           <input [name]="name" [attr.readonly]="(schema.widget.id!=='color') && schema.readOnly?true:null"
-          class="text-widget.id textline-widget form-control" type="number" inputmode="decimal"
+          class="text-widget.id textline-widget form-control" type="text" inputmode="decimal"
           [attr.id]="id"  [formControl]="control" [attr.placeholder]="schema.placeholder"
           [attr.maxLength]="schema.maxLength || null"
           [attr.minLength]="schema.minLength || null"
