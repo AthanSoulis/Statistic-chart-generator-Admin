@@ -93,6 +93,7 @@ export interface GooglechartsOptionsFormSchema {
  *
  * ~ deleteButtonPosition: Changes the position of the delete button relative to the array item. Available values are ['in','out']
  * ~ tooltip: Enables and shows the tooltip string on a {csui-string, csui-boolean, csui-number, csui-select}
+ * ~ relaxed: Adds a hidden divider at the bottom of a {csui-array}
  */
 
 export class FormSchema {
@@ -283,6 +284,7 @@ export class FormSchema {
                         'xaxisData' : {
                             'type': 'array',
                             'title': 'X axis',
+                            'relaxed': true,
                             'itemName': 'Group By',
                             'minItems': 1,
                             'maxItems': 2,
@@ -310,20 +312,21 @@ export class FormSchema {
                                         'required': ['name', 'type']
                                     }
                                 },
+                                'required': ['xaxisEntityField'],
                                 'fieldsets': [
                                     {
                                         'fields': [
                                             'xaxisEntityField'
                                         ]
                                     }
-                                ],
-                                'required': ['xaxisEntityField']
+                                ]
                             }
                         },
                         'filters' : {
                             'type': 'array',
                             'title': 'Filters',
                             'itemName': 'Filter',
+                            'relaxed': true,
                             'widget' : { 'id' : 'csui-array' },
                             'items': {
                                 'type' : 'object',
@@ -397,13 +400,7 @@ export class FormSchema {
                                                 }
                                             },
                                             'fieldsets': [
-                                                {
-                                                    'fields': [
-                                                        'field',
-                                                        'type',
-                                                        'values'
-                                                    ]
-                                                }
+                                                { 'fields': ['field', 'type', 'values']}
                                             ],
                                             'required': ['field', 'type', 'values']
                                         },
