@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class TabularMenuWidgetComponent extends ArrayLayoutWidget implements AfterContentInit {
 
+  active: boolean[] = [];
   editable: boolean[] = [];
 
   constructor(private cdr: ChangeDetectorRef) {
@@ -40,23 +41,43 @@ export class TabularMenuWidgetComponent extends ArrayLayoutWidget implements Aft
 
   setDataSeriesName(index: number, value: any) {
     (<FormProperty>this.formProperty.properties[index])
-    .searchProperty(index + '/chartProperties/dataseriesName').setValue(value, false);
+      .searchProperty(index + '/chartProperties/dataseriesName').setValue(value, true);
   }
 
   addItem() {
-    if ( (<FormProperty[]>this.formProperty.properties).length < this.schema.maxItems) {
+    if ( this.schema.maxItems === undefined || (<FormProperty[]>this.formProperty.properties).length < this.schema.maxItems) {
+      const addedItem = this.formProperty.addItem().searchProperty((this.menuArrayLength - 1) + '/chartProperties/dataseriesName');
+      console.log('Added', addedItem);
+
+      let dif = 0;
+      const regex = new RegExp(addedItem.value + '(\([1-9]+\))*', 'g');
+      for (let i = 0; i < this.menuArrayLength - 1; i++) {
+        if ( (<string>(<FormProperty[]>this.formProperty.properties)[i]
+        .searchProperty(i + '/chartProperties/dataseriesName').value).match(regex)) {
+          dif++;
+      }}
+
+      if (dif > 0) { addedItem.setValue(addedItem.value + '(' + dif + ')', true); }
+
       this.editable.push(false);
-      this.formProperty.addItem();
-    } else if (this.schema.maxItems === undefined ) {
-      this.editable.push(false);
-      this.formProperty.addItem();
+      this.active.push(true);
     }
+    console.log('Active Tabs:', this.active);
   }
 
   removeItem(index: number) {
+    console.log('Active Tabs:', this.active);
     if ( this.menuArrayLength > 1 || index > 0) {
+
+      const activeIndex = this.active.indexOf(true);
       this.formProperty.removeItem(index);
       this.editable.splice(index);
+      this.active.splice(index);
+
+      if (activeIndex > index) {
+        this.active[activeIndex - 1] = true;
+      }
+      this.cdr.detectChanges();
     }
   }
 
