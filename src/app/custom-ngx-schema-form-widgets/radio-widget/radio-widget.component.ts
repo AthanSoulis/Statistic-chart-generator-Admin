@@ -15,9 +15,4 @@ export class RadioWidgetComponent extends ControlWidget {
   handleChange(value: any) {
     this.control.setValue(value);
   }
-
-  detectChange(value: any) {
-    // console.log('Event: ', value);
-    this.cdr.detectChanges();
-  }
 }
