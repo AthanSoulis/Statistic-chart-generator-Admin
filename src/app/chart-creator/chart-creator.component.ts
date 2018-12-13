@@ -10,6 +10,7 @@ import { Profile } from '../services/mapping-profiles-service/mapping-profiles.s
 import { Subject, BehaviorSubject } from 'rxjs';
 import { FormSchema, SCGAFormSchema, PropertiesFormSchema, DataseriesFormSchema, AppearanceFormSchema } from './chart-form-schema.model';
 import { FormComponent } from 'ngx-schema-form';
+import { ErrorHandlerService } from '../services/error-handler-service/error-handler.service';
 
 declare var jQuery: any;
 
@@ -37,9 +38,10 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
 
   constructor(private formBuilder: FormBuilder,
     private supportedLibrariesService: SupportedLibrariesService,
+    protected errorHandlerService: ErrorHandlerService,
     protected cdr: ChangeDetectorRef) {
       this.fs = new FormSchema();
-      this.formErrors = new BehaviorSubject(null);
+      this.formErrors = new BehaviorSubject<any>(null);
   }
 
   ngOnInit() {}
@@ -63,11 +65,16 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     form.rootProperty.reset(this._resetFormValue, false);
     this.formClear.emit();
     this.cdr.detectChanges();
+    this.scrollToTop();
   }
 
   onClear() {
     jQuery('.ui.formClear.modal')
     .modal('show');
+  }
+
+  scrollToTop() {
+    jQuery('html, body').animate({scrollTop: 0}, 300);
   }
 
   onSubmit() {
@@ -81,6 +88,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
         (chartObj: any) => {
           this.chartSubmit.emit({value: chartObj});
           chartObj$.unsubscribe();
+          this.scrollToTop();
         }
       );
 
