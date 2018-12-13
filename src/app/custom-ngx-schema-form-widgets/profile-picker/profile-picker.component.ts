@@ -47,8 +47,10 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
         this.mappingProfileService.changeSelectedProfile(profile);
         this.cdr.detectChanges();
 
+        if (!this.hasBeenInitialized) {
+          this.showProfilePicker(null);
+        }
     }));
-    this.showProfilePicker(null);
   }
 
   ngOnDestroy() {
