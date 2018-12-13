@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, ChangeDetectionStrategy, AfterViewInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { ArrayLayoutWidget, ControlWidget } from 'ngx-schema-form';
 import { FormProperty, PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
 import { ArrayProperty } from 'ngx-schema-form/lib/model/arrayproperty';
@@ -10,16 +10,16 @@ import { ChartLoadingService } from '../../services/chart-loading-service/chart-
   templateUrl: './array-widget.component.html',
   styleUrls: ['./array-widget.component.css'],
 })
-export class ArrayWidgetComponent extends ArrayLayoutWidget implements AfterContentInit {
+export class ArrayWidgetComponent extends ArrayLayoutWidget implements AfterContentInit, AfterViewChecked {
 
   deleteButtonPosition: DeleteButtonPosition;
 
-  constructor(private chartloadingService: ChartLoadingService) {
+  constructor(private chartloadingService: ChartLoadingService,
+              private cdr: ChangeDetectorRef) {
     super();
   }
 
   ngAfterContentInit() {
-
     if (this.schema.deleteButtonPosition === null || this.schema.deleteButtonPosition === undefined ) {
       this.deleteButtonPosition = DeleteButtonPosition.out;
     } else {
@@ -33,8 +33,16 @@ export class ArrayWidgetComponent extends ArrayLayoutWidget implements AfterCont
     }
   }
 
+  ngAfterViewChecked() {
+    this.cdr.markForCheck();
+  }
+
+  get arrayItems(): number {
+    return (<FormProperty[]>this.formProperty.properties).length;
+  }
+
   addItem() {
-    if ( (<FormProperty[]>this.formProperty.properties).length < this.schema.maxItems) {
+    if ( this.arrayItems < this.schema.maxItems) {
       this.formProperty.addItem();
     } else if (this.schema.maxItems === undefined ) {
       this.formProperty.addItem();

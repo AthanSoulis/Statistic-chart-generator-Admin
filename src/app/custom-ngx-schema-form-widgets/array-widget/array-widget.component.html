@@ -13,14 +13,11 @@
   <div class="ui segments" *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex">
     
     <div class="ui equal width form clearing attached segment" >
-      <!-- <button class="ui right floated circular icon compact button btn btn-default array-remove-button"> -->
-        <i (click)="removeItem(i)" *ngIf="deleteButtonPosition === 'in'" style="cursor: pointer;" class="fitted red close icon ui right floated"></i>
-      <!-- </button> -->
+  
+      <i (click)="removeItem(i)" *ngIf="deleteButtonPosition === 'in'" style="cursor: pointer;" class="fitted red close icon ui right floated"></i>
 
       <sf-form-element [formProperty]="itemProperty"></sf-form-element>
-      <!-- <button (click)="removeItem(i)" type="button" class="circular ui icon right floated button"><i class="close icon"></i></button> -->
-      <!-- <button *ngIf="deleteButtonPosition === 'in'" (click)="removeItem(i)" type="button"
-      class="ui circular icon basic red compact button btn btn-default array-remove-button"><i class="close icon"></i></button> -->
+ 
     </div>
     
     <button *ngIf="deleteButtonPosition === 'out'" (click)="removeItem(i)" type="button" 
@@ -29,10 +26,8 @@
 
   </div>
 
-  <a class="link button" (click)="addItem()"><i class="plus icon"></i>Add {{schema.itemName}}</a>
-  <!-- <button type="button" (click)="addItem()"
-  class="ui labeled icon basic blue compact button btn btn-default array-add-button">
-      <i class="plus icon"></i> Add {{schema.itemName}}</button>
-       -->
+  <a *ngIf="(this.schema.maxItems !== undefined && this.schema.maxItems !== null) ? this.arrayItems < this.schema.maxItems : true"
+   class="link button" (click)="addItem()"><i class="plus icon"></i>Add {{schema.itemName}}</a> 
+
   <div *ngIf="schema.relaxed" class="ui hidden divider"></div>
 </div>

@@ -7,7 +7,7 @@
 a, a:visited {
   text-decoration: none;
   position: relative;
-  color: #069;
+  color: rgb(8, 131, 192);
   cursor: pointer;
   font-size: 1.1rem;
 }
@@ -19,7 +19,7 @@ a, a:visited {
   bottom: 0;
   left: 0;
   width: 0%;
-  background: #069;
+  background: rgb(8, 131, 192);
   transition: 0.2s ease;
   -webkit-transition: 0.2s ease;
 }
