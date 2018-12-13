@@ -1,5 +1,9 @@
 .not-allowed {
-    cursor: not-allowed !important; 
+  cursor: not-allowed !important; 
+}
+
+.ui.basic.primary.not-allowed.button {
+  background-color: white !important;
 }
 
 .large.text {
