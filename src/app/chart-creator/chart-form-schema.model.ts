@@ -88,12 +88,15 @@ export interface GooglechartsOptionsFormSchema {
  * Semantic UI related schema fields
  *
  * ~ grouping: Changes the way the fields are grouped based on this https://semantic-ui.com/collections/form.html#text-area
+ * ~ fieldsets.width: Adds a width to each field based on this https://semantic-ui.com/collections/form.html#width .
+ *   Works with {csui-property-object}
  *
  * Custom related schema fields
  *
  * ~ deleteButtonPosition: Changes the position of the delete button relative to the array item. Available values are ['in','out']
  * ~ tooltip: Enables and shows the tooltip string on a {csui-string, csui-boolean, csui-number, csui-select}
  * ~ relaxed: Adds a hidden divider at the bottom of a {csui-array}
+ *
  */
 
 export class FormSchema {
@@ -480,10 +483,14 @@ export class FormSchema {
                     },
                     'fieldsets': [
                         {
-                            'grouping' : 'equal width fields',
+                            'grouping': 'fields',
                             'fields': [
                                 'chartType',
                                 'dataseriesColor'
+                            ],
+                            'width': [
+                                'ten wide',
+                                'six wide'
                             ]
                         },
                         {

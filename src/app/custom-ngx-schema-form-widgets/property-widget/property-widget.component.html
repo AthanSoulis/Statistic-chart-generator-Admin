@@ -6,9 +6,18 @@
     <h3 class="ui dividing header" *ngIf="fieldset.title">{{fieldset.title}}
       <div class="sub header" *ngIf="fieldset.description">{{fieldset.description}}</div>
     </h3>
-    <div [ngClass]=" fieldset.grouping === null ? 'fields' : fieldset.grouping">
-      <div class="ui field " *ngFor="let fieldId of fieldset.fields; let i = index">
-          <sf-form-element [formProperty]="formProperty.getProperty(fieldId)"></sf-form-element>
+    <div [ngClass]=" fieldset.grouping === undefined ? '' : fieldset.grouping">
+
+      <div class="ui {{fieldset.width!==undefined ? fieldset.width[i] : '' }} field" *ngFor="let fieldId of fieldset.fields; let i = index">
+        <!-- <div *ngIf="fieldset.width!==undefined; else defaultFormElement" class="ui {{fieldset.width[i]}} field"> -->
+          <sf-form-element  [formProperty]="formProperty.getProperty(fieldId)"></sf-form-element>
+        <!-- </div> -->
+        <!-- <ng-template #defaultFormElement>
+          <div class="ui field">
+            <sf-form-element [formProperty]="formProperty.getProperty(fieldId)"></sf-form-element>
+          </div>
+        </ng-template> -->
+
       </div>  
     </div>
     <div class="ui hidden divider"></div>
