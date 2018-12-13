@@ -14,15 +14,15 @@
     <span *ngIf="schema.description" class="formHelp">{{schema.description}}</span>
 
     <input [name]="name" class="text-widget.id textline-widget form-control"
-    [(colorPicker)]="color" [cpOutputFormat]="'hex'" [cpAlphaChannel]="'always'" 
-    [style.background]="color" (colorPickerChange)="changeColor($event)" [cpCancelButton]="true"
+    [(colorPicker)]="control.value" (colorPickerChange)="changeColor($event)" [cpOutputFormat]="'hex'" [cpAlphaChannel]="'always'" 
+    [style.background]="this.formProperty.valueChanges | async" [cpCancelButton]="true"
     [attr.id]="id"
     [attr.readonly]="true"
     [attr.placeholder]="schema.placeholder"
     [attr.disabled]="schema.readOnly"
     [attr.maxLength]="schema.maxLength || null"
     [attr.minLength]="schema.minLength || null"
-    [attr.required]="schema.required || null" readonly disabled/>
+    [attr.required]="schema.required || null" readonly/>
 
     <input *ngIf="(schema.widget.id==='color' && schema.readOnly)" [attr.name]="name" type="hidden" [formControl]="control">
 </div>
