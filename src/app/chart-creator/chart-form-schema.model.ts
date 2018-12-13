@@ -830,19 +830,24 @@ export class FormSchema {
 
       // Declare a mapping between action ids and their implementations
   get customValidators() {
-      return {
+    return {
 
-    'generalChartProperties/library': (value: any, formProperty: FormProperty, form: PropertyGroup) => {
-        if (value === undefined || value === null || value === '') {
-            formProperty.extendErrors({ 'generalChartProperties/library': { 'expectedValue': '' }});
-            return null ;
+        '/generalChartProperties/profile': (value: any, formProperty: FormProperty, form: PropertyGroup) => {
+            if (value === undefined || value === null || value === '') {
+                return { '/generalChartProperties/profile': { 'expectedValue': 'JK' }} ;
+            }
+
+            return null;
+        },
+        '/appearance/library': (value: any, formProperty: FormProperty, form: PropertyGroup) => {
+            if (value === undefined || value === null || value === '' || value === 'HighCharts') {
+                // return { '/appearance/library': { 'expectedValue': 'HighCharts' }} ;
+                return null;
+            }
+
+            return null;
         }
-        console.log('Value: ' + value);
-        console.log(formProperty);
-        console.log(form);
 
-        return null;
-    }
 
     }; }
 }
