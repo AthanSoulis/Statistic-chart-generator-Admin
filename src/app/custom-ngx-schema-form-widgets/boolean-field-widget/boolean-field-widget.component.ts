@@ -6,10 +6,10 @@ import { ControlWidget } from 'ngx-schema-form';
   templateUrl: './boolean-field-widget.component.html',
   styleUrls: ['./boolean-field-widget.component.css']
 })
-export class BooleanFieldWidgetComponent extends ControlWidget implements AfterViewInit {
+export class BooleanFieldWidgetComponent extends ControlWidget {
 
   handleChange(value: boolean) {
-    // console.log('Event: ', value);
+    console.log('Event: ', value);
     this.formProperty.setValue(value, false);
   }
 }
