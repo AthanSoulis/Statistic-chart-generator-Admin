@@ -2,6 +2,7 @@ import { Component, OnInit, AfterContentInit, ChangeDetectionStrategy, ChangeDet
 import { ArrayLayoutWidget } from 'ngx-schema-form';
 import { FormProperty } from 'ngx-schema-form/lib/model/formproperty';
 import { Observable } from 'rxjs';
+import { diff } from 'semver';
 
 @Component({
   selector: 'tabular-menu-widget',
@@ -40,25 +41,34 @@ export class TabularMenuWidgetComponent extends ArrayLayoutWidget implements Aft
   }
 
   setDataSeriesName(index: number, value: any) {
-    (<FormProperty>this.formProperty.properties[index])
+    const propertyToRename = (<FormProperty>this.formProperty.properties[index])
       .searchProperty(index + '/chartProperties/dataseriesName').setValue(value, true);
   }
 
   addItem() {
     if ( this.schema.maxItems === undefined || (<FormProperty[]>this.formProperty.properties).length < this.schema.maxItems) {
       const addedItem = this.formProperty.addItem().searchProperty((this.menuArrayLength - 1) + '/chartProperties/dataseriesName');
-      console.log('Added', addedItem);
+
+      // Make sure the addedItem name is unique
+      const itemNames: string[]  = [];
+      for (let i = 0; i < this.menuArrayLength - 1; i++) {
+        itemNames.push((<string>(<FormProperty[]>this.formProperty.properties)[i]
+        .searchProperty(i + '/chartProperties/dataseriesName').value));
+      }
+
+      const similarItemNames = itemNames.filter(
+        itemname => itemname.match(
+          new RegExp(addedItem.value + '(\([1-9]+\))*', 'g')));
 
       let dif = 0;
-      const regex = new RegExp(addedItem.value + '(\([1-9]+\))*', 'g');
-      for (let i = 0; i < this.menuArrayLength - 1; i++) {
-        if ( (<string>(<FormProperty[]>this.formProperty.properties)[i]
-        .searchProperty(i + '/chartProperties/dataseriesName').value).match(regex)) {
+      let newItemName: string = addedItem.value;
+      while (similarItemNames.includes(newItemName)) {
           dif++;
-      }}
+          newItemName = addedItem.value + '(' + dif + ')';
+      }
+      addedItem.setValue(newItemName, true);
 
-      if (dif > 0) { addedItem.setValue(addedItem.value + '(' + dif + ')', true); }
-
+      // Set initial values to the input box
       this.editable.push(false);
       this.active.push(true);
     }
