@@ -4,7 +4,7 @@ import { Query, Select, ChartInfo } from './chart-query-selector/chart-query.mod
 import { ChartProperties } from './chart-properties-selector/chart-properties.model';
 import { SupportedLibrariesService } from '../services/supported-libraries-service/supported-libraries.service';
 import { HighChartsChart} from '../services/supported-libraries-service/chart-description-HighCharts.model';
-import { GoogleChartsChart } from '../services/supported-libraries-service/chart-description-GoogleCharts.model';
+import { GoogleChartsChart, GoogleChartsTable } from '../services/supported-libraries-service/chart-description-GoogleCharts.model';
 import { Filter } from './chart-query-selector/query-filter-selector/query-filter/query-filter.model';
 import { Profile } from '../services/mapping-profiles-service/mapping-profiles.service';
 import { Subject, BehaviorSubject } from 'rxjs';
@@ -108,7 +108,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     const formObj: SCGAFormSchema = this.chartFormValue;
 
     const generalProperties: PropertiesFormSchema = formObj.generalChartProperties;
-    const library: string = formObj.appearance.library;
+    const library: string = formObj.appearance.chartAppearance.library;
 
     const dataseries: DataseriesFormSchema[] = formObj.dataseries;
     const appearanceOptions: AppearanceFormSchema = formObj.appearance;
@@ -154,14 +154,15 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     const generalProperties: PropertiesFormSchema = formObj.generalChartProperties;
     const dataseries: DataseriesFormSchema[] = formObj.dataseries;
 
-    const tableObj = new GoogleChartsChart();
-    const chartDescription = tableObj.chartDescription;
+    const tableObj = new GoogleChartsTable();
 
     dataseries.forEach( dataElement => {
-      chartDescription.queriesInfo.push(
+      tableObj.tableDescription.queriesInfo.push(
         new ChartInfo(dataElement, generalProperties.profile, generalProperties.results.resultsLimit));
     });
 
+    tableObj.tableDescription.options.pageSize = formObj.appearance.tableAppearance.paginationSize;
+    console.log('Page Size:', tableObj.tableDescription.options.pageSize);
     return new BehaviorSubject(tableObj);
   }
 
@@ -185,7 +186,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
 
     chartDescription.GoogleChartType = baseChartType;
     chartDescription.options.title = generalProperties.title;
-    chartDescription.options.exporting = appearanceOptions.googlechartsAppearanceOptions.exporting;
+    chartDescription.options.exporting = appearanceOptions.chartAppearance.googlechartsAppearanceOptions.exporting;
 
     if (generalProperties.axisNames) {
       chartDescription.options.hAxis.title = generalProperties.axisNames.xaxisName;
@@ -205,34 +206,39 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     const chartObj = new HighChartsChart();
     chartObj.chartDescription.title.text = generalProperties.title;
 
-    if (appearanceOptions.highchartsAppearanceOptions !== undefined && appearanceOptions.highchartsAppearanceOptions !== null) {
+    // tslint:disable-next-line:max-line-length
+    if (appearanceOptions.chartAppearance.highchartsAppearanceOptions !== undefined && appearanceOptions.chartAppearance.highchartsAppearanceOptions !== null) {
       // Exporting
-      chartObj.chartDescription.exporting.enabled = appearanceOptions.highchartsAppearanceOptions.exporting;
+      chartObj.chartDescription.exporting.enabled = appearanceOptions.chartAppearance.highchartsAppearanceOptions.exporting;
 
       // Legend Options
-      chartObj.chartDescription.legend.enabled = appearanceOptions.highchartsAppearanceOptions.hcEnableLegend;
-      chartObj.chartDescription.legend.align = appearanceOptions.highchartsAppearanceOptions.hcLegendHorizontalAlignment;
-      chartObj.chartDescription.legend.verticalAlign = appearanceOptions.highchartsAppearanceOptions.hcLegendVerticalAlignment;
-      chartObj.chartDescription.legend.layout = appearanceOptions.highchartsAppearanceOptions.hcLegendLayout;
+      chartObj.chartDescription.legend.enabled = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcEnableLegend;
+      chartObj.chartDescription.legend.align = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcLegendHorizontalAlignment;
+      // tslint:disable-next-line:max-line-length
+      chartObj.chartDescription.legend.verticalAlign = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcLegendVerticalAlignment;
+      chartObj.chartDescription.legend.layout = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcLegendLayout;
 
       // Credits Options
-      chartObj.chartDescription.credits.enabled = appearanceOptions.highchartsAppearanceOptions.hcEnableCredits;
-      chartObj.chartDescription.credits.text = appearanceOptions.highchartsAppearanceOptions.hcCreditsText;
+      chartObj.chartDescription.credits.enabled = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcEnableCredits;
+      chartObj.chartDescription.credits.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcCreditsText;
 
-      chartObj.chartDescription.subtitle.text = appearanceOptions.highchartsAppearanceOptions.hcSubtitle;
-      chartObj.chartDescription.plotOptions.series.dataLabels.enabled = appearanceOptions.highchartsAppearanceOptions.hcEnableDataLabels;
+      chartObj.chartDescription.subtitle.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcSubtitle;
+      // tslint:disable-next-line:max-line-length
+      chartObj.chartDescription.plotOptions.series.dataLabels.enabled = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcEnableDataLabels;
 
       // Chart Area Options
-      chartObj.chartDescription.chart.backgroundColor = appearanceOptions.highchartsAppearanceOptions.hcCABackGroundColor;
-      chartObj.chartDescription.chart.borderColor = appearanceOptions.highchartsAppearanceOptions.hcCABorderColor;
-      chartObj.chartDescription.chart.borderRadius = appearanceOptions.highchartsAppearanceOptions.hcCABorderCornerRadius;
-      chartObj.chartDescription.chart.borderWidth = appearanceOptions.highchartsAppearanceOptions.hcCABorderWidth;
+      chartObj.chartDescription.chart.backgroundColor = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcCABackGroundColor;
+      chartObj.chartDescription.chart.borderColor = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcCABorderColor;
+      chartObj.chartDescription.chart.borderRadius = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcCABorderCornerRadius;
+      chartObj.chartDescription.chart.borderWidth = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcCABorderWidth;
 
       // Plot Area Options
-      chartObj.chartDescription.chart.plotBackgroundColor = appearanceOptions.highchartsAppearanceOptions.hcPABackgroundColor;
-      chartObj.chartDescription.chart.plotBackgroundImage = appearanceOptions.highchartsAppearanceOptions.hcPABackgroundImageURL;
-      chartObj.chartDescription.chart.plotBorderColor = appearanceOptions.highchartsAppearanceOptions.hcPABorderColor;
-      chartObj.chartDescription.chart.plotBorderWidth = appearanceOptions.highchartsAppearanceOptions.hcPABorderWidth;
+      // tslint:disable-next-line:max-line-length
+      chartObj.chartDescription.chart.plotBackgroundColor = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcPABackgroundColor;
+      // tslint:disable-next-line:max-line-length
+      chartObj.chartDescription.chart.plotBackgroundImage = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcPABackgroundImageURL;
+      chartObj.chartDescription.chart.plotBorderColor = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcPABorderColor;
+      chartObj.chartDescription.chart.plotBorderWidth = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcPABorderWidth;
     }
 
     if (generalProperties.axisNames) {
