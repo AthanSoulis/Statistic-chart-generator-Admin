@@ -26,7 +26,8 @@ export class ChartDataPresentationTableComponent implements OnInit, OnChanges {
     window.addEventListener('message',
     (event: any) => {
 
-      if (event.origin !== this.urlProvider.serviceURL) {
+      if (event.origin !== this.urlProvider.serviceURL + '/stats-tool' &&
+        event.origin !== this.urlProvider.serviceURL) {
         return;
       }
 
@@ -47,17 +48,8 @@ export class ChartDataPresentationTableComponent implements OnInit, OnChanges {
       this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/table');
     }
   }
+
   getSanitizedFrameUrl(url: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
-
-  loadDone() {
-    console.log('Load Done');
-    const iframe = <HTMLIFrameElement>document.getElementById('tableIframe');
-    console.log('ScrollHeight', iframe.contentWindow.document.body.scrollHeight);
-
-    iframe.style.height = 'inherit';
-    iframe.style.height = iframe.scrollHeight + 'px';
-  }
-
 }
