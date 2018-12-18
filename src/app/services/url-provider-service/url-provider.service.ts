@@ -19,5 +19,7 @@ export class UrlProviderService {
     this.url = this.protocol + '://' + this.domain + ':' + this.port;
   }
 
-  getUrl(): string { return this.url; }
+  get serviceURL(): string {
+    return this.url;
+  }
 }

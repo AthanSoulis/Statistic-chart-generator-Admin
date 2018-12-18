@@ -19,7 +19,7 @@ export class ChartFrameComponent implements OnInit, OnChanges {
   frameUrl: SafeResourceUrl;
 
   constructor(private sanitizer: DomSanitizer, private urlProvider: UrlProviderService) {
-    this.frameUrl = this.getSanitizedFrameUrl(urlProvider.getUrl() + '/chart');
+    this.frameUrl = this.getSanitizedFrameUrl(urlProvider.serviceURL + '/chart');
   }
 
   ngOnInit() {
@@ -31,10 +31,10 @@ export class ChartFrameComponent implements OnInit, OnChanges {
     console.log('[chart-frame.component] On changes: ' + stringObj);
 
     if (changes.chart.currentValue) {
-      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/chart?json=' + encodeURIComponent(stringObj));
+      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/chart?json=' + encodeURIComponent(stringObj));
       console.log(this.frameUrl);
     } else {
-      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.getUrl() + '/chart');
+      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/chart');
     }
   }
   getSanitizedFrameUrl(url: string) {

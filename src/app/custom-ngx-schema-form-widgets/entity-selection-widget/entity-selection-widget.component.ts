@@ -39,7 +39,7 @@ export class EntitySelectionWidgetComponent extends ControlWidget implements OnI
     const filters = <ArrayProperty>yAxisDataProperty.searchProperty('filters');
 
     // Reset the GroupBys and Filters when an Entity changes
-    this.valueChangesSubscription = this.formProperty.valueChanges.subscribe(
+    this.valueChangesSubscription = this.formProperty.valueChanges.pipe(distinctUntilChanged()).subscribe(
       (data) => {
 
         if (!this.chartLoadingService.chartLoadingStatus) {

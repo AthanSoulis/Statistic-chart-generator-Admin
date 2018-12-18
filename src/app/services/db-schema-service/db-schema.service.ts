@@ -45,7 +45,7 @@ export class DbSchemaService {
       return of([]);
     }
 
-    const entitiesUrl = this.urlProvider.getUrl() + '/schema/' + profile.name + '/entities';
+    const entitiesUrl = this.urlProvider.serviceURL + '/schema/' + profile.name + '/entities';
     return this.http.get< Array<string> >(entitiesUrl)
       .pipe(
         retry(3), // retry a failed request up to 3 times
@@ -55,7 +55,7 @@ export class DbSchemaService {
 
   getAvailableEntitiesNoMapping(): Observable<Array<string>> {
 
-    const entitiesUrl = this.urlProvider.getUrl() + '/schema/entities';
+    const entitiesUrl = this.urlProvider.serviceURL + '/schema/entities';
     return this.http.get< Array<string> >(entitiesUrl)
       .pipe(
         retry(3), // retry a failed request up to 3 times
@@ -67,7 +67,7 @@ export class DbSchemaService {
 
     if (profile === undefined || profile === null) { return this.getEntityFieldsNoMapping(entity); }
 
-    const entityFieldsUrl = this.urlProvider.getUrl() + '/schema/' + profile.name + '/entities/' + entity;
+    const entityFieldsUrl = this.urlProvider.serviceURL + '/schema/' + profile.name + '/entities/' + entity;
     return this.http.get<EntityNode>(entityFieldsUrl)
       .pipe(
         retry(3), // retry a failed request up to 3 times
@@ -77,7 +77,7 @@ export class DbSchemaService {
 
   getEntityFieldsNoMapping(entity: string): Observable<EntityNode> {
 
-    const entityFieldsUrl = this.urlProvider.getUrl() + '/schema/entities/' + entity;
+    const entityFieldsUrl = this.urlProvider.serviceURL + '/schema/entities/' + entity;
     return this.http.get<EntityNode>(entityFieldsUrl)
       .pipe(
         retry(3), // retry a failed request up to 3 times

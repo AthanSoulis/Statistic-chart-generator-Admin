@@ -15,7 +15,7 @@ constructor(private http: HttpClient, private urlProvider: UrlProviderService, p
 
   getSupportedChartTypes(): Observable<Array<string>> {
 
-    const supportedChartTypesUrl = this.urlProvider.getUrl() + '/chart/types';
+    const supportedChartTypesUrl = this.urlProvider.serviceURL + '/chart/types';
     return this.http.get<Array<string>>(supportedChartTypesUrl)
     .pipe(
       retry(3), // retry a failed request up to 3 times

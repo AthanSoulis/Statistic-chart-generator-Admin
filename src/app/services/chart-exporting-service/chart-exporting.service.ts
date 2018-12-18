@@ -63,7 +63,7 @@ export class ChartExportingService {
     if (!chartObject) { return; }
 
     const stringObj = JSON.stringify(chartObject);
-    this._chartUrl.next(this.urlProvider.getUrl() + '/chart?json=' + encodeURIComponent(stringObj));
+    this._chartUrl.next(this.urlProvider.serviceURL + '/chart?json=' + encodeURIComponent(stringObj));
   }
 
   private changeChartTinyUrl(generatedChartTinyUrl: string) {
@@ -75,7 +75,7 @@ export class ChartExportingService {
     if (!tableObject) { return; }
 
     const stringObj = JSON.stringify(tableObject);
-    this._tableUrl.next(this.urlProvider.getUrl() + '/table?json=' + encodeURIComponent(stringObj));
+    this._tableUrl.next(this.urlProvider.serviceURL + '/table?json=' + encodeURIComponent(stringObj));
   }
 
   protected changeTableTinyUrl(generatedTableTinyUrl: string) {
@@ -86,7 +86,7 @@ export class ChartExportingService {
 
     loader.next(true);
 
-    const postUrl = this.urlProvider.getUrl() + '/chart/shorten';
+    const postUrl = this.urlProvider.serviceURL + '/chart/shorten';
 
     const postHeaders = new HttpHeaders();
     postHeaders.append('Content-Type', 'application/json');

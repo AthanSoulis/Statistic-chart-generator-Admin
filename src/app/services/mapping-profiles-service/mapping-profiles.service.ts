@@ -49,7 +49,7 @@ export class MappingProfilesService {
 
   private getProfileMappings(): Observable<Array<Profile>> {
 
-    const profileMappingsUrl = this.urlProvider.getUrl() + '/schema/profiles';
+    const profileMappingsUrl = this.urlProvider.serviceURL + '/schema/profiles';
 
     return this.http.get<Array<Profile>>(profileMappingsUrl);
   }
