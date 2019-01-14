@@ -70,19 +70,26 @@ class GoogleChartsDescription {
 
 class GoogleChartsOptions {
     title: string;
+    backgroundColor: string;
     hAxis: GoogleChartsAxis;
     vAxis: GoogleChartsAxis;
     series: GoogleChartSeries [];
+    chartArea: GoogleChartsChartArea;
     exporting: boolean;
     pageSize: number;
 
     constructor() {
         this.hAxis = new GoogleChartsAxis();
         this.vAxis = new GoogleChartsAxis();
+        this.chartArea = new GoogleChartsChartArea();
         this.series = [];
         this.exporting = false;
         this.pageSize = 50;
     }
+}
+
+class GoogleChartsChartArea {
+    backgroundColor: string;
 }
 
 class GoogleChartsAxis {

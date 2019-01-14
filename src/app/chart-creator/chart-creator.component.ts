@@ -187,6 +187,14 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     chartDescription.GoogleChartType = baseChartType;
     chartDescription.options.title = generalProperties.title;
     chartDescription.options.exporting = appearanceOptions.chartAppearance.googlechartsAppearanceOptions.exporting;
+    if (appearanceOptions.chartAppearance.googlechartsAppearanceOptions.gcCABackGroundColor) {
+      chartDescription.options.backgroundColor =
+        appearanceOptions.chartAppearance.googlechartsAppearanceOptions.gcCABackGroundColor.substring(0, 7);
+    }
+    if (appearanceOptions.chartAppearance.googlechartsAppearanceOptions.gcPABackgroundColor) {
+      chartDescription.options.chartArea.backgroundColor =
+      appearanceOptions.chartAppearance.googlechartsAppearanceOptions.gcPABackgroundColor.substring(0, 7);
+    }
 
     if (generalProperties.axisNames) {
       chartDescription.options.hAxis.title = generalProperties.axisNames.xaxisName;

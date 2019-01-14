@@ -81,6 +81,8 @@ export interface HighchartsOptionsFormSchema {
 }
 export interface GooglechartsOptionsFormSchema {
     exporting ?: boolean;
+    gcCABackGroundColor ?: string;
+    gcPABackgroundColor ?: string;
 }
 export interface ChartAppearanceFormSchema {
     library: string;
@@ -772,6 +774,21 @@ export class FormSchema {
                         'widget' : { 'id' : 'csui-property-object' },
                         // 'title': 'Googlecharts Appearance Options',
                         'properties' : {
+                            'gcCABackGroundColor': {
+                                'type' : 'string',
+                                'pattern': '^#[0-9a-fA-F]{8}$',
+                                'default': '#FFFFFFFF',
+                                'title' : 'Background Color',
+                                'tooltip': 'Background color for the full chart area.',
+                                'widget': {'id': 'csui-color-picker'}
+                            },
+                            'gcPABackgroundColor': {
+                                'type' : 'string',
+                                'pattern': '^#[0-9a-fA-F]{8}$',
+                                'title' : 'Background Color',
+                                'tooltip': 'Background color for the plot area, the area inside the axes.',
+                                'widget': {'id': 'csui-color-picker'}
+                            },
                             'exporting' : {
                                 'type': 'boolean',
                                 'widget' : {'id' : 'csui-boolean'},
@@ -785,7 +802,15 @@ export class FormSchema {
                             {
                                 'title' : 'Exporting',
                                 'fields': ['exporting']
-                            }
+                            },
+                            {
+                                'title' : 'Chart Area',
+                                'fields': ['gcCABackGroundColor']
+                            },
+                            {
+                                'title' : 'Plot Area',
+                                'fields': ['gcPABackgroundColor']
+                            },
                         ],
                         'visibleIf': {
                             'library': ['GoogleCharts']
