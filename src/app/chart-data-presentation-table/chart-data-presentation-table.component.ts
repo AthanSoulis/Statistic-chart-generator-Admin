@@ -26,12 +26,13 @@ export class ChartDataPresentationTableComponent implements OnInit, OnChanges {
     window.addEventListener('message',
     (event: any) => {
 
-      if (event.origin !== this.urlProvider.serviceURL + '/stats-tool' &&
-        event.origin !== this.urlProvider.serviceURL) {
+      if (event.origin !== this.urlProvider.serviceURL &&
+        event.origin !== this.urlProvider.iframeURL) {
+          console.log('Untrusted message', event.origin);
         return;
       }
 
-      console.log(event);
+      // console.log('Table:', event);
       iframe.style.height = event.data + 'px';
     });
   }

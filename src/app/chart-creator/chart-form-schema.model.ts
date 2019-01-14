@@ -574,7 +574,7 @@ export class FormSchema {
                                       'enum': ['normal']
                                     },
                                     {
-                                      'description': 'Stacked by Percentile',
+                                      'description': 'Stacked by Percentage',
                                       'value': 'percent',
                                       'enum': ['percent']
                                     }
@@ -828,7 +828,7 @@ export class FormSchema {
                                       'enum': ['absolute']
                                     },
                                     {
-                                      'description': 'Stacked by Percentile',
+                                      'description': 'Stacked by Percentage',
                                       'value': 'percent',
                                       'enum': ['percent']
                                     }
