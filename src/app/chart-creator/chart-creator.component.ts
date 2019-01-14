@@ -187,6 +187,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     chartDescription.GoogleChartType = baseChartType;
     chartDescription.options.title = generalProperties.title;
     chartDescription.options.exporting = appearanceOptions.chartAppearance.googlechartsAppearanceOptions.exporting;
+    chartDescription.options.isStacked = appearanceOptions.chartAppearance.googlechartsAppearanceOptions.stackedChart;
     if (appearanceOptions.chartAppearance.googlechartsAppearanceOptions.gcCABackGroundColor) {
       chartDescription.options.backgroundColor =
         appearanceOptions.chartAppearance.googlechartsAppearanceOptions.gcCABackGroundColor.substring(0, 7);
@@ -218,6 +219,9 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     if (appearanceOptions.chartAppearance.highchartsAppearanceOptions !== undefined && appearanceOptions.chartAppearance.highchartsAppearanceOptions !== null) {
       // Exporting
       chartObj.chartDescription.exporting.enabled = appearanceOptions.chartAppearance.highchartsAppearanceOptions.exporting;
+      // tslint:disable-next-line:max-line-length
+      chartObj.chartDescription.plotOptions.series.stacking = appearanceOptions.chartAppearance.highchartsAppearanceOptions.stackedChart === 'undefined' ?
+      undefined : appearanceOptions.chartAppearance.highchartsAppearanceOptions.stackedChart;
 
       // Legend Options
       chartObj.chartDescription.legend.enabled = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcEnableLegend;

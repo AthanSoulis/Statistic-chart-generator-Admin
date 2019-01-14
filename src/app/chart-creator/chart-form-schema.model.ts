@@ -62,6 +62,7 @@ export interface AppearanceFormSchema {
 }
 export interface HighchartsOptionsFormSchema {
     exporting ?: boolean;
+    stackedChart ?: string;
     hcCABackGroundColor ?: string;
     hcCABorderWidth ?: number;
     hcCABorderCornerRadius ?: number;
@@ -81,6 +82,7 @@ export interface HighchartsOptionsFormSchema {
 }
 export interface GooglechartsOptionsFormSchema {
     exporting ?: boolean;
+    stackedChart ?: string;
     gcCABackGroundColor ?: string;
     gcPABackgroundColor ?: string;
 }
@@ -548,6 +550,30 @@ export class FormSchema {
                         'widget' : { 'id' : 'csui-property-object' },
                         // 'title': 'Highcharts Appearance Options',
                         'properties' : {
+                            'stackedChart' : {
+                                'type' : 'string',
+                                'widget' : { 'id': 'csui-select'},
+                                'tooltip': 'Choose between a Regular or Stacked chart.',
+                                'title': 'Stacked Graph',
+                                'default': 'undefined',
+                                'oneOf': [
+                                    {
+                                      'description': 'Disabled',
+                                      'value' : 'undefined',
+                                      'enum': ['undefined']
+                                    },
+                                    {
+                                      'description': 'Stacked by Value',
+                                      'value': 'normal',
+                                      'enum': ['normal']
+                                    },
+                                    {
+                                      'description': 'Stacked by Percentile',
+                                      'value': 'percent',
+                                      'enum': ['percent']
+                                    }
+                                  ]
+                            },
                             'hcCABackGroundColor': {
                                 'type' : 'string',
                                 'pattern': '^#[0-9a-fA-F]{8}$',
@@ -724,6 +750,10 @@ export class FormSchema {
                                 'fields': ['hcSubtitle']
                             },
                             {
+                                'title' : 'Plot Options',
+                                'fields': ['stackedChart']
+                            },
+                            {
                                 'title' : 'Exporting',
                                 'fields': ['exporting']
                             },
@@ -774,6 +804,30 @@ export class FormSchema {
                         'widget' : { 'id' : 'csui-property-object' },
                         // 'title': 'Googlecharts Appearance Options',
                         'properties' : {
+                            'stackedChart' : {
+                                'type' : 'string',
+                                'widget' : { 'id': 'csui-select'},
+                                'tooltip': 'Choose between a Regular or Stacked chart.',
+                                'title': 'Stacked Graph',
+                                'default': 'false',
+                                'oneOf': [
+                                    {
+                                      'description': 'Disabled',
+                                      'value' : 'false',
+                                      'enum' : ['false']
+                                    },
+                                    {
+                                      'description': 'Stacked by Value',
+                                      'value': 'absolute',
+                                      'enum': ['absolute']
+                                    },
+                                    {
+                                      'description': 'Stacked by Percentile',
+                                      'value': 'percent',
+                                      'enum': ['percent']
+                                    }
+                                  ]
+                            },
                             'gcCABackGroundColor': {
                                 'type' : 'string',
                                 'pattern': '^#[0-9a-fA-F]{8}$',
@@ -799,6 +853,10 @@ export class FormSchema {
                             }
                         },
                         'fieldsets': [
+                            {
+                                'title' : 'Plot Options',
+                                'fields': ['stackedChart']
+                            },
                             {
                                 'title' : 'Exporting',
                                 'fields': ['exporting']

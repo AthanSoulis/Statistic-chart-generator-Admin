@@ -90,8 +90,10 @@ class HCPlotOptions {
 
 class HCPlotOptionsSeries {
     dataLabels: HCDataLabels;
+    stacking: string;
     constructor() {
         this.dataLabels = new HCDataLabels();
+        this.stacking = undefined;
     }
 }
 

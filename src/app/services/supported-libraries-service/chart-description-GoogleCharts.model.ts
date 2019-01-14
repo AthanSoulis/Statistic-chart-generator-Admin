@@ -77,6 +77,7 @@ class GoogleChartsOptions {
     chartArea: GoogleChartsChartArea;
     exporting: boolean;
     pageSize: number;
+    isStacked: string;
 
     constructor() {
         this.hAxis = new GoogleChartsAxis();
@@ -85,6 +86,7 @@ class GoogleChartsOptions {
         this.series = [];
         this.exporting = false;
         this.pageSize = 50;
+        this.isStacked = 'false';
     }
 }
 
