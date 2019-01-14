@@ -7,7 +7,7 @@
     <label [attr.for]="id" class="horizontal control-label" >
       {{ schema.title }}
       <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" suiPopup popupPlacement="right"
-      popupText={{this.schema.tooltip}}></i>
+      popupText={{this.schema.tooltip}} popupHeader={{this.schema.tooltipHeader}}></i>
     </label>
     <span *ngIf="schema.description" class="formHelp">{{schema.description}}</span>
     <input [name]="name" [attr.readonly]="(schema.widget.id!=='color') && schema.readOnly?true:null"
