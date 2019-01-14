@@ -10,7 +10,7 @@
     </div>
     <div class="actions">
         <div class="ui center aligned basic segment">
-            <button class="ui red cancel inverted button" >
+            <button class="ui red cancel inverted button" (click)="closeModal()">
                 <i class="remove icon"></i>No</button>
             <button class="ui green basic ok inverted button" (click)="this.reset(form)">
                 <i class="checkmark icon"></i>Yes</button>
@@ -25,9 +25,9 @@
             <sf-form #form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.customValidators" 
             (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>  
             
-            <div *ngIf="!isFormValid" class="ui red message">
+            <div *ngIf="!isFormValid" class="ui negative message">
                 <ul>
-                    <li *ngFor="let error of (this.formErrors | async)">{{error.message}}</li>
+                    <li *ngFor="let error of (this.formErrors.value)">{{error.message}}</li>
                 </ul>
             </div>
         </div>

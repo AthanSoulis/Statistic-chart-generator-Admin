@@ -104,8 +104,9 @@ export interface TableAppearanceFormSchema {
  *
  * Custom related schema fields
  *
- * ~ deleteButtonPosition: Changes the position of the delete button relative to the array item. Available values are ['in','out']
+ * ~ deleteButtonPosition: Changes the position of the delete button relative to the array item. Supported values are ['in','out']
  * ~ tooltip: Enables and shows the tooltip string on a {csui-string, csui-boolean, csui-number, csui-select}
+ * ~ tooltipHeader Enables and shows the tooltip header string on a {csui-string, csui-boolean, csui-number, csui-select}
  * ~ relaxed: Adds a hidden divider at the bottom of a {csui-array}
  *
  */
@@ -170,6 +171,8 @@ export class FormSchema {
                         'type' : 'number',
                         'title' : 'Results Limit',
                         'default' : 30,
+                        // tslint:disable-next-line:max-line-length
+                        'tooltip' : `To get all available results set Results Limit to 0.`,
                         'widget' : {'id' : 'csui-number'}
                     },
                     'orderByAxis' : {
@@ -468,7 +471,10 @@ export class FormSchema {
                             'type' : 'string',
                             'pattern': '^#[0-9a-fA-F]{8}$',
                             'title' : 'Dataseries Color',
-                            'widget': { 'id': 'csui-color-picker' }
+                            'widget': { 'id': 'csui-color-picker' },
+                            'visibleIf': {
+                                'chartType': ['area', 'column', 'bar', 'line']
+                            }
                         },
                         'dataseriesName' : {
                             'type' : 'string',
@@ -849,7 +855,7 @@ export class FormSchema {
                                 'default': false,
                                 // tslint:disable-next-line:max-line-length
                                 'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
-                                'description': 'Enable exporting'
+                                'description': 'Enable Exporting'
                             }
                         },
                         'fieldsets': [

@@ -72,6 +72,10 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     jQuery('.ui.formClear.modal')
     .modal('show');
   }
+  closeModal() {
+    jQuery('.ui.formClear.modal')
+    .modal('hide');
+  }
 
   scrollToTop() {
     jQuery('html, body').animate({scrollTop: 0}, 300);
@@ -282,7 +286,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
       return;
     }
     this.isFormValid = false;
-    // console.log('Errors Change: ', formErrorsObj);
+    // console.log('Errors Change: ', this.formErrors.value);
   }
 
 }
