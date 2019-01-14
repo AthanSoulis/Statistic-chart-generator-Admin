@@ -1,25 +1,56 @@
-import { Component, OnInit, AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterContentInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ArrayLayoutWidget } from 'ngx-schema-form';
 import { FormProperty } from 'ngx-schema-form/lib/model/formproperty';
-import { Observable } from 'rxjs';
-import { diff } from 'semver';
+import { Observable, Subscription, of } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
 
 @Component({
   selector: 'tabular-menu-widget',
   templateUrl: './tabular-menu-widget.component.html',
-  styleUrls: ['./tabular-menu-widget.component.css'],
+  styleUrls: ['./tabular-menu-widget.component.css']
 })
-export class TabularMenuWidgetComponent extends ArrayLayoutWidget implements AfterContentInit {
+export class TabularMenuWidgetComponent extends ArrayLayoutWidget implements AfterContentInit, OnDestroy {
 
   active: boolean[] = [];
   editable: boolean[] = [];
+  subscriptions: Subscription[] = [];
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(private cdr: ChangeDetectorRef, private loadingService: ChartLoadingService) {
     super();
    }
 
   ngAfterContentInit() {
+
     this.addItem();
+
+    this.subscriptions.push(this.formProperty.valueChanges.
+      pipe(distinctUntilChanged()).subscribe(
+      (value: FormProperty[]) => {
+
+        if (value.length === 0) {
+          this.active = [true];
+        }
+        if (this.loadingService.chartLoadingStatus) {
+          this.active = new Array<boolean>(value.length);
+          this.active[0] = true;
+          for (let index = 1; index < this.active.length; index++) {
+            this.active[index] = false;
+          }
+        }
+      }
+    ));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => {
+      subscription.unsubscribe();
+    });
+  }
+
+  onActiveTabChange(value: boolean, index: number) {
+    // console.log('[' + index + ']:' + value);
+    this.active[index] = value;
   }
 
   enableEditable(index: number) {
@@ -72,11 +103,9 @@ export class TabularMenuWidgetComponent extends ArrayLayoutWidget implements Aft
       this.editable.push(false);
       this.active.push(true);
     }
-    console.log('Active Tabs:', this.active);
   }
 
   removeItem(index: number) {
-    console.log('Active Tabs:', this.active);
     if ( this.menuArrayLength > 1 || index > 0) {
 
       const activeIndex = this.active.indexOf(true);
@@ -84,9 +113,6 @@ export class TabularMenuWidgetComponent extends ArrayLayoutWidget implements Aft
       this.editable.splice(index);
       this.active.splice(index);
 
-      if (activeIndex > index) {
-        this.active[activeIndex - 1] = true;
-      }
       this.cdr.detectChanges();
     }
   }

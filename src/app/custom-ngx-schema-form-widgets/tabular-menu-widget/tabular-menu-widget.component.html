@@ -4,7 +4,7 @@
           <div class="ui secondary vertical fluid pointing menu">
 
             <div class="ui centered grid link noleftpadding item" *ngFor="let itemProperty of formProperty.properties; let i = index"
-            [suiTabHeader]="i" [(isActive)]="active[i]">
+            [suiTabHeader]="i" [isActive]="active[i]" (isActiveChange)="onActiveTabChange($event,i)">
                 <div class="ui center aligned noleftpadding norightpadding basic segment">
                     
                     <div *ngIf="editable[i]; else notEditable">
