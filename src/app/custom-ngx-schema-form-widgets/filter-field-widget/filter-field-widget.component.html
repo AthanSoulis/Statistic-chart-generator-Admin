@@ -18,7 +18,7 @@
       </ng-container>
       <ng-container *ngSwitchCase="1">
 
-          <input (input)="numericChangeHandler($event)"
+          <input (input)="numericChangeHandler($event)" (change)="numericChangeHandler($event)"
           [name]="name" [attr.readonly]="(schema.widget.id!=='color') && schema.readOnly?true:null"
           class="text-widget.id textline-widget form-control" type="number" inputmode="numeric"
           [attr.id]="id" [formControl]="control" [attr.placeholder]="schema.placeholder"
@@ -28,7 +28,7 @@
       </ng-container>
       <ng-container *ngSwitchCase="2">
 
-          <input (input)="numericChangeHandler($event)"
+          <input (input)="numericChangeHandler($event)" (change)="numericChangeHandler($event)"
           [name]="name" [attr.readonly]="(schema.widget.id!=='color') && schema.readOnly?true:null"
           class="text-widget.id textline-widget form-control" type="number" inputmode="decimal"
           [attr.id]="id"  [formControl]="control" [attr.placeholder]="schema.placeholder"
