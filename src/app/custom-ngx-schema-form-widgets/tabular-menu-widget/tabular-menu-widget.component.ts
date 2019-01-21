@@ -72,8 +72,8 @@ export class TabularMenuWidgetComponent extends ArrayLayoutWidget implements Aft
   }
 
   setDataSeriesName(index: number, value: any) {
-    const propertyToRename = (<FormProperty>this.formProperty.properties[index])
-      .searchProperty(index + '/chartProperties/dataseriesName').setValue(value, true);
+    (<FormProperty>this.formProperty.properties[index])
+      .searchProperty(index + '/chartProperties/dataseriesName').setValue(value, false);
   }
 
   addItem() {
@@ -97,7 +97,7 @@ export class TabularMenuWidgetComponent extends ArrayLayoutWidget implements Aft
           dif++;
           newItemName = addedItem.value + '(' + dif + ')';
       }
-      addedItem.setValue(newItemName, true);
+      addedItem.setValue(newItemName, false);
 
       // Set initial values to the input box
       this.editable.push(false);
