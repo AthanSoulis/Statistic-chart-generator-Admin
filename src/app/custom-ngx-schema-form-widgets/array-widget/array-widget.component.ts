@@ -1,8 +1,6 @@
 import { Component, OnInit, AfterContentInit, ChangeDetectionStrategy, AfterViewInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { ArrayLayoutWidget, ControlWidget } from 'ngx-schema-form';
-import { FormProperty, PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
-import { ArrayProperty } from 'ngx-schema-form/lib/model/arrayproperty';
-import { ObjectProperty } from 'ngx-schema-form/lib/model/objectproperty';
+import { FormProperty } from '../../../../node_modules/ngx-schema-form/lib/model/formproperty';
 import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
 
 @Component({

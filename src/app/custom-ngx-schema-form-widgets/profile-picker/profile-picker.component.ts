@@ -30,9 +30,9 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
 
   subscriptions: Array<Subscription>;
 
-  constructor(protected mappingProfileService: MappingProfilesService,
+  constructor(public mappingProfileService: MappingProfilesService,
               public modalService: SuiModalService,
-              protected cdr: ChangeDetectorRef) {
+              private cdr: ChangeDetectorRef) {
     super();
     this.subscriptions = new Array();
   }

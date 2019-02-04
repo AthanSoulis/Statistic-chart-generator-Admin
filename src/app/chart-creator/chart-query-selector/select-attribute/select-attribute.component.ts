@@ -77,7 +77,7 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
   }
 
   _onChange = (arg: any) => {};
-  _onTouched = () => {};
+  _onTouched = (arg: boolean) => {};
 
   handleChange(arg: FieldNode) {
     if (this.checkValidFieldNode(arg) !== null) {
@@ -204,7 +204,7 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
     this.fieldChanged.emit(selectedFieldNode);
   }
 
-  protected checkValidFieldNode(e: FieldNode) {
+  public checkValidFieldNode(e: FieldNode) {
 
     if (e !== null && (e.name && e.type)) {
       return e;

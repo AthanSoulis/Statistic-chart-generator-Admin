@@ -69,7 +69,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     // this._publishPopUpCondition = !this._publishPopUpCondition;
   }
 
-  private exportChart(popup: IPopup) {
+  public exportChart(popup: IPopup) {
 
     if (!(this.childChartCreator instanceof ChartCreatorComponent)) {
       console.error('childChartCreator not an instance of ChartCreatorComponent');
@@ -98,14 +98,14 @@ export class AppComponent implements OnInit, AfterViewInit {
     document.body.removeChild(element);
   }
 
-  private initiateFilePicker() {
+  public initiateFilePicker() {
     const fileElem = document.getElementById('fileElem');
     if (fileElem) {
       fileElem.click();
     }
   }
 
-  private loadChart(event: any) {
+  public loadChart(event: any) {
 
     this.loadedChartFile = null;
     if (event) {
@@ -126,7 +126,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private publishChart() {
+  public publishChart() {
 
     if (!(this.childChartCreator instanceof ChartCreatorComponent)) {
       console.error('childChartCreator not an instance of ChartCreatorComponent');

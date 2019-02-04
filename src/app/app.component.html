@@ -67,7 +67,7 @@
                     <div class="hidden content"><i class="large share alternate icon"></i></div>
                 </div>
                 <div class="ui vertical animated button item" suiPopup [popupTemplate]="loadPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick"
-                (click)="loadChart()">
+                (click)="loadChart($event)">
                     <div class="visible content" style="padding-inline-start: 0.5rem"><b>Load</b></div>
                     <div class="hidden content"><i class="large upload icon"></i></div>
                 </div>

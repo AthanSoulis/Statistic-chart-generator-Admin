@@ -7,9 +7,7 @@ import { distinctUntilChanged, filter } from 'rxjs/operators';
 import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
 import { ErrorHandlerService } from '../../services/error-handler-service/error-handler.service';
 import { ArrayProperty } from 'ngx-schema-form/lib/model/arrayproperty';
-import { Validators, ValidatorFn, AbstractControl } from '@angular/forms';
-import { FormProperty, PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
-import { ObjectProperty } from 'ngx-schema-form/lib/model/objectproperty';
+import { PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
 
 @Component({
   selector: 'entity-selection-widget',
