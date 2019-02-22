@@ -25,7 +25,11 @@ export class UrlProviderService {
     this.iframeUrl = this.protocol + '://' + this.domain + ':' + this.port;
 
     if (this.browserWindowEnv.hasOwnProperty('apiUrl')) {
-      this.url = window['__env']['apiUrl'];
+      const apiUrl = (<string>window['__env']['apiUrl']);
+      if (apiUrl !== '' && apiUrl !== null ) {
+        this.url = apiUrl;
+        this.iframeUrl = this.url;
+      }
     }
   }
 

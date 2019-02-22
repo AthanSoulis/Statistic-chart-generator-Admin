@@ -19,7 +19,7 @@
             "assets": [
               "src/assets",
               "src/ARC.ico",
-              "stats-api.js"
+              "src/stats-api.js"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
