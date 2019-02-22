@@ -18,7 +18,8 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
-              "src/ARC.ico"
+              "src/ARC.ico",
+              "stats-api.js"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
