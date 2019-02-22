@@ -4,6 +4,7 @@ import { TemplateModalConfig, ModalTemplate, SuiActiveModal, SuiModalService } f
 import { MappingProfilesService, Profile } from '../../services/mapping-profiles-service/mapping-profiles.service';
 import { Subscription, BehaviorSubject } from 'rxjs';
 import { ArrayProperty } from 'ngx-schema-form/lib/model/arrayproperty';
+import { FormProperty } from 'ngx-schema-form/lib/model/formproperty';
 
 declare var jQuery: any;
 
@@ -21,16 +22,17 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
   @ViewChild('mappingModal')
   public modalTemplate: ModalTemplate<IContext, string, string>;
   private activeModal: SuiActiveModal<IContext, string, string>;
-  private _hasBeenInitialized = false;
 
-  set hasBeenInitialized(init: boolean) { this._hasBeenInitialized = init; }
-  get hasBeenInitialized() { return this._hasBeenInitialized; }
+  get hasBeenInitialized() {
+    return this.formProperty.value !== null &&
+     this.formProperty.value !== undefined &&
+     this.formProperty.value !== ''; }
 
   subscriptions: Array<Subscription>;
 
-  constructor(protected mappingProfileService: MappingProfilesService,
+  constructor(public mappingProfileService: MappingProfilesService,
               public modalService: SuiModalService,
-              protected cdr: ChangeDetectorRef) {
+              private cdr: ChangeDetectorRef) {
     super();
     this.subscriptions = new Array();
   }
@@ -41,19 +43,19 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
     this.subscriptions.push(
     (<BehaviorSubject<string>> this.formProperty.valueChanges)
     .subscribe(profile => {
-      if (profile) {
+
         this.mappingProfileService.changeSelectedProfile(profile);
         this.cdr.detectChanges();
-        dataseriesArray.reset([{'data': {'xaxisData': [], 'filters': []}, 'chartProperties': {'dataseriesName': 'Data'}}] );
-      }
-    }));
 
-    this.showProfilePicker(null);
+        if (!this.hasBeenInitialized) {
+          this.showProfilePicker(null);
+        }
+    }));
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(element => {
-      element.unsubscribe();
+    this.subscriptions.forEach( suscription => {
+        suscription.unsubscribe();
     });
   }
 
@@ -80,11 +82,6 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
         cdrRef.detectChanges();
 
         return true;
-      },
-      onHidden: () => {
-        if (this.formProperty.value !== null) {
-          caller.hasBeenInitialized = true;
-        }
       }
     })
     .modal('show');

@@ -17,7 +17,7 @@ export class SupportedLibrariesService {
 
   getSupportedLibraries(): Observable<Array<string>> {
 
-    const supportedLibrariesUrl = this.urlProvider.getUrl() + '/chart/libraries';
+    const supportedLibrariesUrl = this.urlProvider.serviceURL + '/chart/libraries';
     return this.http.get<Array<string>>(supportedLibrariesUrl)
     .pipe(
       retry(3), // retry a failed request up to 3 times

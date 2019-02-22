@@ -1,0 +1,29 @@
+<input *ngIf="this.schema.widget.id ==='hidden'; else notHiddenFieldBlock"
+  [attr.name]="name" type="hidden" [formControl]="control">
+
+<ng-template #notHiddenFieldBlock>
+<div [ngClass]="!schema.requiredField ? 'widget form-group field' : 
+(control.touched || control.dirty) && (!this.control.valid)  ? 
+'widget form-group required field error' : 'widget form-group required field'">
+
+    <label [attr.for]="id" class="horizontal control-label">
+      {{ schema.title }}
+      <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" suiPopup popupPlacement="right"
+      popupText={{this.schema.tooltip}}></i>
+    </label>
+    <span *ngIf="schema.description" class="formHelp">{{schema.description}}</span>
+
+    <input [name]="name" class="text-widget.id textline-widget form-control"
+    [(colorPicker)]="control.value" (colorPickerChange)="changeColor($event)" [cpOutputFormat]="'hex'" [cpAlphaChannel]="'always'" 
+    [style.background]="this.formProperty.valueChanges | async" [cpCancelButton]="true"
+    [attr.id]="id"
+    [attr.readonly]="true"
+    [attr.placeholder]="schema.placeholder"
+    [attr.disabled]="schema.readOnly"
+    [attr.maxLength]="schema.maxLength || null"
+    [attr.minLength]="schema.minLength || null"
+    [attr.required]="schema.required || null" readonly/>
+
+    <input *ngIf="(schema.widget.id==='color' && schema.readOnly)" [attr.name]="name" type="hidden" [formControl]="control">
+</div>
+</ng-template>

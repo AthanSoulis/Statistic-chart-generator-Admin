@@ -1,4 +1,4 @@
-import { Filter } from './query-filter-selector/query-filter/query-filter.model';
+import { Filter, FilterGroup } from './query-filter-selector/query-filter/query-filter.model';
 import { DataseriesFormSchema, DataFormSchema } from '../chart-form-schema.model';
 
 export class Query {
@@ -6,7 +6,7 @@ export class Query {
     profile: string;
     entity: string;
     select: Array<Select> = [];
-    filters: Array<Filter> = [];
+    filters: Array<FilterGroup> = [];
 
     constructor(dataseriesData: DataFormSchema, profile: string, limit: string) {
         this.entity = dataseriesData.yaxisData.entity;
@@ -31,11 +31,17 @@ export class Query {
         });
 
         dataseriesData.filters.forEach(element => {
-            const filter = new Filter();
-            filter.field = element.field.name;
-            filter.type = element.type;
-            filter.values = element.values;
-            this.filters.push(filter);
+            const filterGroup = new FilterGroup();
+            filterGroup.op = element.op;
+
+            element.groupFilters.forEach(groupFilter => {
+                const filter = new Filter();
+                filter.field = groupFilter.field.name;
+                filter.type = groupFilter.type;
+                filter.values = groupFilter.values;
+                filterGroup.groupFilters.push(filter);
+            });
+            this.filters.push(filterGroup);
         });
 
     }

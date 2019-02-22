@@ -28,11 +28,12 @@ export class SupportedFilterTypesService {
 const supportedFilterTypesArray = [
   {filterOperator: '=', filterName: 'Equals', filterType: [FieldType.text, FieldType.int, FieldType.float, FieldType.date]},
   {filterOperator: '!=', filterName: 'Not equals', filterType: [FieldType.text, FieldType.int, FieldType.float, FieldType.date]},
-  {filterOperator: '>', filterName: 'Bigger than', filterType: [FieldType.int, FieldType.float, FieldType.date]},
-  {filterOperator: '>=', filterName: 'Bigger / Equal than', filterType: [FieldType.int, FieldType.float, FieldType.date]},
-  {filterOperator: '<', filterName: 'Smaller than', filterType: [FieldType.int, FieldType.float, FieldType.date]},
-  {filterOperator: '<=', filterName: 'Smaller / Equal than', filterType: [FieldType.int, FieldType.float, FieldType.date]},
-  {filterOperator: 'between', filterName: 'Between', filterType: [FieldType.int, FieldType.float, FieldType.date]},
+  {filterOperator: '>', filterName: 'Greater than', filterType: [FieldType.int, FieldType.float, FieldType.date]},
+  {filterOperator: '>=', filterName: 'Greater / Equal than', filterType: [FieldType.int, FieldType.float, FieldType.date]},
+  {filterOperator: '<', filterName: 'Less than', filterType: [FieldType.int, FieldType.float, FieldType.date]},
+  {filterOperator: '<=', filterName: 'Less / Equal than', filterType: [FieldType.int, FieldType.float, FieldType.date]},
+  // Operator between no longer needed after the redisigned filters
+  // {filterOperator: 'between', filterName: 'Between', filterType: [FieldType.int, FieldType.float, FieldType.date]},
   {filterOperator: 'contains', filterName: 'Contains', filterType: [FieldType.text]},
   {filterOperator: 'starts_with', filterName: 'Starts with', filterType: [FieldType.text]},
   {filterOperator: 'ends_with', filterName: 'Ends with', filterType: [FieldType.text]}

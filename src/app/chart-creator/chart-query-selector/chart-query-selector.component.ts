@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, Input, OnDestroy } from '@angular/cor
 import { ControlContainer, FormGroupDirective, FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { DbSchemaService, EntityTreeNode, EntityNode } from '../../services/db-schema-service/db-schema.service';
 import { Query, Select } from './chart-query.model';
-import { SupportedAggregateFunctionsService } from '../../services/supported-aggregate-functions-service/supported-aggregate-functions.service';
+import { SupportedAggregateFunctionsService, AggregateFunction } from '../../services/supported-aggregate-functions-service/supported-aggregate-functions.service';
 import { Profile, MappingProfilesService } from '../../services/mapping-profiles-service/mapping-profiles.service';
 import { Subscription } from 'rxjs';
 import { ErrorHandlerService } from '../../services/error-handler-service/error-handler.service';
@@ -59,10 +59,10 @@ export class ChartQuerySelectorComponent implements OnInit, AfterViewInit, OnDes
   }
 
   getAvailableAggregates() {
-    this.supportedAggregateFunctionsService.getSupportedAggregateFunctionFilterY().subscribe(
-      (data: Array<string>) => this.availableAggregates = data // success path
-        // error => this.error = error // error path
-    );
+    // this.supportedAggregateFunctionsService.getSupportedAggregateFunctionFilterY().subscribe(
+    //   (data: Array<AggregateFunction>) => this.availableAggregates = data // success path
+    //     // error => this.error = error // error path
+    // );
     return this.availableAggregates;
   }
 

@@ -2,9 +2,8 @@
     (control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'" >
       <ng-container *ngSwitchCase="0">          
         
-        <div class="ui fluid action icon input" *ngIf="(this.filterOperator === '=') || (this.filterOperator === '!='); else plainStringInput">
-          <autocomplete-input-field  class="ui fluid action icon input" [inputFormGroup]="control" 
-          [filterfield]="this.selectedField.name"></autocomplete-input-field>
+        <div  *ngIf="(this.filterOperator === '=') || (this.filterOperator === '!='); else plainStringInput">
+          <autocomplete-input-field [inputFormGroup]="control" [filterfield]="this.selectedField.name"></autocomplete-input-field>
         </div>
         <ng-template #plainStringInput>
 
@@ -17,20 +16,21 @@
         </ng-template>
 
       </ng-container>
-      <!-- Case 1 & 2 input types should be number but ngx-schema does not support multiple type arrays -->
       <ng-container *ngSwitchCase="1">
 
-          <input [name]="name" [attr.readonly]="(schema.widget.id!=='color') && schema.readOnly?true:null"
-          class="text-widget.id textline-widget form-control" type="text" inputmode="numeric"
-          [attr.id]="id"  [formControl]="control" [attr.placeholder]="schema.placeholder"
+          <input (input)="numericChangeHandler($event)" (change)="numericChangeHandler($event)"
+          [name]="name" [attr.readonly]="(schema.widget.id!=='color') && schema.readOnly?true:null"
+          class="text-widget.id textline-widget form-control" type="number" inputmode="numeric"
+          [attr.id]="id" [formControl]="control" [attr.placeholder]="schema.placeholder"
           [attr.maxLength]="schema.maxLength || null"
           [attr.minLength]="schema.minLength || null"
           [attr.disabled]="(schema.widget.id=='color' && schema.readOnly)?true:null">
       </ng-container>
       <ng-container *ngSwitchCase="2">
 
-          <input [name]="name" [attr.readonly]="(schema.widget.id!=='color') && schema.readOnly?true:null"
-          class="text-widget.id textline-widget form-control" type="text" inputmode="decimal"
+          <input (input)="numericChangeHandler($event)" (change)="numericChangeHandler($event)"
+          [name]="name" [attr.readonly]="(schema.widget.id!=='color') && schema.readOnly?true:null"
+          class="text-widget.id textline-widget form-control" type="number" inputmode="decimal"
           [attr.id]="id"  [formControl]="control" [attr.placeholder]="schema.placeholder"
           [attr.maxLength]="schema.maxLength || null"
           [attr.minLength]="schema.minLength || null"
@@ -44,5 +44,9 @@
           [attr.maxLength]="schema.maxLength || null"
           [attr.minLength]="schema.minLength || null"
           [attr.disabled]="(schema.widget.id=='color' && schema.readOnly)?true:null">
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        <input [name]="name" class="text-widget.id textline-widget form-control"
+        [attr.id]="id"  [formControl]="control" [attr.placeholder]="schema.placeholder" disabled>
       </ng-container>
   </div>

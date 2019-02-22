@@ -15,6 +15,11 @@ import { FilterFieldArrayWidgetComponent } from './filter-field-array-widget/fil
 import { ProfilePickerComponent } from './profile-picker/profile-picker.component';
 import { TabularMenuWidgetComponent } from './tabular-menu-widget/tabular-menu-widget.component';
 import { HeadMenuWidgetComponent } from './head-menu-widget/head-menu-widget.component';
+import { RadioWidgetComponent } from './radio-widget/radio-widget.component';
+import { ColorPickerWidgetComponent } from './color-picker-widget/color-picker-widget.component';
+import { BooleanFieldWidgetComponent } from './boolean-field-widget/boolean-field-widget.component';
+import { NumberFieldWidgetComponent } from './number-field-widget/number-field-widget.component';
+import { StringFieldWidgetComponent } from './string-field-widget/string-field-widget.component';
 
 export class CustomWidgetRegistry extends DefaultWidgetRegistry {
   constructor() {
@@ -36,5 +41,10 @@ export class CustomWidgetRegistry extends DefaultWidgetRegistry {
     this.register('csui-filter-field-array', FilterFieldArrayWidgetComponent);
     this.register('csui-tabular-menu', TabularMenuWidgetComponent);
     this.register('csui-head-menu', HeadMenuWidgetComponent);
+    this.register('csui-radio-selection', RadioWidgetComponent);
+    this.register('csui-color-picker', ColorPickerWidgetComponent);
+    this.register('csui-boolean', BooleanFieldWidgetComponent);
+    this.register('csui-number', NumberFieldWidgetComponent);
+    this.register('csui-string', StringFieldWidgetComponent);
   }
 }

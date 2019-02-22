@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
 import { SupportedLibrariesService } from '../../services/supported-libraries-service/supported-libraries.service';
 
@@ -7,14 +7,19 @@ import { SupportedLibrariesService } from '../../services/supported-libraries-se
   templateUrl: './library-selection-widget.component.html',
   styleUrls: ['./library-selection-widget.component.css']
 })
-export class LibrarySelectionWidgetComponent extends ControlWidget {
+export class LibrarySelectionWidgetComponent extends ControlWidget implements AfterContentInit {
 
   supportedLibraries: Array<string>;
 
   constructor(private librariesService: SupportedLibrariesService) {
     super();
-    librariesService.getSupportedLibraries().subscribe(
-      (data: Array<string>) => this.supportedLibraries = data // success path
+  }
+
+  ngAfterContentInit() {
+
+    this.librariesService.getSupportedLibraries().subscribe(
+      // success path
+      (data: Array<string>) => this.supportedLibraries = data
         // error => this.error = error // error path
     );
   }

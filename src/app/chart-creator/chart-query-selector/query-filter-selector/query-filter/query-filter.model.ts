@@ -11,3 +11,14 @@ export class Filter {
     }
 }
 
+export class FilterGroup {
+
+    groupFilters: Array<Filter>;
+    op: string;
+
+    constructor() {
+        this.groupFilters = [];
+        this.op = null;
+    }
+}
+

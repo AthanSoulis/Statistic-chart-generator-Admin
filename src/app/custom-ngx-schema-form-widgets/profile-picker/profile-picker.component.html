@@ -3,12 +3,12 @@
       <h2 class="ui header">
           Select View
       </h2>
-      <div class="content">
+      <div class="scrolling content">
         <div *ngIf="this.hasBeenInitialized" class="ui warning message">
                 <i class="icon warning"></i>
                 Choosing a new View will delete all your <b>Dataseries</b> changes!
         </div>
-        <div class="ui three centered stackable cards">
+        <div class="ui centered stackable cards">
         <div class="ui card" *ngFor="let profile of (this.mappingProfileService.mappingProfiles$ | async )">
             <div class="content">
                 <div class="header"><h2>{{profile.name}}</h2></div>

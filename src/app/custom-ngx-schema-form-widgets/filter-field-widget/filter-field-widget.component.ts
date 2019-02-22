@@ -49,4 +49,9 @@ export class FilterFieldWidgetComponent extends ControlWidget implements OnDestr
     this.entityFieldSub.unsubscribe();
     this.operatorSub.unsubscribe();
   }
+
+  numericChangeHandler(event: any) {
+    // console.log('Input:', event);
+    this.control.setValue(event.target.value);
+  }
 }

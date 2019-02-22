@@ -1,0 +1,14 @@
+<div [ngClass]="!schema.requiredField ? 'widget form-group field' : 
+(control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'">
+  <label>{{schema.title}}</label>
+  <span *ngIf="schema.description" class="formHelp">
+    {{schema.description}}
+  </span>  
+  <div [ngClass]="schema.inline ? 'inline fields' : 'grouped fields'">
+    <div class="field" *ngFor="let option of schema.oneOf" (click)="handleChange(option.enum[0])">
+
+      <sui-radio-button name="name" value="{{option.enum[0]}}" [formControl]="control"
+      [isDisabled]="schema.readOnly" [isReadonly]="schema.readOnly">{{option.description}}</sui-radio-button>
+    </div>
+  </div>
+</div>

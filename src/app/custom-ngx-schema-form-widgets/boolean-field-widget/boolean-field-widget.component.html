@@ -1,0 +1,17 @@
+<div [ngClass]="!schema.requiredField ? 'widget form-group field' : 
+    (control.touched || control.dirty) && (!this.control.valid)  ? 
+    'widget form-group required field error' : 'widget form-group required field'">
+  <label [attr.for]="id" class="horizontal control-label">
+      {{ schema.title }}
+  </label>
+  <div *ngIf="schema.type!='array'">
+      
+    <sui-checkbox [formControl]="control" class="toggle" [name]="name"
+      [isDisabled]="schema.readonly"> {{schema.description}}
+    </sui-checkbox>
+    
+    <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" suiPopup popupPlacement="right"
+      popupText={{this.schema.tooltip}} popupHeader={{this.schema.tooltipHeader}}></i>
+      
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterContentInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterContentInit, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
 import { ControlWidget, ObjectLayoutWidget } from 'ngx-schema-form';
 import { Observable, Subscription, Subject } from 'rxjs';
 import { ObjectProperty } from 'ngx-schema-form/lib/model/objectproperty';
@@ -11,10 +11,11 @@ import { distinctUntilChanged } from 'rxjs/operators';
   templateUrl: './entity-field-selection-widget.component.html',
   styleUrls: ['./entity-field-selection-widget.component.css'],
 })
-export class EntityFieldSelectionWidgetComponent extends ControlWidget implements OnDestroy, AfterContentInit {
+export class EntityFieldSelectionWidgetComponent extends ControlWidget implements OnDestroy, AfterContentInit, AfterViewInit {
 
   entityValue: string;
-  private entitySubscription: Subscription;
+  private subscriptions: Subscription[] = [];
+  entityFieldDisabled = true;
 
   constructor() {
     super();
@@ -28,28 +29,43 @@ export class EntityFieldSelectionWidgetComponent extends ControlWidget implement
       // lulz
       property = property.parent;
     }
-    this.entitySubscription = (<PropertyGroup>(<ObjectProperty>(<ObjectProperty>property).getProperty('yaxisData')).getProperty('entity'))
-                              .valueChanges.asObservable().pipe(distinctUntilChanged()).subscribe(
-                                (data: string) => {
-                                    // Acquire this dataseries' entity if its valid
-                                    if (data) {
-                                      this.entityValue = data;
-                                      return;
-                                    }
-                                    // Else, reset the value of the form
-                                    this.entityValue = null;
-                                    this.control.reset();
-                                  }
-                              );
+    this.subscriptions.push(
+    property.getProperty('yaxisData/entity').valueChanges.pipe(distinctUntilChanged()).subscribe(
+                (data: string) => {
+                    // Acquire this dataseries' entity if its valid
+                    if (data) {
+                      this.entityValue = data;
+                      return;
+                    }
+                    // Else, reset the value of the form
+                    this.entityValue = null;
+                    this.control.reset();
+                  })
+    );
+    // this.subscriptions.push(
+    //   property.getProperty('yaxisData/yaxisAggregate').valueChanges.pipe(distinctUntilChanged()).subscribe(
+    //     (aggregate: string) => {
+    //       if (aggregate === 'total' || aggregate === null || aggregate === undefined) {
+    //         this.entityFieldDisabled = true;
+    //         return;
+    //       }
+    //       this.entityFieldDisabled = false;
+    //     })
+    // );
 
-    this.control.valueChanges.subscribe(
+    this.subscriptions.push(
+      this.control.valueChanges.subscribe(
       (value) => {
         console.log('Errors: ', this.control.errors);
-      }
+      })
     );
   }
 
   ngOnDestroy() {
-    this.entitySubscription.unsubscribe();
+    console.log('Entity Field Destroyed');
+    this.subscriptions.forEach(element => {
+      element.unsubscribe();
+    });
+    this.subscriptions = null;
   }
 }

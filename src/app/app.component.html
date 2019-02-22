@@ -60,19 +60,30 @@
     </div>
     
     <div class="right menu">
-        <a class="item" suiPopup (onOpen)="handlePopUpOpen($event)" [popupTemplate]="publishPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #publishpopup="suiPopup"
-        (click)="togglePublishPopUp(publishpopup)"><h3>Publish</h3></a>
-        <a class="item" suiPopup [popupTemplate]="loadPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick"
-        (click)="loadChart()"><h3>Load</h3></a>
-        <a class="item" suiPopup [popupTemplate]="exportPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #exportpopup="suiPopup"
-        (click)="exportChart(exportpopup)"><h3>Export</h3></a>
+        <div class="three ui big basic buttons">
+                <div class="ui vertical animated button item" tabindex="0" suiPopup (onOpen)="handlePopUpOpen($event)" [popupTemplate]="publishPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #publishpopup="suiPopup"
+                (click)="togglePublishPopUp(publishpopup)">
+                    <div class="visible content"><b>Publish</b></div>
+                    <div class="hidden content"><i class="large share alternate icon"></i></div>
+                </div>
+                <div class="ui vertical animated button item" suiPopup [popupTemplate]="loadPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick"
+                (click)="loadChart($event)">
+                    <div class="visible content" style="padding-inline-start: 0.5rem"><b>Load</b></div>
+                    <div class="hidden content"><i class="large upload icon"></i></div>
+                </div>
+                <div class="ui vertical animated button item" suiPopup [popupTemplate]="exportPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #exportpopup="suiPopup"
+                (click)="exportChart(exportpopup)">
+                    <div class="visible content"><b>Export</b></div>
+                    <div class="hidden content"><i class="large save icon"></i></div>
+                </div>
+        </div>
         <!-- <a class="item">Sign Up</a>
         <a class="item">Help</a> -->
     </div>
 </div>
 
-<div class="ui stackable two column divided padded grid">
-    <div class="ui seven wide padded column container">
+<div class="ui stackable two column divided very compact grid">
+    <div class="ui seven wide column container">
         <chart-creator [loadedChart]="chartModel" (formClear)="handleClearForm()" (chartSubmit)="handleChartObject($event)" (tableSubmit)="handleTableObject($event)"></chart-creator>
     </div>
     <div class="ui nine wide column container">
@@ -97,7 +108,7 @@
         <img src="https://www.openaire.eu/templates/yootheme/cache/flag_black_white_low-c62d292e.jpeg" srcset="https://www.openaire.eu/templates/yootheme/cache/flag_black_white_low-c62d292e.jpeg 50w, https://www.openaire.eu/templates/yootheme/cache/flag_black_white_low-77b5e7bd.jpeg 100w" sizes="(min-width: 50px) 50px" data-width="427" data-height="285" class="el-image" alt="European Commission">
     </div>
     <div id="" class="" style="text-align: center;color: rgba(255,255,255,.7);">
-        <a href="http://creativecommons.org/licenses/by/4.0/" rel="license"> <img src="/images/Icons/cc.svg" uk-svg="" hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" class=" uk-svg"><title></title><g data-name="Creative Commons" id="Creative_Commons"><circle cx="12" cy="12" r="11.5" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></circle><path d="M10.87,10a3.5,3.5,0,1,0,0,4" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></path><path d="M18.87,10a3.5,3.5,0,1,0,0,4" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></path></g></svg>&nbsp;<img src="/images/Icons/cc-by.svg" uk-svg="" hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" class=" uk-svg"><title></title><g id="Attribution"><g data-name="<Group>" id="_Group_"><circle cx="12" cy="5" data-name="<Path>" id="_Path_" r="1.5" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></circle><path d="M12,8a5,5,0,0,0-3.07.71,1,1,0,0,0-.43.83V15H10v5.5h4V15h1.5V9.54a1,1,0,0,0-.43-.83A5,5,0,0,0,12,8Z" data-name="<Path>" id="_Path_2" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></path></g><circle cx="12" cy="12" r="11.5" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></circle></g></svg></a>&nbsp;Unless otherwise indicated, all materials created by OpenAIRE are licenced under&nbsp;<a href="http://creativecommons.org/licenses/by/4.0/" rel="license" style="color: #fff;">CC ATTRIBUTION 4.0 INTERNATIONAL LICENSE</a>. 
+        <a href="http://creativecommons.org/licenses/by/4.0/" rel="license"> <img uk-svg="" hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" class=" uk-svg"><title></title><g data-name="Creative Commons" id="Creative_Commons"><circle cx="12" cy="12" r="11.5" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></circle><path d="M10.87,10a3.5,3.5,0,1,0,0,4" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></path><path d="M18.87,10a3.5,3.5,0,1,0,0,4" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></path></g></svg>&nbsp;<img uk-svg="" hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" class=" uk-svg"><title></title><g id="Attribution"><g data-name="<Group>" id="_Group_"><circle cx="12" cy="5" data-name="<Path>" id="_Path_" r="1.5" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></circle><path d="M12,8a5,5,0,0,0-3.07.71,1,1,0,0,0-.43.83V15H10v5.5h4V15h1.5V9.54a1,1,0,0,0-.43-.83A5,5,0,0,0,12,8Z" data-name="<Path>" id="_Path_2" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></path></g><circle cx="12" cy="12" r="11.5" style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round"></circle></g></svg></a>&nbsp;Unless otherwise indicated, all materials created by OpenAIRE are licenced under&nbsp;<a href="http://creativecommons.org/licenses/by/4.0/" rel="license" style="color: #fff;">CC ATTRIBUTION 4.0 INTERNATIONAL LICENSE</a>. 
       
     </div>
 </div>

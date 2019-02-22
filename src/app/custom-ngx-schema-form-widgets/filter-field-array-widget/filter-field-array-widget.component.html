@@ -1,16 +1,26 @@
-<div *ngIf="this.filterOperator" [ngClass]="!schema.requiredField ? 'widget form-group field' : 
-(control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'">
+    <div [ngClass]="!schema.requiredField ? 'widget form-group field' : 
+  (control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'"
+  *ngIf="filterFieldArrayLength > 0; else noFilterValue" >
 
-  <div *ngIf="filterFieldArrayLength > 0" class="ui basic segment">
+    <label *ngIf="filterFieldArrayLength > 1; else singleValue" [attr.for]="id" class="horizontal control-label">
+      Filter Values
+    </label>
+    <ng-template #singleValue>
+      <label [attr.for]="id" class="horizontal control-label">Filter Value</label>
+    </ng-template>
+
+    <span *ngIf="schema.description" class="formHelp">
+      {{schema.description}}
+    </span>
+    
     <div *ngIf="filterOperator !== 'between'; else betweenFilterFields">
       <div *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex">
         
-        <div class="ui fluid action input">
+        <!-- <div class="ui fluid action input"> -->
           <sf-form-element [formProperty]="itemProperty"></sf-form-element>
-
-          <button (click)="removeFilterValue(i)" type="button" 
+          <!-- <button (click)="removeFilterValue(i)" type="button" 
           class="ui icon compact button"><i class="close icon"></i></button>
-        </div>
+        </div> -->
         
 
         <span *ngIf="applicableDivider(i)" class="ui horizontal divider">OR</span>
@@ -24,17 +34,25 @@
         <sf-form-element [formProperty]="formProperty.properties[i]"></sf-form-element>    
         
         <div *ngIf="isOdd">
-          <button (click)="removeFilterValue(i)" type="button" 
-                  class="fluid ui icon compact button"><i class="close icon"></i></button>
+          <!-- <button (click)="removeFilterValue(i)" type="button" 
+                  class="fluid ui icon compact button"><i class="close icon"></i></button> -->
           <span *ngIf="applicableDivider(i)" class="ui horizontal divider">OR</span>
         </div>
 
       </div>
     </ng-template>
+      <!-- <button (click)="addFilterValue()" type="button" class="circular ui icon basic blue compact left floated button">
+          <div *ngIf="filterFieldArrayLength > 0; else addFilter">OR</div>
+          <ng-template #addFilter><i class="plus icon"></i></ng-template>
+        </button> -->
   </div>
 
-  <button (click)="addFilterValue()" type="button" class="circular ui icon basic blue compact left floated button">
-    <div *ngIf="filterFieldArrayLength > 0; else addFilter">OR</div>
-    <ng-template #addFilter><i class="plus icon"></i></ng-template>
-  </button>
-</div>
+  <ng-template #noFilterValue>
+    <div [ngClass]="!schema.requiredField ? 'widget form-group disabled field' : 
+    (control.touched || control.dirty) && (!this.control.valid)  ? 
+    'widget form-group required disabled field error' : 'widget form-group required disabled field'">
+        <label [attr.for]="id" class="horizontal control-label">Filter Value</label>
+        <span *ngIf="schema.description" class="formHelp">{{schema.description}}</span>
+        <input disabled>
+    </div>
+  </ng-template>

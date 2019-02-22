@@ -1,10 +1,10 @@
 <sui-tabset>
     <div class="ui two column grid noleftpadding fluid container">
-      <div class="noleftpadding three wide column">
+      <div class="noleftpadding norightpadding three wide column">
           <div class="ui secondary vertical fluid pointing menu">
 
             <div class="ui centered grid link noleftpadding item" *ngFor="let itemProperty of formProperty.properties; let i = index"
-            [suiTabHeader]="i" >
+            [suiTabHeader]="i" [isActive]="active[i]" (isActiveChange)="onActiveTabChange($event,i)">
                 <div class="ui center aligned noleftpadding norightpadding basic segment">
                     
                     <div *ngIf="editable[i]; else notEditable">
@@ -16,8 +16,23 @@
                         class="ui center aligned item item"> {{getDataSeriesName(i) | async}} </h4>
                     </ng-template>
 
-                    <button *ngIf="menuArrayLength > 1" (click)="removeItem(i)" class="mini fluid ui icon basic bottom attached button ">
-                        <i class="icon minus"></i>
+                    <ng-template let-popup #deleteDataseriesPrompt>
+                        <div class="ui center aligned grid">
+                        <div class="column">
+                            <h5 class="ui header">Deleting {{getDataSeriesName(i) | async}}</h5>
+                            <p>Are you sure ?</p>
+                            <div class="buttons">
+                                <button class="ui tiny compact positive button" (click)="removeItem(i)">Yes</button>
+                                <button class="ui tiny compact negative button" (click)="popup.close()">No</button>
+                            </div>
+                        </div>
+                        </div>
+                    </ng-template>
+
+                    <button *ngIf="menuArrayLength > 1" suiPopup [popupTemplate]="deleteDataseriesPrompt"
+                        popupTrigger="outsideClick" [popupPlacement]="'top left'" [popupBasic]="'true'"
+                        class="mini fluid compact ui icon basic bottom attached button ">
+                        <i class="close icon"></i>
                     </button>
                     
                 </div>
@@ -25,14 +40,14 @@
             </div>
               
             <div class="ui center aligned item animated fade compact button" (click)="addItem()">
-                <div class="visible content"><i class="icon plus"></i></div>
-                <div class="hidden content">Add Data</div>
+                <div class="visible content"><i class="blue large icon plus"></i></div>
+                <div class="hidden content"><span class="blue text">Add Data</span></div>
             </div>
   
           </div>
       </div>
       
-      <div class="thirteen wide stretched column">
+      <div class="thirteen wide noleftpadding norightpadding stretched column">
       <div class="ui container">
 
           <div class="ui tab" *ngFor="let itemProperty of formProperty.properties; let i = index; trackBy:trackByIndex" [suiTabContent]="i">

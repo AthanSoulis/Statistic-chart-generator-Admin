@@ -36,6 +36,8 @@ import { ChartLoadingService } from './services/chart-loading-service/chart-load
 
 import { SuiModule } from 'ng2-semantic-ui';
 
+import { ColorPickerModule } from 'ngx-color-picker';
+
 import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from 'ngx-schema-form';
 import { GeneralPropertiesWidgetComponent } from './custom-ngx-schema-form-widgets/general-properties-widget/general-properties-widget.component';
 import { CustomWidgetRegistry } from './custom-ngx-schema-form-widgets/custom-widget-registry';
@@ -54,6 +56,11 @@ import { ProfilePickerComponent } from './custom-ngx-schema-form-widgets/profile
 import { FilterFieldArrayWidgetComponent } from './custom-ngx-schema-form-widgets/filter-field-array-widget/filter-field-array-widget.component';
 import { TabularMenuWidgetComponent } from './custom-ngx-schema-form-widgets/tabular-menu-widget/tabular-menu-widget.component';
 import { HeadMenuWidgetComponent } from './custom-ngx-schema-form-widgets/head-menu-widget/head-menu-widget.component';
+import { RadioWidgetComponent } from './custom-ngx-schema-form-widgets/radio-widget/radio-widget.component';
+import { ColorPickerWidgetComponent } from './custom-ngx-schema-form-widgets/color-picker-widget/color-picker-widget.component';
+import { BooleanFieldWidgetComponent } from './custom-ngx-schema-form-widgets/boolean-field-widget/boolean-field-widget.component';
+import { NumberFieldWidgetComponent } from './custom-ngx-schema-form-widgets/number-field-widget/number-field-widget.component';
+import { StringFieldWidgetComponent } from './custom-ngx-schema-form-widgets/string-field-widget/string-field-widget.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +90,12 @@ import { HeadMenuWidgetComponent } from './custom-ngx-schema-form-widgets/head-m
     ProfilePickerComponent,
     FilterFieldArrayWidgetComponent,
     TabularMenuWidgetComponent,
-    HeadMenuWidgetComponent
+    HeadMenuWidgetComponent,
+    RadioWidgetComponent,
+    ColorPickerWidgetComponent,
+    BooleanFieldWidgetComponent,
+    NumberFieldWidgetComponent,
+    StringFieldWidgetComponent
   ],
   imports: [
     SchemaFormModule.forRoot(),
@@ -95,7 +107,8 @@ import { HeadMenuWidgetComponent } from './custom-ngx-schema-form-widgets/head-m
     NoopAnimationsModule,
     MatTreeModule,
     MatIconModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    ColorPickerModule
   ],
   entryComponents: [
     GeneralPropertiesWidgetComponent,
@@ -113,7 +126,12 @@ import { HeadMenuWidgetComponent } from './custom-ngx-schema-form-widgets/head-m
     ProfilePickerComponent,
     FilterFieldArrayWidgetComponent,
     TabularMenuWidgetComponent,
-    HeadMenuWidgetComponent
+    HeadMenuWidgetComponent,
+    RadioWidgetComponent,
+    ColorPickerWidgetComponent,
+    BooleanFieldWidgetComponent,
+    NumberFieldWidgetComponent,
+    StringFieldWidgetComponent
   ],
   providers: [
     SupportedLibrariesService,

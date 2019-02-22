@@ -13,3 +13,12 @@ input:read-only{
 .norightpadding {
     padding-right: 0 !important;
 }
+
+.blue.text {
+    color: rgb(8, 131, 192);
+    font-size: 1.1rem;
+}
+
+.ui.centered.grid.link.noleftpadding.item.active {
+    border-color: rgb(8, 131, 192) !important;
+}

@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, AfterContentInit } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
-import { SupportedAggregateFunctionsService } from '../../services/supported-aggregate-functions-service/supported-aggregate-functions.service';
+import { SupportedAggregateFunctionsService, AggregateFunction } from '../../services/supported-aggregate-functions-service/supported-aggregate-functions.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,13 +10,13 @@ import { Subscription } from 'rxjs';
 })
 export class AggregateSelectionWidgetComponent extends ControlWidget implements AfterContentInit {
 
-  aggregateFunctions: Array<string>;
+  aggregateFunctions: Array<AggregateFunction>;
 
   constructor(private supportedAggregatesService: SupportedAggregateFunctionsService) {
     super();
 
     supportedAggregatesService.getSupportedAggregateFunctionFilterY().subscribe(
-      (data: Array<string>) => this.aggregateFunctions = data // success path
+      (data: Array<AggregateFunction>) => this.aggregateFunctions = data // success path
       // error => this.error = error // error path
     );
   }

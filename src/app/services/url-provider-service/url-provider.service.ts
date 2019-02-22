@@ -13,11 +13,19 @@ export class UrlProviderService {
   private protocol = 'http';
 
   private url: string;
+  private iframeUrl: string;
 
   constructor() {
     this.domain = location.hostname;
     this.url = this.protocol + '://' + this.domain + ':' + this.port;
+    this.iframeUrl = this.url;
   }
 
-  getUrl(): string { return this.url; }
+  get iframeURL(): string {
+    return this.iframeUrl;
+  }
+
+  get serviceURL(): string {
+    return this.url;
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, forwardRef, Injectable, OnChanges, SimpleChanges, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, OnChanges, SimpleChanges, AfterViewInit, ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, ControlContainer, FormGroupDirective, FormBuilder, FormGroupName, ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource, MatTreeNodeOutlet } from '@angular/material/tree';
@@ -11,6 +11,7 @@ import { map, distinctUntilChanged } from 'rxjs/operators';
 import { ErrorHandlerService } from '../../../services/error-handler-service/error-handler.service';
 import { MappingProfilesService, Profile } from '../../../services/mapping-profiles-service/mapping-profiles.service';
 import { ChartLoadingService } from '../../../services/chart-loading-service/chart-loading.service';
+import { ViewRef_ } from '@angular/core/src/view';
 
 @Component({
   selector: 'select-attribute',
@@ -21,27 +22,30 @@ import { ChartLoadingService } from '../../../services/chart-loading-service/cha
   ],
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SelectAttributeComponent), multi: true }]
 })
-export class SelectAttributeComponent implements ControlValueAccessor, OnChanges, AfterViewInit {
+export class SelectAttributeComponent implements OnInit, ControlValueAccessor, OnChanges, AfterViewInit, OnDestroy {
 
   nestedEntityTreeControl: NestedTreeControl<EntityTreeNode>;
   nestedEntityDataSource: MatTreeNestedDataSource<EntityTreeNode>;
 
+  @Input() isDisabled = false;
   @Input() formControl: FormControl;
   @Input() chosenEntity: string = null;
   @Output() fieldChanged = new EventEmitter<FieldNode>();
 
-  parentPath: string = null;
   selectedNode: FieldNode = null;
 
-  constructor(private formBuilder: FormBuilder,
-    private dbSchemaService: DbSchemaService,
+  constructor(private dbSchemaService: DbSchemaService,
     private errorHandlerService: ErrorHandlerService,
     private profileMappingService: MappingProfilesService,
     private chartLoadingService: ChartLoadingService,
     private cdr: ChangeDetectorRef) {
 
-    this.nestedEntityTreeControl = new NestedTreeControl<EntityTreeNode>(this.getChildren);
-    this.nestedEntityDataSource = new MatTreeNestedDataSource();
+      this.nestedEntityTreeControl = new NestedTreeControl<EntityTreeNode>(this.getChildren);
+      this.nestedEntityDataSource = new MatTreeNestedDataSource();
+  }
+
+  ngOnInit() {
+    console.log('Select attribute Created');
   }
 
   ngAfterViewInit() {
@@ -49,8 +53,31 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
     this.registerOnTouched(this.handleTouch);
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+
+    for (const changedField of Object.keys(changes)) {
+
+      const change = changes[changedField];
+
+      if (changedField === 'chosenEntity') {
+        // console.log('Entity changed from: ' + change.previousValue + ' to ' + change.currentValue);
+        if (change.currentValue !== change.previousValue) {
+          if (this.chartLoadingService.chartLoadingStatus) {
+            this.getEntityTreeNode(change.currentValue, false);
+          } else {
+            this.getEntityTreeNode(change.currentValue, true);
+          }
+        }
+      }
+    }
+  }
+
+  ngOnDestroy() {
+    // console.log('Select attribute Destroyed', this.formControl);
+  }
+
   _onChange = (arg: any) => {};
-  _onTouched = () => {};
+  _onTouched = (arg: boolean) => {};
 
   handleChange(arg: FieldNode) {
     if (this.checkValidFieldNode(arg) !== null) {
@@ -78,25 +105,6 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
       return false; }
     }
 
-  ngOnChanges(changes: SimpleChanges) {
-
-    for (const changedField of Object.keys(changes)) {
-
-      const change = changes[changedField];
-
-      if (changedField === 'chosenEntity') {
-        // console.log('Entity changed from: ' + change.previousValue + ' to ' + change.currentValue);
-        if (change.currentValue !== change.previousValue) {
-          if (this.chartLoadingService.chartLoadingStatus) {
-            this.getEntityTreeNode(change.currentValue, false);
-          } else {
-            this.getEntityTreeNode(change.currentValue, true);
-          }
-        }
-      }
-    }
-  }
-
   getEntityTreeNode(entity: string, resetSelectField?: boolean) {
 
     if (entity === null) {
@@ -121,7 +129,6 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
 
                   // Expand root node
                   this.nestedEntityTreeControl.expand(rootTreeNode);
-                  this.onExpanded(rootTreeNode);
 
                   if (resetSelectField) {
                     this.selectedFieldChanged(null);
@@ -159,7 +166,9 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
     console.log('Updating DOM from model value: ', value);
     if (this.checkValidFieldNode(value)) {
       this.selectedFieldChanged(value);
-      this.cdr.detectChanges();
+      if ( this.cdr !== null && this.cdr !== undefined && !(this.cdr as ViewRef_).destroyed ) {
+            this.cdr.detectChanges();
+      }
     }
   }
 
@@ -171,11 +180,6 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
   registerOnTouched(fn: any): void {
     // console.log('On Touched method updated');
     this._onTouched = fn;
-  }
-
-  onExpanded(node: EntityTreeNode) {
-    // console.log('Node expanded: ',node);
-    // this.parentPath = this.traverseParentPath(node);
   }
 
   traverseParentPath(node: EntityTreeNode): string {
@@ -195,11 +199,12 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
     selectedFieldNode.type = field.type;
 
     this.formControl.setValue(selectedFieldNode);
+    console.log(this.formControl);
 
     this.fieldChanged.emit(selectedFieldNode);
   }
 
-  protected checkValidFieldNode(e: FieldNode) {
+  public checkValidFieldNode(e: FieldNode) {
 
     if (e !== null && (e.name && e.type)) {
       return e;

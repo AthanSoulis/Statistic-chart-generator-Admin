@@ -10,8 +10,29 @@ export class GoogleChartsChart {
     }
 }
 
+export class GoogleChartsTable {
+    library: string;
+    tableDescription: GoogleChartsDescription;
+
+    constructor() {
+        this.library = 'GoogleCharts';
+        this.tableDescription = new GoogleChartsDescription();
+    }
+}
+
+class GoogleChartsTableDescription {
+
+    queriesInfo: ChartInfo[];
+    columns: string[];
+    options: GoogleChartsOptions;
+    constructor() {
+        this.queriesInfo = [];
+        this.columns = new Array<string>();
+        this.options = new GoogleChartsOptions();
+    }
+}
+
 class GoogleChartsDescription {
-    tableForm?: boolean;
     chartType: string;
     columns: string[];
     queriesInfo: ChartInfo[];
@@ -49,17 +70,28 @@ class GoogleChartsDescription {
 
 class GoogleChartsOptions {
     title: string;
+    backgroundColor: string;
     hAxis: GoogleChartsAxis;
     vAxis: GoogleChartsAxis;
     series: GoogleChartSeries [];
+    chartArea: GoogleChartsChartArea;
     exporting: boolean;
+    pageSize: number;
+    isStacked: string;
 
     constructor() {
         this.hAxis = new GoogleChartsAxis();
         this.vAxis = new GoogleChartsAxis();
+        this.chartArea = new GoogleChartsChartArea();
         this.series = [];
         this.exporting = false;
+        this.pageSize = 50;
+        this.isStacked = 'false';
     }
+}
+
+class GoogleChartsChartArea {
+    backgroundColor: string;
 }
 
 class GoogleChartsAxis {

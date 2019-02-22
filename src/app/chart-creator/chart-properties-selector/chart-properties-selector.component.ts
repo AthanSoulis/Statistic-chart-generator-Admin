@@ -48,7 +48,7 @@ export class ChartPropertiesSelectorComponent implements OnDestroy, OnInit, Afte
   constructor(formBuilder: FormBuilder,
     private librariesService: SupportedLibrariesService,
     private chartTypesService: SupportedChartTypesService,
-    protected mappingProfileService: MappingProfilesService,
+    public mappingProfileService: MappingProfilesService,
     public modalService: SuiModalService) {
 
     librariesService.getSupportedLibraries().subscribe(
