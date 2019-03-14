@@ -1,11 +1,11 @@
 import { Component, OnInit, AfterViewInit, Output, EventEmitter, Input, AfterContentInit, OnChanges, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
-import { Query, Select, ChartInfo } from './chart-query-selector/chart-query.model';
-import { ChartProperties } from './chart-properties-selector/chart-properties.model';
+import { Query, Select, ChartInfo } from './chart-query.model';
+// import { ChartProperties } from './chart-properties-selector/chart-properties.model';
 import { SupportedLibrariesService } from '../services/supported-libraries-service/supported-libraries.service';
 import { HighChartsChart} from '../services/supported-libraries-service/chart-description-HighCharts.model';
 import { GoogleChartsChart, GoogleChartsTable } from '../services/supported-libraries-service/chart-description-GoogleCharts.model';
-import { Filter } from './chart-query-selector/query-filter-selector/query-filter/query-filter.model';
+// import { Filter } from './chart-query-selector/query-filter-selector/query-filter/query-filter.model';
 import { Profile } from '../services/mapping-profiles-service/mapping-profiles.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { FormSchema, SCGAFormSchema, PropertiesFormSchema, DataseriesFormSchema, AppearanceFormSchema } from './chart-form-schema.model';
