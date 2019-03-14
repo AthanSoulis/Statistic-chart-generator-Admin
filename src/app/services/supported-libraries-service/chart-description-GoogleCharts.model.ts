@@ -1,4 +1,4 @@
-import { Query, ChartInfo } from '../../chart-creator/chart-query-selector/chart-query.model';
+import { Query, ChartInfo } from '../../chart-creator/chart-query.model';
 
 export class GoogleChartsChart {
     library: string;

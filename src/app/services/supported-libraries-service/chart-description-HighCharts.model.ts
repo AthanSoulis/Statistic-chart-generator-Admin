@@ -1,5 +1,4 @@
-import { Query, ChartInfo } from '../../chart-creator/chart-query-selector/chart-query.model';
-import { ChartProperties } from '../../chart-creator/chart-properties-selector/chart-properties.model';
+import { Query, ChartInfo } from '../../chart-creator/chart-query.model';
 
 export class HighChartsChart {
     library: string;
