@@ -3,14 +3,14 @@ import { FormGroup, ControlContainer, FormGroupDirective, FormBuilder, FormGroup
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource, MatTreeNodeOutlet } from '@angular/material/tree';
 
-import { FieldType } from '../../../services/supported-filter-types-service/supported-filter-types.service';
-import { DbSchemaService, EntityNode, FieldNode, EntityTreeNode } from '../../../services/db-schema-service/db-schema.service';
+import { FieldType } from '../../services/supported-filter-types-service/supported-filter-types.service';
+import { DbSchemaService, EntityNode, FieldNode, EntityTreeNode } from '../../services/db-schema-service/db-schema.service';
 
 import { BehaviorSubject, of as observableOf, Observable, Subscription} from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
-import { ErrorHandlerService } from '../../../services/error-handler-service/error-handler.service';
-import { MappingProfilesService, Profile } from '../../../services/mapping-profiles-service/mapping-profiles.service';
-import { ChartLoadingService } from '../../../services/chart-loading-service/chart-loading.service';
+import { ErrorHandlerService } from '../../services/error-handler-service/error-handler.service';
+import { MappingProfilesService, Profile } from '../../services/mapping-profiles-service/mapping-profiles.service';
+import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
 import { ViewRef_ } from '@angular/core/src/view';
 
 @Component({

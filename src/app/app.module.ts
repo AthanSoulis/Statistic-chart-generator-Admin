@@ -12,15 +12,12 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
 import { ChartFrameComponent } from './chart-frame/chart-frame.component';
-import { ChartPropertiesSelectorComponent } from './chart-creator/chart-properties-selector/chart-properties-selector.component';
-import { ChartDataPresentationTableComponent } from './chart-data-presentation-table/chart-data-presentation-table.component';
-import { ChartQuerySelectorComponent } from './chart-creator/chart-query-selector/chart-query-selector.component';
-import { ChartDataPresentationTableRowComponent } from './chart-data-presentation-table/chart-data-presentation-table-row/chart-data-presentation-table-row.component';
-import { SelectAttributeComponent } from './chart-creator/chart-query-selector/select-attribute/select-attribute.component';
+import { TableFrameComponent } from './table-frame/table-frame.component';
+import { SelectAttributeComponent } from './form-components/select-attribute/select-attribute.component';
 import { ChartCreatorComponent } from './chart-creator/chart-creator.component';
-import { QueryFilterSelectorComponent } from './chart-creator/chart-query-selector/query-filter-selector/query-filter-selector.component';
-import { QueryFilterComponent } from './chart-creator/chart-query-selector/query-filter-selector/query-filter/query-filter.component';
-import { AutocompleteInputFieldComponent } from './chart-creator/chart-query-selector/query-filter-selector/query-filter/autocomplete-input-field/autocomplete-input-field.component';
+import { QueryFilterSelectorComponent } from './form-components/query-filter-selector/query-filter-selector.component';
+import { QueryFilterComponent } from './form-components/query-filter-selector/query-filter/query-filter.component';
+import { AutocompleteInputFieldComponent } from './form-components/query-filter-selector/query-filter/autocomplete-input-field/autocomplete-input-field.component';
 
 import { SupportedLibrariesService } from './services/supported-libraries-service/supported-libraries.service';
 import { DbSchemaService } from './services/db-schema-service/db-schema.service';
@@ -66,10 +63,7 @@ import { StringFieldWidgetComponent } from './custom-ngx-schema-form-widgets/str
   declarations: [
     AppComponent,
     ChartFrameComponent,
-    ChartPropertiesSelectorComponent,
-    ChartDataPresentationTableComponent,
-    ChartQuerySelectorComponent,
-    ChartDataPresentationTableRowComponent,
+    TableFrameComponent,
     ChartCreatorComponent,
     QueryFilterSelectorComponent,
     QueryFilterComponent,

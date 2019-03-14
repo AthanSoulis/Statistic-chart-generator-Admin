@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ControlContainer, FormGroupDirective, FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
-import { Filter } from '../../chart-query-selector/query-filter-selector/query-filter/query-filter.model';
-import { EntityTreeNode } from '../../../services/db-schema-service/db-schema.service';
+import { Filter } from './query-filter/query-filter.model';
+import { EntityTreeNode } from '../../services/db-schema-service/db-schema.service';
 
 @Component({
   selector: 'query-filter-selector',

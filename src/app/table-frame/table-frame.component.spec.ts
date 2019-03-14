@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChartDataPresentationTableComponent } from './chart-data-presentation-table.component';
+import { TableFrameComponent } from './table-frame.component';
 
 describe('ChartDataPresentationTableComponent', () => {
-  let component: ChartDataPresentationTableComponent;
-  let fixture: ComponentFixture<ChartDataPresentationTableComponent>;
+  let component: TableFrameComponent;
+  let fixture: ComponentFixture<TableFrameComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChartDataPresentationTableComponent ]
+      declarations: [ TableFrameComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChartDataPresentationTableComponent);
+    fixture = TestBed.createComponent(TableFrameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

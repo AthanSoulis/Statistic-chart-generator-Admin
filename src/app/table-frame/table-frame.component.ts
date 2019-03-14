@@ -3,11 +3,11 @@ import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browse
 import { UrlProviderService } from '../services/url-provider-service/url-provider.service';
 
 @Component({
-  selector: 'chart-data-presentation-table',
-  templateUrl: './chart-data-presentation-table.component.html',
-  styleUrls: ['./chart-data-presentation-table.component.css']
+  selector: 'table-frame',
+  templateUrl: './table-frame.component.html',
+  styleUrls: ['./table-frame.component.css']
 })
-export class ChartDataPresentationTableComponent implements OnInit, OnChanges {
+export class TableFrameComponent implements OnInit, OnChanges {
 
   @ViewChild('tableIframe') iframe: ElementRef;
   @Input() table: Object;
