@@ -6,13 +6,13 @@ input:read-only{
     cursor: pointer !important;
 }
 
-.noleftpadding {
+/* .noleftpadding {
     padding-left: 0 !important;
 }
 
 .norightpadding {
     padding-right: 0 !important;
-}
+} */
 
 .blue.text {
     color: rgb(8, 131, 192);
