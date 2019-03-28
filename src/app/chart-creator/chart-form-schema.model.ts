@@ -556,6 +556,20 @@ export class FormSchema {
                         'widget' : { 'id' : 'csui-property-object' },
                         // 'title': 'Highcharts Appearance Options',
                         'properties' : {
+                            'dataSeriesColorArray' : {
+                                'type': 'array',
+                                'title': 'Data Series Color',
+                                'itemName': 'Series Color',
+                                'minItems': 1,
+                                'deleteButtonPosition' : 'in',
+                                'widget' : { 'id' : 'csui-array' },
+                                'items': {
+                                    'type' : 'string',
+                                    'pattern': '^#[0-9a-fA-F]{8}$',
+                                    'default': '#00000000',
+                                    'widget': {'id': 'csui-color-picker'}
+                                }
+                            },
                             'stackedChart' : {
                                 'type' : 'string',
                                 'widget' : { 'id': 'csui-select'},
@@ -584,7 +598,7 @@ export class FormSchema {
                                 'type' : 'string',
                                 'pattern': '^#[0-9a-fA-F]{8}$',
                                 'default': '#FFFFFFFF',
-                                'title' : 'Background Color',
+                                'title' : 'Data Series Color',
                                 'tooltip': 'Background color for the full chart area.',
                                 'widget': {'id': 'csui-color-picker'}
                             },
@@ -777,6 +791,10 @@ export class FormSchema {
                             {
                                 'grouping': 'equal width fields',
                                 'fields': ['hcLegendHorizontalAlignment', 'hcLegendVerticalAlignment']
+                            },
+                            {
+                                'title' : 'Series',
+                                'fields' : ['dataSeriesColorArray']
                             },
                             {
                                 'title' : 'Chart Area',
@@ -974,7 +992,8 @@ export class FormSchema {
 
         '/generalChartProperties/profile': (value: any, formProperty: FormProperty, form: PropertyGroup) => {
             if (value === undefined || value === null || value === '') {
-                return { '/generalChartProperties/profile': { 'expectedValue': 'JK' }} ;
+                // return { '/generalChartProperties/profile': { 'expectedValue': 'OpenAIRE All-Inclusive' }} ;
+                return null;
             }
 
             return null;
