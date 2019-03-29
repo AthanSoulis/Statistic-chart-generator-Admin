@@ -22,7 +22,6 @@ export class ErrorHandlerService implements ErrorHandler {
       console.error( error.error);
     }
     // return an observable with a user-facing error message
-    return throwError(
-      'Something bad happened; please try again later.');
+    // throwError('Something bad happened; please try again later.');
   }
 }

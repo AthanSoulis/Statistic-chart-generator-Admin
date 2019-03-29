@@ -1,8 +1,11 @@
 .url-holder {
     overflow-wrap: break-word;
     text-align: center;
-    max-height: 2cm;
-    overflow-y: auto
+    overflow: hidden;
+    display: block;
+    max-width: 20em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .export-description {

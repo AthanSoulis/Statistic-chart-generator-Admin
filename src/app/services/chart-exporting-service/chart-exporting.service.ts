@@ -1,9 +1,16 @@
 import { Injectable} from '@angular/core';
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { Observable, throwError, BehaviorSubject, of, } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { retry, catchError, distinctUntilChanged } from 'rxjs/operators';
 import { ErrorHandlerService } from '../error-handler-service/error-handler.service';
 import { UrlProviderService } from '../url-provider-service/url-provider.service';
+
+type PostTinyUrlCallback = (shortUrl: string) => void;
+
+export class ShortenUrlResponse {
+  constructor(shortUrl: string) { this.shortUrl = shortUrl; }
+  public shortUrl: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -91,22 +98,29 @@ export class ChartExportingService {
     const postHeaders = new HttpHeaders();
     postHeaders.append('Content-Type', 'application/json');
 
-    this.http.post(postUrl,
+    const postSub = this.http.post(postUrl,
       {'url' : encodeURIComponent(chartUrl) },
       {headers: postHeaders})
+      .pipe(
+        catchError(
+          err => {
+            this.errorHandler.handleError(err);
+            const unshortenedResponse = new ShortenUrlResponse(chartUrl);
+            return of(unshortenedResponse);
+        }))
       .subscribe(
       // success path
       (response: ShortenUrlResponse) => tinyUrlSubject.next(response.shortUrl),
       // error path
-      error => this.errorHandler.handleError(error),
+      error => {
+        this.errorHandler.handleError(error);
+       },
       // complete path
-      () => loader.next(false)
+      () => {
+        loader.next(false);
+        postSub.unsubscribe();
+      }
     );
   }
 }
 
-type PostTinyUrlCallback = (shortUrl: string) => void;
-
-export class ShortenUrlResponse {
-  public shortUrl: string;
-}
