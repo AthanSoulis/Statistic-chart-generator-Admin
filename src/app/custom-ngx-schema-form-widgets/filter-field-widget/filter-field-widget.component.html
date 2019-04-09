@@ -1,5 +1,5 @@
-    <div [ngSwitch]="this.fieldType" [ngClass]="!schema.requiredField ? 'widget form-group field' : 
-    (control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'" >
+    <div [ngSwitch]="this.fieldType" [ngClass]="!schema.requiredField ? 'widget form-group fluid field' : 
+    (control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required fluid field error' : 'widget form-group required fluid field'" >
       <ng-container *ngSwitchCase="0">          
         
         <div  *ngIf="(this.filterOperator === '=') || (this.filterOperator === '!='); else plainStringInput">

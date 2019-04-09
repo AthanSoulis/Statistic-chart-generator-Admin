@@ -25,7 +25,7 @@ export class EntityFieldSelectionWidgetComponent extends ControlWidget implement
 
     // Find the FormProperty named 'data'
     let property = <PropertyGroup>this.formProperty;
-    while (property.schema.title !== 'Data Selection') {
+    while ( property.properties['yaxisData'] === null || property.properties['yaxisData'] === undefined ) {
       // lulz
       property = property.parent;
     }

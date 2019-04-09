@@ -1,9 +1,9 @@
 import { Component, AfterViewInit, Injectable, OnChanges, SimpleChanges, AfterContentInit, OnDestroy, forwardRef, Inject, OnInit, Output, EventEmitter, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
 import { DbSchemaService } from '../../services/db-schema-service/db-schema.service';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, of } from 'rxjs';
 import { MappingProfilesService } from '../../services/mapping-profiles-service/mapping-profiles.service';
-import { distinctUntilChanged, filter } from 'rxjs/operators';
+import { distinctUntilChanged, filter, catchError } from 'rxjs/operators';
 import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
 import { ErrorHandlerService } from '../../services/error-handler-service/error-handler.service';
 import { ArrayProperty } from 'ngx-schema-form/lib/model/arrayproperty';
@@ -66,7 +66,14 @@ export class EntitySelectionWidgetComponent extends ControlWidget implements OnI
         this.chartLoadingService.increaseLoadingObs();
       }
 
-      this.dbSchemaServiceSubscription = this.dbSchemaService.getAvailableEntities(profile).pipe(distinctUntilChanged()).subscribe(
+      this.dbSchemaServiceSubscription = this.dbSchemaService.getAvailableEntities(profile)
+      .pipe(
+      distinctUntilChanged(),
+      catchError(
+        err => {
+          this.errorHandler.handleError(err);
+          return of([]);
+      })).subscribe(
         // success path
         (data: Array<string>) => {
 
@@ -77,7 +84,6 @@ export class EntitySelectionWidgetComponent extends ControlWidget implements OnI
           // Get a hold of the new entities
           this.entities = data;
         },
-        (error) => this.errorHandler.handleError(error),
         () => {
           // We want to avoid certain functionality when a chart is Loading
           // so notify that this Dataseries stopped loading
