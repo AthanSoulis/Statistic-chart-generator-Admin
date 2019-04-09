@@ -19,8 +19,21 @@
 }
 
 /* Every mat-nested-tree-node li wraps around its content */
-.mat-nested-tree-node li{
+/* .mat-nested-tree-node li{
     width: fit-content !important;
+} */
+.mat-tree-node {
+    font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+    min-height: 1em;
+    font-size: 1.1em;
+}
+.mat-tree-node.header {
+    font-size: 1.1em;
+}
+
+.ui.link.list {
+    padding-left: 1em;
+    padding-top: 0.25em;
 }
 
 /* Makes the dropdown menu bigger and enables the horizontal scroll bar */
