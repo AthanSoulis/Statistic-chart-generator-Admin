@@ -1,0 +1,59 @@
+<div *ngIf="this.diagramInitialised" class="row">
+    <div class="ui basic center aligned container">
+    <div class="ui warning compact message" style="display: inline-block; margin-bottom: 2em;">
+        <p><i class="exclamation icon"></i>Choosing a new Category will reset all your <b>Data</b> changes!</p>
+    </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="this.diagramCategoryService.supportedChartTypes.length > 0">
+  <div class="ui basic container">
+  <h3 class="ui dividing header">Basic Diagrams</h3>
+  <div class="ui stackable centered cards">
+      <a class="card" *ngFor="let basicDiagram of this.diagramCategoryService.supportedChartTypes"
+      [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(basicDiagram)))
+      (click)="this.diagramSelectionAction(basicDiagram)">
+        <div class="image">
+          <img src="assets/images/imagePlaceholder.svg" alt="Diagram Image">
+        </div>
+        <div class="content">
+          <a class="center aligned header">{{basicDiagram | titlecase}}</a>
+        </div>
+      </a>
+  </div>
+  </div>
+</div>
+<div class="row" *ngIf="this.diagramCategoryService.supportedMaps.length > 0">
+  <div class="ui basic container">
+  <h3 class="ui dividing header">Map Diagrams</h3>
+  <div class="ui stackable centered cards">
+    <a class="card" *ngFor="let mapDiagram of this.diagramCategoryService.supportedMaps"
+    [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(mapDiagram)))
+    (click)="this.diagramSelectionAction(mapDiagram)">
+        <div class="image">
+          <img src="assets/images/imagePlaceholder.svg" alt="Diagram Image">
+        </div>
+        <div class="content">
+          <a class="center aligned header">{{mapDiagram}}</a>
+        </div>
+      </a>
+  </div>
+  </div>
+</div>
+<div class="row" *ngIf="this.diagramCategoryService.supportedSpecialisedDiagrams.length > 0">
+  <div class="ui basic container">
+  <h3 class="ui dividing header">Specialised Diagrams</h3>
+  <div class="ui stackable centered cards">
+      <a class="card" *ngFor="let specialisedDiagram of this.diagramCategoryService.supportedSpecialisedDiagrams"
+      [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(specialisedDiagram)))
+      (click)="this.diagramSelectionAction(specialisedDiagram)">
+          <div class="image">
+            <img src="assets/images/imagePlaceholder.svg" alt="Diagram Image">
+          </div>
+          <div class="content">
+            <a class="center aligned header">{{specialisedDiagram}}</a>
+          </div>
+        </a>
+  </div>
+  </div>
+</div>
