@@ -58,6 +58,10 @@ import { ColorPickerWidgetComponent } from './custom-ngx-schema-form-widgets/col
 import { BooleanFieldWidgetComponent } from './custom-ngx-schema-form-widgets/boolean-field-widget/boolean-field-widget.component';
 import { NumberFieldWidgetComponent } from './custom-ngx-schema-form-widgets/number-field-widget/number-field-widget.component';
 import { StringFieldWidgetComponent } from './custom-ngx-schema-form-widgets/string-field-widget/string-field-widget.component';
+import { ViewPropertiesWidgetComponent } from './custom-ngx-schema-form-widgets/view-properties-widget/view-properties-widget.component';
+import { CategoryPropertiesWidgetComponent } from './custom-ngx-schema-form-widgets/category-properties-widget/category-properties-widget.component';
+import { DiagramCategoryPickerComponent } from './custom-ngx-schema-form-widgets/diagram-category-picker/diagram-category-picker.component';
+import { FilterArrayWidgetComponent } from './custom-ngx-schema-form-widgets/filter-array-widget/filter-array-widget.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +93,11 @@ import { StringFieldWidgetComponent } from './custom-ngx-schema-form-widgets/str
     ColorPickerWidgetComponent,
     BooleanFieldWidgetComponent,
     NumberFieldWidgetComponent,
-    StringFieldWidgetComponent
+    StringFieldWidgetComponent,
+    ViewPropertiesWidgetComponent,
+    CategoryPropertiesWidgetComponent,
+    DiagramCategoryPickerComponent,
+    FilterArrayWidgetComponent
   ],
   imports: [
     SchemaFormModule.forRoot(),
@@ -125,7 +133,11 @@ import { StringFieldWidgetComponent } from './custom-ngx-schema-form-widgets/str
     ColorPickerWidgetComponent,
     BooleanFieldWidgetComponent,
     NumberFieldWidgetComponent,
-    StringFieldWidgetComponent
+    StringFieldWidgetComponent,
+    ViewPropertiesWidgetComponent,
+    CategoryPropertiesWidgetComponent,
+    DiagramCategoryPickerComponent,
+    FilterArrayWidgetComponent
   ],
   providers: [
     SupportedLibrariesService,
