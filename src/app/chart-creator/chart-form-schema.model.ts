@@ -98,6 +98,7 @@ export interface TableAppearanceFormSchema {
 /*
  * Semantic UI related schema fields
  *
+ * ~ fieldsetColumnWidth: Sets the width of the fieldset on the grid based on this https://semantic-ui.com/collections/grid.html#column-widths
  * ~ grouping: Changes the way the fields are grouped based on this https://semantic-ui.com/collections/form.html#fields
  * ~ fieldsets.width: Adds a width to each field based on this https://semantic-ui.com/collections/form.html#width .
  *   Works with {csui-property-object}
@@ -112,6 +113,41 @@ export interface TableAppearanceFormSchema {
  */
 
 export class FormSchema {
+
+    private _viewFormSchema = {
+        'type' : 'object',
+        'widget' : { 'id' : 'csui-view-properties-object' },
+        'properties' : {
+            'profile' : {
+                'type' : 'string',
+                'requiredField' : true,
+                'minLength' : 1,
+                'widget': {'id': 'csui-profile-picker'}
+            }
+        },
+        'fieldsets': [
+            {
+                'fields': ['profile']
+            }
+        ],
+        'required': [ 'profile' ]
+    };
+
+    private _categoryFormSchema = {
+        'type' : 'object',
+        'title' : 'Select Category',
+        'description' : 'Choose the type of diagram you want to make',
+        'widget' : { 'id' : 'csui-category-properties-object' },
+        'properties' : {
+            'chartType' : {
+                'type' : 'string',
+                'requiredField' : true,
+                'widget': { 'id': 'csui-diagram-category-component' },
+            }
+        },
+        'fieldsets': [{ 'fields': ['chartType'] }],
+        'required': ['chartType']
+    };
 
     private _propertiesFormSchema = {
         'type' : 'object',
@@ -236,9 +272,9 @@ export class FormSchema {
             'properties' : {
                 'data' : {
                     'type' : 'object',
-                    'title' : 'Data Selection',
-                    'description' : 'Describe the data you want to appear on your chart',
-                    'grouping' : 'ui field basic segment',
+                    // 'title' : 'Data Selection',
+                    // 'description' : 'Describe the data you want to appear on your chart',
+                    'grouping' : 'ui fluid two column stackable basic grid',
                     'widget' : { 'id' : 'csui-property-object' },
                     'properties' : {
                         'yaxisData' : {
@@ -354,7 +390,7 @@ export class FormSchema {
                                         'itemName': 'Filter Rule',
                                         'deleteButtonPosition' : 'in',
                                         'minItems': 1,
-                                        'widget' : { 'id' : 'csui-array' },
+                                        'widget' : { 'id' : 'csui-filter-array' },
                                         'items': {
                                             'type' : 'object',
                                             'widget': { 'id': 'csui-filter-property-object'},
@@ -451,31 +487,32 @@ export class FormSchema {
                     },
                     'fieldsets': [
                         {
-                            'fields' : [
-                                'yaxisData',
-                                'xaxisData',
-                                'filters'
-                            ]
+                            'fieldsetColumnWidth' : 'six wide column',
+                            'fields' : ['yaxisData', 'xaxisData']
+                        },
+                        {
+                            'fieldsetColumnWidth' : 'ten wide column',
+                            'fields' : ['filters']
                         }
                     ],
                     'required': ['yaxisData', 'xaxisData', 'filters']
                 },
                 'chartProperties' : {
                     'type' : 'object',
-                    'title' : 'Chart Properties',
-                    'description' : 'Customize the way data appear on your chart',
-                    'grouping' : 'ui field basic segment',
+                    // 'title' : 'Chart Properties',
+                    // 'description' : 'Customize the way data appear on your chart',
+                    // 'grouping' : 'ui field basic segment',
                     'widget' : { 'id' : 'csui-property-object' },
                     'properties' : {
-                        'dataseriesColor' : {
-                            'type' : 'string',
-                            'pattern': '^#[0-9a-fA-F]{8}$',
-                            'title' : 'Dataseries Color',
-                            'widget': { 'id': 'csui-color-picker' },
-                            'visibleIf': {
-                                'chartType': ['area', 'column', 'bar', 'line']
-                            }
-                        },
+                        // 'dataseriesColor' : {
+                        //     'type' : 'string',
+                        //     'pattern': '^#[0-9a-fA-F]{8}$',
+                        //     'title' : 'Dataseries Color',
+                        //     'widget': { 'id': 'csui-color-picker' },
+                        //     // 'visibleIf': {
+                        //     //     'chartType': ['area', 'column', 'bar', 'line']
+                        //     // }
+                        // },
                         'dataseriesName' : {
                             'type' : 'string',
                             'placeholder' : 'Dataseries',
@@ -489,32 +526,33 @@ export class FormSchema {
                             //     'id': 'string'
                             // }
                         },
-                        'chartType' : {
-                            'type' : 'string',
-                            'requiredField' : true,
-                            'minLength': 1,
-                            'placeholder' : 'Select Chart Type',
-                            'title' : 'Chart Type',
-                            'widget': { 'id': 'csui-chart-type-select' },
-                        }
+                        // 'chartType' : {
+                        //     'type' : 'string',
+                        //     // 'requiredField' : true,
+                        //     'minLength': 1,
+                        //     'placeholder' : 'Select Chart Type',
+                        //     'title' : 'Chart Type',
+                        //     'widget': { 'id': 'csui-chart-type-select' },
+                        // }
                     },
                     'fieldsets': [
-                        {
-                            'grouping': 'fields',
-                            'fields': [
-                                'chartType',
-                                'dataseriesColor'
-                            ],
-                            'width': [
-                                'ten wide',
-                                'six wide'
-                            ]
-                        },
+                        // {
+                        //     'grouping': 'fields',
+                        //     'title' : 'Data Properties',
+                        //     'fields': [
+                        //         'chartType',
+                        //         'dataseriesColor'
+                        //     ],
+                        //     'width': [
+                        //         'three wide',
+                        //         'three wide'
+                        //     ]
+                        // },
                         {
                             'fields': [ 'dataseriesName' ]
                         }
                     ],
-                    'required': ['chartType']
+                    // 'required': ['chartType']
                 }
             },
             'fieldsets': [
@@ -961,25 +999,34 @@ export class FormSchema {
         'type' : 'object',
         'widget' : { 'id' : 'csui-head-menu' },
         'properties' : {
-            'generalChartProperties' : this._propertiesFormSchema ,
+            'view' : this._viewFormSchema ,
+            'category' : this._categoryFormSchema,
             'dataseries' : this._dataseriesFormSchema,
             'appearance' : this._appearanceFormSchema
         },
         'fieldsets': [
             {
-                'title': 'General',
-                'fields': ['generalChartProperties']
+                'title' : 'Select View',
+                'description' : 'Choose what type of data interests you',
+                'fields': ['view']
             },
             {
-                'title': 'Dataseries',
+                'title' : 'Select Category',
+                'description' : 'Choose the type of diagram you want to make',
+                'fields': ['category']
+            },
+            {
+                'title': 'Select Data',
+                'description' : 'Describe the data you want to see',
                 'fields': ['dataseries']
             },
             {
-                'title': 'Appearance',
+                'title': 'Customise Appearance',
+                'description' : 'Change the way your diagram looks',
                 'fields': ['appearance']
             }
         ],
-        'required': ['generalChartProperties', 'dataseries', 'appearance']
+        'required': ['view', 'category', 'dataseries', 'appearance']
     };
 
     get formSchema() { return this._SCGAFormSchema; }
@@ -990,22 +1037,22 @@ export class FormSchema {
   get customValidators() {
     return {
 
-        '/generalChartProperties/profile': (value: any, formProperty: FormProperty, form: PropertyGroup) => {
-            if (value === undefined || value === null || value === '') {
-                // return { '/generalChartProperties/profile': { 'expectedValue': 'OpenAIRE All-Inclusive' }} ;
-                return null;
-            }
+        // '/generalChartProperties/profile': (value: any, formProperty: FormProperty, form: PropertyGroup) => {
+        //     if (value === undefined || value === null || value === '') {
+        //         // return { '/generalChartProperties/profile': { 'expectedValue': 'OpenAIRE All-Inclusive' }} ;
+        //         return null;
+        //     }
 
-            return null;
-        },
-        '/appearance/library': (value: any, formProperty: FormProperty, form: PropertyGroup) => {
-            if (value === undefined || value === null || value === '' || value === 'HighCharts') {
-                // return { '/appearance/library': { 'expectedValue': 'HighCharts' }} ;
-                return null;
-            }
+        //     return null;
+        // },
+        // '/appearance/library': (value: any, formProperty: FormProperty, form: PropertyGroup) => {
+        //     if (value === undefined || value === null || value === '' || value === 'HighCharts') {
+        //         // return { '/appearance/library': { 'expectedValue': 'HighCharts' }} ;
+        //         return null;
+        //     }
 
-            return null;
-        }
+        //     return null;
+        // }
 
 
     }; }
