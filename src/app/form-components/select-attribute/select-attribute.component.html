@@ -36,19 +36,18 @@
               </button>
               {{node.name | titlecase}}
             </div>
+            <div class="ui fitted divider"></div>
           </div>
       
           <div class="ui link list" [class.data-tree-invisible]="!nestedEntityTreeControl.isExpanded(node)">
           <div class="content">
             <div *ngFor="let field of node.fields; trackBy:trackByFieldName; let first = first" >
-              <div *ngIf="first" class="ui fitted divider"></div>
               <a class="mat-tree-node item" (click)="nodeSelected(field, node)" style="padding-inline-start: 1em">
                 {{field.name | titlecase}}
               </a>
               <div class="ui fitted divider"></div>
             </div>
-            
-
+          
             <ng-container matTreeNodeOutlet></ng-container>
           </div>
           </div>
