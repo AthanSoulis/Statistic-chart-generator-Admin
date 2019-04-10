@@ -6,11 +6,11 @@ import { distinctUntilChanged } from 'rxjs/operators';
 import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
 
 @Component({
-  selector: 'tabular-menu-widget',
-  templateUrl: './tabular-menu-widget.component.html',
-  styleUrls: ['./tabular-menu-widget.component.css']
+  selector: 'dataseries-menu-widget',
+  templateUrl: './dataseries-menu-widget.component.html',
+  styleUrls: ['./dataseries-menu-widget.component.css']
 })
-export class TabularMenuWidgetComponent extends ArrayLayoutWidget implements AfterContentInit, OnDestroy {
+export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements AfterContentInit, OnDestroy {
 
   active: boolean[] = [];
   editable: boolean[] = [];

@@ -13,7 +13,7 @@ import { OperatorSelectionWidgetComponent } from './operator-selection-widget/op
 import { FilterPropertyWidgetComponent } from './filter-property-widget/filter-property-widget.component';
 import { FilterFieldArrayWidgetComponent } from './filter-field-array-widget/filter-field-array-widget.component';
 import { ProfilePickerComponent } from './profile-picker/profile-picker.component';
-import { TabularMenuWidgetComponent } from './tabular-menu-widget/tabular-menu-widget.component';
+import { DataseriesMenuWidgetComponent } from './dataseries-menu-widget/dataseries-menu-widget.component';
 import { HeadMenuWidgetComponent } from './head-menu-widget/head-menu-widget.component';
 import { RadioWidgetComponent } from './radio-widget/radio-widget.component';
 import { ColorPickerWidgetComponent } from './color-picker-widget/color-picker-widget.component';
@@ -44,7 +44,7 @@ export class CustomWidgetRegistry extends DefaultWidgetRegistry {
     this.register('csui-profile-picker', ProfilePickerComponent);
     this.register('csui-filter-field-array', FilterFieldArrayWidgetComponent);
     this.register('csui-filter-array', FilterArrayWidgetComponent);
-    this.register('csui-tabular-menu', TabularMenuWidgetComponent);
+    this.register('csui-dataseries-menu', DataseriesMenuWidgetComponent);
     this.register('csui-head-menu', HeadMenuWidgetComponent);
     this.register('csui-radio-selection', RadioWidgetComponent);
     this.register('csui-color-picker', ColorPickerWidgetComponent);

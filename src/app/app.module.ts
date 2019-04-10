@@ -51,7 +51,7 @@ import { OperatorSelectionWidgetComponent } from './custom-ngx-schema-form-widge
 import { FilterPropertyWidgetComponent } from './custom-ngx-schema-form-widgets/filter-property-widget/filter-property-widget.component';
 import { ProfilePickerComponent } from './custom-ngx-schema-form-widgets/profile-picker/profile-picker.component';
 import { FilterFieldArrayWidgetComponent } from './custom-ngx-schema-form-widgets/filter-field-array-widget/filter-field-array-widget.component';
-import { TabularMenuWidgetComponent } from './custom-ngx-schema-form-widgets/tabular-menu-widget/tabular-menu-widget.component';
+import { DataseriesMenuWidgetComponent } from './custom-ngx-schema-form-widgets/dataseries-menu-widget/dataseries-menu-widget.component';
 import { HeadMenuWidgetComponent } from './custom-ngx-schema-form-widgets/head-menu-widget/head-menu-widget.component';
 import { RadioWidgetComponent } from './custom-ngx-schema-form-widgets/radio-widget/radio-widget.component';
 import { ColorPickerWidgetComponent } from './custom-ngx-schema-form-widgets/color-picker-widget/color-picker-widget.component';
@@ -87,7 +87,7 @@ import { FilterArrayWidgetComponent } from './custom-ngx-schema-form-widgets/fil
     FilterPropertyWidgetComponent,
     ProfilePickerComponent,
     FilterFieldArrayWidgetComponent,
-    TabularMenuWidgetComponent,
+    DataseriesMenuWidgetComponent,
     HeadMenuWidgetComponent,
     RadioWidgetComponent,
     ColorPickerWidgetComponent,
@@ -127,7 +127,7 @@ import { FilterArrayWidgetComponent } from './custom-ngx-schema-form-widgets/fil
     FilterPropertyWidgetComponent,
     ProfilePickerComponent,
     FilterFieldArrayWidgetComponent,
-    TabularMenuWidgetComponent,
+    DataseriesMenuWidgetComponent,
     HeadMenuWidgetComponent,
     RadioWidgetComponent,
     ColorPickerWidgetComponent,

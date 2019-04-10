@@ -265,7 +265,7 @@ export class FormSchema {
     private _dataseriesFormSchema = {
         'type': 'array',
         'description': 'Dataseries',
-        'widget' : { 'id' : 'csui-tabular-menu' },
+        'widget' : { 'id' : 'csui-dataseries-menu' },
         'items': {
             'type' : 'object',
             'widget' : { 'id' : 'csui-general-properties-object' },

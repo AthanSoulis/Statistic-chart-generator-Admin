@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabularMenuWidgetComponent } from './tabular-menu-widget.component';
+import { DataseriesMenuWidgetComponent } from './dataseries-menu-widget.component';
 
 describe('TabularMenuWidgetComponent', () => {
-  let component: TabularMenuWidgetComponent;
-  let fixture: ComponentFixture<TabularMenuWidgetComponent>;
+  let component: DataseriesMenuWidgetComponent;
+  let fixture: ComponentFixture<DataseriesMenuWidgetComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TabularMenuWidgetComponent ]
+      declarations: [ DataseriesMenuWidgetComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TabularMenuWidgetComponent);
+    fixture = TestBed.createComponent(DataseriesMenuWidgetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
