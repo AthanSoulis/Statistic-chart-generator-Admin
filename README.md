@@ -1,5 +1,5 @@
 # Statistic-chart-generator-Admin
-The Admin Angular app for the [Statistic chart generator](https://github.com/AthanSoulis/Statistic-chart-generator)
+The Admin Angular app for the [Statistic chart generator](https://github.com/madgeek-arc/Statistic-chart-generator)
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -38,13 +38,6 @@ Finally from the root folder get the project up and running, listening to **loca
 cd ../
 npm start
 ```
+### Setting up access to back end
 
-If you are a cool guy you can also try :
-
- ```
- npm run pstart   //p for panormos
- ```
- or
- ```
- npm run vstart   //v for vatopedi
- ```
+By default the Angular app expects a back end service to be running at **localhost:8080**.If you want to use a back end service that is in a different address than that then fill in the `apiUrl` and `apiFolder` variables in the [stats-api.js](src/stats-api.js) file accordingly.
