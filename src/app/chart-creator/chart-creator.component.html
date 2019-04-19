@@ -21,23 +21,23 @@
 <div class="ui form" id="formContainer">
 
     <!-- Error Messages -->
-    <div class="ui basic compact segment container" style="padding: 0">
+    <!-- <div class="ui basic compact segment container" style="padding: 0">
         <div *ngIf="!isFormValid" class="ui negative message">
             <ul style="list-style: inside !important;" class="ui center aligned equal width compact stretched four column grid" >
                 <div class="column" *ngFor="let error of (this.dynamicFormHandlingService.$formErrorObject.value)">
                     <li>{{error.message}}</li></div>
             </ul>
         </div>    
-    </div>
+    </div> -->
 
-    <div class="ui two column grid">
+    <!-- <div class="ui two column grid">
         <div class="three wide column">
             <pre> {{this.dynamicFormHandlingService.formSchemaObject | json}} </pre>
         </div>
-        <div class="thirteen wide column">
+        <div class="thirteen wide column"> -->
             <sf-form #form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.customValidators" 
                 (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>  
-        </div>
-    </div>
+        <!-- </div>
+    </div> -->
 
 </div>
