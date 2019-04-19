@@ -62,6 +62,8 @@ import { ViewPropertiesWidgetComponent } from './custom-ngx-schema-form-widgets/
 import { CategoryPropertiesWidgetComponent } from './custom-ngx-schema-form-widgets/category-properties-widget/category-properties-widget.component';
 import { DiagramCategoryPickerComponent } from './custom-ngx-schema-form-widgets/diagram-category-picker/diagram-category-picker.component';
 import { FilterArrayWidgetComponent } from './custom-ngx-schema-form-widgets/filter-array-widget/filter-array-widget.component';
+import { TabularMenuWidgetComponent } from './custom-ngx-schema-form-widgets/tabular-menu-widget/tabular-menu-widget.component';
+import { ChartTableModalComponent } from './chart-table-modal/chart-table-modal.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +99,9 @@ import { FilterArrayWidgetComponent } from './custom-ngx-schema-form-widgets/fil
     ViewPropertiesWidgetComponent,
     CategoryPropertiesWidgetComponent,
     DiagramCategoryPickerComponent,
-    FilterArrayWidgetComponent
+    FilterArrayWidgetComponent,
+    TabularMenuWidgetComponent,
+    ChartTableModalComponent
   ],
   imports: [
     SchemaFormModule.forRoot(),
@@ -137,7 +141,9 @@ import { FilterArrayWidgetComponent } from './custom-ngx-schema-form-widgets/fil
     ViewPropertiesWidgetComponent,
     CategoryPropertiesWidgetComponent,
     DiagramCategoryPickerComponent,
-    FilterArrayWidgetComponent
+    FilterArrayWidgetComponent,
+    TabularMenuWidgetComponent,
+    ChartTableModalComponent
   ],
   providers: [
     SupportedLibrariesService,
