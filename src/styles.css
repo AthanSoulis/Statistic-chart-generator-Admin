@@ -3,13 +3,35 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 [class*="norightpadding"] {
-    padding-right: 0 !important;
+    /* padding-right: 0 !important; */
 }
 
 [class*="noleftpadding"] {
-    padding-left: 0 !important;
+    /* padding-left: 0 !important; */
 }
 
 [class*="basic segment"] {
-    padding-right: 0 !important;
+    /* padding-right: 0 !important; */
+}
+
+.Site {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.Site-header,
+.Site-footer {
+  flex-shrink: 0;
+}
+
+.Site-content {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+sui-modal sui-dimmer .ui.modal.fullscreen.transition.active.visible.normal {
+  margin: 1em !important;
+  left: auto !important;
+  right: auto !important;
 }

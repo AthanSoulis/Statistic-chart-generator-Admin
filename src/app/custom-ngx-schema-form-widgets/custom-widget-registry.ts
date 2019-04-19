@@ -13,13 +13,18 @@ import { OperatorSelectionWidgetComponent } from './operator-selection-widget/op
 import { FilterPropertyWidgetComponent } from './filter-property-widget/filter-property-widget.component';
 import { FilterFieldArrayWidgetComponent } from './filter-field-array-widget/filter-field-array-widget.component';
 import { ProfilePickerComponent } from './profile-picker/profile-picker.component';
-import { TabularMenuWidgetComponent } from './tabular-menu-widget/tabular-menu-widget.component';
+import { DataseriesMenuWidgetComponent } from './dataseries-menu-widget/dataseries-menu-widget.component';
 import { HeadMenuWidgetComponent } from './head-menu-widget/head-menu-widget.component';
 import { RadioWidgetComponent } from './radio-widget/radio-widget.component';
 import { ColorPickerWidgetComponent } from './color-picker-widget/color-picker-widget.component';
 import { BooleanFieldWidgetComponent } from './boolean-field-widget/boolean-field-widget.component';
 import { NumberFieldWidgetComponent } from './number-field-widget/number-field-widget.component';
 import { StringFieldWidgetComponent } from './string-field-widget/string-field-widget.component';
+import { ViewPropertiesWidgetComponent } from './view-properties-widget/view-properties-widget.component';
+import { CategoryPropertiesWidgetComponent } from './category-properties-widget/category-properties-widget.component';
+import { DiagramCategoryPickerComponent } from './diagram-category-picker/diagram-category-picker.component';
+import { FilterArrayWidgetComponent } from './filter-array-widget/filter-array-widget.component';
+import { TabularMenuWidgetComponent } from './tabular-menu-widget/tabular-menu-widget.component';
 
 export class CustomWidgetRegistry extends DefaultWidgetRegistry {
   constructor() {
@@ -39,12 +44,17 @@ export class CustomWidgetRegistry extends DefaultWidgetRegistry {
     this.register('csui-array', ArrayWidgetComponent);
     this.register('csui-profile-picker', ProfilePickerComponent);
     this.register('csui-filter-field-array', FilterFieldArrayWidgetComponent);
-    this.register('csui-tabular-menu', TabularMenuWidgetComponent);
+    this.register('csui-filter-array', FilterArrayWidgetComponent);
+    this.register('csui-dataseries-menu', DataseriesMenuWidgetComponent);
     this.register('csui-head-menu', HeadMenuWidgetComponent);
     this.register('csui-radio-selection', RadioWidgetComponent);
     this.register('csui-color-picker', ColorPickerWidgetComponent);
     this.register('csui-boolean', BooleanFieldWidgetComponent);
     this.register('csui-number', NumberFieldWidgetComponent);
     this.register('csui-string', StringFieldWidgetComponent);
+    this.register('csui-view-properties-object', ViewPropertiesWidgetComponent);
+    this.register('csui-category-properties-object', CategoryPropertiesWidgetComponent);
+    this.register('csui-diagram-category-component', DiagramCategoryPickerComponent);
+    this.register('csui-tabular-menu', TabularMenuWidgetComponent);
   }
 }

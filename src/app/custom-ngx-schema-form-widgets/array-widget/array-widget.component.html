@@ -10,9 +10,9 @@
     <div class="ui hidden divider"></div>
   </ng-template>
 
-  <div class="ui segments" *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex">
+  <div class="ui basic segments" *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex">
     
-    <div class="ui equal width form clearing attached segment" >
+    <div class="ui equal width form clearing attached basic segment">
   
       <i (click)="removeItem(i)" *ngIf="deleteButtonPosition === 'in'" style="cursor: pointer;" class="fitted red close icon ui right floated"></i>
 

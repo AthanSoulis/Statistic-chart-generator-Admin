@@ -22,29 +22,35 @@
     <div class="item">
     <div class="mat-app-background basic-container">
 
-      <mat-tree [dataSource]="nestedEntityDataSource" [treeControl]="nestedEntityTreeControl" class="data-tree" >
+      <mat-tree [dataSource]="nestedEntityDataSource" [treeControl]="nestedEntityTreeControl" class="data-tree ui link list" >
 
         <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
-          <li class="mat-tree-node" id="data-tree-entity-field"
-          matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+          <div class="item">
+            <div class="mat-tree-node  header" id="data-tree-entity-field"
+            matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+            
+              <button type="button" id="data-tree-button" class="ui compact icon button" mat-icon-button>
+                <mat-icon class="mat-icon-rtl-mirror">
+                  {{nestedEntityTreeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                </mat-icon>
+              </button>
+              {{node.name | titlecase}}
+            </div>
+            <div class="ui fitted divider"></div>
+          </div>
+      
+          <div class="ui link list" [class.data-tree-invisible]="!nestedEntityTreeControl.isExpanded(node)">
+          <div class="content">
+            <div *ngFor="let field of node.fields; trackBy:trackByFieldName; let first = first" >
+              <a class="mat-tree-node item" (click)="nodeSelected(field, node)" style="padding-inline-start: 1em">
+                {{field.name | titlecase}}
+              </a>
+              <div class="ui fitted divider"></div>
+            </div>
           
-            <button type="button" id="data-tree-button" class="ui compact icon button" mat-icon-button>
-              <mat-icon class="mat-icon-rtl-mirror">
-                {{nestedEntityTreeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-              </mat-icon>
-            </button>
-            {{node.name | titlecase}}
-          </li>
-
-          <ul [class.data-tree-invisible]="!nestedEntityTreeControl.isExpanded(node)">
-            <li *ngFor="let field of node.fields; trackBy:trackByFieldName" (click)="nodeSelected(field, node)">
-              <div class="mat-tree-node">
-                <span style="cursor: pointer;">{{field.name | titlecase}}</span>
-              </div>
-            </li>
-
             <ng-container matTreeNodeOutlet></ng-container>
-          </ul>
+          </div>
+          </div>
 
         </mat-nested-tree-node>
       </mat-tree>

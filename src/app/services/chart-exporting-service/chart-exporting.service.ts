@@ -73,20 +73,12 @@ export class ChartExportingService {
     this._chartUrl.next(this.urlProvider.serviceURL + '/chart?json=' + encodeURIComponent(stringObj));
   }
 
-  private changeChartTinyUrl(generatedChartTinyUrl: string) {
-    this._chartTinyUrl.next(generatedChartTinyUrl);
-  }
-
   changeTableUrl(tableObject: Object) {
 
     if (!tableObject) { return; }
 
     const stringObj = JSON.stringify(tableObject);
     this._tableUrl.next(this.urlProvider.serviceURL + '/table?json=' + encodeURIComponent(stringObj));
-  }
-
-  protected changeTableTinyUrl(generatedTableTinyUrl: string) {
-    this._tableTinyUrl.next(generatedTableTinyUrl);
   }
 
   private postTinyUrl(chartUrl: string, loader: BehaviorSubject<boolean>, tinyUrlSubject: BehaviorSubject<string> ) {

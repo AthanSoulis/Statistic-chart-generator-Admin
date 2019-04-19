@@ -13,6 +13,10 @@
       {{schema.description}}
     </span>
     
+  <!-- In older revision of the filters there was a 'between' filter operator. This operator required two inputs for its values.
+        At the moment of writing the need for a 'between' filter operator is no more because of the structure of the filters.
+        The code for the 'between' operator case has been commented out in case it is needed in the future.
+        (Now for a between filter you use two filters; one with a 'starts_with' operator and another with 'ends_with' operator)-->
     <div *ngIf="filterOperator !== 'between'; else betweenFilterFields">
       <div *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex">
         
@@ -23,7 +27,7 @@
         </div> -->
         
 
-        <span *ngIf="applicableDivider(i)" class="ui horizontal divider">OR</span>
+        <!-- <span *ngIf="applicableDivider(i)" class="ui horizontal divider">OR</span> -->
 
       </div>
     </div>
@@ -33,11 +37,11 @@
               
         <sf-form-element [formProperty]="formProperty.properties[i]"></sf-form-element>    
         
-        <div *ngIf="isOdd">
-          <!-- <button (click)="removeFilterValue(i)" type="button" 
-                  class="fluid ui icon compact button"><i class="close icon"></i></button> -->
+        <!-- <div *ngIf="isOdd">
+          <button (click)="removeFilterValue(i)" type="button" 
+                  class="fluid ui icon compact button"><i class="close icon"></i></button>
           <span *ngIf="applicableDivider(i)" class="ui horizontal divider">OR</span>
-        </div>
+        </div> -->
 
       </div>
     </ng-template>

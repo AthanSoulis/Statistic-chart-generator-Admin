@@ -51,13 +51,19 @@ import { OperatorSelectionWidgetComponent } from './custom-ngx-schema-form-widge
 import { FilterPropertyWidgetComponent } from './custom-ngx-schema-form-widgets/filter-property-widget/filter-property-widget.component';
 import { ProfilePickerComponent } from './custom-ngx-schema-form-widgets/profile-picker/profile-picker.component';
 import { FilterFieldArrayWidgetComponent } from './custom-ngx-schema-form-widgets/filter-field-array-widget/filter-field-array-widget.component';
-import { TabularMenuWidgetComponent } from './custom-ngx-schema-form-widgets/tabular-menu-widget/tabular-menu-widget.component';
+import { DataseriesMenuWidgetComponent } from './custom-ngx-schema-form-widgets/dataseries-menu-widget/dataseries-menu-widget.component';
 import { HeadMenuWidgetComponent } from './custom-ngx-schema-form-widgets/head-menu-widget/head-menu-widget.component';
 import { RadioWidgetComponent } from './custom-ngx-schema-form-widgets/radio-widget/radio-widget.component';
 import { ColorPickerWidgetComponent } from './custom-ngx-schema-form-widgets/color-picker-widget/color-picker-widget.component';
 import { BooleanFieldWidgetComponent } from './custom-ngx-schema-form-widgets/boolean-field-widget/boolean-field-widget.component';
 import { NumberFieldWidgetComponent } from './custom-ngx-schema-form-widgets/number-field-widget/number-field-widget.component';
 import { StringFieldWidgetComponent } from './custom-ngx-schema-form-widgets/string-field-widget/string-field-widget.component';
+import { ViewPropertiesWidgetComponent } from './custom-ngx-schema-form-widgets/view-properties-widget/view-properties-widget.component';
+import { CategoryPropertiesWidgetComponent } from './custom-ngx-schema-form-widgets/category-properties-widget/category-properties-widget.component';
+import { DiagramCategoryPickerComponent } from './custom-ngx-schema-form-widgets/diagram-category-picker/diagram-category-picker.component';
+import { FilterArrayWidgetComponent } from './custom-ngx-schema-form-widgets/filter-array-widget/filter-array-widget.component';
+import { TabularMenuWidgetComponent } from './custom-ngx-schema-form-widgets/tabular-menu-widget/tabular-menu-widget.component';
+import { ChartTableModalComponent } from './chart-table-modal/chart-table-modal.component';
 
 @NgModule({
   declarations: [
@@ -83,13 +89,19 @@ import { StringFieldWidgetComponent } from './custom-ngx-schema-form-widgets/str
     FilterPropertyWidgetComponent,
     ProfilePickerComponent,
     FilterFieldArrayWidgetComponent,
-    TabularMenuWidgetComponent,
+    DataseriesMenuWidgetComponent,
     HeadMenuWidgetComponent,
     RadioWidgetComponent,
     ColorPickerWidgetComponent,
     BooleanFieldWidgetComponent,
     NumberFieldWidgetComponent,
-    StringFieldWidgetComponent
+    StringFieldWidgetComponent,
+    ViewPropertiesWidgetComponent,
+    CategoryPropertiesWidgetComponent,
+    DiagramCategoryPickerComponent,
+    FilterArrayWidgetComponent,
+    TabularMenuWidgetComponent,
+    ChartTableModalComponent
   ],
   imports: [
     SchemaFormModule.forRoot(),
@@ -119,13 +131,19 @@ import { StringFieldWidgetComponent } from './custom-ngx-schema-form-widgets/str
     FilterPropertyWidgetComponent,
     ProfilePickerComponent,
     FilterFieldArrayWidgetComponent,
-    TabularMenuWidgetComponent,
+    DataseriesMenuWidgetComponent,
     HeadMenuWidgetComponent,
     RadioWidgetComponent,
     ColorPickerWidgetComponent,
     BooleanFieldWidgetComponent,
     NumberFieldWidgetComponent,
-    StringFieldWidgetComponent
+    StringFieldWidgetComponent,
+    ViewPropertiesWidgetComponent,
+    CategoryPropertiesWidgetComponent,
+    DiagramCategoryPickerComponent,
+    FilterArrayWidgetComponent,
+    TabularMenuWidgetComponent,
+    ChartTableModalComponent
   ],
   providers: [
     SupportedLibrariesService,

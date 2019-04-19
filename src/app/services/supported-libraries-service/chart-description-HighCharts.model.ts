@@ -49,10 +49,10 @@ class HCchart {
     plotBorderColor: string;
     plotBorderWidth: number;
 }
-class HCsubtitle {
+export class HCsubtitle {
     text: string;
 }
-class HCtitle {
+export class HCtitle {
     text: string;
 }
 class HCaxis {
@@ -66,14 +66,14 @@ class HCLang {
     noData = 'No Data available for the Query';
 }
 
-class HCExporting {
+export class HCExporting {
     enabled: boolean;
     constructor() {
         this.enabled = false;
     }
 }
 
-class HCLegend {
+export class HCLegend {
     enabled: boolean;
     layout: string;
     align: string;
@@ -96,11 +96,12 @@ class HCPlotOptionsSeries {
     }
 }
 
-class HCDataLabels {
+export class HCDataLabels {
     enabled: boolean;
+    format: string = undefined;
 }
 
-class HCCredits {
+export class HCCredits {
     enabled: boolean;
     text: string;
     href: string = null;

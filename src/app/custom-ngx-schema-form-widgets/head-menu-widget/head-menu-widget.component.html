@@ -1,23 +1,99 @@
-<form class="ui form container">
+<form class="ui form">
   <sui-tabset>
-  <div class="ui grid container">
-          <div class="ui top attached tabular menu">
-              <a class="ui item" suiTabHeader="tab-properties"><h3>{{formProperty.schema.fieldsets[0].title}}</h3></a>
-              <a class="ui item" suiTabHeader="tab-dataseries"><h3>{{formProperty.schema.fieldsets[1].title}}</h3></a>
-              <a class="ui item" suiTabHeader="tab-appearance"><h3>{{formProperty.schema.fieldsets[2].title}}</h3></a>
-          </div>
-      
-      <div class="ui basic fluid container segment noleftpadding norightpadding">
-          <div class="ui tab" suiTabContent="tab-properties">
-            <sf-form-element [formProperty]="formProperty.getProperty(formProperty.schema.fieldsets[0].fields[0])"></sf-form-element>
-          </div>
-          <div class="ui tab" suiTabContent="tab-dataseries">
-            <sf-form-element [formProperty]="formProperty.getProperty(formProperty.schema.fieldsets[1].fields[0])"></sf-form-element>
-          </div>
-          <div class="ui tab" suiTabContent="tab-appearance">
-            <sf-form-element [formProperty]="formProperty.getProperty(formProperty.schema.fieldsets[2].fields[0])"></sf-form-element>
+      <div class="ui five steps ">
+          <a class="step" suiTabHeader="tab-view" [(isActive)]="tabActivationStatusService.viewTabStatus">
+            <i class="users icon"></i>
+            <div class="content">
+              <div class="title">{{this.formProperty.schema.fieldsets[0].title}}</div>
+              <div class="description">{{this.formProperty.schema.fieldsets[0].description}}</div>
+            </div>
+            <div class="ui blue card" *ngIf="(mappingProfileService.selectedProfile$ | async) !== null &&
+             (mappingProfileService.selectedProfile$ | async) !== undefined">
+              <h1 class="center aligned description">
+                  <b>{{(mappingProfileService.selectedProfile$ | async).name}} </b>
+                  <div style="padding: 0.1em 0.25em !important; min-height: 0;"
+                  *ngFor="let shareholder of (mappingProfileService.selectedProfile$ | async).shareholders" 
+                  class="ui label">{{shareholder}}</div>
+                </h1>
+            </div>
+          </a>
+          <a class="step" suiTabHeader="tab-category" [(isActive)]="tabActivationStatusService.categoryTabStatus"
+          [isDisabled]="!((mappingProfileService.selectedProfile$ | async) !== null &&
+                        (mappingProfileService.selectedProfile$ | async) !== undefined)">
+            <i class="chart bar icon"></i>
+            <div class="content">
+                <div class="title">{{this.formProperty.schema.fieldsets[1].title}}</div>
+                <div class="description">{{this.formProperty.schema.fieldsets[1].description}}</div>
+            </div>
+            <div class="ui blue card" *ngIf="(this.diagramCategoryService.selectedDiagramCategory$ | async) !== null &&
+            (this.diagramCategoryService.selectedDiagramCategory$ | async) !== undefined">
+                <h1 class="center aligned description">
+                  <b>{{(this.diagramCategoryService.selectedDiagramCategory$ | async) | titlecase}} Diagram</b>
+                </h1>
+            </div>
+          </a>
+          <a class="step" suiTabHeader="tab-dataseries" [(isActive)]="tabActivationStatusService.dataseriesTabStatus" 
+          [isDisabled]="!((this.diagramCategoryService.selectedDiagramCategory$ | async) !== null &&
+                          (this.diagramCategoryService.selectedDiagramCategory$ | async) !== undefined &&
+                          (mappingProfileService.selectedProfile$ | async) !== null &&
+                          (mappingProfileService.selectedProfile$ | async) !== undefined)">
+            <i class="database icon"></i>
+            <div class="content">
+              <div class="title">{{this.formProperty.schema.fieldsets[2].title}}</div>
+              <div class="description">{{this.formProperty.schema.fieldsets[2].description}}</div>
+            </div>
+          </a>
+          <a class="step" suiTabHeader="tab-appearance"
+          [isDisabled]="!((this.diagramCategoryService.selectedDiagramCategory$ | async) !== null &&
+                          (this.diagramCategoryService.selectedDiagramCategory$ | async) !== undefined &&
+                          (mappingProfileService.selectedProfile$ | async) !== null &&
+                          (mappingProfileService.selectedProfile$ | async) !== undefined)">
+            <i class="paint brush icon"></i>
+            <div class="content">
+                <div class="title">{{this.formProperty.schema.fieldsets[3].title}}</div>
+                <div class="description">{{this.formProperty.schema.fieldsets[3].description}}</div>
+            </div>
+          </a>
+          <div class="step" style="flex-wrap: wrap !important; flex: 1 1 content;">
+              <button [ngClass]=" this.dynamicFormHandlingService.isFormValid ? 'ui animated primary button' : 'ui animated disabled primary button'"
+              (click)="applyChanges()">
+                  <div class="visible content">Apply Changes</div>
+                  <div class="hidden content"><i class="check icon"></i></div>
+              </button>
+              <button class="ui animated negative button" (click)="openClearModal()">
+                  <div class="hidden content"><i class="x icon"></i></div>
+                  <div class="visible content">Clear</div>
+              </button>
           </div>
       </div>
-  </div>
+
+      <div class="ui tab" suiTabContent="tab-view">
+        <div class="ui fluid equal width grid basic segment">
+            <div class="column" style="padding: 0;">
+              <sf-form-element [formProperty]="formProperty.getProperty(formProperty.schema.fieldsets[0].fields[0])"></sf-form-element>
+            </div>
+        </div>
+      </div>
+      <div class="ui tab" suiTabContent="tab-category">
+        <div class="ui fluid equal width grid basic segment">
+          <div class="column" style="padding: 0;">
+            <sf-form-element [formProperty]="formProperty.getProperty(formProperty.schema.fieldsets[1].fields[0])"></sf-form-element>
+          </div>
+        </div>
+      </div>
+      <div class="ui tab" suiTabContent="tab-dataseries">
+        <div class="ui fluid grid basic segment">
+          <div class="column" style="padding: 0;">
+            <sf-form-element [formProperty]="formProperty.getProperty(formProperty.schema.fieldsets[2].fields[0])"></sf-form-element>
+          </div>
+        </div>
+      </div>
+      <div class="ui tab" suiTabContent="tab-appearance">
+        <div class="ui fluid grid basic segment">
+          <div class="column" style="padding: 0;">
+            <sf-form-element [formProperty]="formProperty.getProperty(formProperty.schema.fieldsets[3].fields[0])"></sf-form-element>
+          </div>
+        </div>
+      </div>
   </sui-tabset>
 </form>

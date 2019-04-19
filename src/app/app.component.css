@@ -12,16 +12,16 @@
     text-align: center;
 }
 
-.ui.fixed.menu {
+.ui.menu {
     padding: 1rem 1rem;
 }
 
 .ui.menu .header.item {
-    padding-left: 3rem !important;
+    /* padding-left: 3rem !important; */
 }
 
-.ui.fixed.menu + .ui.grid {
-    padding-top: 10rem;
+.ui.menu + .ui.grid {
+    /* padding-top: 10rem; */
 }
 
 .ui.menu .item::before {

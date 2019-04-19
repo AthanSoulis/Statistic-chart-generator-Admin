@@ -1,5 +1,5 @@
 import { Filter, FilterGroup } from '../form-components/query-filter-selector/query-filter/query-filter.model';
-import { DataseriesFormSchema, DataFormSchema } from './chart-form-schema.model';
+import { DataseriesFormSchema, DataFormSchema } from './chart-form-schema.classes';
 
 export class Query {
     limit: string;
@@ -62,9 +62,13 @@ export class ChartInfo {
     color: string;
     query: Query;
 
-    constructor(dataseriesElement: DataseriesFormSchema, profile: string, limit: number) {
+    constructor(dataseriesElement: DataseriesFormSchema, profile: string, limit: number, category: string) {
         this.name = dataseriesElement.chartProperties.dataseriesName;
-        this.type = dataseriesElement.chartProperties.chartType;
+        if (dataseriesElement.chartProperties.chartType) {
+            this.type = dataseriesElement.chartProperties.chartType;
+        } else {
+            this.type = category;
+        }
         this.color = dataseriesElement.chartProperties.dataseriesColor;
         this.query = new Query(dataseriesElement.data, profile, limit.toString());
     }

@@ -1,0 +1,34 @@
+<div [ngClass]="!schema.requiredField ? 
+'widget form-group field' : 
+(control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'" >
+  <h3 class="ui dividing header horizontal control-label" [attr.for]="id"
+  *ngIf="schema.title || schema.description; else no_header"> {{ schema.title }}
+    <div class="sub header formHelp" *ngIf="schema.description">{{ schema.description }}</div>
+  </h3>
+    
+  <ng-template #no_header>
+    <div class="ui hidden divider"></div>
+  </ng-template>
+
+  <div class="ui basic segments" *ngFor="let itemProperty of formProperty.properties; let i=index; trackBy:trackByIndex" 
+  style="border: none; box-shadow: none">
+    
+    <div class="ui equal width form clearing attached basic segment" style="border: none; box-shadow: none; padding: 0">
+  
+      <i (click)="removeItem(i)" *ngIf="deleteButtonPosition === 'in'" style="cursor: pointer;" class="fitted red close icon ui right floated"></i>
+
+      <sf-form-element [formProperty]="itemProperty"></sf-form-element>
+ 
+    </div>
+    
+    <button *ngIf="deleteButtonPosition === 'out'" (click)="removeItem(i)" type="button" 
+    class="ui bottom attached fluid icon basic red compact button btn btn-default array-remove-button">
+    <i class="close icon"></i></button>
+
+  </div>
+
+  <a *ngIf="(this.schema.maxItems !== undefined && this.schema.maxItems !== null) ? this.arrayItems < this.schema.maxItems : true"
+   class="link button" (click)="addItem()"><i class="plus icon"></i>Add {{schema.itemName}}</a> 
+
+  <div *ngIf="schema.relaxed" class="ui hidden divider"></div>
+</div>

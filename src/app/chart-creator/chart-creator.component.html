@@ -10,7 +10,7 @@
     </div>
     <div class="actions">
         <div class="ui center aligned basic segment">
-            <button class="ui red cancel inverted button" (click)="closeModal()">
+            <button class="ui red cancel inverted button" (click)="this.closeClearModal()">
                 <i class="remove icon"></i>No</button>
             <button class="ui green basic ok inverted button" (click)="this.reset(form)">
                 <i class="checkmark icon"></i>Yes</button>
@@ -18,50 +18,26 @@
     </div>
 </div>
 
-<form class="ui form very compact grid" id="formContainer">
+<div class="ui form" id="formContainer">
 
-    <div class="sixteen wide column norightpadding" >
-        <div class="ui basic segment norightpadding">
+    <!-- Error Messages -->
+    <div class="ui basic compact segment container" style="padding: 0">
+        <div *ngIf="!isFormValid" class="ui negative message">
+            <ul style="list-style: inside !important;" class="ui center aligned equal width compact stretched four column grid" >
+                <div class="column" *ngFor="let error of (this.dynamicFormHandlingService.$formErrorObject.value)">
+                    <li>{{error.message}}</li></div>
+            </ul>
+        </div>    
+    </div>
+
+    <div class="ui two column grid">
+        <div class="three wide column">
+            <pre> {{this.dynamicFormHandlingService.formSchemaObject | json}} </pre>
+        </div>
+        <div class="thirteen wide column">
             <sf-form #form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.customValidators" 
-            (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>  
-            
-            <div *ngIf="!isFormValid" class="ui negative message">
-                <ul>
-                    <li *ngFor="let error of (this.formErrors.value)">{{error.message}}</li>
-                </ul>
-            </div>
+                (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>  
         </div>
-        <!-- <pre> {{formValue | json}} </pre> -->
-        
     </div>
 
-    <div *ngIf="isFormValid; else invalidForm" class="ui horizontal buttons mdc-fab mdc-fab--extended app-fab--absolute" >
-        <button type="submit" (click)="onSubmit()"
-                class="ui large primary button">Submit</button>
-        <button (click)="onClear()"
-                    class="ui large primary negative button">Clear</button>
-    </div>
-    <ng-template #invalidForm>
-        <div class="ui horizontal buttons mdc-fab mdc-fab--extended app-fab--absolute">
-            <button type="submit" class="ui large basic primary not-allowed button"
-            data-position="left center" data-tooltip="Some obligatory fields are not selected !">
-            Submit</button>
-            <button (click)="onClear()"
-                    class="ui large primary negative button">Clear</button>
-        </div>
-    </ng-template>
-
-        <!-- <div class="ui sticky fixed top">
-            
-            <div *ngIf="isFormValid; else invalidForm">
-                <button type="submit" (click)="onSubmit()"
-                        class="ui bottom attached large positive button">Submit</button>
-            </div>
-            <ng-template #invalidForm>
-                <div  data-tooltip="Some obligatory fields are not selected !" data-position="bottom right">
-                    <button type="submit" class="ui bottom attached basic large negative not-allowed button">
-                        Submit</button>
-                </div>
-            </ng-template>            
-        </div> -->
-</form>
+</div>

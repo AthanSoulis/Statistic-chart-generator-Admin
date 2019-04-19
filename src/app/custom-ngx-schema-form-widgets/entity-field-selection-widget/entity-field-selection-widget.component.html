@@ -1,6 +1,6 @@
 <div [ngClass]="!schema.requiredField ? 
-'widget form-group field' : 
-(control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'">
+'widget form-group fluid field' : 
+(control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required fluid field error' : 'widget form-group required fluid field'">
 	<label [attr.for]="id" class="horizontal control-label">
 		{{ schema.title }}
 	</label>

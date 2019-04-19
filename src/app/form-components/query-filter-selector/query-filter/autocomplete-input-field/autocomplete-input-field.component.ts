@@ -53,7 +53,7 @@ export class AutocompleteInputFieldComponent implements OnInit, AfterViewInit, O
       map((inputVal: any) => inputVal.target.value),
       filter((text: string) => text.length > 0),
       debounceTime(this.typeToSearchDelay),
-      tap(() => {this.possibleFieldValues = of([]); this.loading = true; this.cdr.detectChanges(); } ),
+      tap(() => {this.possibleFieldValues = of([]); this.loading = true; this.cdr.markForCheck(); } ),
       map((queryText: string) => this.fieldAutocompleteService.getAutocompleteFields(this.filterfield, queryText)),
       switchAll())
       .subscribe(
@@ -62,17 +62,17 @@ export class AutocompleteInputFieldComponent implements OnInit, AfterViewInit, O
           this.possibleFieldValues = of(result.values);
           this.numberOfpossibleFieldValues = result.count;
           this.loading = false;
-          this.cdr.detectChanges();
+          this.cdr.markForCheck();
         },
         (err: any) => {
           console.log(err);
           this.numberOfpossibleFieldValues = -1;
           this.loading = false;
-          this.cdr.detectChanges();
+          this.cdr.markForCheck();
         },
         () => {
           this.loading = false;
-          this.cdr.detectChanges();
+          // this.cdr.detectChanges();
         }
       );
   }

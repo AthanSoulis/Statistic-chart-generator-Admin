@@ -1,8 +1,8 @@
 <h2 class="ui header" *ngIf="formProperty.schema.title">{{formProperty.schema.title}}
   <div class="sub header" *ngIf="formProperty.schema.description">{{formProperty.schema.description}}</div>
 </h2>
-<div class="{{formProperty.schema.grouping}}">
-  <div *ngFor="let fieldset of formProperty.schema.fieldsets">
+<div class="{{this.schema.grouping}}">
+  <div *ngFor="let fieldset of formProperty.schema.fieldsets" class="{{this.fieldset.fieldsetColumnWidth}}">
     <h3 class="ui dividing header" *ngIf="fieldset.title">{{fieldset.title}}
       <div class="sub header" *ngIf="fieldset.description">{{fieldset.description}}</div>
     </h3>
@@ -20,6 +20,6 @@
 
       </div>  
     </div>
-    <div class="ui hidden divider"></div>
+    <div *ngIf="schema.relaxed" class="ui hidden divider"></div>
   </div>
 </div>
