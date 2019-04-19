@@ -11,8 +11,9 @@
              (mappingProfileService.selectedProfile$ | async) !== undefined">
               <h1 class="center aligned description">
                   <b>{{(mappingProfileService.selectedProfile$ | async).name}} </b>
-                  <div *ngFor="let shareholder of (mappingProfileService.selectedProfile$ | async).shareholders" 
-                  class="ui basic circular label">{{shareholder}}</div>
+                  <div style="padding: 0.1em 0.25em !important; min-height: 0;"
+                  *ngFor="let shareholder of (mappingProfileService.selectedProfile$ | async).shareholders" 
+                  class="ui label">{{shareholder}}</div>
                 </h1>
             </div>
           </a>
@@ -54,14 +55,15 @@
             </div>
           </a>
           <div class="step" style="flex-wrap: wrap !important; flex: 1 1 content;">
-              <i class="ui animated primary button">
+              <button [ngClass]=" this.dynamicFormHandlingService.isFormValid ? 'ui animated primary button' : 'ui animated disabled primary button'"
+              (click)="applyChanges()">
                   <div class="visible content">Apply Changes</div>
                   <div class="hidden content"><i class="check icon"></i></div>
-              </i>
-              <i class="ui animated negative button" tabindex="0">
+              </button>
+              <button class="ui animated negative button" (click)="openClearModal()">
                   <div class="hidden content"><i class="x icon"></i></div>
                   <div class="visible content">Clear</div>
-              </i>
+              </button>
           </div>
       </div>
 
