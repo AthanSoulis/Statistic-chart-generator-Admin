@@ -1,0 +1,13 @@
+<div class="row" style="padding: 0 2em">
+  <sui-tabset>
+      <div class="ui secondary pointing menu">
+          <a class="item" style="font-size: 1.25em;" *ngFor="let fieldset of this.schema.fieldsets; let i = index" 
+          [suiTabHeader]="i">{{ fieldset.tabTitle }}</a>
+      </div>
+      
+      <div class="ui basic segment" *ngFor="let fieldset of this.schema.fieldsets; let i = index; trackBy:trackByIndex"
+      [suiTabContent]="i">
+          <sf-form-element [formProperty]="formProperty.getProperty(fieldset.fields[0])"></sf-form-element>
+      </div>
+  </sui-tabset>
+</div>
