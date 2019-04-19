@@ -10,7 +10,7 @@
     </div>
     <div class="actions">
         <div class="ui center aligned basic segment">
-            <button class="ui red cancel inverted button" (click)="closeModal()">
+            <button class="ui red cancel inverted button" (click)="this.closeClearModal()">
                 <i class="remove icon"></i>No</button>
             <button class="ui green basic ok inverted button" (click)="this.reset(form)">
                 <i class="checkmark icon"></i>Yes</button>
@@ -20,33 +20,24 @@
 
 <div class="ui form" id="formContainer">
 
-    <!-- <div class="ui basic compact segment container">
+    <!-- Error Messages -->
+    <div class="ui basic compact segment container" style="padding: 0">
         <div *ngIf="!isFormValid" class="ui negative message">
-            <ul style="list-style: inside !important;" class="ui center aligned equal width compact stretched grid" >
-                <div class="eight wide column" *ngFor="let error of (this.formErrors.value)">
+            <ul style="list-style: inside !important;" class="ui center aligned equal width compact stretched four column grid" >
+                <div class="column" *ngFor="let error of (this.dynamicFormHandlingService.$formErrorObject.value)">
                     <li>{{error.message}}</li></div>
             </ul>
         </div>    
-    </div> -->
-
-    <sf-form #form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.customValidators" 
-        (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>  
-    <!-- <pre> {{formValue | json}} </pre> -->
-
-    <div *ngIf="isFormValid; else invalidForm" class="ui horizontal buttons mdc-fab mdc-fab--extended app-fab--absolute" >
-        <button type="submit" (click)="onSubmit()"
-                class="ui large primary button">Submit</button>
-        <button (click)="onClear()"
-                    class="ui large primary negative button">Clear</button>
     </div>
-    <ng-template #invalidForm>
-        <div class="ui horizontal buttons mdc-fab mdc-fab--extended app-fab--absolute">
-            <button type="submit" class="ui large basic primary not-allowed button"
-            data-position="left center" data-tooltip="Some obligatory fields are not selected !">
-            Submit</button>
-            <button (click)="onClear()"
-                    class="ui large primary negative button">Clear</button>
+
+    <div class="ui two column grid">
+        <div class="three wide column">
+            <pre> {{this.dynamicFormHandlingService.formSchemaObject | json}} </pre>
         </div>
-    </ng-template>
+        <div class="thirteen wide column">
+            <sf-form #form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.customValidators" 
+                (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>  
+        </div>
+    </div>
 
 </div>

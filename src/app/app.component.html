@@ -10,11 +10,11 @@
             <sui-dimmer class="inverted" [(isDimmed)]="this.chartLoadingService.chartLoadingStatus">
                 <div class="ui text loader">Loading Chart</div>
             </sui-dimmer>
-            <input id="fileElem" type="file" style="display:none" accept=".json" (change)="loadChart($event)">
+            <input id="fileElem" type="file" style="display:none" accept=".json" (change)="this.dfhs.loadForm($event)">
             <div class="ui labeled button" (click)="initiateFilePicker()">
                 <div class="ui basic icon button"><i class="plus icon"></i></div>
                 <div id="fileName" class="ui basic label">
-                    {{ ((this.loadedChartFile !== null) ? this.loadedChartFile.name : 'Select File') | slice:0:20 }}</div>
+                    {{ ((this.dfhs.loadFormObjectFile !== null) ? this.dfhs.loadFormObjectFile.name : 'Select File') | slice:0:20 }}</div>
             </div>
         </div>
         <!-- <p class="ui center aligned basic segment">Chart model is loaded!</p> -->
@@ -23,12 +23,6 @@
 
 <ng-template let-popup #publishPopUp >
     <div class="ui content">
-
-        <!-- <h4 class="ui centered header">Generated Chart Url</h4>
-        <div class="ui small text container segment">
-            <p class="url-holder">{{chartExportingService.chartUrl$ | async}}</p>
-        </div> -->
-
         <h4 class="ui centered header">Generated Chart TinyUrl</h4>
         <div class="ui small text container fluid segment">
             <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingChartTinyUrl$ | async); else chartTinyUrlNotLoading">
@@ -82,7 +76,7 @@
 </header>
 
 <main class="Site-content">
-    <chart-creator [loadedChart]="chartModel" (formClear)="handleClearForm()" (chartSubmit)="handleChartObject($event)" (tableSubmit)="handleTableObject($event)"></chart-creator>
+    <chart-creator [loadedChart]="this.dfhs.loadFormObject" ></chart-creator>
 </main>
 
 <footer class="Site-footer" style="background: #222080;padding: 30px 30px;font-size: 85%;">

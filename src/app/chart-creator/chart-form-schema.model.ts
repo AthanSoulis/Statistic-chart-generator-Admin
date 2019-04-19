@@ -1,101 +1,6 @@
-import { FormProperty, PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
-
-export interface SCGAFormSchema {
-    generalChartProperties: PropertiesFormSchema;
-    dataseries: DataseriesFormSchema[];
-    appearance: AppearanceFormSchema;
-}
-export interface DataseriesFormSchema {
-    data: DataFormSchema;
-    chartProperties: ChartPropertiesFormSchema;
-}
-export interface DataFormSchema {
-    yaxisData: YaxisDataFormSchema;
-    xaxisData: XaxisDataFormSchema[];
-    filters: FilterFormSchema[];
-}
-export interface YaxisDataFormSchema {
-    entity: string;
-    yaxisAggregate: string;
-    yaxisEntityField?: EntityFieldFormSchema;
-}
-export interface XaxisDataFormSchema {
-    xaxisEntityField: EntityFieldFormSchema;
-}
-export interface FilterFormSchema {
-    groupFilters: FilterGroupSchema[];
-    op: string;
-}
-export interface FilterGroupSchema {
-    field: EntityFieldFormSchema;
-    type: string;
-    values: string[];
-}
-export interface EntityFieldFormSchema {
-    name: string;
-    type?: string;
-}
-export interface ChartPropertiesFormSchema {
-    chartType: string;
-    dataseriesColor?: string;
-    dataseriesName?: string;
-}
-export interface PropertiesFormSchema {
-    profile: string;
-
-    axisNames ?: AxisNamesFormSchema;
-    title ?: string;
-    results ?: ResultsOptionsFormSchema;
-}
-export interface ResultsOptionsFormSchema {
-    resultsLimit ?: number;
-    orderByAxis ?: string;
-}
-export interface AxisNamesFormSchema {
-    yaxisName ?: string;
-    xaxisName ?: string;
-}
-export interface AppearanceFormSchema {
-
-    tableAppearance: TableAppearanceFormSchema;
-    chartAppearance: ChartAppearanceFormSchema;
-}
-export interface HighchartsOptionsFormSchema {
-    exporting ?: boolean;
-    stackedChart ?: string;
-    hcCABackGroundColor ?: string;
-    hcCABorderWidth ?: number;
-    hcCABorderCornerRadius ?: number;
-    hcCABorderColor ?: string;
-    hcPABackgroundColor ?: string;
-    hcPABackgroundImageURL ?: string;
-    hcPABorderWidth ?: number;
-    hcPABorderColor ?: string;
-    hcSubtitle ?: string;
-    hcEnableDataLabels ?: boolean;
-    hcEnableLegend ?: boolean;
-    hcLegendLayout ?: string;
-    hcLegendHorizontalAlignment ?: string;
-    hcLegendVerticalAlignment ?: string;
-    hcEnableCredits ?: boolean;
-    hcCreditsText ?: string;
-}
-export interface GooglechartsOptionsFormSchema {
-    exporting ?: boolean;
-    stackedChart ?: string;
-    gcCABackGroundColor ?: string;
-    gcPABackgroundColor ?: string;
-}
-export interface ChartAppearanceFormSchema {
-    library: string;
-
-    highchartsAppearanceOptions ?: HighchartsOptionsFormSchema;
-    googlechartsAppearanceOptions ?: GooglechartsOptionsFormSchema;
-}
-export interface TableAppearanceFormSchema {
-    paginationSize ?: number;
-}
 /*
+ * This is the form schema that feeds the sf-form component with the form structure of the Statistic-Chart-Generator-Admin
+ *
  * Semantic UI related schema fields
  *
  * ~ fieldsetColumnWidth: Sets the width of the fieldset on the grid based on this https://semantic-ui.com/collections/grid.html#column-widths
@@ -109,7 +14,7 @@ export interface TableAppearanceFormSchema {
  * ~ tooltip: Enables and shows the tooltip string on a {csui-string, csui-boolean, csui-number, csui-select}
  * ~ tooltipHeader Enables and shows the tooltip header string on a {csui-string, csui-boolean, csui-number, csui-select}
  * ~ relaxed: Adds a hidden divider at the bottom of a {csui-array}
- *
+ * ~ tabTitle: This is the name for the respective tab on an object with a {csui-tabular-menu}
  */
 
 export class FormSchema {
@@ -139,127 +44,14 @@ export class FormSchema {
         'description' : 'Choose the type of diagram you want to make',
         'widget' : { 'id' : 'csui-category-properties-object' },
         'properties' : {
-            'chartType' : {
+            'categoryType' : {
                 'type' : 'string',
                 'requiredField' : true,
-                'widget': { 'id': 'csui-diagram-category-component' },
+                'widget': { 'id': 'csui-diagram-category-component' }
             }
         },
-        'fieldsets': [{ 'fields': ['chartType'] }],
-        'required': ['chartType']
-    };
-
-    private _propertiesFormSchema = {
-        'type' : 'object',
-        'title' : 'General Properties',
-        'description' : 'Set the general attributes of your chart',
-        'widget' : { 'id' : 'csui-general-properties-object' },
-        'properties' : {
-            'profile' : {
-                'type' : 'string',
-                'placeholder' : 'No Profile Selected',
-                'title' : 'Selected View',
-                'requiredField' : true,
-                'minLength' : 1,
-                'widget': {
-                    'id': 'csui-profile-picker'
-                }
-            },
-            'axisNames' : {
-                'type' : 'object',
-                'widget' : { 'id' : 'csui-property-object' },
-                'properties' : {
-                    'yaxisName' : {
-                        'type' : 'string',
-                        'placeholder' : 'Yaxis',
-                        'title' : 'Yaxis',
-                        'widget': { 'id': 'csui-string' }
-                    },
-                    'xaxisName' : {
-                        'type' : 'string',
-                        'placeholder' : 'Xaxis',
-                        'title' : 'Xaxis',
-                        'widget': { 'id': 'csui-string' }
-                    }
-                },
-                'fieldsets': [
-                    {
-                        'title': 'Axis Names',
-                        'grouping': 'equal width fields',
-                        'fields': [
-                            'yaxisName',
-                            'xaxisName'
-                        ]
-                    }
-                ]
-            },
-            'title' : {
-                'type' : 'string',
-                'placeholder' : 'Title',
-                'title' : 'Main Title',
-                'widget': {'id': 'csui-string' }
-            },
-            'results' : {
-                'type' : 'object',
-                'widget' : { 'id' : 'csui-property-object' },
-                'properties' : {
-                    'resultsLimit' : {
-                        'type' : 'number',
-                        'title' : 'Results Limit',
-                        'default' : 30,
-                        // tslint:disable-next-line:max-line-length
-                        'tooltip' : `To get all available results set Results Limit to 0.`,
-                        'widget' : {'id' : 'csui-number'}
-                    },
-                    'orderByAxis' : {
-                        'type' : 'string',
-                        'title' : 'Order By',
-                        'widget' : {'id' : 'csui-select'},
-                        'oneOf': [
-                            {
-                                'description': 'X Axis',
-                                'value' : 'xaxis',
-                                'enum': ['xaxis']
-                            },
-                            {
-                                'description': 'Y Axis',
-                                'value' : 'yaxis',
-                                'enum': ['yaxis']
-                            }
-                        ]
-                    }
-                },
-                'fieldsets': [
-                    {
-                        'title': 'Results',
-                        'grouping': 'equal width fields',
-                        'fields': [
-                            'resultsLimit',
-                            'orderByAxis'
-                        ]
-                    }
-                ]
-            }
-        },
-        'fieldsets': [
-            {
-                'title': 'Data View',
-                'description' : 'Shows what type of data interests the user most',
-                'fields': [
-                    'profile'
-                ]
-            },
-            {
-                'title': 'Chart Properties',
-                'description' : 'Basic attributes of the chart',
-                'fields': [
-                    'title',
-                    'axisNames',
-                    'results'
-                ]
-            }
-          ],
-          'required': [ 'profile' ]
+        'fieldsets': [{ 'fields': ['categoryType'] }],
+        'required': ['categoryType']
     };
 
     private _dataseriesFormSchema = {
@@ -522,43 +314,33 @@ export class FormSchema {
                             //     'id': 'string'
                             // }
                         },
-                        // 'chartType' : {
-                        //     'type' : 'string',
-                        //     // 'requiredField' : true,
-                        //     'minLength': 1,
-                        //     'placeholder' : 'Select Chart Type',
-                        //     'title' : 'Chart Type',
-                        //     'widget': { 'id': 'csui-chart-type-select' },
-                        // }
-                    },
-                    'fieldsets': [
-                        // {
-                        //     'grouping': 'fields',
-                        //     'title' : 'Data Properties',
-                        //     'fields': [
-                        //         'chartType',
-                        //         'dataseriesColor'
-                        //     ],
-                        //     'width': [
-                        //         'three wide',
-                        //         'three wide'
-                        //     ]
-                        // },
-                        {
-                            'fields': [ 'dataseriesName' ]
+                        'chartType' : {
+                            'type' : 'string',
+                            'minLength': 1,
+                            'placeholder' : 'Select Chart Type',
+                            'title' : 'Chart Type',
+                            'widget': { 'id': 'csui-chart-type-select' },
+                            // This is different from the visibleIf because I want to know
+                            // the value of an ancestor property
+                            'showOnlyWhen': {
+                                '/category/categoryType': ['combo']
+                            }
                         }
-                    ],
-                    // 'required': ['chartType']
+                    },
+                    'fieldsets':
+                        [{
+                            'fields': [ 'dataseriesName']
+                        },
+                        {
+                            'width': ['four wide'],
+                            'fields': ['chartType']
+                        }]
                 }
             },
-            'fieldsets': [
-                {
-                    'fields': [
-                        'chartProperties',
-                        'data'
-                    ]
-                }
-            ],
+            'fieldsets':
+                [{
+                    'fields': ['chartProperties', 'data']
+                }],
             'required': ['data', 'chartProperties']
         }
     };
@@ -566,22 +348,57 @@ export class FormSchema {
     private _appearanceFormSchema = {
 
         'type' : 'object',
-        'widget' : { 'id' : 'csui-property-object' },
+        'widget' : { 'id' : 'csui-tabular-menu' },
         'properties' : {
             'chartAppearance' : {
                 'type' : 'object',
-                'title' : 'Chart Appearance',
-                'description' : 'Customise the way your chart looks',
+                // 'title' : 'Chart Appearance',
+                // 'description' : 'Customise the way your chart looks',
                 'widget' : { 'id' : 'csui-general-properties-object' },
                 'properties' : {
-                    'library' : {
-                        'type' : 'string',
-                        'placeholder' : 'Select Library',
-                        'title' : 'Selected Library',
-                        'requiredField' : true,
-                        'default' : 'HighCharts',
-                        'minLength' : 1,
-                        'widget': {'id': 'csui-library-select'}
+                    'generalOptions': {
+                        'type' : 'object',
+                        'widget' : { 'id' : 'csui-property-object' },
+                        'properties' : {
+                            'library' : {
+                                'type' : 'string',
+                                'placeholder' : 'Select Library',
+                                'title' : 'Visualisation Library',
+                                'requiredField' : true,
+                                'minLength' : 1,
+                                'widget': {'id': 'csui-library-select'}
+                            },
+                            'resultsLimit' : {
+                                'type' : 'number',
+                                'title' : 'Results Limit',
+                                'default' : 30,
+                                // tslint:disable-next-line:max-line-length
+                                'tooltip' : `To get all available results set Results Limit to 0.`,
+                                'widget' : {'id' : 'csui-number'}
+                            },
+                            'orderByAxis' : {
+                                'type' : 'string',
+                                'title' : 'Order By',
+                                'widget' : {'id' : 'csui-select'},
+                                'oneOf': [
+                                    {
+                                        'description': 'X Axis',
+                                        'value' : 'xaxis',
+                                        'enum': ['xaxis']
+                                    },
+                                    {
+                                        'description': 'Y Axis',
+                                        'value' : 'yaxis',
+                                        'enum': ['yaxis']
+                                    }]
+                            }
+                        },
+                        'fieldsets':
+                        [{
+                            'grouping': 'equal width fields',
+                            'fields': ['library', 'resultsLimit', 'orderByAxis']
+                        }],
+                        'required': [ 'library', 'resultsLimit' ]
                     },
                     'highchartsAppearanceOptions': {
                         'type' : 'object',
@@ -636,43 +453,6 @@ export class FormSchema {
                                         'grouping': 'equal width fields',
                                         'fields': ['yaxisName', 'xaxisName']
                                     }]
-                            },
-                            'results' : {
-                                'type' : 'object',
-                                'widget' : { 'id' : 'csui-property-object' },
-                                'properties' : {
-                                    'resultsLimit' : {
-                                        'type' : 'number',
-                                        'title' : 'Results Limit',
-                                        'default' : 30,
-                                        // tslint:disable-next-line:max-line-length
-                                        'tooltip' : `To get all available results set Results Limit to 0.`,
-                                        'widget' : {'id' : 'csui-number'}
-                                    },
-                                    'orderByAxis' : {
-                                        'type' : 'string',
-                                        'title' : 'Order By',
-                                        'widget' : {'id' : 'csui-select'},
-                                        'oneOf': [
-                                            {
-                                                'description': 'X Axis',
-                                                'value' : 'xaxis',
-                                                'enum': ['xaxis']
-                                            },
-                                            {
-                                                'description': 'Y Axis',
-                                                'value' : 'yaxis',
-                                                'enum': ['yaxis']
-                                            }
-                                        ]
-                                    }
-                                },
-                                'fieldsets':
-                                [{
-                                    'title': 'Results',
-                                    'grouping': 'equal width fields',
-                                    'fields': ['resultsLimit', 'orderByAxis']
-                                }]
                             },
                             'dataSeriesColorArray' : {
                                 'type': 'array',
@@ -910,87 +690,57 @@ export class FormSchema {
                                 'type': 'object',
                                 'widget': { 'id' : 'csui-property-object'},
                                 'properties': {
-                                    'hcExporting' : {
-                                        'type': 'object',
-                                        'widget': { 'id' : 'csui-property-object'},
-                                        'properties': {
-                                            'exporting': {
-                                                'type': 'boolean',
-                                                'widget' : {'id' : 'csui-boolean'},
-                                                'default': false,
-                                                // tslint:disable-next-line:max-line-length
-                                                'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
-                                                'description': 'Enable Exporting'
-                                            }
-                                        },
-                                        'fieldsets':
-                                            [{
-                                                'fields': ['exporting']
-                                            }]
+                                    'exporting': {
+                                        'type': 'boolean',
+                                        'widget' : {'id' : 'csui-boolean'},
+                                        'default': false,
+                                        // tslint:disable-next-line:max-line-length
+                                        'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
+                                        'description': 'Enable Exporting'
                                     },
-                                    'hcDataLabels' : {
-                                        'type': 'object',
-                                        'widget': { 'id' : 'csui-property-object'},
-                                        'properties': {
-                                            'hcEnableDataLabels' : {
-                                                'type': 'boolean',
-                                                'widget' : {'id' : 'csui-boolean'},
-                                                'default': false,
-                                                'tooltip': 'Show small labels next to each data value.',
-                                                'description': 'Enable data labels for all series'
-                                            }
-                                        },
-                                        'fieldsets':
-                                            [{
-                                                'fields': ['hcEnableDataLabels']
-                                            }]
+                                    'hcEnableDataLabels' : {
+                                        'type': 'boolean',
+                                        'widget' : {'id' : 'csui-boolean'},
+                                        'default': false,
+                                        'tooltip': 'Show small labels next to each data value.',
+                                        'description': 'Enable data labels for all series'
                                     },
-                                    'hcPlotOptions' : {
-                                        'type': 'object',
-                                        'widget': { 'id' : 'csui-property-object'},
-                                        'properties': {
-                                            'stackedChart' : {
-                                                'type' : 'string',
-                                                'widget' : { 'id': 'csui-select'},
-                                                'tooltip': 'Choose between a Regular or Stacked chart.',
-                                                'title': 'Stacked Graph',
-                                                'default': 'undefined',
-                                                'oneOf': [
-                                                    {
-                                                      'description': 'Disabled',
-                                                      'value' : 'undefined',
-                                                      'enum': ['undefined']
-                                                    },
-                                                    {
-                                                      'description': 'Stacked by Value',
-                                                      'value': 'normal',
-                                                      'enum': ['normal']
-                                                    },
-                                                    {
-                                                      'description': 'Stacked by Percentage',
-                                                      'value': 'percent',
-                                                      'enum': ['percent']
-                                                    }
-                                                  ]
+                                    'stackedChart' : {
+                                        'type' : 'string',
+                                        'widget' : { 'id': 'csui-select'},
+                                        'tooltip': 'Choose between a Regular or Stacked chart.',
+                                        'title': 'Stacked Graph',
+                                        'default': 'undefined',
+                                        'oneOf': [
+                                            {
+                                              'description': 'Disabled',
+                                              'value' : 'undefined',
+                                              'enum': ['undefined']
                                             },
-                                        },
-                                        'fieldsets':
-                                            [{
-                                                'fields': ['stackedChart']
-                                            }]
+                                            {
+                                              'description': 'Stacked by Value',
+                                              'value': 'normal',
+                                              'enum': ['normal']
+                                            },
+                                            {
+                                              'description': 'Stacked by Percentage',
+                                              'value': 'percent',
+                                              'enum': ['percent']
+                                            }
+                                          ]
                                     }
                                 },
                                 'fieldsets':
                                 [{
                                     'title': 'Misc Options',
-                                    'fields': ['hcExporting', 'hcDataLabels', 'hcPlotOptions']
+                                    'fields': ['exporting', 'hcEnableDataLabels', 'stackedChart']
                                 }]
                             }
                         },
                         'fieldsets': [
                             {
                                 'fieldsetColumnWidth' : 'eight wide column',
-                                'fields': ['titles', 'axisNames', 'results', 'hcCredits', 'hcMiscOptions']
+                                'fields': ['titles', 'axisNames', 'hcCredits', 'hcMiscOptions']
                             },
                             {
                                 'fieldsetColumnWidth' : 'eight wide column',
@@ -998,15 +748,101 @@ export class FormSchema {
                             }
                         ],
                         'visibleIf': {
-                            'library': ['HighCharts']
+                            'generalOptions/library': ['HighCharts']
                         }
                     },
                     'googlechartsAppearanceOptions': {
                         'type' : 'object',
-                        'grouping' : 'ui fluid four column stackable basic grid',
+                        'grouping' : 'ui fluid two column stackable basic grid',
                         'widget' : { 'id' : 'csui-property-object' },
                         // 'title': 'Googlecharts Appearance Options',
                         'properties' : {
+                            'titles' : {
+                                'type': 'object',
+                                'widget': { 'id' : 'csui-property-object'},
+                                'properties': {
+                                    'title' : {
+                                        'type' : 'string',
+                                        'placeholder' : 'Title',
+                                        'title' : 'Title',
+                                        'widget': { 'id': 'csui-string' }
+                                    }
+                                    // GoogleCharts does not support subtitle
+                                    // 'subtitle' : {
+                                    //     'type' : 'string',
+                                    //     'placeholder' : 'Subtitle',
+                                    //     'title' : 'Subtitle',
+                                    //     'widget': { 'id': 'csui-string' }
+                                    // }
+                                },
+                                'fieldsets':
+                                    [{
+                                        'title': 'Diagram Title',
+                                        'grouping': 'equal width fields',
+                                        'fields': ['title']
+                                    }]
+                            },
+                            'axisNames' : {
+                                'type' : 'object',
+                                'widget' : { 'id' : 'csui-property-object' },
+                                'properties' : {
+                                    'yaxisName' : {
+                                        'type' : 'string',
+                                        'placeholder' : 'Yaxis',
+                                        'title' : 'Yaxis',
+                                        'widget': { 'id': 'csui-string' }
+                                    },
+                                    'xaxisName' : {
+                                        'type' : 'string',
+                                        'placeholder' : 'Xaxis',
+                                        'title' : 'Xaxis',
+                                        'widget': { 'id': 'csui-string' }
+                                    }
+                                },
+                                'fieldsets':
+                                    [{
+                                        'title': 'Axis Names',
+                                        'grouping': 'equal width fields',
+                                        'fields': ['yaxisName', 'xaxisName']
+                                    }]
+                            },
+                            'results' : {
+                                'type' : 'object',
+                                'widget' : { 'id' : 'csui-property-object' },
+                                'properties' : {
+                                    'resultsLimit' : {
+                                        'type' : 'number',
+                                        'title' : 'Results Limit',
+                                        'default' : 30,
+                                        // tslint:disable-next-line:max-line-length
+                                        'tooltip' : `To get all available results set Results Limit to 0.`,
+                                        'widget' : {'id' : 'csui-number'}
+                                    },
+                                    'orderByAxis' : {
+                                        'type' : 'string',
+                                        'title' : 'Order By',
+                                        'widget' : {'id' : 'csui-select'},
+                                        'oneOf': [
+                                            {
+                                                'description': 'X Axis',
+                                                'value' : 'xaxis',
+                                                'enum': ['xaxis']
+                                            },
+                                            {
+                                                'description': 'Y Axis',
+                                                'value' : 'yaxis',
+                                                'enum': ['yaxis']
+                                            }
+                                        ]
+                                    }
+                                },
+                                'fieldsets':
+                                [{
+                                    'title': 'Results',
+                                    'grouping': 'equal width fields',
+                                    'fields': ['resultsLimit', 'orderByAxis']
+                                }]
+                            },
                             'stackedChart' : {
                                 'type' : 'string',
                                 'widget' : { 'id': 'csui-select'},
@@ -1057,6 +893,10 @@ export class FormSchema {
                         },
                         'fieldsets': [
                             {
+                                'fieldsetColumnWidth' : 'eight wide column',
+                                'fields': ['titles']
+                            },
+                            {
                                 'title' : 'Plot Options',
                                 'fieldsetColumnWidth' : 'four wide column',
                                 'fields': ['stackedChart']
@@ -1065,6 +905,10 @@ export class FormSchema {
                                 'title' : 'Exporting',
                                 'fieldsetColumnWidth' : 'four wide column',
                                 'fields': ['exporting']
+                            },
+                            {
+                                'fieldsetColumnWidth' : 'eight wide column',
+                                'fields': ['axisNames']
                             },
                             {
                                 'title' : 'Chart Area',
@@ -1076,18 +920,21 @@ export class FormSchema {
                                 'fieldsetColumnWidth' : 'four wide column',
                                 'fields': ['gcPABackgroundColor']
                             },
+                            {
+                                'fieldsetColumnWidth' : 'eight wide column',
+                                'fields': ['results']
+                            }
                         ],
                         'visibleIf': {
-                            'library': ['GoogleCharts']
+                            'generalOptions/library': ['GoogleCharts']
                         }
                     },
                 },
                 'fieldsets': [
                     {
-                        'title': 'Visualisation Library',
-                        'description' : 'Select one of the supported libraries for chart visualisation',
-                        'grouping': 'four wide field',
-                        'fields': ['library']
+                        'title': 'General Options',
+                        'description' : 'Select a chart Visualisation Library, the upper limit of your results and how they are grouped',
+                        'fields': ['generalOptions']
                     },
                     {
                         'title': 'Visualisation Options',
@@ -1095,18 +942,18 @@ export class FormSchema {
                         'fields': ['highchartsAppearanceOptions', 'googlechartsAppearanceOptions']
                     }
                 ],
-                'required': [ 'library' ]
+                'required': ['generalOptions']
             },
             'tableAppearance' : {
                 'type' : 'object',
-                'title': 'Table Appearance',
-                'description' : 'Customise the way your table looks',
+                // 'title': 'Table Appearance',
+                // 'description' : 'Customise the way your table looks',
                 'widget' : { 'id' : 'csui-general-properties-object' },
                 'properties' : {
                     'paginationSize' : {
                         'type' : 'number',
                         'title' : 'Table Page Size',
-                        'default' : 50,
+                        'default' : 30,
                         'minLength' : 10,
                         'tooltip' : 'The number of rows in each page of the Data Table',
                         'widget': {'id': 'csui-number'},
@@ -1114,7 +961,9 @@ export class FormSchema {
                 },
                 'fieldsets': [
                     {
-                        'grouping': 'inline fields',
+                        'title': 'Visualisation Options',
+                        'description' : 'Available options based on the selected Visualisation Library',
+                        'grouping': 'three wide field',
                         'fields': ['paginationSize']
                     }
                 ]
@@ -1122,12 +971,12 @@ export class FormSchema {
         },
         'fieldsets': [
             {
-                // 'title' : 'Chart Appearance',
+                'tabTitle' : 'Chart Appearance',
                 // 'description' : 'Customise the way your chart looks',
                 'fields': ['chartAppearance']
             },
             {
-                // 'title' : 'Chart Appearance',
+                'tabTitle' : 'Table Appearance',
                 // 'description' : 'Customise the way your chart looks',
                 'fields': ['tableAppearance']
             }
@@ -1171,11 +1020,14 @@ export class FormSchema {
     };
 
     get formSchema() { return this._SCGAFormSchema; }
-    get propertiesFormSchema() { return this._propertiesFormSchema; }
+    get viewFormSchema() { return this._viewFormSchema; }
+    get categoriesFormSchema() { return this._categoryFormSchema; }
     get dataseriesFormSchema() { return this._dataseriesFormSchema; }
+    get appearanceFormSchema() { return this._appearanceFormSchema; }
 
-      // Declare a mapping between action ids and their implementations
-  get customValidators() {
+    // Advanced Validation: https://github.com/guillotinaweb/ngx-schema-form#advanced-validation
+    // Declare a mapping between action ids and their implementations
+    get customValidators() {
     return {
 
         // '/generalChartProperties/profile': (value: any, formProperty: FormProperty, form: PropertyGroup) => {
