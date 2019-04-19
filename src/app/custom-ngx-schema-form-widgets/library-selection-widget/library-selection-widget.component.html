@@ -8,7 +8,7 @@
   </span>
   <input *ngIf="schema.readOnly; else librarySelection" [attr.name]="name" type="hidden" [formControl]="control">
   <ng-template #librarySelection>
-    <sui-select class="selection" [options]="supportedLibraries" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly"
+    <sui-select class="selection" [options]="availableLibraries" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly"
       placeholder={{schema.placeholder}} #librarySelect>    
       <sui-select-option *ngFor="let library of librarySelect.filteredOptions" [value]='library'></sui-select-option>
     </sui-select>
