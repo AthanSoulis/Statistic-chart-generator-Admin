@@ -1,3 +1,4 @@
+<div *ngIf="this.isVisible | async">
 <div [ngClass]="!schema.requiredField ? 
 'widget form-group field' : 
 (control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'">
@@ -10,7 +11,7 @@
   <input *ngIf="schema.readOnly; else chartTypeSelection" [attr.name]="name" type="hidden" [formControl]="control">
   <ng-template #chartTypeSelection>
     <ng-template let-option #chartTypeOptionTemplate>
-        {{ option | titlecase }}
+        {{ option| titlecase }}
     </ng-template>
     <sui-select class="selection" [formControl]="control"
     [attr.name]="name" [attr.disabled]="schema.readOnly"
@@ -21,4 +22,5 @@
       <sui-select-option *ngFor="let chartType of chartTypeSelect.filteredOptions" [value]="chartType"></sui-select-option>
     </sui-select>
   </ng-template>
+</div>
 </div>
