@@ -24,6 +24,7 @@ import { ViewPropertiesWidgetComponent } from './view-properties-widget/view-pro
 import { CategoryPropertiesWidgetComponent } from './category-properties-widget/category-properties-widget.component';
 import { DiagramCategoryPickerComponent } from './diagram-category-picker/diagram-category-picker.component';
 import { FilterArrayWidgetComponent } from './filter-array-widget/filter-array-widget.component';
+import { TabularMenuWidgetComponent } from './tabular-menu-widget/tabular-menu-widget.component';
 
 export class CustomWidgetRegistry extends DefaultWidgetRegistry {
   constructor() {
@@ -54,5 +55,6 @@ export class CustomWidgetRegistry extends DefaultWidgetRegistry {
     this.register('csui-view-properties-object', ViewPropertiesWidgetComponent);
     this.register('csui-category-properties-object', CategoryPropertiesWidgetComponent);
     this.register('csui-diagram-category-component', DiagramCategoryPickerComponent);
+    this.register('csui-tabular-menu', TabularMenuWidgetComponent);
   }
 }
