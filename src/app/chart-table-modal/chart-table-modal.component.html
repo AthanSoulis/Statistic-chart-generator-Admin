@@ -1,0 +1,26 @@
+
+
+<div class="content">
+  <sui-tabset>
+    <div class="ui secondary pointing menu">
+        <a class="item" style="font-size: 1.25em;" [suiTabHeader]="1" (click)="this.activeTab = 1" >Diagram</a>
+        <a class="item" style="font-size: 1.25em;" [suiTabHeader]="2" (click)="this.activeTab = 2">Table</a>
+    </div>
+  
+    <div class="ui basic segment" [suiTabContent]="1">
+      <chart-frame [chart]="this.modal.context.chartObj"></chart-frame>
+    </div>
+    <div class="ui basic segment" [suiTabContent]="2">
+      <table-frame [table]="this.modal.context.tableObj"></table-frame>
+    </div>
+  </sui-tabset>
+</div>
+<div class="actions">
+  <i class="big linkify icon" style="vertical-align: inherit;"></i>
+  <div class="ui basic big label" style="max-width: 20em">  
+    <a *ngIf="this.activeTab === 1" class="url-holder" style="cursor: pointer; color: #1e70bf"
+    target="_blank" rel="noopener noreferrer" href="{{chartExportingService.chartTinyUrl$ | async}}">{{chartExportingService.chartTinyUrl$ | async}}</a>
+    <a *ngIf="this.activeTab === 2" class="url-holder" style="cursor: pointer; color: #1e70bf"
+    target="_blank" rel="noopener noreferrer" href="{{chartExportingService.tableTinyUrl$ | async}}">{{chartExportingService.tableTinyUrl$ | async}}</a>
+  </div>
+</div>

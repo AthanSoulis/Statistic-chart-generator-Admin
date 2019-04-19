@@ -1,0 +1,9 @@
+.url-holder {
+    overflow-wrap: break-word;
+    text-align: center;
+    overflow: hidden;
+    display: block;
+    max-width: 20em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
