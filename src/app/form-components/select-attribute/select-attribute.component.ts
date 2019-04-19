@@ -167,7 +167,7 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
     if (this.checkValidFieldNode(value)) {
       this.selectedFieldChanged(value);
       if ( this.cdr !== null && this.cdr !== undefined && !(this.cdr as ViewRef_).destroyed ) {
-            this.cdr.detectChanges();
+            this.cdr.markForCheck();
       }
     }
   }

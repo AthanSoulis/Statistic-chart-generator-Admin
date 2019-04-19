@@ -1,6 +1,5 @@
 import { Component, OnDestroy, AfterContentInit, ChangeDetectorRef } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
-import { SuiModalService } from 'ng2-semantic-ui';
 import { MappingProfilesService, Profile } from '../../services/mapping-profiles-service/mapping-profiles.service';
 import { Subscription, BehaviorSubject } from 'rxjs';
 import { CardPicker } from '../diagram-category-picker/diagram-category-picker.component';
@@ -29,7 +28,6 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
 
   constructor(public mappingProfileService: MappingProfilesService,
               private tabActicationStatusService: TabActivationStatusService,
-              public modalService: SuiModalService,
               private cdr: ChangeDetectorRef) {
     super();
     this.subscriptions = new Array();
@@ -42,7 +40,7 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
     .subscribe(profile => {
 
         this.mappingProfileService.changeSelectedProfile(profile);
-        this.cdr.detectChanges();
+        this.cdr.markForCheck();
 
     }));
   }

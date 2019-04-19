@@ -29,8 +29,8 @@ export class DiagramCategoryPickerComponent extends ControlWidget implements Car
     this.subscriptions.push(
       (<BehaviorSubject<string>> this.formProperty.valueChanges)
       .subscribe(diagram => {
-          this.diagramCategoryService.changeDiagramCategory(diagram);
-          this.cdr.detectChanges();
+        this.diagramCategoryService.changeDiagramCategory(diagram);
+        this.cdr.markForCheck();
     }));
   }
 

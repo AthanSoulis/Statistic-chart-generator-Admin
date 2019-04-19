@@ -113,7 +113,7 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
       this.editable.splice(index);
       this.active.splice(index);
 
-      this.cdr.detectChanges();
+      this.cdr.markForCheck();
     }
   }
 
