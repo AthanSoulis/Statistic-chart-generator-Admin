@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { SupportedChartTypesService } from '../supported-chart-types-service/supported-chart-types.service';
+import { SupportedChartTypesService, ISupportedMap, ISupportedSpecialChartType, ISupportedChart, ISupportedCategory } from '../supported-chart-types-service/supported-chart-types.service';
+import { isNullOrUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -9,34 +10,54 @@ export class DiagramCategoryService {
 
   public selectedDiagramCategory$: BehaviorSubject<string>;
 
-  supportedChartTypes: Array<string> = [];
-  supportedMaps: Array<string> = [];
-  supportedSpecialisedDiagrams: Array<string> = [];
+  supportedChartTypes: Array<ISupportedChart> = [];
+  supportedMaps: Array<ISupportedMap> = [];
+  supportedSpecialisedDiagrams: Array<ISupportedSpecialChartType> = [];
 
-  availableDiagrams: Array<string> = [];
+  availableDiagrams: Array<ISupportedCategory> = [];
 
   constructor(private chartTypesService: SupportedChartTypesService) {
 
-    chartTypesService.getSupportedChartTypes().subscribe(
-      (data: Array<string>) => this.supportedChartTypes = data, // success path
+    this.chartTypesService.getSupportedChartTypes().subscribe(
+      (data: Array<ISupportedChart>) => this.supportedChartTypes = data, // success path
       error => {}, // error path
       () => {
-        this.availableDiagrams = this.supportedChartTypes;
+        this.supportedChartTypes
+        .map((elem: ISupportedChart) => this.availableDiagrams.push(elem));
+      }
+    );
+    this.chartTypesService.getSupportedMaps().subscribe(
+      (data: Array<ISupportedMap>) => {
+        this.supportedMaps = data;
+      }, // success path
+      error => {}, // error path
+      () => {
+        this.supportedMaps
+        .map((elem: ISupportedChart) => this.availableDiagrams.push(elem));
+      }
+    );
+    this.chartTypesService.getSupportedSpecialChartTypes().subscribe(
+      (data: Array<ISupportedSpecialChartType>) => {
+        this.supportedSpecialisedDiagrams = data;
+      }, // success path
+      error => {}, // error path
+      () => {
+        this.supportedSpecialisedDiagrams
+        .map((elem: ISupportedChart) => this.availableDiagrams.push(elem) );
       }
     );
     this.selectedDiagramCategory$ = new BehaviorSubject(null);
-    // this.availableDiagrams.concat(this.supportedChartTypes, this.supportedMaps, this.supportedSpecialisedDiagrams);
   }
 
   public changeDiagramCategory(diagramCategory: string) {
-    const found = this.availableDiagrams.find(
-      (availableDiagram: string) => availableDiagram === diagramCategory);
-    this.selectedDiagramCategory$.next(found);
+      const found = this.availableDiagrams.find(
+        (availableDiagram: ISupportedCategory) => availableDiagram.type === diagramCategory);
+      this.selectedDiagramCategory$.next(isNullOrUndefined(found) ? null : found.type);
 
-    // if (found) {
-    //   console.log('Changed to:', diagramCategory);
-    // } else {
-    //   console.log(diagramCategory + 'Not found among:', this.availableDiagrams );
-    // }
+      if (found) {
+        console.log('Changed to:', diagramCategory);
+      } else {
+        console.log(diagramCategory + 'diagram not found among:', this.availableDiagrams );
+      }
   }
 }

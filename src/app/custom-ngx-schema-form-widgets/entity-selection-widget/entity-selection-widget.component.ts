@@ -73,23 +73,23 @@ export class EntitySelectionWidgetComponent extends ControlWidget implements OnI
         err => {
           this.errorHandler.handleError(err);
           return of([]);
-      })).subscribe(
+      }))
+      .subscribe(
         // success path
         (data: Array<string>) => {
 
           // Reset the entity when a profile changes and its not loading a chart
           if (!this.chartLoadingService.chartLoadingStatus) {
             this.formProperty.reset(null, false);
+          } else {
+            // We want to avoid certain functionality when a chart is Loading
+            // so notify that this Dataseries stopped loading
+            this.chartLoadingService.decreaseLoadingObs();
           }
           // Get a hold of the new entities
           this.entities = data;
         },
         () => {
-          // We want to avoid certain functionality when a chart is Loading
-          // so notify that this Dataseries stopped loading
-          if ( this.chartLoadingService.chartLoadingStatus) {
-            this.chartLoadingService.decreaseLoadingObs();
-          }
           if ( this.dbSchemaServiceSubscription ) {
             this.dbSchemaServiceSubscription.unsubscribe();
           }

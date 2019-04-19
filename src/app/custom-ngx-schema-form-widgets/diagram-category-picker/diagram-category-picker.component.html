@@ -11,13 +11,13 @@
   <h3 class="ui dividing header">Basic Diagrams</h3>
   <div class="ui stackable centered cards">
       <a class="card" *ngFor="let basicDiagram of this.diagramCategoryService.supportedChartTypes"
-      [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(basicDiagram)))
-      (click)="this.diagramSelectionAction(basicDiagram)">
+      [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(basicDiagram.type)))
+      (click)="this.diagramSelectionAction(basicDiagram.type)">
         <div class="image">
           <img src="assets/images/imagePlaceholder.svg" alt="Diagram Image">
         </div>
         <div class="content">
-          <a class="center aligned header">{{basicDiagram | titlecase}}</a>
+          <a class="center aligned header">{{basicDiagram.type | titlecase}}</a>
         </div>
       </a>
   </div>
@@ -28,13 +28,13 @@
   <h3 class="ui dividing header">Map Diagrams</h3>
   <div class="ui stackable centered cards">
     <a class="card" *ngFor="let mapDiagram of this.diagramCategoryService.supportedMaps"
-    [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(mapDiagram)))
-    (click)="this.diagramSelectionAction(mapDiagram)">
+    [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(mapDiagram.type)))
+    (click)="this.diagramSelectionAction(mapDiagram.type)">
         <div class="image">
           <img src="assets/images/imagePlaceholder.svg" alt="Diagram Image">
         </div>
         <div class="content">
-          <a class="center aligned header">{{mapDiagram}}</a>
+          <a class="center aligned header">{{mapDiagram.type | titlecase}}</a>
         </div>
       </a>
   </div>
@@ -45,13 +45,13 @@
   <h3 class="ui dividing header">Specialised Diagrams</h3>
   <div class="ui stackable centered cards">
       <a class="card" *ngFor="let specialisedDiagram of this.diagramCategoryService.supportedSpecialisedDiagrams"
-      [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(specialisedDiagram)))
-      (click)="this.diagramSelectionAction(specialisedDiagram)">
+      [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(specialisedDiagram.type)))
+      (click)="this.diagramSelectionAction(specialisedDiagram.type)">
           <div class="image">
             <img src="assets/images/imagePlaceholder.svg" alt="Diagram Image">
           </div>
           <div class="content">
-            <a class="center aligned header">{{specialisedDiagram}}</a>
+            <a class="center aligned header">{{specialisedDiagram.type | titlecase}}</a>
           </div>
         </a>
   </div>
