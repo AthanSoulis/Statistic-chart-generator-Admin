@@ -70,6 +70,33 @@ export interface HighchartsOptionsFormSchema {
     hcMiscOptions ?: HCMiscOptionsFormSchema;
     stackedChart ?: string;
 }
+export interface HighmapsOptionsFormSchema {
+    titles ?: TitlesOptionsFormSchema;
+    hmCredits ?: HMCreditsOptionsFormSchema;
+    hmLegend ?: HMLegendOptionsFormSchema;
+    hmMiscOptions ?: HMMiscOptionsFormSchema;
+    hmColorAxis ?: HMColorAxisOptionsFormSchema;
+}
+export interface HMColorAxisOptionsFormSchema {
+    hmColorAxisMin ?: number;
+    hmColorAxisMax ?: number;
+    hmColorAxisType ?: string;
+    hmColorAxisMinColor ?: string;
+    hmColorAxisMaxColor ?: string;
+}
+export interface HMLegendOptionsFormSchema {
+    hmEnableLegend ?: boolean;
+    hmLegendTitle ?: string;
+}
+export interface HMCreditsOptionsFormSchema {
+    hmEnableCredits ?: boolean;
+    hmCreditsText ?: string;
+}
+export interface HMMiscOptionsFormSchema {
+    exporting ?: boolean;
+    hmEnableDataLabels ?: boolean;
+    hmEnableMapNavigation ?: boolean;
+}
 export interface HCChartAreaOptionsFormSchema {
     hcCABackGroundColor ?: string;
     hcCABorderWidth ?: number;
@@ -111,6 +138,7 @@ export interface ChartAppearanceFormSchema {
 
     highchartsAppearanceOptions ?: HighchartsOptionsFormSchema;
     googlechartsAppearanceOptions ?: GooglechartsOptionsFormSchema;
+    highmapsAppearanceOptions ?: HighmapsOptionsFormSchema;
 }
 export interface AppearanceGeneralOptionsFormSchema {
     library: string;

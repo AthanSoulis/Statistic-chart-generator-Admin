@@ -1,14 +1,16 @@
 import { Subject, BehaviorSubject, Observable, of } from 'rxjs';
 import { SCGAFormSchema, ViewFormSchema, CategoryFormSchema, DataseriesFormSchema, AppearanceFormSchema } from '../../chart-creator/chart-form-schema.classes';
-import { SupportedLibrariesService } from '../supported-libraries-service/supported-libraries.service';
 import { GoogleChartsTable, GoogleChartsChart } from '../supported-libraries-service/chart-description-GoogleCharts.model';
 import { ChartInfo } from '../../chart-creator/chart-query.model';
 import { HighChartsChart } from '../supported-libraries-service/chart-description-HighCharts.model';
 import { isNullOrUndefined } from 'util';
+import { HighMapsMap, HMSeriesInfo } from '../supported-libraries-service/chart-description-HighMaps.model';
+import { DiagramCategoryService } from '../diagram-category-service/diagram-category.service';
+import { ISupportedMap } from '../supported-chart-types-service/supported-chart-types.service';
 
 export class DiagramCreator {
 
-  constructor(private supportedLibrariesService: SupportedLibrariesService) {}
+  constructor(private diagramCategoryService: DiagramCategoryService) {}
 
   public createChart(formObj: SCGAFormSchema): Observable<Object> {
 
@@ -24,26 +26,30 @@ export class DiagramCreator {
       // (data: Array<string>) =>  {
       //     if (data.includes(library)) {
 
-          switch (library) {
+      console.log('Appearance', appearanceOptions);
+      switch (library) {
 
-              case('HighCharts'): {
-                  console.log('Appearance', appearanceOptions);
-                  const hchartObj = this.createDynamicHighChartsChart(view, category, dataseries, appearanceOptions);
-                  console.log('Creating a ' + library + ' chart!', hchartObj);
+        case('HighCharts'): {
+            const hchartObj = this.createDynamicHighChartsChart(view, category, dataseries, appearanceOptions);
+            console.log('Creating a ' + library + ' chart!', hchartObj);
 
-                  return of(hchartObj);
-              }
-              case('GoogleCharts'): {
-                  console.log('Appearance', appearanceOptions);
-                  const gchartObj = this.createDynamicGoogleChartsChart(view, category, dataseries, appearanceOptions);
-                  console.log('Creating a ' + library + ' chart!', gchartObj);
+            return of(hchartObj);
+        }
+        case('GoogleCharts'): {
+            const gchartObj = this.createDynamicGoogleChartsChart(view, category, dataseries, appearanceOptions);
+            console.log('Creating a ' + library + ' chart!', gchartObj);
 
-                  return of(gchartObj);
-              }
-              default: {
-                  return of(null);
-              }
-          }
+            return of(gchartObj);
+        }
+        case('HighMaps'): {
+          const hmapObj = this.createDynamicHighMapsMap(view, category, dataseries, appearanceOptions);
+          console.log('Creating a ' + library + ' chart!', hmapObj);
+          return of(hmapObj);
+        }
+        default: {
+            return of(null);
+        }
+      }
           // }});
   }
   public createTable(formObj: SCGAFormSchema): Observable<Object> {
@@ -163,5 +169,56 @@ export class DiagramCreator {
 
       chartObj.chartDescription.queries = queries;
       return chartObj;
+  }
+  createDynamicHighMapsMap(view: ViewFormSchema, category: CategoryFormSchema,
+    dataseries: DataseriesFormSchema[], appearanceOptions: AppearanceFormSchema): HighMapsMap {
+
+    const mapObj = new HighMapsMap();
+    mapObj.library = appearanceOptions.chartAppearance.generalOptions.library;
+
+    // tslint:disable-next-line:max-line-length
+    if (appearanceOptions.chartAppearance.highmapsAppearanceOptions !== undefined && appearanceOptions.chartAppearance.highmapsAppearanceOptions !== null) {
+      // Color Axis
+      mapObj.mapDescription.colorAxis.max = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmColorAxis.hmColorAxisMax === undefined ?
+                                              null : appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmColorAxis.hmColorAxisMax;
+      mapObj.mapDescription.colorAxis.min = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmColorAxis.hmColorAxisMin === undefined ?
+                                              null : appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmColorAxis.hmColorAxisMin;
+      mapObj.mapDescription.colorAxis.maxColor = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmColorAxis.hmColorAxisMaxColor;
+      mapObj.mapDescription.colorAxis.minColor = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmColorAxis.hmColorAxisMinColor;
+      mapObj.mapDescription.colorAxis.type = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmColorAxis.hmColorAxisType;
+      // Exporting
+      mapObj.mapDescription.exporting.enabled = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmMiscOptions.exporting;
+      if (!isNullOrUndefined(appearanceOptions.chartAppearance.highmapsAppearanceOptions.titles)) {
+        // Title
+        mapObj.mapDescription.title.text = appearanceOptions.chartAppearance.highmapsAppearanceOptions.titles.title;
+        // Subtitle
+        mapObj.mapDescription.subtitle.text = appearanceOptions.chartAppearance.highmapsAppearanceOptions.titles.subtitle;
+      }
+      // MapNavigation
+      mapObj.mapDescription.mapNavigation.enabled = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmMiscOptions.hmEnableMapNavigation;
+      // Credits
+      mapObj.mapDescription.credits.enabled =  appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmCredits.hmEnableCredits;
+      mapObj.mapDescription.credits.text = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmCredits.hmCreditsText;
+      // Legend
+      mapObj.mapDescription.legend.enabled = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmLegend.hmEnableLegend;
+
+    }
+
+    dataseries.forEach( dataElement => {
+      mapObj.mapDescription.series.push(
+        // Dataseries Info
+        new HMSeriesInfo(dataElement.chartProperties.dataseriesName,
+          appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmMiscOptions.hmEnableDataLabels)
+      );
+      mapObj.mapDescription.queries.push(
+        new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit, category.categoryType)
+      );
+    });
+
+    mapObj.mapDescription.chart.map = this.diagramCategoryService
+                                      .supportedMaps
+                                      .find((map: ISupportedMap) => map.type === category.categoryType).name;
+
+    return mapObj;
   }
 }

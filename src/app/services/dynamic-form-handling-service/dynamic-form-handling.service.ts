@@ -7,6 +7,7 @@ import { SupportedLibrariesService } from '../supported-libraries-service/suppor
 import { ChartExportingService } from '../chart-exporting-service/chart-exporting.service';
 import { ChartLoadingService } from '../chart-loading-service/chart-loading.service';
 import { isNullOrUndefined } from 'util';
+import { DiagramCategoryService } from '../diagram-category-service/diagram-category.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,11 @@ export class DynamicFormHandlingService {
 
   private _diagramCreator: DiagramCreator;
 
-  constructor(private supportedLibrariesService: SupportedLibrariesService,
+  constructor(private diagramcategoryService: DiagramCategoryService,
     private chartExportingService: ChartExportingService,
     private chartLoadingService: ChartLoadingService) {
 
-    this._diagramCreator = new DiagramCreator(supportedLibrariesService);
+    this._diagramCreator = new DiagramCreator(diagramcategoryService);
     this._formErrorObject = new BehaviorSubject([]);
     this._formSchemaObject = new BehaviorSubject(null);
   }

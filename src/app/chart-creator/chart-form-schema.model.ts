@@ -929,6 +929,206 @@ export class FormSchema {
                             'generalOptions/library': ['GoogleCharts']
                         }
                     },
+                    'highmapsAppearanceOptions': {
+                        'type' : 'object',
+                        'grouping' : 'ui fluid two column stackable basic grid',
+                        'widget' : { 'id' : 'csui-property-object' },
+                        'properties' : {
+                            'titles' : {
+                                'type': 'object',
+                                'widget': { 'id' : 'csui-property-object'},
+                                'properties': {
+                                    'title' : {
+                                        'type' : 'string',
+                                        'placeholder' : 'Title',
+                                        'title' : 'Title',
+                                        'widget': { 'id': 'csui-string' }
+                                    },
+                                    'subtitle' : {
+                                        'type' : 'string',
+                                        'placeholder' : 'Subtitle',
+                                        'title' : 'Subtitle',
+                                        'widget': { 'id': 'csui-string' }
+                                    }
+                                },
+                                'fieldsets':
+                                    [{
+                                        'title': 'Diagram Title',
+                                        'grouping': 'equal width fields',
+                                        'fields': ['title', 'subtitle']
+                                    }]
+                            },
+                            'hmCredits': {
+                                'type': 'object',
+                                'widget': { 'id' : 'csui-property-object'},
+                                'properties': {
+                                    'hmEnableCredits' : {
+                                        'type': 'boolean',
+                                        'widget' : {'id' : 'csui-boolean'},
+                                        'default': true,
+                                        'tooltip': 'Whether to show the credits text.',
+                                        'description': 'Enable Credits'
+                                    },
+                                    'hmCreditsText' : {
+                                        'type': 'string',
+                                        'default': 'Created by OpenAIRE via HighCharts',
+                                        'title' : 'Credits Text',
+                                        'tooltip': 'The text for the credits label',
+                                        'widget' : {'id': 'csui-string'},
+                                        'visibleIf': {
+                                            'hmEnableCredits': [true]
+                                        }
+                                    }
+                                },
+                                'fieldsets':
+                                    [{
+                                        'title': 'Credits',
+                                        'fields': ['hmEnableCredits', 'hmCreditsText']
+                                    }]
+                            },
+                            'hmMiscOptions': {
+                                'type': 'object',
+                                'widget': { 'id' : 'csui-property-object'},
+                                'properties': {
+                                    'exporting': {
+                                        'type': 'boolean',
+                                        'widget' : {'id' : 'csui-boolean'},
+                                        'default': false,
+                                        // tslint:disable-next-line:max-line-length
+                                        'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
+                                        'description': 'Enable Exporting'
+                                    },
+                                    'hmEnableDataLabels' : {
+                                        'type': 'boolean',
+                                        'widget' : {'id' : 'csui-boolean'},
+                                        'default': false,
+                                        'tooltip': 'Show small labels next to each data value.',
+                                        'description': 'Enable data labels for all series'
+                                    },
+                                    'hmEnableMapNavigation' : {
+                                        'type': 'boolean',
+                                        'widget' : {'id' : 'csui-boolean'},
+                                        'default': false,
+                                        'tooltip': 'Whether to enable navigation of the map.',
+                                        'description': 'Enable map navigation'
+                                    },
+                                },
+                                'fieldsets':
+                                [{
+                                    'title': 'Misc Options',
+                                    'fields': ['exporting', 'hmEnableDataLabels', 'hmEnableMapNavigation']
+                                }]
+                            },
+                            'hmLegend' : {
+                                'type': 'object',
+                                'widget': { 'id' : 'csui-property-object'},
+                                'properties': {
+                                    'hmEnableLegend' : {
+                                        'type': 'boolean',
+                                        'widget' : {'id' : 'csui-boolean'},
+                                        'default': true,
+                                        'tooltip': 'Enable or disable the legend.',
+                                        'description': 'Enable Legend'
+                                    },
+                                    'hmLegendTitle' : {
+                                        'type': 'string',
+                                        'placeholder': 'Legend Title',
+                                        'title': 'Legend Title',
+                                        'tooltip': 'The title to be added on top of the legend.',
+                                        'widget' : {'id' : 'csui-string'},
+                                        'visibleIf': {
+                                            'hmEnableLegend': [true]
+                                        }
+                                    }
+                                },
+                                'fieldsets':
+                                [{
+                                    'title': 'Legend Options',
+                                    'fields': ['hmEnableLegend', 'hmLegendTitle']
+                                }]
+                            },
+                            'hmColorAxis' : {
+                                'type': 'object',
+                                'widget': { 'id' : 'csui-property-object'},
+                                'properties': {
+                                    'hmColorAxisMin' : {
+                                        'type' : 'number',
+                                        'title' : 'Color Axis Min',
+                                        'tooltip': 'The minimum value of the color axis in terms of map point values.',
+                                        'widget': {'id': 'csui-number'}
+                                    },
+                                    'hmColorAxisMax' : {
+                                        'type' : 'number',
+                                        'title' : 'Color Axis Max',
+                                        'tooltip': 'The maximum value of the color axis in terms of map point values.',
+                                        'widget': {'id': 'csui-number'}
+                                    },
+                                    'hmColorAxisType' : {
+                                        'type': 'string',
+                                        'placeholder': 'Legend Title',
+                                        'title': 'Color Axis Interpolation',
+                                        'tooltip': 'The type of interpolation to use for the color axis.',
+                                        'widget' : { 'id': 'csui-select'},
+                                        'default': 'linear',
+                                        'oneOf': [
+                                            {
+                                              'description': 'Linear',
+                                              'value' : 'linear',
+                                              'enum': ['linear']
+                                            },
+                                            {
+                                              'description': 'Logarithmic',
+                                              'value': 'logarithmic',
+                                              'enum': ['logarithmic']
+                                            }
+                                          ]
+                                    },
+                                    'hmColorAxisMinColor' : {
+                                        'type' : 'string',
+                                        'pattern': '^#[0-9a-fA-F]{6}$',
+                                        'default': '#E6EBF5',
+                                        'title' : 'Minimum Color',
+                                        'tooltip': 'Representation of the minimum on the color axis.',
+                                        'widget': {'id': 'csui-color-picker'}
+                                    },
+                                    'hmColorAxisMaxColor' : {
+                                        'type' : 'string',
+                                        'pattern': '^#[0-9a-fA-F]{6}$',
+                                        'default': '#003399',
+                                        'title' : 'Maximum Color',
+                                        'tooltip': 'Representation of the maximum on the color axis.',
+                                        'widget': {'id': 'csui-color-picker'}
+                                    }
+                                },
+                                'fieldsets':
+                                [{
+                                    'title': 'Color Axis Options',
+                                    'grouping': 'equal width fields',
+                                    'fields': [ 'hmColorAxisType']
+                                },
+                                {   'grouping': 'equal width fields',
+                                    'fields': ['hmColorAxisMin', 'hmColorAxisMax']
+                                },
+                                {
+                                    'grouping': 'equal width fields',
+                                    'fields': ['hmColorAxisMinColor', 'hmColorAxisMaxColor']
+                                }]
+                            }
+                        },
+                        'fieldsets': [
+                            {
+                                'fieldsetColumnWidth' : 'eight wide column',
+                                'fields': ['titles', 'hmCredits', 'hmLegend' ]
+                            },
+                            {
+                                'fieldsetColumnWidth' : 'eight wide column',
+                                'fields': ['hmColorAxis', 'hmMiscOptions']
+                            }
+                        ],
+                        'visibleIf': {
+                            'generalOptions/library': ['HighMaps']
+                        }
+                    }
                 },
                 'fieldsets': [
                     {
@@ -939,7 +1139,7 @@ export class FormSchema {
                     {
                         'title': 'Visualisation Options',
                         'description' : 'Available options based on the selected Visualisation Library',
-                        'fields': ['highchartsAppearanceOptions', 'googlechartsAppearanceOptions']
+                        'fields': ['highchartsAppearanceOptions', 'googlechartsAppearanceOptions', 'highmapsAppearanceOptions' ]
                     }
                 ],
                 'required': ['generalOptions']
