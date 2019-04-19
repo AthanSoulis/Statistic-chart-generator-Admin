@@ -20,21 +20,23 @@ export class TableFrameComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    // this.frameHeight = (2 * window.outerHeight) / 5;
+    this.frameHeight = (3 * window.outerHeight) / 5;
 
     const iframe = <HTMLIFrameElement>document.getElementById('tableIframe');
-    window.addEventListener('message',
-    (event: any) => {
+    if ( iframe ) {
+      window.addEventListener('message',
+      (event: any) => {
 
-      if (event.origin !== this.urlProvider.serviceURL &&
-        event.origin !== this.urlProvider.iframeURL) {
-          console.log('Untrusted message', event.origin);
-        return;
-      }
+        if (event.origin !== this.urlProvider.serviceURL &&
+          event.origin !== this.urlProvider.iframeURL) {
+            console.log('Untrusted message', event.origin);
+          return;
+        }
 
-      // console.log('Table:', event);
-      iframe.style.height = event.data + 'px';
-    });
+        // console.log('Table:', event);
+        iframe.style.height = event.data + 'px';
+      });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {

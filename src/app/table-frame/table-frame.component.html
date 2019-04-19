@@ -1,17 +1,3 @@
 
-<iframe #tableIframe id="tableIframe"  width=100% [src]='frameUrl' 
+<iframe #tableIframe id="tableIframe"  width=100% height='{{this.frameHeight}}' [src]='frameUrl' 
     style="border:none; display:block;" ></iframe>
-
-<!-- <table class="ui unstackable celled table">
-    <thead>
-        <tr><th *ngFor="let columnHeader of columnHeaders">
-            {{columnHeader}}
-        </th></tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let row of rows">
-        <td *ngFor="let rowObject of row">
-            {{rowObject}}
-        </td></tr>
-    </tbody>
-</table> -->
