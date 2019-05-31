@@ -11,7 +11,7 @@ import {  BehaviorSubject, Subscription } from 'rxjs';
 export class ChartTypeSelectionWidgetComponent extends ControlWidget implements AfterContentInit, OnDestroy {
 
   supportedChartTypes: Array<string>;
-  protected isVisible: BehaviorSubject<boolean>;
+  public isVisible: BehaviorSubject<boolean>;
   private sub: Subscription;
 
   constructor(private chartTypesService: SupportedChartTypesService) {

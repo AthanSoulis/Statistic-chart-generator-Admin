@@ -29,7 +29,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   constructor(private urlProvider: UrlProviderService,
     protected chartExportingService: ChartExportingService,
     protected chartLoadingService: ChartLoadingService,
-    protected dfhs: DynamicFormHandlingService) {}
+    public dfhs: DynamicFormHandlingService) {}
 
   ngOnInit() {}
 
