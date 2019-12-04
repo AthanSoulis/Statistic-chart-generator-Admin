@@ -165,6 +165,10 @@ export class DiagramCreator {
         queries.push(new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
           category.categoryType !== 'combo' ? category.categoryType :
           (isNullOrUndefined(dataElement.chartProperties.chartType) ? 'line' : dataElement.chartProperties.chartType )));
+        // Data Series Color
+        if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.length > 1 || appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray[0] !== '#00000000') {
+          queries[queries.length - 1].color = appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray[queries.length - 1];
+        }
       });
 
       chartObj.chartDescription.queries = queries;
