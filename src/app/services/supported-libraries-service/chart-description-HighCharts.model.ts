@@ -22,6 +22,7 @@ class HighChartsDescription {
     plotOptions: HCPlotOptions;
     legend: HCLegend;
     credits: HCCredits;
+    colors: string[];
 
     constructor() {
         this.chart = new HCchart();
