@@ -10,6 +10,8 @@ import { ISupportedMap } from '../supported-chart-types-service/supported-chart-
 
 export class DiagramCreator {
 
+  private colorTheme = ['#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce', '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a'];
+
   constructor(private diagramCategoryService: DiagramCategoryService) {}
 
   public createChart(formObj: SCGAFormSchema): Observable<Object> {
@@ -161,7 +163,7 @@ export class DiagramCreator {
     }
     // Set Color Theme. More universal approach
     if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.length > 1 || appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray[0] !== '#00000000') {
-      chartObj.chartDescription.colors = appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray;
+      chartObj.chartDescription.colors = appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.concat(this.colorTheme);
     }
 
       const queries = new Array<ChartInfo>();
