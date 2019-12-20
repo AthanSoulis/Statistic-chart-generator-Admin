@@ -1,5 +1,12 @@
 import { Subject, BehaviorSubject, Observable, of } from 'rxjs';
-import { SCGAFormSchema, ViewFormSchema, CategoryFormSchema, DataseriesFormSchema, AppearanceFormSchema } from '../../chart-creator/chart-form-schema.classes';
+import {
+  SCGAFormSchema,
+  ViewFormSchema,
+  CategoryFormSchema,
+  DataseriesFormSchema,
+  AppearanceFormSchema,
+  SelectQuery
+} from '../../chart-creator/chart-form-schema.classes';
 import { GoogleChartsTable, GoogleChartsChart } from '../supported-libraries-service/chart-description-GoogleCharts.model';
 import { ChartInfo } from '../../chart-creator/chart-query.model';
 import { HighChartsChart } from '../supported-libraries-service/chart-description-HighCharts.model';
@@ -18,7 +25,9 @@ export class DiagramCreator {
 
       const view: ViewFormSchema = formObj.view;
       const category: CategoryFormSchema = formObj.category;
-      const dataseries: DataseriesFormSchema[] = formObj.dataseries;
+      const dataseries: DataseriesFormSchema[] = formObj.dataseries.buildQuery;
+      const selectQuery: SelectQuery = formObj.dataseries;
+      console.log(selectQuery);
       const appearanceOptions: AppearanceFormSchema = formObj.appearance;
       const library: string = appearanceOptions.chartAppearance.generalOptions.library;
 
@@ -32,19 +41,19 @@ export class DiagramCreator {
       switch (library) {
 
         case('HighCharts'): {
-            const hchartObj = this.createDynamicHighChartsChart(view, category, dataseries, appearanceOptions);
+            const hchartObj = this.createDynamicHighChartsChart(view, category, selectQuery, appearanceOptions);
             console.log('Creating a ' + library + ' chart!', hchartObj);
 
             return of(hchartObj);
         }
         case('GoogleCharts'): {
-            const gchartObj = this.createDynamicGoogleChartsChart(view, category, dataseries, appearanceOptions);
+            const gchartObj = this.createDynamicGoogleChartsChart(view, category, selectQuery, appearanceOptions);
             console.log('Creating a ' + library + ' chart!', gchartObj);
 
             return of(gchartObj);
         }
         case('HighMaps'): {
-          const hmapObj = this.createDynamicHighMapsMap(view, category, dataseries, appearanceOptions);
+          const hmapObj = this.createDynamicHighMapsMap(view, category, selectQuery, appearanceOptions);
           console.log('Creating a ' + library + ' chart!', hmapObj);
           return of(hmapObj);
         }
@@ -58,12 +67,28 @@ export class DiagramCreator {
 
       const view: ViewFormSchema = formObj.view;
       const category: CategoryFormSchema = formObj.category;
-      const dataseries: DataseriesFormSchema[] = formObj.dataseries;
+      const dataseries: SelectQuery = formObj.dataseries;
       const appearanceOptions: AppearanceFormSchema = formObj.appearance;
 
       const tableObj = new GoogleChartsTable();
 
-      dataseries.forEach( dataElement => {
+      if (dataseries.prebuildQueryName.length > 0) {
+        dataseries.prebuildQueryName.forEach( queryName => {
+          // let temp: ChartInfo = new ChartInfo([], '', appearanceOptions.chartAppearance.generalOptions.resultsLimit, '');
+          const temp: DataseriesFormSchema = {
+            data: {yaxisData: {entity: '', yaxisAggregate: ''}, xaxisData: [], filters: []}, chartProperties: {}
+          };
+          tableObj.tableDescription.queriesInfo.push(
+            new ChartInfo(temp, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
+              category.categoryType !== 'combo' ? category.categoryType :
+                (isNullOrUndefined(temp.chartProperties.chartType) ? 'line' : temp.chartProperties.chartType), queryName.name)
+          );
+        });
+        tableObj.tableDescription.options.pageSize = formObj.appearance.tableAppearance.paginationSize;
+        return of(tableObj);
+      }
+
+      dataseries.buildQuery.forEach( dataElement => {
         tableObj.tableDescription.queriesInfo.push(
           new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
             category.categoryType !== 'combo' ? category.categoryType :
@@ -75,7 +100,7 @@ export class DiagramCreator {
       return of(tableObj);
   }
   createDynamicGoogleChartsChart(view: ViewFormSchema, category: CategoryFormSchema,
-      dataseries: DataseriesFormSchema[], appearanceOptions: AppearanceFormSchema): GoogleChartsChart {
+      dataseries: SelectQuery, appearanceOptions: AppearanceFormSchema): GoogleChartsChart {
 
       const chartObj = new GoogleChartsChart();
       const chartDescription = chartObj.chartDescription;
@@ -101,7 +126,7 @@ export class DiagramCreator {
         chartDescription.options.vAxis.title = appearanceOptions.chartAppearance.googlechartsAppearanceOptions.axisNames.yaxisName;
       }
 
-      dataseries.forEach( dataElement => {
+      dataseries.buildQuery.forEach( dataElement => {
         chartDescription.queriesInfo.push(
           new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
             category.categoryType !== 'combo' ? category.categoryType :
@@ -112,9 +137,10 @@ export class DiagramCreator {
   }
 
   createDynamicHighChartsChart(view: ViewFormSchema, category: CategoryFormSchema,
-                               dataseries: DataseriesFormSchema[], appearanceOptions: AppearanceFormSchema): HighChartsChart {
+                               dataseries: SelectQuery, appearanceOptions: AppearanceFormSchema): HighChartsChart {
 
     const chartObj = new HighChartsChart();
+    console.log(dataseries);
 
     // tslint:disable-next-line:max-line-length
     if (appearanceOptions.chartAppearance.highchartsAppearanceOptions !== undefined && appearanceOptions.chartAppearance.highchartsAppearanceOptions !== null) {
@@ -168,7 +194,19 @@ export class DiagramCreator {
 
       const queries = new Array<ChartInfo>();
 
-      dataseries.forEach( dataElement => {
+      if (dataseries.prebuildQueryName.length > 0) {
+        dataseries.prebuildQueryName.forEach( queryName => {
+          // let temp: ChartInfo = new ChartInfo([], '', appearanceOptions.chartAppearance.generalOptions.resultsLimit, '');
+          const temp: DataseriesFormSchema = {data: {yaxisData: {entity: '', yaxisAggregate: ''}, xaxisData: [], filters: []}, chartProperties: {}};
+          queries.push(new ChartInfo(temp, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
+            category.categoryType !== 'combo' ? category.categoryType :
+              (isNullOrUndefined(temp.chartProperties.chartType) ? 'line' : temp.chartProperties.chartType ), queryName.name));
+        });
+        chartObj.chartDescription.queries = queries;
+        return chartObj;
+      }
+
+      dataseries.buildQuery.forEach( dataElement => {
         queries.push(new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
           category.categoryType !== 'combo' ? category.categoryType :
           (isNullOrUndefined(dataElement.chartProperties.chartType) ? 'line' : dataElement.chartProperties.chartType )));
@@ -178,11 +216,12 @@ export class DiagramCreator {
         // }
       });
 
+      console.log(queries);
       chartObj.chartDescription.queries = queries;
       return chartObj;
   }
   createDynamicHighMapsMap(view: ViewFormSchema, category: CategoryFormSchema,
-    dataseries: DataseriesFormSchema[], appearanceOptions: AppearanceFormSchema): HighMapsMap {
+    dataseries: SelectQuery, appearanceOptions: AppearanceFormSchema): HighMapsMap {
 
     const mapObj = new HighMapsMap();
     mapObj.library = appearanceOptions.chartAppearance.generalOptions.library;
@@ -215,7 +254,7 @@ export class DiagramCreator {
 
     }
 
-    dataseries.forEach( dataElement => {
+    dataseries.buildQuery.forEach( dataElement => {
       mapObj.mapDescription.series.push(
         // Dataseries Info
         new HMSeriesInfo(dataElement.chartProperties.dataseriesName,

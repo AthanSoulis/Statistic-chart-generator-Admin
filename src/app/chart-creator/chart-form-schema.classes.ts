@@ -3,7 +3,7 @@
 export interface SCGAFormSchema {
     view: ViewFormSchema;
     category: CategoryFormSchema;
-    dataseries: DataseriesFormSchema[];
+    dataseries: SelectQuery;
     appearance: AppearanceFormSchema;
 }
 export interface ViewFormSchema {
@@ -12,9 +12,16 @@ export interface ViewFormSchema {
 export interface CategoryFormSchema {
     categoryType: string;
 }
+export interface SelectQuery {
+    buildQuery: DataseriesFormSchema[];
+    prebuildQueryName: PrebuildQueryName[];
+}
 export interface DataseriesFormSchema {
     data: DataFormSchema;
     chartProperties: ChartPropertiesFormSchema;
+}
+export interface PrebuildQueryName {
+    name: string;
 }
 export interface DataFormSchema {
     yaxisData: YaxisDataFormSchema;

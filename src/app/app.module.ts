@@ -64,6 +64,7 @@ import { DiagramCategoryPickerComponent } from './custom-ngx-schema-form-widgets
 import { FilterArrayWidgetComponent } from './custom-ngx-schema-form-widgets/filter-array-widget/filter-array-widget.component';
 import { TabularMenuWidgetComponent } from './custom-ngx-schema-form-widgets/tabular-menu-widget/tabular-menu-widget.component';
 import { ChartTableModalComponent } from './chart-table-modal/chart-table-modal.component';
+import {SelectQueryNameComponent} from './custom-ngx-schema-form-widgets/select-query-name/select-query-name.componet';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { ChartTableModalComponent } from './chart-table-modal/chart-table-modal.
     DiagramCategoryPickerComponent,
     FilterArrayWidgetComponent,
     TabularMenuWidgetComponent,
+    SelectQueryNameComponent,
     ChartTableModalComponent
   ],
   imports: [
@@ -143,6 +145,7 @@ import { ChartTableModalComponent } from './chart-table-modal/chart-table-modal.
     DiagramCategoryPickerComponent,
     FilterArrayWidgetComponent,
     TabularMenuWidgetComponent,
+    SelectQueryNameComponent,
     ChartTableModalComponent
   ],
   providers: [
