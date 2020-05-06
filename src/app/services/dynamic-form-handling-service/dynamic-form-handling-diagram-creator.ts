@@ -7,10 +7,13 @@ import { isNullOrUndefined } from 'util';
 import { HighMapsMap, HMSeriesInfo } from '../supported-libraries-service/chart-description-HighMaps.model';
 import { DiagramCategoryService } from '../diagram-category-service/diagram-category.service';
 import { ISupportedMap } from '../supported-chart-types-service/supported-chart-types.service';
+import {EChartsChart, ECToolboxFeature} from '../supported-libraries-service/chart-description-eCharts.model';
 
 export class DiagramCreator {
 
-  private colorTheme = ['#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce', '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a'];
+  private hcColorTheme = ['#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce', '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a'];
+  private ecColorTheme = ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83',  '#ca8622', '#bda29a', '#6e7074',
+      '#546570', '#c4ccd3'];
 
   constructor(private diagramCategoryService: DiagramCategoryService) {}
 
@@ -47,6 +50,12 @@ export class DiagramCreator {
           const hmapObj = this.createDynamicHighMapsMap(view, category, dataseries, appearanceOptions);
           console.log('Creating a ' + library + ' chart!', hmapObj);
           return of(hmapObj);
+        }
+        case('eCharts'): {
+          const echartObj = this.createDynamicEChartsChart(view, category, dataseries, appearanceOptions);
+          console.log('Creating a ' + library + ' chart!', echartObj);
+
+          return of(echartObj);
         }
         default: {
             return of(null);
@@ -163,7 +172,7 @@ export class DiagramCreator {
     }
     // Set Color Theme. More universal approach
     if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.length > 1 || appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray[0] !== '#00000000') {
-      chartObj.chartDescription.colors = appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.concat(this.colorTheme);
+      chartObj.chartDescription.colors = appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.concat(this.hcColorTheme);
     }
 
       const queries = new Array<ChartInfo>();
@@ -181,6 +190,80 @@ export class DiagramCreator {
       chartObj.chartDescription.queries = queries;
       return chartObj;
   }
+
+  createDynamicEChartsChart(view: ViewFormSchema, category: CategoryFormSchema,
+                                 dataseries: DataseriesFormSchema[], appearanceOptions: AppearanceFormSchema): EChartsChart {
+
+        const chartObj = new EChartsChart();
+
+        // tslint:disable-next-line:max-line-length
+        if (appearanceOptions.chartAppearance.echartsAppearanceOptions !== undefined && appearanceOptions.chartAppearance.echartsAppearanceOptions !== null) {
+            // Exporting
+            // tslint:disable-next-line:max-line-length
+            chartObj.chartDescription.toolbox.show = appearanceOptions.chartAppearance.echartsAppearanceOptions.ecMiscOptions.exporting;
+            if (chartObj.chartDescription.toolbox.show) {
+                chartObj.chartDescription.toolbox.right = '10';
+                chartObj.chartDescription.toolbox.feature = new ECToolboxFeature();
+            }
+            // tslint:disable-next-line:max-line-length
+            chartObj.chartDescription.plotOptions.series.stacking = appearanceOptions.chartAppearance.echartsAppearanceOptions.ecMiscOptions.stackedChart;
+
+            // Legend Options
+            chartObj.chartDescription.legend.show = appearanceOptions.chartAppearance.echartsAppearanceOptions.ecLegend.ecEnableLegend;
+            chartObj.chartDescription.legend.orient = appearanceOptions.chartAppearance.echartsAppearanceOptions.ecLegend.ecLegendLayout;
+            // tslint:disable-next-line:max-line-length
+            chartObj.chartDescription.legend.left = appearanceOptions.chartAppearance.echartsAppearanceOptions.ecLegend.ecLegendHorizontalAlignment;
+            // tslint:disable-next-line:max-line-length
+            chartObj.chartDescription.legend.top = appearanceOptions.chartAppearance.echartsAppearanceOptions.ecLegend.ecLegendVerticalAlignment;
+
+            if (appearanceOptions.chartAppearance.echartsAppearanceOptions.titles) {
+                chartObj.chartDescription.title.text = appearanceOptions.chartAppearance.echartsAppearanceOptions.titles.title;
+                chartObj.chartDescription.title.subtext = appearanceOptions.chartAppearance.echartsAppearanceOptions.titles.subtitle;
+            }
+            // tslint:disable-next-line:max-line-length
+            chartObj.chartDescription.plotOptions.series.dataLabels.enabled = appearanceOptions.chartAppearance.echartsAppearanceOptions.ecMiscOptions.hcEnableDataLabels;
+
+            // Chart Area Options
+            // tslint:disable-next-line:max-line-length
+            chartObj.chartDescription.backgroundColor = appearanceOptions.chartAppearance.echartsAppearanceOptions.ecChartArea.ecCABackGroundColor;
+
+            if (appearanceOptions.chartAppearance.echartsAppearanceOptions.axisNames) {
+                chartObj.chartDescription.xAxis.name = appearanceOptions.chartAppearance.echartsAppearanceOptions.axisNames.xaxisName;
+                chartObj.chartDescription.yAxis.name = appearanceOptions.chartAppearance.echartsAppearanceOptions.axisNames.yaxisName;
+            }
+        }
+        // Set Color Theme. More universal approach
+        if (appearanceOptions.chartAppearance.echartsAppearanceOptions.dataSeriesColorArray.length > 1
+            || appearanceOptions.chartAppearance.echartsAppearanceOptions.dataSeriesColorArray[0] !== '#00000000') {
+            // tslint:disable-next-line:max-line-length
+            chartObj.chartDescription.color = appearanceOptions.chartAppearance.echartsAppearanceOptions.dataSeriesColorArray.concat(this.ecColorTheme);
+        }
+
+        console.log('chartObj.chartDescription', chartObj.chartDescription);
+
+        const queries = new Array<ChartInfo>();
+
+        dataseries.forEach( dataElement => {
+            queries.push(new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
+                category.categoryType !== 'combo' ? category.categoryType :
+                    (isNullOrUndefined(dataElement.chartProperties.chartType) ? 'line' : dataElement.chartProperties.chartType )));
+            // if (appearanceOptions.chartAppearance.echartsAppearanceOptions.hcMiscOptions.hcEnableDataLabels) {
+            //     queries.push(new ECChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
+            //         category.categoryType !== 'combo' ? category.categoryType :
+            //             (isNullOrUndefined(dataElement.chartProperties.chartType) ? 'line' : dataElement.chartProperties.chartType ),
+            //         new ECSeriesDataLabel()));
+            // } else {
+            //     queries.push(new ECChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
+            //         category.categoryType !== 'combo' ? category.categoryType :
+            //             (isNullOrUndefined(dataElement.chartProperties.chartType) ? 'line' : dataElement.chartProperties.chartType ),
+            //         null));
+            // }
+        });
+
+        chartObj.chartDescription.queries = queries;
+        return chartObj;
+    }
+
   createDynamicHighMapsMap(view: ViewFormSchema, category: CategoryFormSchema,
     dataseries: DataseriesFormSchema[], appearanceOptions: AppearanceFormSchema): HighMapsMap {
 

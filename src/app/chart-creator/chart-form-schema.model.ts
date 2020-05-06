@@ -751,6 +751,241 @@ export class FormSchema {
                             'generalOptions/library': ['HighCharts']
                         }
                     },
+                    'echartsAppearanceOptions': {
+                        'type' : 'object',
+                        'grouping' : 'ui fluid two column stackable basic grid',
+                        'widget' : { 'id' : 'csui-property-object' },
+                        // 'title': 'eCharts Appearance Options',
+                        'properties' : {
+                            'titles' : {
+                                'type': 'object',
+                                'widget': { 'id' : 'csui-property-object'},
+                                'properties': {
+                                    'title' : {
+                                        'type' : 'string',
+                                        'placeholder' : 'Title',
+                                        'title' : 'Title',
+                                        'widget': { 'id': 'csui-string' }
+                                    },
+                                    'subtitle' : {
+                                        'type' : 'string',
+                                        'placeholder' : 'Subtitle',
+                                        'title' : 'Subtitle',
+                                        'widget': { 'id': 'csui-string' }
+                                    }
+                                },
+                                'fieldsets':
+                                    [{
+                                        'title': 'Diagram Title',
+                                        'grouping': 'equal width fields',
+                                        'fields': ['title', 'subtitle']
+                                    }]
+                            },
+                            'axisNames' : {
+                                'type' : 'object',
+                                'widget' : { 'id' : 'csui-property-object' },
+                                'properties' : {
+                                    'yaxisName' : {
+                                        'type' : 'string',
+                                        'placeholder' : 'Yaxis',
+                                        'title' : 'Yaxis',
+                                        'widget': { 'id': 'csui-string' }
+                                    },
+                                    'xaxisName' : {
+                                        'type' : 'string',
+                                        'placeholder' : 'Xaxis',
+                                        'title' : 'Xaxis',
+                                        'widget': { 'id': 'csui-string' }
+                                    }
+                                },
+                                'fieldsets':
+                                    [{
+                                        'title': 'Axis Names',
+                                        'grouping': 'equal width fields',
+                                        'fields': ['yaxisName', 'xaxisName']
+                                    }]
+                            },
+                            'dataSeriesColorArray' : {
+                                'type': 'array',
+                                'title': 'Data Series Color',
+                                'itemName': 'Series Color',
+                                'minItems': 1,
+                                'deleteButtonPosition' : 'out',
+                                'widget' : { 'id' : 'csui-array' },
+                                'items': {
+                                    'type' : 'string',
+                                    'pattern': '^#[0-9a-fA-F]{8}$',
+                                    'default': '#00000000',
+                                    'widget': {'id': 'csui-color-picker'}
+                                }
+                            },
+                            'ecChartArea': {
+                                'type': 'object',
+                                'widget': { 'id' : 'csui-property-object'},
+                                'properties': {
+                                    'ecCABackGroundColor': {
+                                        'type' : 'string',
+                                        'pattern': '^#[0-9a-fA-F]{8}$',
+                                        'default': '#FFFFFFFF',
+                                        'title' : 'Background Color',
+                                        'tooltip': 'Background color for the full chart area.',
+                                        'widget': {'id': 'csui-color-picker'}
+                                    },
+                                },
+                                'fieldsets':
+                                    [{
+                                        'title': 'Chart Area',
+                                        'grouping': 'equal width fields',
+                                        'fields': ['ecCABackGroundColor']
+                                    }]
+                            },
+                            'ecLegend': {
+                                'type': 'object',
+                                'widget': { 'id' : 'csui-property-object'},
+                                'relaxed': true,
+                                'properties': {
+                                    'ecEnableLegend' : {
+                                        'type': 'boolean',
+                                        'widget' : {'id' : 'csui-boolean'},
+                                        'default': true,
+                                        'tooltip': 'Enable or disable the legend.',
+                                        'description': 'Enable Legend'
+                                    },
+                                    'ecLegendLayout' : {
+                                        'type': 'string',
+                                        'widget' : {'id' : 'csui-select'},
+                                        'title': 'Item Layout',
+                                        'tooltip': 'The layout of the legend items. Can be one of "Horizontal" or "Vertical".',
+                                        'oneOf': [
+                                            {
+                                                'enum': ['horizontal'],
+                                                'value' : 'horizontal',
+                                                'description': 'Horizontal'
+                                            },
+                                            {
+                                                'enum': ['vertical'],
+                                                'value' : 'vertical',
+                                                'description': 'Vertical'
+                                            }
+                                        ],
+                                        'default': 'horizontal',
+                                        'visibleIf': {
+                                            'ecEnableLegend': [true]
+                                        }
+                                    },
+                                    'ecLegendHorizontalAlignment' : {
+                                        'type': 'string',
+                                        'widget' : {'id' : 'csui-select'},
+                                        'title': 'Horizontal Alignment',
+                                        'tooltip': 'The horizontal alignment of the legend box within the chart area.',
+                                        'oneOf': [
+                                            {
+                                                'enum': ['left'],
+                                                'value' : 'left',
+                                                'description': 'Left'
+                                            },
+                                            {
+                                                'enum': ['center'],
+                                                'value' : 'center',
+                                                'description': 'Center'
+                                            },
+                                            {
+                                                'enum': ['right'],
+                                                'value' : 'right',
+                                                'description': 'Right'
+                                            }
+                                        ],
+                                        'default': 'center',
+                                        'visibleIf': {
+                                            'ecEnableLegend': [true]
+                                        }
+                                    },
+                                    'ecLegendVerticalAlignment' : {
+                                        'type': 'string',
+                                        'widget' : {'id' : 'csui-select'},
+                                        'title': 'Vertical Alignment',
+                                        'tooltip': 'The vertical alignment of the legend box.',
+                                        'oneOf': [
+                                            {
+                                                'enum': ['top'],
+                                                'value' : 'top',
+                                                'description': 'Top'
+                                            },
+                                            {
+                                                'enum': ['middle'],
+                                                'value' : 'middle',
+                                                'description': 'Middle'
+                                            },
+                                            {
+                                                'enum': ['bottom'],
+                                                'value' : 'bottom',
+                                                'description': 'Bottom'
+                                            }
+                                        ],
+                                        'default': 'bottom',
+                                        'visibleIf': {
+                                            'ecEnableLegend': [true]
+                                        }
+                                    },
+                                },
+                                'fieldsets':
+                                    [{
+                                        'title': 'Legend',
+                                        'fields': ['ecEnableLegend']
+                                    },
+                                        {
+                                            'grouping': 'equal width stackable fields',
+                                            'fields': ['ecLegendLayout', 'ecLegendHorizontalAlignment', 'ecLegendVerticalAlignment']
+                                        }]
+                            },
+                            'ecMiscOptions': {
+                                'type': 'object',
+                                'widget': { 'id' : 'csui-property-object'},
+                                'properties': {
+                                    'exporting': {
+                                        'type': 'boolean',
+                                        'widget' : {'id' : 'csui-boolean'},
+                                        'default': false,
+                                        // tslint:disable-next-line:max-line-length
+                                        'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
+                                        'description': 'Enable Exporting'
+                                    },
+                                    'hcEnableDataLabels' : {
+                                        'type': 'boolean',
+                                        'widget' : {'id' : 'csui-boolean'},
+                                        'default': false,
+                                        'tooltip': 'Show small labels next to each data value.',
+                                        'description': 'Enable data labels for all series'
+                                    },
+                                    'stackedChart' : {
+                                        'type': 'boolean',
+                                        'widget' : {'id' : 'csui-boolean'},
+                                        'default': false,
+                                        'tooltip': 'Choose between a Regular or Stacked chart.',
+                                        'description': 'Stacked graph',
+                                    }
+                                },
+                                'fieldsets':
+                                    [{
+                                        'title': 'Misc Options',
+                                        'fields': ['exporting', 'hcEnableDataLabels', 'stackedChart']
+                                    }]
+                            }
+                        },
+                        'fieldsets': [
+                            {
+                                'fieldsetColumnWidth' : 'eight wide column',
+                                'fields': ['titles', 'axisNames', 'ecMiscOptions']
+                            },
+                            {
+                                'fieldsetColumnWidth' : 'eight wide column',
+                                'fields': ['ecLegend', 'ecChartArea', 'dataSeriesColorArray' ]
+                            }
+                        ],
+                        'visibleIf': {
+                            'generalOptions/library': ['eCharts']
+                        }
+                    },
                     'googlechartsAppearanceOptions': {
                         'type' : 'object',
                         'grouping' : 'ui fluid two column stackable basic grid',
@@ -1139,7 +1374,8 @@ export class FormSchema {
                     {
                         'title': 'Visualisation Options',
                         'description' : 'Available options based on the selected Visualisation Library',
-                        'fields': ['highchartsAppearanceOptions', 'googlechartsAppearanceOptions', 'highmapsAppearanceOptions' ]
+                        'fields': ['highchartsAppearanceOptions', 'googlechartsAppearanceOptions', 'highmapsAppearanceOptions',
+                            'echartsAppearanceOptions' ]
                     }
                 ],
                 'required': ['generalOptions']

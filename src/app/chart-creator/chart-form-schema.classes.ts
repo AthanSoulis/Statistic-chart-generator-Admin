@@ -70,6 +70,15 @@ export interface HighchartsOptionsFormSchema {
     hcMiscOptions ?: HCMiscOptionsFormSchema;
     stackedChart ?: string;
 }
+export interface EchartsOptionsFormSchema {
+    titles ?: TitlesOptionsFormSchema;
+    axisNames ?: AxisNamesFormSchema;
+    dataSeriesColorArray ?: Array<string>;
+    ecChartArea ?: ECChartAreaOptionsFormSchema;
+    ecLegend ?: ECLegendOptionsFormSchema;
+    ecMiscOptions ?: ECMiscOptionsFormSchema;
+    // stackedChart ?: boolean;
+}
 export interface HighmapsOptionsFormSchema {
     titles ?: TitlesOptionsFormSchema;
     hmCredits ?: HMCreditsOptionsFormSchema;
@@ -119,6 +128,20 @@ export interface HCLegendOptionsFormSchema {
     hcLegendHorizontalAlignment ?: string;
     hcLegendVerticalAlignment ?: string;
 }
+export interface ECLegendOptionsFormSchema {
+    ecEnableLegend ?: boolean;
+    ecLegendLayout ?: string;
+    ecLegendHorizontalAlignment ?: string;
+    ecLegendVerticalAlignment ?: string;
+}
+export interface ECChartAreaOptionsFormSchema {
+    ecCABackGroundColor ?: string;
+}
+export interface ECMiscOptionsFormSchema {
+    exporting ?: boolean;
+    hcEnableDataLabels ?: boolean;
+    stackedChart ?: boolean;
+}
 export interface HCMiscOptionsFormSchema {
     exporting ?: boolean;
     hcEnableDataLabels ?: boolean;
@@ -137,6 +160,7 @@ export interface ChartAppearanceFormSchema {
     generalOptions: AppearanceGeneralOptionsFormSchema;
 
     highchartsAppearanceOptions ?: HighchartsOptionsFormSchema;
+    echartsAppearanceOptions ?: EchartsOptionsFormSchema;
     googlechartsAppearanceOptions ?: GooglechartsOptionsFormSchema;
     highmapsAppearanceOptions ?: HighmapsOptionsFormSchema;
 }
