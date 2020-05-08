@@ -29,6 +29,12 @@ export class ChartExportingService {
   loadingTableTinyUrl$: Observable<boolean>;
   private _loadingTableTinyUrl: BehaviorSubject<boolean>;
 
+  private _rawDataUrl: BehaviorSubject<string>;
+  rawDataTinyUrl$: Observable<string>;
+  private _rawDataTinyUrl: BehaviorSubject<string>;
+  loadingRawDataTinyUrl$: Observable<boolean>;
+  private _loadingRawDataTinyUrl: BehaviorSubject<boolean>;
+
   constructor(private http: HttpClient, private errorHandler: ErrorHandlerService,
      private urlProvider: UrlProviderService) {
 
@@ -63,6 +69,22 @@ export class ChartExportingService {
                     } }, // success path
           error => this.errorHandler.handleError(error) // error path
       );
+
+      // Raw Data Url Loader
+      this._rawDataTinyUrl = new BehaviorSubject<string>(null);
+      this.rawDataTinyUrl$ = this._rawDataTinyUrl.asObservable();
+
+      this._loadingRawDataTinyUrl = new BehaviorSubject<boolean>(false);
+      this.loadingRawDataTinyUrl$ = this._loadingRawDataTinyUrl.asObservable();
+
+      this._rawDataUrl = new BehaviorSubject<string>(null);
+      this._rawDataUrl.pipe(distinctUntilChanged()).subscribe(
+          (rawDataUrl: string) => {
+              if (rawDataUrl) {
+                  this.postTinyUrl(rawDataUrl, this._loadingRawDataTinyUrl, this._rawDataTinyUrl);
+              } }, // success path
+          error => this.errorHandler.handleError(error) // error path
+      );
     }
 
   changeChartUrl(chartObject: Object) {
@@ -79,6 +101,14 @@ export class ChartExportingService {
 
     const stringObj = JSON.stringify(tableObject);
     this._tableUrl.next(this.urlProvider.serviceURL + '/table?json=' + encodeURIComponent(stringObj));
+  }
+
+  changeRawDataUrl(rawDataObject: Object) {
+
+      if (!rawDataObject) { return; }
+
+      const stringObj = JSON.stringify(rawDataObject);
+      this._rawDataUrl.next(this.urlProvider.serviceURL + '/chart/json?json=' + encodeURIComponent(stringObj));
   }
 
   private postTinyUrl(chartUrl: string, loader: BehaviorSubject<boolean>, tinyUrlSubject: BehaviorSubject<string> ) {

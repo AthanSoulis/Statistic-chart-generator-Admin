@@ -16,6 +16,7 @@ export class DynamicFormHandlingService {
 
   private _chartObject = undefined;
   private _tableObject = undefined;
+  private _rawDataObject = undefined;
   private _resetFormValue = null;
   private _formSchemaObject: BehaviorSubject<SCGAFormSchema>;
   private _formErrorObject: BehaviorSubject<Array<any>> = null;
@@ -41,6 +42,7 @@ export class DynamicFormHandlingService {
   get $formErrorObject(): BehaviorSubject<Array<any>> { return this._formErrorObject; }
   get ChartObject(): Object { return this._chartObject; }
   get TableObject(): Object { return this._tableObject; }
+  get RawDataObject(): Object { return this._rawDataObject; }
   get loadFormObject(): Object { return this._loadFormObject; }
   get loadFormObjectFile(): File { return this._loadFormObjectFile; }
 
@@ -50,6 +52,7 @@ export class DynamicFormHandlingService {
     // Reset table and chart objects
     this._tableObject = undefined;
     this._chartObject = undefined;
+    this._rawDataObject = undefined;
   }
 
   loadForm(event: any) {
@@ -76,14 +79,18 @@ export class DynamicFormHandlingService {
     if (this.formSchemaObject !== null && this.isFormValid) {
 
       const forkSub = forkJoin(
-        this._diagramCreator.createChart(value),
-        this._diagramCreator.createTable(value)).subscribe(
-          ([chartObject, tableObject]: [Object, Object]) => {
+          this._diagramCreator.createChart(value),
+          this._diagramCreator.createTable(value),
+          this._diagramCreator.createRawData(value)).subscribe(
+          ([chartObject, tableObject, rawDataObject]: [Object, Object, Object]) => {
             this._chartObject = chartObject;
             this.chartExportingService.changeChartUrl(chartObject);
 
             this._tableObject = tableObject;
             this.chartExportingService.changeTableUrl(tableObject);
+
+            this._rawDataObject = rawDataObject;
+            this.chartExportingService.changeRawDataUrl(rawDataObject);
           },
           () => {
             forkSub.unsubscribe(); }
@@ -96,16 +103,19 @@ export class DynamicFormHandlingService {
     if (this.formSchemaObject !== null && this.isFormValid) {
 
       const forkSub = forkJoin(
-        this._diagramCreator.createChart(value),
-        this._diagramCreator.createTable(value)).subscribe(
-          ([chartObject, tableObject]: [Object, Object]) => {
-            this.chartExportingService.changeChartUrl(chartObject);
+          this._diagramCreator.createChart(value),
+          this._diagramCreator.createTable(value),
+          this._diagramCreator.createRawData(value)).subscribe(
+            ([chartObject, tableObject, rawDataObj]: [Object, Object, Object]) => {
+              this.chartExportingService.changeChartUrl(chartObject);
 
-            this.chartExportingService.changeTableUrl(tableObject);
-          },
-          () => {
-            forkSub.unsubscribe(); }
-        );
+              this.chartExportingService.changeTableUrl(tableObject);
+
+              this.chartExportingService.changeRawDataUrl(rawDataObj);
+            },
+            () => {
+              forkSub.unsubscribe(); }
+          );
     }
   }
   exportForm() {

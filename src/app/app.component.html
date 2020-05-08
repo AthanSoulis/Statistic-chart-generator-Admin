@@ -43,6 +43,16 @@
                 class="url-holder">{{chartExportingService.tableTinyUrl$ | async}}</a> 
             </ng-template>
         </div>
+        <h4 class="ui centered header">Generated Raw Chart Data TinyUrl</h4>
+        <div class="ui small text container fluid segment">
+            <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingRawDataTinyUrl$ | async); else rawDataTinyUrlNotLoading">
+
+            </div>
+            <ng-template #rawDataTinyUrlNotLoading>
+                <a target="_blank" rel="noopener noreferrer" href="{{chartExportingService.rawDataTinyUrl$ | async}}"
+                   class="url-holder">{{chartExportingService.rawDataTinyUrl$ | async}}</a>
+            </ng-template>
+        </div>
 
     </div>
 </ng-template>
