@@ -2,10 +2,12 @@ import { Query, ChartInfo } from '../../chart-creator/chart-query.model';
 
 export class HighChartsChart {
     library: string;
+    orderBy: string;
     chartDescription: HighChartsDescription;
 
     constructor() {
         this.library = 'HighCharts';
+        this.orderBy = 'xaxis';
         this.chartDescription = new HighChartsDescription();
     }
 }

@@ -2,10 +2,12 @@ import {Query, ChartInfo} from '../../chart-creator/chart-query.model';
 
 export class EChartsChart {
     library: string;
+    orderBy: string;
     chartDescription: EChartsDescription;
 
     constructor() {
         this.library = 'eCharts';
+        this.orderBy = 'xaxis';
         this.chartDescription = new EChartsDescription();
     }
 }

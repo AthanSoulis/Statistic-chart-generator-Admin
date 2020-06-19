@@ -105,6 +105,9 @@ export class DiagramCreator {
         const library: string = appearanceOptions.chartAppearance.generalOptions.library;
 
         const rawDataModelObj = new RawDataModel(library);
+        if (appearanceOptions.chartAppearance.generalOptions && appearanceOptions.chartAppearance.generalOptions.orderByAxis !== null) {
+            rawDataModelObj.orderBy = appearanceOptions.chartAppearance.generalOptions.orderByAxis;
+        }
 
         dataseries.forEach(dataElement => {
             rawDataModelObj.chartsInfo.push(
@@ -123,6 +126,12 @@ export class DiagramCreator {
         const chartDescription = chartObj.chartDescription;
 
         chartDescription.GoogleChartType = category.categoryType;
+
+        if (appearanceOptions.chartAppearance.generalOptions !== undefined
+            && appearanceOptions.chartAppearance.generalOptions.orderByAxis !== null) {
+            chartObj.orderBy = appearanceOptions.chartAppearance.generalOptions.orderByAxis;
+        }
+
         if (appearanceOptions.chartAppearance.googlechartsAppearanceOptions.titles) {
             chartDescription.options.title = appearanceOptions.chartAppearance.googlechartsAppearanceOptions.titles.title;
         }
@@ -157,6 +166,11 @@ export class DiagramCreator {
                                  dataseries: DataseriesFormSchema[], appearanceOptions: AppearanceFormSchema): HighChartsChart {
 
         const chartObj = new HighChartsChart();
+
+        if (appearanceOptions.chartAppearance.generalOptions !== undefined
+            && appearanceOptions.chartAppearance.generalOptions.orderByAxis !== null) {
+            chartObj.orderBy = appearanceOptions.chartAppearance.generalOptions.orderByAxis;
+        }
 
         // tslint:disable-next-line:max-line-length
         if (appearanceOptions.chartAppearance.highchartsAppearanceOptions !== undefined && appearanceOptions.chartAppearance.highchartsAppearanceOptions !== null) {
@@ -228,6 +242,11 @@ export class DiagramCreator {
                               dataseries: DataseriesFormSchema[], appearanceOptions: AppearanceFormSchema): EChartsChart {
 
         const chartObj = new EChartsChart();
+
+        if (appearanceOptions.chartAppearance.generalOptions !== undefined
+            && appearanceOptions.chartAppearance.generalOptions.orderByAxis !== null) {
+            chartObj.orderBy = appearanceOptions.chartAppearance.generalOptions.orderByAxis;
+        }
 
         // tslint:disable-next-line:max-line-length
         if (appearanceOptions.chartAppearance.echartsAppearanceOptions !== undefined && appearanceOptions.chartAppearance.echartsAppearanceOptions !== null) {

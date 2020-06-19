@@ -2,10 +2,12 @@ import { Query, ChartInfo } from '../../chart-creator/chart-query.model';
 
 export class GoogleChartsChart {
     library: string;
+    orderBy: string;
     chartDescription: GoogleChartsDescription;
 
     constructor() {
         this.library = 'GoogleCharts';
+        this.orderBy = 'xaxis';
         this.chartDescription = new GoogleChartsDescription();
     }
 }
