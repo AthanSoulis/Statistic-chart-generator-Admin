@@ -26,7 +26,8 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
   constructor(protected errorHandlerService: ErrorHandlerService,
     protected dynamicFormHandlingService: DynamicFormHandlingService,
     protected cdr: ChangeDetectorRef) {
-      this.fs = new FormSchema();
+      // this.fs = new FormSchema();
+      this.fs = this.dynamicFormHandlingService.formSchema;
       this.formErrors = new BehaviorSubject<Array<any>>([]);
   }
 
@@ -45,6 +46,8 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
       // console.log('Updating non Null or Undefined DynamicForm', formSchemaValueObj.value);
       this.dynamicFormHandlingService.formSchemaObject = formSchemaValueObj.value;
     }
+
+    // this.dynamicFormHandlingService.printLogs();
   }
 
   reset(form: FormComponent) {

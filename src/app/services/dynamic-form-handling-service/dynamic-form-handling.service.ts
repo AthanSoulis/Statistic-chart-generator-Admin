@@ -8,6 +8,7 @@ import { ChartExportingService } from '../chart-exporting-service/chart-exportin
 import { ChartLoadingService } from '../chart-loading-service/chart-loading.service';
 import { isNullOrUndefined } from 'util';
 import { DiagramCategoryService } from '../diagram-category-service/diagram-category.service';
+import {FormSchema} from '../../chart-creator/chart-form-schema.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,11 @@ export class DynamicFormHandlingService {
 
   private _diagramCreator: DiagramCreator;
 
+  private _formSchema: FormSchema;
+
+  // fixme when find another solution
+  private xAxisRequirement: boolean;
+
   constructor(private diagramcategoryService: DiagramCategoryService,
     private chartExportingService: ChartExportingService,
     private chartLoadingService: ChartLoadingService) {
@@ -32,10 +38,23 @@ export class DynamicFormHandlingService {
     this._diagramCreator = new DiagramCreator(diagramcategoryService);
     this._formErrorObject = new BehaviorSubject([]);
     this._formSchemaObject = new BehaviorSubject(null);
+
+    this._formSchema = new FormSchema();
   }
 
   set resetFormValue(value: SCGAFormSchema) { this._resetFormValue = value; }
-  get isFormValid(): boolean { return this.$formErrorObject.value === null; }
+  get isFormValid(): boolean {
+    if (this.$formErrorObject.value === null) {
+      return true;
+    } else if (!this.xAxisRequirement && this._formErrorObject.value.length === 1
+        && this._formErrorObject.getValue()[0].code === 'ARRAY_LENGTH_SHORT'
+        && this._formErrorObject.getValue()[0].path === '#/dataseries/0/data/xaxisData') {
+      return true;
+    } else {
+      return false;
+    }
+    // return this.$formErrorObject.value === null;
+  }
   set formSchemaObject(value: SCGAFormSchema) { this._formSchemaObject.next(value); }
   get formSchemaObject(): SCGAFormSchema { return this._formSchemaObject.getValue(); }
   get diagramCreator(): DiagramCreator { return this.diagramCreator; }
@@ -45,6 +64,7 @@ export class DynamicFormHandlingService {
   get RawDataObject(): Object { return this._rawDataObject; }
   get loadFormObject(): Object { return this._loadFormObject; }
   get loadFormObjectFile(): File { return this._loadFormObjectFile; }
+  get formSchema(): FormSchema { return this._formSchema; }
 
   resetForm(root: FormProperty) {
     // Reset through the root property of the dynamic form
@@ -133,5 +153,56 @@ export class DynamicFormHandlingService {
     element.click();
     document.body.removeChild(element);
   }
+
+  changeRequirementOfXAxis(required: boolean) {
+    if (required) {
+      this.xAxisRequirement = true;
+      this._formSchema.dataseriesFormSchema.items.properties.data.fieldsets[0].fields = ['yaxisData', 'xaxisData'];
+      this._formSchema.dataseriesFormSchema.items.properties.data.required = ['yAxisData', 'xAxisData', 'filters'];
+      this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.items.required = ['xaxisEntityField'];
+      this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.minItems = 1;
+      this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.items.properties.xaxisEntityField.requiredField = true;
+    } else {
+      this.xAxisRequirement = false;
+      // this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.widget = 'hidden';
+      this._formSchema.dataseriesFormSchema.items.properties.data.fieldsets[0].fields = ['yaxisData'];
+      this._formSchema.dataseriesFormSchema.items.properties.data.required = ['yAxisData', 'filters'];
+      this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.items.required = [];
+      this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.minItems = 0;
+      this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.items.properties.xaxisEntityField.requiredField = false;
+    }
+  }
+
+  printLogs() {
+    console.log('this._formSchema --> ', this._formSchema);
+    console.log('this._formErrorObject -->', this._formErrorObject);
+  }
+
+  // removeXAxisErrorForNumbers() {
+  //     if (!this.xAxisRequirement && this._formErrorObject.value.length > 0) {
+  //         // for (const value of this._formErrorObject.getValue()) {
+  //         //     console.log('error value -->', value);
+  //         //     if (value.code === 'ARRAY_LENGTH_SHORT' && value.path === '#/dataseries/0/data/xaxisData') {
+  //         //         console.log('found the error to remove');
+  //         //         const index = this._formErrorObject.getValue().indexOf(value, 0);
+  //         //         if (index > -1) {
+  //         //             this._formErrorObject.getValue().splice(index, 1);
+  //         //         }
+  //         //         console.log('this._formErrorObject.getValue() NEW -->', this._formErrorObject.getValue());
+  //         //     }
+  //         // }
+  //         console.log('this._formErrorObject OLD -->', this._formErrorObject);
+  //         this._formErrorObject.getValue().forEach( (item, index) => {
+  //             console.log('error value -->', item);
+  //             if (item.code === 'ARRAY_LENGTH_SHORT' && item.path === '#/dataseries/0/data/xaxisData') {
+  //                 if (index > -1) {
+  //                     this._formErrorObject.getValue().splice(index, 1);
+  //                 }
+  //                 console.log('error found at index -->', index);
+  //                 console.log('this._formErrorObject NEW -->', this._formErrorObject);
+  //             }
+  //         });
+  //     }
+  // }
 
 }

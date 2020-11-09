@@ -131,6 +131,9 @@ export class FormSchema {
                             'minItems': 1,
                             'maxItems': 2,
                             'widget' : { 'id' : 'csui-array' },
+                            // 'visibleIf': {
+                            //     '/category/categoryType': ['area', 'pie', 'column', 'bar', 'line', 'world', 'combo']
+                            // },
                             'items': {
                                 'type' : 'object',
                                 'widget' : { 'id' : 'csui-property-object' },
@@ -278,12 +281,14 @@ export class FormSchema {
                         {
                             'fieldsetColumnWidth' : 'six wide column',
                             'fields' : ['yaxisData', 'xaxisData']
+                            // 'fields' : ['yaxisData']
                         },
                         {
                             'fieldsetColumnWidth' : 'ten wide column',
                             'fields' : ['filters']
                         }],
                     'required': ['yaxisData', 'xaxisData', 'filters']
+                    // 'required': ['yaxisData', 'filters']
                 },
                 'chartProperties' : {
                     'type' : 'object',

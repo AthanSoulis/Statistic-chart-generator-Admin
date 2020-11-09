@@ -39,6 +39,16 @@ constructor(private http: HttpClient, private urlProvider: UrlProviderService, p
       catchError(this.errorHandler.handleError) // then handle the error
     );
   }
+
+  getSupportedMiscTypes(): Observable<Array<ISupportedMiscType>> {
+
+    const supportedMiscTypesUrl = this.urlProvider.serviceURL + '/chart/misc';
+    return this.http.get<Array<ISupportedMiscType>>(supportedMiscTypesUrl)
+        .pipe(
+            retry(3), // retry a failed request up to 3 times
+            catchError(this.errorHandler.handleError) // then handle the error
+        );
+  }
 }
 
 export interface ISupportedCategory {
@@ -56,6 +66,10 @@ export interface ISupportedMap extends ISupportedCategory {
   supportedLibraries: Array<string>;
 }
 export interface ISupportedSpecialChartType extends ISupportedCategory {
+  type: string;
+  supportedLibraries: Array<string>;
+}
+export interface ISupportedMiscType extends ISupportedCategory {
   type: string;
   supportedLibraries: Array<string>;
 }

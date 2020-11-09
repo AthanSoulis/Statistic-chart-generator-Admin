@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { SupportedChartTypesService, ISupportedMap, ISupportedSpecialChartType, ISupportedChart, ISupportedCategory } from '../supported-chart-types-service/supported-chart-types.service';
+import {
+    SupportedChartTypesService,
+    ISupportedMap,
+    ISupportedSpecialChartType,
+    ISupportedChart,
+    ISupportedCategory,
+    ISupportedMiscType
+} from '../supported-chart-types-service/supported-chart-types.service';
 import { isNullOrUndefined } from 'util';
 
 @Injectable({
@@ -13,6 +20,7 @@ export class DiagramCategoryService {
   supportedChartTypes: Array<ISupportedChart> = [];
   supportedMaps: Array<ISupportedMap> = [];
   supportedSpecialisedDiagrams: Array<ISupportedSpecialChartType> = [];
+  supportedMiscTypes: Array<ISupportedMiscType> = [];
 
   availableDiagrams: Array<ISupportedCategory> = [];
 
@@ -46,6 +54,17 @@ export class DiagramCategoryService {
         .map((elem: ISupportedChart) => this.availableDiagrams.push(elem) );
       }
     );
+    this.chartTypesService.getSupportedMiscTypes().subscribe(
+        (data: Array<ISupportedMiscType>) => {
+              this.supportedMiscTypes = data;
+          }, // success path
+          error => {}, // error path
+          () => {
+              this.supportedMiscTypes
+                  .map((elem: ISupportedChart) => this.availableDiagrams.push(elem) );
+        }
+    );
+
     this.selectedDiagramCategory$ = new BehaviorSubject(null);
   }
 

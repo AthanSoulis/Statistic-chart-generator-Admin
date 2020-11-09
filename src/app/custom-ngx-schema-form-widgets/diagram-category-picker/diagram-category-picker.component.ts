@@ -3,6 +3,8 @@ import { ControlWidget } from 'ngx-schema-form';
 import { DiagramCategoryService } from '../../services/diagram-category-service/diagram-category.service';
 import { Subscription, BehaviorSubject } from 'rxjs';
 import { TabActivationStatusService } from '../../services/tab-activation-status-service/tab-activation-status.service';
+import { FormSchema } from '../../chart-creator/chart-form-schema.model';
+import {DynamicFormHandlingService} from '../../services/dynamic-form-handling-service/dynamic-form-handling.service';
 
 @Component({
   selector: 'diagram-category-picker',
@@ -11,6 +13,7 @@ import { TabActivationStatusService } from '../../services/tab-activation-status
 })
 export class DiagramCategoryPickerComponent extends ControlWidget implements CardPicker, OnDestroy, AfterContentInit {
 
+  // fs: FormSchema;
 
   get diagramInitialised(): boolean {
     return this.formProperty.value !== null &&
@@ -21,7 +24,8 @@ export class DiagramCategoryPickerComponent extends ControlWidget implements Car
   subscriptions: Array<Subscription> = [];
 
   constructor(public diagramCategoryService: DiagramCategoryService,
-              private cdr: ChangeDetectorRef, private tabActivationStatusService: TabActivationStatusService) {
+              private cdr: ChangeDetectorRef, private tabActivationStatusService: TabActivationStatusService,
+              public dynamicFormHandlingService: DynamicFormHandlingService) {
     super();
   }
 
@@ -48,6 +52,13 @@ export class DiagramCategoryPickerComponent extends ControlWidget implements Car
     if ( this.formProperty.value !== diagram ) {
       this.formProperty.setValue(diagram, false);
     }
+
+    if (diagram === 'numbers') {
+      this.dynamicFormHandlingService.changeRequirementOfXAxis(false);
+    } else {
+      this.dynamicFormHandlingService.changeRequirementOfXAxis(true);
+    }
+
   }
 
   isDiagramSelected(diagram: string): boolean {
