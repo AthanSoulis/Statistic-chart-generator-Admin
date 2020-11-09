@@ -5,6 +5,7 @@ import { ChartExportingService } from '../services/chart-exporting-service/chart
 interface IChartTableModalContext {
   chartObj: Object;
   tableObj: Object;
+  rawChartDataObj: Object;
   rawDataObj: Object;
 }
 
@@ -22,9 +23,9 @@ export class ChartTableModalComponent {
 }
 
 export class ChartTableModal extends ComponentModalConfig<IChartTableModalContext, void, void> {
-  constructor(chartObj: Object, tableObj: Object, rawDataObj: Object) {
+  constructor(chartObj: Object, tableObj: Object, rawChartDataObj: Object, rawDataObj: Object) {
       console.log('Creating modal with:', chartObj, tableObj, rawDataObj);
-      super(ChartTableModalComponent, { chartObj, tableObj, rawDataObj });
+      super(ChartTableModalComponent, { chartObj, tableObj, rawChartDataObj, rawDataObj });
 
       this.isClosable = true;
       this.size = ModalSize.Normal;

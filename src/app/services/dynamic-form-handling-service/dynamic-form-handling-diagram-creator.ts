@@ -10,14 +10,15 @@ import {
     GoogleChartsTable,
     GoogleChartsChart
 } from '../supported-libraries-service/chart-description-GoogleCharts.model';
-import {ChartInfo} from '../../chart-creator/chart-query.model';
+import {ChartInfo, Query} from '../../chart-creator/chart-query.model';
 import {HighChartsChart} from '../supported-libraries-service/chart-description-HighCharts.model';
 import {isNullOrUndefined} from 'util';
 import {HighMapsMap, HMSeriesInfo} from '../supported-libraries-service/chart-description-HighMaps.model';
 import {DiagramCategoryService} from '../diagram-category-service/diagram-category.service';
 import {ISupportedMap} from '../supported-chart-types-service/supported-chart-types.service';
 import {EChartsChart, ECToolboxFeature} from '../supported-libraries-service/chart-description-eCharts.model';
-import {RawDataModel} from '../supported-libraries-service/chart-description-rawData.model';
+import {RawChartDataModel} from '../supported-libraries-service/chart-description-rawChartData.model';
+import {QueryInfo, RawDataModel} from '../supported-libraries-service/description-rawData.model';
 
 export class DiagramCreator {
 
@@ -96,7 +97,7 @@ export class DiagramCreator {
         return of(tableObj);
     }
 
-    public createRawData(formObj: SCGAFormSchema): Observable<Object> {
+    public createRawChartData(formObj: SCGAFormSchema): Observable<Object> {
 
         const view: ViewFormSchema = formObj.view;
         const category: CategoryFormSchema = formObj.category;
@@ -104,19 +105,39 @@ export class DiagramCreator {
         const appearanceOptions: AppearanceFormSchema = formObj.appearance;
         const library: string = appearanceOptions.chartAppearance.generalOptions.library;
 
-        const rawDataModelObj = new RawDataModel(library);
+        const rawChartDataModel = new RawChartDataModel(library);
         if (appearanceOptions.chartAppearance.generalOptions && appearanceOptions.chartAppearance.generalOptions.orderByAxis !== null) {
-            rawDataModelObj.orderBy = appearanceOptions.chartAppearance.generalOptions.orderByAxis;
+            rawChartDataModel.orderBy = appearanceOptions.chartAppearance.generalOptions.orderByAxis;
         }
 
         dataseries.forEach(dataElement => {
-            rawDataModelObj.chartsInfo.push(
+            rawChartDataModel.chartsInfo.push(
                 new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
                     category.categoryType !== 'combo' ? category.categoryType :
                         (isNullOrUndefined(dataElement.chartProperties.chartType) ? 'line' : dataElement.chartProperties.chartType)));
         });
-        console.log('Creating a rawData model!', rawDataModelObj);
-        return of(rawDataModelObj);
+        console.log('Creating a rawChartData model!', rawChartDataModel);
+        return of(rawChartDataModel);
+    }
+
+    public createRawData(formObj: SCGAFormSchema): Observable<Object> {
+
+        const view: ViewFormSchema = formObj.view;
+        // const category: CategoryFormSchema = formObj.category;
+        const dataseries: DataseriesFormSchema[] = formObj.dataseries;
+        const appearanceOptions: AppearanceFormSchema = formObj.appearance;
+
+        const rawDataModel = new RawDataModel();
+        if (appearanceOptions.chartAppearance.generalOptions && appearanceOptions.chartAppearance.generalOptions.orderByAxis !== null) {
+            rawDataModel.orderBy = appearanceOptions.chartAppearance.generalOptions.orderByAxis;
+        }
+
+        dataseries.forEach(dataElement => {
+            rawDataModel.series.push(
+                new QueryInfo(dataElement.data, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit.toString()));
+        });
+        console.log('Creating a rawData model!', rawDataModel);
+        return of(rawDataModel);
     }
 
     createDynamicGoogleChartsChart(view: ViewFormSchema, category: CategoryFormSchema,

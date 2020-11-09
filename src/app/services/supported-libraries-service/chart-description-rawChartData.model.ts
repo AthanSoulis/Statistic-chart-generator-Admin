@@ -1,6 +1,6 @@
 import {ChartInfo} from '../../chart-creator/chart-query.model';
 
-export class RawDataModel {
+export class RawChartDataModel {
     library: string;
     orderBy: string;
     chartsInfo: Array<ChartInfo> = [];

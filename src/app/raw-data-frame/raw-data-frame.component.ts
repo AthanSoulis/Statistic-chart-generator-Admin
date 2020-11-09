@@ -15,7 +15,7 @@ export class RawDataFrameComponent implements OnInit, OnChanges {
     frameHeight: number;
 
     constructor(private sanitizer: DomSanitizer, private urlProvider: UrlProviderService) {
-        this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/chart/json');
+        this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/raw/json');
     }
 
     ngOnInit() {
@@ -44,10 +44,10 @@ export class RawDataFrameComponent implements OnInit, OnChanges {
         console.log('[raw-data-frame.component] On changes: ' + stringObj);
 
         if (changes.rawData.currentValue) {
-            this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/chart/json?json=' + encodeURIComponent(stringObj));
+            this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/raw?json=' + encodeURIComponent(stringObj));
             console.log(this.frameUrl);
         } else {
-            this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/chart/json');
+            this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/raw?json');
         }
     }
 

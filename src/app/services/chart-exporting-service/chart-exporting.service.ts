@@ -29,6 +29,12 @@ export class ChartExportingService {
   loadingTableTinyUrl$: Observable<boolean>;
   private _loadingTableTinyUrl: BehaviorSubject<boolean>;
 
+  private _rawChartDataUrl: BehaviorSubject<string>;
+  rawChartDataTinyUrl$: Observable<string>;
+  private _rawChartDataTinyUrl: BehaviorSubject<string>;
+  loadingRawChartDataTinyUrl$: Observable<boolean>;
+  private _loadingRawChartDataTinyUrl: BehaviorSubject<boolean>;
+
   private _rawDataUrl: BehaviorSubject<string>;
   rawDataTinyUrl$: Observable<string>;
   private _rawDataTinyUrl: BehaviorSubject<string>;
@@ -70,6 +76,22 @@ export class ChartExportingService {
           error => this.errorHandler.handleError(error) // error path
       );
 
+      // Raw Chart Data Url Loader
+      this._rawChartDataTinyUrl = new BehaviorSubject<string>(null);
+      this.rawChartDataTinyUrl$ = this._rawChartDataTinyUrl.asObservable();
+
+      this._loadingRawChartDataTinyUrl = new BehaviorSubject<boolean>(false);
+      this.loadingRawChartDataTinyUrl$ = this._loadingRawChartDataTinyUrl.asObservable();
+
+      this._rawChartDataUrl = new BehaviorSubject<string>(null);
+      this._rawChartDataUrl.pipe(distinctUntilChanged()).subscribe(
+          (rawChartDataUrl: string) => {
+              if (rawChartDataUrl) {
+                  this.postTinyUrl(rawChartDataUrl, this._loadingRawChartDataTinyUrl, this._rawChartDataTinyUrl);
+              } }, // success path
+          error => this.errorHandler.handleError(error) // error path
+      );
+
       // Raw Data Url Loader
       this._rawDataTinyUrl = new BehaviorSubject<string>(null);
       this.rawDataTinyUrl$ = this._rawDataTinyUrl.asObservable();
@@ -103,12 +125,20 @@ export class ChartExportingService {
     this._tableUrl.next(this.urlProvider.serviceURL + '/table?json=' + encodeURIComponent(stringObj));
   }
 
+  changeRawChartDataUrl(rawChartDataObject: Object) {
+
+      if (!rawChartDataObject) { return; }
+
+      const stringObj = JSON.stringify(rawChartDataObject);
+      this._rawChartDataUrl.next(this.urlProvider.serviceURL + '/chart/json?json=' + encodeURIComponent(stringObj));
+  }
+
   changeRawDataUrl(rawDataObject: Object) {
 
       if (!rawDataObject) { return; }
 
       const stringObj = JSON.stringify(rawDataObject);
-      this._rawDataUrl.next(this.urlProvider.serviceURL + '/chart/json?json=' + encodeURIComponent(stringObj));
+      this._rawDataUrl.next(this.urlProvider.serviceURL + '/raw?json=' + encodeURIComponent(stringObj));
   }
 
   private postTinyUrl(chartUrl: string, loader: BehaviorSubject<boolean>, tinyUrlSubject: BehaviorSubject<string> ) {
@@ -132,7 +162,10 @@ export class ChartExportingService {
         }))
       .subscribe(
       // success path
-      (response: ShortenUrlResponse) => tinyUrlSubject.next(response.shortUrl),
+      (response: ShortenUrlResponse) => {
+          tinyUrlSubject.next(response.shortUrl);
+          console.log('tinyURLResponse ->', response.shortUrl);
+      },
       // error path
       error => {
         this.errorHandler.handleError(error);

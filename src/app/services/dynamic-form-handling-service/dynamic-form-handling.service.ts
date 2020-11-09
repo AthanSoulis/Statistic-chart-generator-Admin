@@ -17,6 +17,7 @@ export class DynamicFormHandlingService {
 
   private _chartObject = undefined;
   private _tableObject = undefined;
+  private _rawChartDataObject = undefined;
   private _rawDataObject = undefined;
   private _resetFormValue = null;
   private _formSchemaObject: BehaviorSubject<SCGAFormSchema>;
@@ -61,6 +62,7 @@ export class DynamicFormHandlingService {
   get $formErrorObject(): BehaviorSubject<Array<any>> { return this._formErrorObject; }
   get ChartObject(): Object { return this._chartObject; }
   get TableObject(): Object { return this._tableObject; }
+  get RawChartDataObject(): Object { return this._rawChartDataObject; }
   get RawDataObject(): Object { return this._rawDataObject; }
   get loadFormObject(): Object { return this._loadFormObject; }
   get loadFormObjectFile(): File { return this._loadFormObjectFile; }
@@ -72,6 +74,7 @@ export class DynamicFormHandlingService {
     // Reset table and chart objects
     this._tableObject = undefined;
     this._chartObject = undefined;
+    this._rawChartDataObject = undefined;
     this._rawDataObject = undefined;
   }
 
@@ -101,13 +104,17 @@ export class DynamicFormHandlingService {
       const forkSub = forkJoin(
           this._diagramCreator.createChart(value),
           this._diagramCreator.createTable(value),
+          this._diagramCreator.createRawChartData(value),
           this._diagramCreator.createRawData(value)).subscribe(
-          ([chartObject, tableObject, rawDataObject]: [Object, Object, Object]) => {
+          ([chartObject, tableObject, rawChartDataObject, rawDataObject]: [Object, Object, Object, Object]) => {
             this._chartObject = chartObject;
             this.chartExportingService.changeChartUrl(chartObject);
 
             this._tableObject = tableObject;
             this.chartExportingService.changeTableUrl(tableObject);
+
+            this._rawChartDataObject = rawChartDataObject;
+            this.chartExportingService.changeRawChartDataUrl(rawChartDataObject);
 
             this._rawDataObject = rawDataObject;
             this.chartExportingService.changeRawDataUrl(rawDataObject);
@@ -125,13 +132,16 @@ export class DynamicFormHandlingService {
       const forkSub = forkJoin(
           this._diagramCreator.createChart(value),
           this._diagramCreator.createTable(value),
+          this._diagramCreator.createRawChartData(value),
           this._diagramCreator.createRawData(value)).subscribe(
-            ([chartObject, tableObject, rawDataObj]: [Object, Object, Object]) => {
+          ([chartObject, tableObject, rawChartDataObject, rawDataObject]: [Object, Object, Object, Object]) => {
               this.chartExportingService.changeChartUrl(chartObject);
 
               this.chartExportingService.changeTableUrl(tableObject);
 
-              this.chartExportingService.changeRawDataUrl(rawDataObj);
+              this.chartExportingService.changeRawChartDataUrl(rawChartDataObject);
+
+              this.chartExportingService.changeRawDataUrl(rawDataObject);
             },
             () => {
               forkSub.unsubscribe(); }
@@ -177,32 +187,4 @@ export class DynamicFormHandlingService {
     console.log('this._formSchema --> ', this._formSchema);
     console.log('this._formErrorObject -->', this._formErrorObject);
   }
-
-  // removeXAxisErrorForNumbers() {
-  //     if (!this.xAxisRequirement && this._formErrorObject.value.length > 0) {
-  //         // for (const value of this._formErrorObject.getValue()) {
-  //         //     console.log('error value -->', value);
-  //         //     if (value.code === 'ARRAY_LENGTH_SHORT' && value.path === '#/dataseries/0/data/xaxisData') {
-  //         //         console.log('found the error to remove');
-  //         //         const index = this._formErrorObject.getValue().indexOf(value, 0);
-  //         //         if (index > -1) {
-  //         //             this._formErrorObject.getValue().splice(index, 1);
-  //         //         }
-  //         //         console.log('this._formErrorObject.getValue() NEW -->', this._formErrorObject.getValue());
-  //         //     }
-  //         // }
-  //         console.log('this._formErrorObject OLD -->', this._formErrorObject);
-  //         this._formErrorObject.getValue().forEach( (item, index) => {
-  //             console.log('error value -->', item);
-  //             if (item.code === 'ARRAY_LENGTH_SHORT' && item.path === '#/dataseries/0/data/xaxisData') {
-  //                 if (index > -1) {
-  //                     this._formErrorObject.getValue().splice(index, 1);
-  //                 }
-  //                 console.log('error found at index -->', index);
-  //                 console.log('this._formErrorObject NEW -->', this._formErrorObject);
-  //             }
-  //         });
-  //     }
-  // }
-
 }

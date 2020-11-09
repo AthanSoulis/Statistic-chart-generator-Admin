@@ -2,6 +2,10 @@ import { Filter, FilterGroup } from '../form-components/query-filter-selector/qu
 import { DataseriesFormSchema, DataFormSchema } from './chart-form-schema.classes';
 
 export class Query {
+
+    name: string;
+    parameters: Array<any> = [];
+
     limit: string;
     profile: string;
     entity: string;

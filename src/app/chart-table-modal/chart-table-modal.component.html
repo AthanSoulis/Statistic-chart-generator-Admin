@@ -6,6 +6,7 @@
         <a class="item" style="font-size: 1.25em;" [suiTabHeader]="1" (click)="this.activeTab = 1" >Diagram</a>
         <a class="item" style=" font-size: 1.25em;" [suiTabHeader]="2" (click)="this.activeTab = 2">Table</a>
         <a class="item" style=" font-size: 1.25em;" [suiTabHeader]="3" (click)="this.activeTab = 3">Raw Chart Data</a>
+        <a class="item" style=" font-size: 1.25em;" [suiTabHeader]="4" (click)="this.activeTab = 4">Raw Data</a>
     </div>
   
     <div class="ui basic segment" [suiTabContent]="1">
@@ -15,6 +16,9 @@
       <table-frame [table]="this.modal.context.tableObj"></table-frame>
     </div>
     <div class="ui basic segment" [suiTabContent]="3">
+      <raw-chart-data-frame [rawChartData]="this.modal.context.rawChartDataObj"></raw-chart-data-frame>
+    </div>
+    <div class="ui basic segment" [suiTabContent]="4">
       <raw-data-frame [rawData]="this.modal.context.rawDataObj"></raw-data-frame>
     </div>
   </sui-tabset>
@@ -27,6 +31,10 @@
     <a *ngIf="this.activeTab === 2" class="url-holder" style="cursor: pointer; color: #1e70bf"
     target="_blank" rel="noopener noreferrer" href="{{chartExportingService.tableTinyUrl$ | async}}">{{chartExportingService.tableTinyUrl$ | async}}</a>
     <a *ngIf="this.activeTab === 3" class="url-holder" style="cursor: pointer; color: #1e70bf"
-       target="_blank" rel="noopener noreferrer" href="{{chartExportingService.rawDataTinyUrl$ | async}}">{{chartExportingService.rawDataTinyUrl$ | async}}</a>
+       target="_blank" rel="noopener noreferrer" href="{{chartExportingService.rawChartDataTinyUrl$ | async}}">{{chartExportingService.rawChartDataTinyUrl$
+        | async}}</a>
+    <a *ngIf="this.activeTab === 4" class="url-holder" style="cursor: pointer; color: #1e70bf"
+       target="_blank" rel="noopener noreferrer" href="{{chartExportingService.rawDataTinyUrl$ | async}}">{{chartExportingService.rawDataTinyUrl$
+      | async}}</a>
   </div>
 </div>
