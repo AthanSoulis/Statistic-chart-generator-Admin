@@ -30,7 +30,7 @@ export class DynamicFormHandlingService {
   private _formSchema: FormSchema;
 
   // fixme when find another solution
-  private xAxisRequirement: boolean;
+  private _xAxisRequired: boolean;
 
   constructor(private diagramcategoryService: DiagramCategoryService,
     private chartExportingService: ChartExportingService,
@@ -47,9 +47,7 @@ export class DynamicFormHandlingService {
   get isFormValid(): boolean {
     if (this.$formErrorObject.value === null) {
       return true;
-    } else if (!this.xAxisRequirement && this._formErrorObject.value.length === 1
-        && this._formErrorObject.getValue()[0].code === 'ARRAY_LENGTH_SHORT'
-        && this._formErrorObject.getValue()[0].path === '#/dataseries/0/data/xaxisData') {
+    } else if (!this._xAxisRequired && this.isOnlyxAxisRequirementError()) {
       return true;
     } else {
       return false;
@@ -67,6 +65,7 @@ export class DynamicFormHandlingService {
   get loadFormObject(): Object { return this._loadFormObject; }
   get loadFormObjectFile(): File { return this._loadFormObjectFile; }
   get formSchema(): FormSchema { return this._formSchema; }
+  get isxAxisRequired(): boolean { return this._xAxisRequired; }
 
   resetForm(root: FormProperty) {
     // Reset through the root property of the dynamic form
@@ -166,14 +165,14 @@ export class DynamicFormHandlingService {
 
   changeRequirementOfXAxis(required: boolean) {
     if (required) {
-      this.xAxisRequirement = true;
+      this._xAxisRequired = true;
       this._formSchema.dataseriesFormSchema.items.properties.data.fieldsets[0].fields = ['yaxisData', 'xaxisData'];
       this._formSchema.dataseriesFormSchema.items.properties.data.required = ['yAxisData', 'xAxisData', 'filters'];
       this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.items.required = ['xaxisEntityField'];
       this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.minItems = 1;
       this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.items.properties.xaxisEntityField.requiredField = true;
     } else {
-      this.xAxisRequirement = false;
+      this._xAxisRequired = false;
       // this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.widget = 'hidden';
       this._formSchema.dataseriesFormSchema.items.properties.data.fieldsets[0].fields = ['yaxisData'];
       this._formSchema.dataseriesFormSchema.items.properties.data.required = ['yAxisData', 'filters'];
@@ -186,5 +185,15 @@ export class DynamicFormHandlingService {
   printLogs() {
     console.log('this._formSchema --> ', this._formSchema);
     console.log('this._formErrorObject -->', this._formErrorObject);
+  }
+
+  isOnlyxAxisRequirementError() {
+
+    for (const value of this._formErrorObject.getValue()) {
+      if (value.code !== 'ARRAY_LENGTH_SHORT' || !value.path.endsWith('/data/xaxisData')) {
+        return false;
+      }
+    }
+    return true;
   }
 }

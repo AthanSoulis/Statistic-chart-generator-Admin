@@ -23,36 +23,46 @@
 
 <ng-template let-popup #publishPopUp >
     <div class="ui content">
-        <h4 class="ui centered header">Generated Chart TinyUrl</h4>
-        <div class="ui small text container fluid segment">
-            <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingChartTinyUrl$ | async); else chartTinyUrlNotLoading">
 
-            </div>
-            <ng-template #chartTinyUrlNotLoading>
-                <a target="_blank" rel="noopener noreferrer" href="{{chartExportingService.chartTinyUrl$ | async}}"
-                class="url-holder">{{chartExportingService.chartTinyUrl$ | async}}</a> 
-            </ng-template>
-        </div>
-        <h4 class="ui centered header">Generated Table TinyUrl</h4>
-        <div class="ui small text container fluid segment">
-            <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingTableTinyUrl$ | async); else tableTinyUrlNotLoading">
+        <ng-container *ngIf="dfhs.isxAxisRequired">
+            <h4 class="ui centered header">Generated Chart TinyUrl</h4>
+            <div class="ui small text container fluid segment">
+                <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingChartTinyUrl$ | async); else chartTinyUrlNotLoading">
 
+                </div>
+                <ng-template #chartTinyUrlNotLoading>
+                    <a target="_blank" rel="noopener noreferrer" href="{{chartExportingService.chartTinyUrl$ | async}}"
+                       class="url-holder">{{chartExportingService.chartTinyUrl$ | async}}</a>
+                </ng-template>
             </div>
-            <ng-template #tableTinyUrlNotLoading>
-                <a target="_blank" rel="noopener noreferrer" href="{{chartExportingService.tableTinyUrl$ | async}}" 
-                class="url-holder">{{chartExportingService.tableTinyUrl$ | async}}</a> 
-            </ng-template>
-        </div>
-        <h4 class="ui centered header">Generated Raw Chart Data TinyUrl</h4>
-        <div class="ui small text container fluid segment">
-            <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingRawChartDataTinyUrl$ | async); else rawChartDataTinyUrlNotLoading">
+        </ng-container>
 
+        <ng-container *ngIf="dfhs.isxAxisRequired">
+            <h4 class="ui centered header">Generated Table TinyUrl</h4>
+            <div class="ui small text container fluid segment">
+                <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingTableTinyUrl$ | async); else tableTinyUrlNotLoading">
+
+                </div>
+                <ng-template #tableTinyUrlNotLoading>
+                    <a target="_blank" rel="noopener noreferrer" href="{{chartExportingService.tableTinyUrl$ | async}}"
+                       class="url-holder">{{chartExportingService.tableTinyUrl$ | async}}</a>
+                </ng-template>
             </div>
-            <ng-template #rawChartDataTinyUrlNotLoading>
-                <a target="_blank" rel="noopener noreferrer" href="{{chartExportingService.rawChartDataTinyUrl$ | async}}"
-                   class="url-holder">{{chartExportingService.rawChartDataTinyUrl$ | async}}</a>
-            </ng-template>
-        </div>
+        </ng-container>
+
+        <ng-container *ngIf="dfhs.isxAxisRequired">
+            <h4 class="ui centered header">Generated Raw Chart Data TinyUrl</h4>
+            <div class="ui small text container fluid segment">
+                <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingRawChartDataTinyUrl$ | async); else rawChartDataTinyUrlNotLoading">
+
+                </div>
+                <ng-template #rawChartDataTinyUrlNotLoading>
+                    <a target="_blank" rel="noopener noreferrer" href="{{chartExportingService.rawChartDataTinyUrl$ | async}}"
+                       class="url-holder">{{chartExportingService.rawChartDataTinyUrl$ | async}}</a>
+                </ng-template>
+            </div>
+        </ng-container>
+
         <h4 class="ui centered header">Generated Raw Data TinyUrl</h4>
         <div class="ui small text container fluid segment">
             <div class="ui active centered inline loader" *ngIf="(chartExportingService.loadingRawDataTinyUrl$ | async); else rawDataTinyUrlNotLoading">

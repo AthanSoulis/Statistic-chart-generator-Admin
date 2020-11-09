@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SuiModal, ComponentModalConfig, ModalSize } from 'ng2-semantic-ui';
 import { ChartExportingService } from '../services/chart-exporting-service/chart-exporting.service';
+import {DynamicFormHandlingService} from '../services/dynamic-form-handling-service/dynamic-form-handling.service';
 
 interface IChartTableModalContext {
   chartObj: Object;
@@ -18,7 +19,8 @@ export class ChartTableModalComponent {
 
   activeTab = 1;
   constructor(public modal: SuiModal<IChartTableModalContext, void, void>,
-    public chartExportingService: ChartExportingService) {}
+    public chartExportingService: ChartExportingService,
+    public dynamicFormHandlingService: DynamicFormHandlingService) {}
 
 }
 
