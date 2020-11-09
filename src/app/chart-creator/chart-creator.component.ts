@@ -47,7 +47,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
       this.dynamicFormHandlingService.formSchemaObject = formSchemaValueObj.value;
     }
 
-    this.dynamicFormHandlingService.printLogs();
+    // this.dynamicFormHandlingService.printLogs();
   }
 
   reset(form: FormComponent) {
