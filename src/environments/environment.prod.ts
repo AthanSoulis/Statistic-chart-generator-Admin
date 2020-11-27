@@ -1,5 +1,5 @@
 export const environment = {
 production: true,
-apiUrl: 'https://stats.madgik.di.uoa.gr',
-apiFolder: '/stats-api'
+apiUrl: 'http://services.openaire.eu',
+apiFolder: '/stats-tool'
 };

@@ -4,10 +4,10 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "pstart": "ng serve --watch --host panormos.di.uoa.gr --port 4200",
-    "vstart": "ng serve --watch --host vatopedi.di.uoa.gr --port 4200",
     "start": "ng serve --watch",
-    "build": "ng build --prod --aot --build-optimizer",
+    "build:prod": "ng build --prod --aot --build-optimizer",
+    "build:beta": "ng build --prod --configuration beta --aot --build-optimizer",
+    "build:madgik": "ng build --prod --configuration madgik --aot --build-optimizer",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
