@@ -1,5 +1,5 @@
 export const environment = {
 production: true,
-apiUrl: 'http://services.openaire.eu',
+apiUrl: 'https://services.openaire.eu',
 apiFolder: '/stats-tool'
 };
