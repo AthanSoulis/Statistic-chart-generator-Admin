@@ -34,7 +34,7 @@ export class LibrarySelectionWidgetComponent extends ControlWidget implements Af
         const availableDiagramsPerCategory =  this.diagramCategoryService.availableDiagrams
         .find((availableDiagram: ISupportedCategory) =>  availableDiagram.type === categoryType);
 
-        if (isNullOrUndefined(availableDiagramsPerCategory)) {
+        if (availableDiagramsPerCategory === null || availableDiagramsPerCategory === undefined) {
           this.availableLibraries = [];
         } else {
           this.availableLibraries = availableDiagramsPerCategory.supportedLibraries;

@@ -71,7 +71,7 @@ export class DiagramCategoryService {
   public changeDiagramCategory(diagramCategory: string) {
       const found = this.availableDiagrams.find(
         (availableDiagram: ISupportedCategory) => availableDiagram.type === diagramCategory);
-      this.selectedDiagramCategory$.next(isNullOrUndefined(found) ? null : found.type);
+      this.selectedDiagramCategory$.next((found === null || found === undefined) ? null : found.type);
 
       if (found) {
         console.log('Changed to:', diagramCategory);
