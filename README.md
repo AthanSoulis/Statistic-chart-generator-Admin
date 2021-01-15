@@ -40,4 +40,4 @@ npm start
 ```
 ### Setting up access to back end
 
-By default the Angular app expects a back end service to be running at **localhost:8080**.If you want to use a back end service that is in a different address than that then fill in the `apiUrl` and `apiFolder` variables in the [stats-api.js](src/stats-api.js) file accordingly.
+By default the Angular app expects a back end service to be running at **localhost:8080**. Selecting the back end service to be used for dev purposes is accomplished by changing the [environment.ts](src/environments/environment.ts) `apiUrl` and `apiFolder` environment variables.
