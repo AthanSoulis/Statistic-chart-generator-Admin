@@ -31,8 +31,6 @@ import { ChartExportingService } from './services/chart-exporting-service/chart-
 import { ErrorHandlerService } from './services/error-handler-service/error-handler.service';
 import { ChartLoadingService } from './services/chart-loading-service/chart-loading.service';
 
-import { SuiModule } from 'ng2-semantic-ui';
-
 import { ColorPickerModule } from 'ngx-color-picker';
 
 import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from 'ngx-schema-form';
@@ -109,7 +107,6 @@ import { RawDataFrameComponent } from './raw-data-frame/raw-data-frame.component
   ],
   imports: [
     SchemaFormModule.forRoot(),
-    SuiModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,

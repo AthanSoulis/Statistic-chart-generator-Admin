@@ -4,7 +4,6 @@ import { MappingProfilesService } from '../../services/mapping-profiles-service/
 import { DiagramCategoryService } from '../../services/diagram-category-service/diagram-category.service';
 import { TabActivationStatusService } from '../../services/tab-activation-status-service/tab-activation-status.service';
 import { DynamicFormHandlingService } from '../../services/dynamic-form-handling-service/dynamic-form-handling.service';
-import { SuiModalService } from 'ng2-semantic-ui';
 import { ChartTableModal } from '../../chart-table-modal/chart-table-modal.component';
 
 declare var jQuery: any;
@@ -20,8 +19,7 @@ export class HeadMenuWidgetComponent extends ObjectLayoutWidget implements OnIni
   constructor(public mappingProfileService: MappingProfilesService,
               public diagramCategoryService: DiagramCategoryService,
               public tabActivationStatusService: TabActivationStatusService,
-              public dynamicFormHandlingService: DynamicFormHandlingService,
-              private modalService: SuiModalService) {
+              public dynamicFormHandlingService: DynamicFormHandlingService) {
     super();
   }
 
@@ -38,8 +36,9 @@ export class HeadMenuWidgetComponent extends ObjectLayoutWidget implements OnIni
 
   applyChanges() {
     this.dynamicFormHandlingService.submitForm();
-    this.modalService.open(new ChartTableModal(this.dynamicFormHandlingService.ChartObject,
-        this.dynamicFormHandlingService.TableObject, this.dynamicFormHandlingService.RawChartDataObject,
-        this.dynamicFormHandlingService.RawDataObject));
+    // TODO Create the modal with the following JSON objects and Open it.  
+    // this.modalService.open(new ChartTableModal(this.dynamicFormHandlingService.ChartObject,
+    //     this.dynamicFormHandlingService.TableObject, this.dynamicFormHandlingService.RawChartDataObject,
+    //     this.dynamicFormHandlingService.RawDataObject));
   }
 }

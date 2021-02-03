@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ChartCreatorComponent } from './chart-creator/chart-creator.component';
 import { UrlProviderService } from './services/url-provider-service/url-provider.service';
 import { ChartExportingService } from './services/chart-exporting-service/chart-exporting.service';
-import { IPopup, PopupPlacement } from 'ng2-semantic-ui';
-import { SuiPopup } from 'ng2-semantic-ui/dist';
 import { ChartLoadingService } from './services/chart-loading-service/chart-loading.service';
 import { DynamicFormHandlingService } from './services/dynamic-form-handling-service/dynamic-form-handling.service';
 
@@ -22,9 +20,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   chartModel: Object;
   loadedChartFile: File = null;
 
-  activePopUp: SuiPopup;
+  activePopUp: any/*SuiPopup*/;
 
-  popupPlacement = PopupPlacement.Bottom;
+  popupPlacement : any  = undefined/*PopupPlacement.Bottom*/;
 
   constructor(private urlProvider: UrlProviderService,
     protected chartExportingService: ChartExportingService,
@@ -42,12 +40,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     console.log(event);
   }
 
-  public togglePublishPopUp(popup: IPopup) {
+  public togglePublishPopUp(popup: any /*IPopup*/) {
     this.dfhs.publishURLS();
     popup.toggle();
   }
 
-  public exportChart(popup: IPopup) {
+  public exportChart(popup: any /*IPopup*/) {
 
     if (!(this.childChartCreator instanceof ChartCreatorComponent)) {
       console.error('childChartCreator not an instance of ChartCreatorComponent');

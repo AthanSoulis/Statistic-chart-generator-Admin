@@ -7,9 +7,11 @@
 <ng-template let-popup #loadPopUp>
     <div class="ui content">
         <div class="ui center aligned basic segment">
-            <sui-dimmer class="inverted" [(isDimmed)]="this.chartLoadingService.chartLoadingStatus">
+            <div>
+            <!-- TODO <sui-dimmer class="inverted" [(isDimmed)]="this.chartLoadingService.chartLoadingStatus"> -->
                 <div class="ui text loader">Loading Chart</div>
-            </sui-dimmer>
+            <!-- </sui-dimmer> -->
+            </div>
             <input id="fileElem" type="file" style="display:none" accept=".json" (change)="this.dfhs.loadForm($event)">
             <div class="ui labeled button" (click)="initiateFilePicker()">
                 <div class="ui basic icon button"><i class="plus icon"></i></div>
@@ -85,23 +87,24 @@
     
     <div class="right menu">
         <div class="three ui big basic buttons">
-                <div class="ui vertical animated button item" tabindex="0" suiPopup (onOpen)="handlePopUpOpen($event)" [popupTemplate]="publishPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #publishpopup="suiPopup"
-                (click)="togglePublishPopUp(publishpopup)">
+                <div>
+                <!--TODO <div class="ui vertical animated button item" tabindex="0" suiPopup (onOpen)="handlePopUpOpen($event)" [popupTemplate]="publishPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #publishpopup="suiPopup"
+                (click)="togglePublishPopUp(publishpopup)"> -->
                     <div class="visible content"><b>Publish</b></div>
                     <div class="hidden content"><i class="large share alternate icon"></i></div>
                 </div>
-                <div class="ui vertical animated button item" suiPopup [popupTemplate]="loadPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick">
+                <!--TODO <div class="ui vertical animated button item" suiPopup [popupTemplate]="loadPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick"> -->
+                <div>
                     <div class="visible content" style="padding-inline-start: 0.5rem"><b>Load</b></div>
                     <div class="hidden content"><i class="large upload icon"></i></div>
                 </div>
-                <div class="ui vertical animated button item" suiPopup [popupTemplate]="exportPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #exportpopup="suiPopup"
-                (click)="exportChart(exportpopup)">
+                <!--TODO <div class="ui vertical animated button item" suiPopup [popupTemplate]="exportPopUp" [popupPlacement]="popupPlacement" popupTrigger="outsideClick" #exportpopup="suiPopup"
+                (click)="exportChart(exportpopup)"> -->
+                <div>
                     <div class="visible content"><b>Export</b></div>
                     <div class="hidden content"><i class="large save icon"></i></div>
                 </div>
         </div>
-        <!-- <a class="item">Sign Up</a>
-        <a class="item">Help</a> -->
     </div>
 </header>
 

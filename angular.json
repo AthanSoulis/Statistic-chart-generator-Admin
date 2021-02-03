@@ -28,14 +28,11 @@
               ]
             },
             "styles": [
-              "semantic/dist/semantic.min.css",
-              "semantic/dist/components/transition.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "semantic/dist/components/transition.min.js",
-              "semantic/dist/semantic.min.js"
+
             ]
           },
           "configurations": {
@@ -117,11 +114,9 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "semantic/dist/semantic.min.js"
+              
             ],
             "styles": [
-              "semantic/dist/semantic.min.css",
               "src/styles.css"
             ],
             "assets": [
