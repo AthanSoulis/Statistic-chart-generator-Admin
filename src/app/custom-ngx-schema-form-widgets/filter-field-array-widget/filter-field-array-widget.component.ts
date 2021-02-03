@@ -74,15 +74,15 @@ export class FilterFieldArrayWidgetComponent extends ArrayLayoutWidget implement
   removeFilterValue(index: number) {
     if (this.filterOperator !== 'between') {
         console.log('Removed index: ' + (<FormProperty>this.formProperty.properties[index]).value);
-        this.formProperty.removeItem(index);
+        this.formProperty.removeItem(this.formProperty.properties[index]);
     }
 
     if (this.filterOperator === 'between' && index % 2 === 1 ) {
       console.log('Removed index: ' + (<FormProperty>this.formProperty.properties[index - 1]).value + ' ' +
         (<FormProperty>this.formProperty.properties[index]).value);
 
-      this.formProperty.removeItem(index);
-      this.formProperty.removeItem(index - 1 );
+      this.formProperty.removeItem(this.formProperty.properties[index]);
+      this.formProperty.removeItem(this.formProperty.properties[index-1]);
 
     }
   }

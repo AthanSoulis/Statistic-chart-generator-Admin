@@ -109,7 +109,7 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
     if ( this.menuArrayLength > 1 || index > 0) {
 
       const activeIndex = this.active.indexOf(true);
-      this.formProperty.removeItem(index);
+      this.formProperty.removeItem(this.formProperty.properties[index]);
       this.editable.splice(index);
       this.active.splice(index);
 

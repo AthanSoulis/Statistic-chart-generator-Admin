@@ -48,7 +48,7 @@ export class FilterArrayWidgetComponent extends ArrayLayoutWidget implements Aft
   }
 
   removeItem(index: number) {
-    this.formProperty.removeItem(index);
+    this.formProperty.removeItem(this.formProperty.properties[index]);
   }
 
   trackByIndex(index: number, item: any) {

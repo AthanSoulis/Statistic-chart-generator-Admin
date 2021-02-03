@@ -53,7 +53,7 @@ export class ArrayWidgetComponent extends ArrayLayoutWidget implements AfterCont
   }
 
   removeItem(index: number) {
-    this.formProperty.removeItem(index);
+    this.formProperty.removeItem(this.formProperty.properties[index]);
   }
 
   trackByIndex(index: number, item: any) {
