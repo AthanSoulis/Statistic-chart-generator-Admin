@@ -2,24 +2,24 @@
 (control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'">
 	<label [attr.for]="id" class="horizontal control-label">
 		{{ schema.title }}
-		<i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" suiPopup popupPlacement="right"
-		popupText={{this.schema.tooltip}} popupHeader={{this.schema.tooltipHeader}}></i>
+		<!-- TODO Tooltip <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" suiPopup popupPlacement="right"
+		popupText={{this.schema.tooltip}} popupHeader={{this.schema.tooltipHeader}}></i> -->
 	</label>
 	<span *ngIf="schema.description" class="formHelp">
 		{{schema.description}}
 	</span>
   
-  <sui-select *ngIf="schema.type!='array'" [options]="schema.oneOf" [formControl]="control"  [attr.name]="name"
+  <!--TODO Selection Dropdown <sui-select *ngIf="schema.type!='array'" [options]="schema.oneOf" [formControl]="control"  [attr.name]="name"
   [attr.disabled]="schema.readOnly" class="form-control selection" 
   labelField="description" valueField="value" #customSelect>
 		<sui-select-option *ngFor="let option of customSelect.filteredOptions" [value]="option">{{option.description}}</sui-select-option>
-  </sui-select>
+  </sui-select> -->
   
-  <sui-multi-select *ngIf="schema.type==='array'" multiple [options]="schema.items.oneOf" [formControl]="control" [attr.name]="name" 
+  <!--TODO Multiple Selection Dropdown <sui-multi-select *ngIf="schema.type==='array'" multiple [options]="schema.items.oneOf" [formControl]="control" [attr.name]="name" 
   [attr.disabled]="schema.readOnly" class="form-control selection" 
   labelField="description" valueField="value" #customSelectArray>
 		<sui-select-option *ngFor="let option of customSelectArray.filteredOptions" [value]="option" >{{option.description}}</sui-select-option>
-	</sui-multi-select>
+	</sui-multi-select> -->
   
   <input *ngIf="schema.readOnly" [attr.name]="name" type="hidden" [formControl]="control">
 </div>

@@ -9,7 +9,6 @@ import { ControlWidget } from 'ngx-schema-form';
 export class BooleanFieldWidgetComponent extends ControlWidget {
 
   handleChange(value: boolean) {
-    console.log('Event: ', value);
     this.formProperty.setValue(value, false);
   }
 }

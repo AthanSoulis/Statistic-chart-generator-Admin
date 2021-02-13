@@ -6,12 +6,12 @@
   </label>
   <div *ngIf="schema.type!='array'">
       
-    <sui-checkbox [formControl]="control" class="toggle" [name]="name"
+    <!-- TODO Boolean type input <sui-checkbox [formControl]="control" class="toggle" [name]="name"
       [isDisabled]="schema.readonly"> {{schema.description}}
-    </sui-checkbox>
+    </sui-checkbox> -->
     
-    <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" suiPopup popupPlacement="right"
-      popupText={{this.schema.tooltip}} popupHeader={{this.schema.tooltipHeader}}></i>
+    <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" suiPopup popupPlacement="right"></i>
+      <!--TODO Popup Text for tooltip popupText={{this.schema.tooltip}} popupHeader={{this.schema.tooltipHeader}}></i> -->
       
   </div>
 </div>

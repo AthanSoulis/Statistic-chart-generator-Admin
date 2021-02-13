@@ -13,9 +13,9 @@
     <ng-template let-option #entityOptionTemplate>
         {{ option | titlecase }}
     </ng-template>
-    <sui-select class="selection" [options]="entities" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly"
+    <!-- TODO Select Dropdown <sui-select class="selection" [options]="entities" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly"
       placeholder={{schema.placeholder}} [optionTemplate]="entityOptionTemplate" #entitySelect>    
       <sui-select-option *ngFor="let entity of entitySelect.filteredOptions" [value]='entity'></sui-select-option>
-    </sui-select>
+    </sui-select> -->
   </ng-template>
 </div>

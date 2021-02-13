@@ -6,7 +6,7 @@
   </div>
 
   <div *ngIf="this.selectedField " class="field">
-    <sui-select class="selection" formControlName="type" 
+    <!--TODO Selection Dropdown <sui-select class="selection" formControlName="type" 
                         placeholder="Select Operator" 
                         [options]="operators"
                         (selectedOptionChange)=operatorChanged($event)
@@ -15,7 +15,7 @@
                         #operatorSelect>
     
       <sui-select-option *ngFor="let operator of operatorSelect.filteredOptions" [value]="operator"></sui-select-option>
-    </sui-select>
+    </sui-select> -->
   </div>
 
   <div class="field" formArrayName="values">

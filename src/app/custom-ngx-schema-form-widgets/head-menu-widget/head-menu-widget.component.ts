@@ -36,9 +36,5 @@ export class HeadMenuWidgetComponent extends ObjectLayoutWidget implements OnIni
 
   applyChanges() {
     this.dynamicFormHandlingService.submitForm();
-    // TODO Create the modal with the following JSON objects and Open it.  
-    // this.modalService.open(new ChartTableModal(this.dynamicFormHandlingService.ChartObject,
-    //     this.dynamicFormHandlingService.TableObject, this.dynamicFormHandlingService.RawChartDataObject,
-    //     this.dynamicFormHandlingService.RawDataObject));
   }
 }

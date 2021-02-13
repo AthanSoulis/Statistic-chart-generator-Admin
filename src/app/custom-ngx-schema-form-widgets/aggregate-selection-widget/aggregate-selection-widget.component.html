@@ -9,9 +9,9 @@
     </span>
     <input *ngIf="schema.readOnly; else aggregateSelection" [attr.name]="name" type="hidden" [formControl]="control">
     <ng-template #aggregateSelection>
-      <sui-select class="selection" [options]="aggregateFunctions" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly"
+      <!-- TODO Select Dropdown <sui-select class="selection" [options]="aggregateFunctions" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly"
         placeholder={{schema.placeholder}} labelField="name" valueField="code" #aggregateSelect>    
         <sui-select-option *ngFor="let aggregate of aggregateSelect.filteredOptions" [value]="aggregate"></sui-select-option>
-      </sui-select>
+      </sui-select> -->
     </ng-template>
   </div>

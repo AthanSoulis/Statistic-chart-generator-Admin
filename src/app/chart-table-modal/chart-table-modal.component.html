@@ -1,27 +1,39 @@
 
 
 <div class="content">
-  <sui-tabset>
+  <!-- TODO Tabset <sui-tabset> -->
     <div class="ui secondary pointing menu">
-        <a *ngIf="dynamicFormHandlingService.isxAxisRequired" class="item" style="font-size: 1.25em;" [suiTabHeader]="1" (click)="this.activeTab = 1" >Diagram</a>
-        <a *ngIf="dynamicFormHandlingService.isxAxisRequired" class="item" style=" font-size: 1.25em;" [suiTabHeader]="2" (click)="this.activeTab = 2">Table</a>
-        <a *ngIf="dynamicFormHandlingService.isxAxisRequired" class="item" style=" font-size: 1.25em;" [suiTabHeader]="3" (click)="this.activeTab = 3">Raw Chart Data</a>
-        <a class="item" style=" font-size: 1.25em;" [suiTabHeader]="4" (click)="this.activeTab = 4">Raw Data</a>
+        <a *ngIf="dynamicFormHandlingService.isxAxisRequired" class="item" style="font-size: 1.25em;" (click)="this.activeTab = 1">
+          <!-- [suiTabHeader]="1" -->
+          Diagram</a>
+        <a *ngIf="dynamicFormHandlingService.isxAxisRequired" class="item" style=" font-size: 1.25em;" (click)="this.activeTab = 2">
+          <!-- [suiTabHeader]="2" -->
+          Table</a>
+        <a *ngIf="dynamicFormHandlingService.isxAxisRequired" class="item" style=" font-size: 1.25em;" (click)="this.activeTab = 3">
+          <!-- [suiTabHeader]="3" -->
+          Raw Chart Data</a>
+        <a class="item" style=" font-size: 1.25em;" (click)="this.activeTab = 4">
+          <!-- [suiTabHeader]="4" -->
+          Raw Data</a>
     </div>
   
-    <div *ngIf="dynamicFormHandlingService.isxAxisRequired" class="ui basic segment" [suiTabContent]="1">
+    <div *ngIf="dynamicFormHandlingService.isxAxisRequired" class="ui basic segment">
+      <!--TODO Content [suiTabContent]="1"> -->
       <chart-frame [chart]="this.modal.context.chartObj"></chart-frame>
     </div>
-    <div *ngIf="dynamicFormHandlingService.isxAxisRequired" class="ui basic segment" [suiTabContent]="2">
+    <div *ngIf="dynamicFormHandlingService.isxAxisRequired" class="ui basic segment">
+      <!--TODO Content [suiTabContent]="2"> -->
       <table-frame [table]="this.modal.context.tableObj"></table-frame>
     </div>
-    <div *ngIf="dynamicFormHandlingService.isxAxisRequired" class="ui basic segment" [suiTabContent]="3">
+    <div *ngIf="dynamicFormHandlingService.isxAxisRequired" class="ui basic segment">
+      <!--TODO Content [suiTabContent]="3"> -->
       <raw-chart-data-frame [rawChartData]="this.modal.context.rawChartDataObj"></raw-chart-data-frame>
     </div>
-    <div class="ui basic segment" [suiTabContent]="4">
+    <div class="ui basic segment">
+      <!--TODO Content [suiTabContent]="4"> -->
       <raw-data-frame [rawData]="this.modal.context.rawDataObj"></raw-data-frame>
     </div>
-  </sui-tabset>
+  <!-- </sui-tabset> -->
 </div>
 <div class="actions">
   <i class="big linkify icon" style="vertical-align: inherit;"></i>

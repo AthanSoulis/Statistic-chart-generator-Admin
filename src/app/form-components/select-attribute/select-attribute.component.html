@@ -1,6 +1,7 @@
 <div class="simple segment">
-  <!-- <div class="ui fluid pointing dropdown segment" suiDropdown (isOpenChange)="this._onTouched($event)" > -->
-    <div class="ui fluid selection dropdown" suiDropdown (isOpenChange)="this._onTouched($event)" [isDisabled]="isDisabled">
+    <!--TODO Selection Dropdown this is replaced by below
+      <div class="ui fluid selection dropdown" suiDropdown (isOpenChange)="this._onTouched($event)" [isDisabled]="isDisabled"> -->
+    <input class="ui fluid selection dropdown" suiDropdown (isOpenChange)="this._onTouched($event)" [disabled]="isDisabled">
 
     <div *ngIf="this.checkValidFieldNode(selectedNode) !== null; else nullSelectedField">
       <div class="ui breadcrumb" #selectedFieldLength *ngFor="let field of selectedNode.name.split('.'); let i = index">
@@ -58,5 +59,5 @@
     </div>
     </div>
     </div>
-  </div>
+  <!-- </div> -->
 </div>

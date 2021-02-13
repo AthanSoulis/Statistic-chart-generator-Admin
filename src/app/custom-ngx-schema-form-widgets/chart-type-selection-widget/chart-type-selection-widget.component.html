@@ -13,14 +13,14 @@
     <ng-template let-option #chartTypeOptionTemplate>
         {{ option| titlecase }}
     </ng-template>
-    <sui-select class="selection" [formControl]="control"
+    <!--TODO Select Dropdown <sui-select class="selection" [formControl]="control"
     [attr.name]="name" [attr.disabled]="schema.readOnly"
                 placeholder={{schema.placeholder}} 
                 [options]="supportedChartTypes"
                 [optionTemplate]="chartTypeOptionTemplate"
                 #chartTypeSelect>
       <sui-select-option *ngFor="let chartType of chartTypeSelect.filteredOptions" [value]="chartType"></sui-select-option>
-    </sui-select>
+    </sui-select> -->
   </ng-template>
 </div>
 </div>

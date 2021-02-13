@@ -15,9 +15,11 @@ interface IChartTableModalContext {
   styleUrls: ['./chart-table-modal.component.css']
 })
 export class ChartTableModalComponent {
+  
+  public modal
 
   activeTab = 1;
-  constructor(/*public modal: SuiModal<IChartTableModalContext, void, void>,*/
+  constructor(/*public modal: /*SuiModal<IChartTableModalContext, void, void>,*/
     public chartExportingService: ChartExportingService,
     public dynamicFormHandlingService: DynamicFormHandlingService) {}
 

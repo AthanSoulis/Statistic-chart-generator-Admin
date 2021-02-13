@@ -1,31 +1,21 @@
 <div class="row">
-    <sui-tabset >
+    <!--TODO the whole tabset <sui-tabset > -->
+    <div>
     <div class="ui two column fluid grid ">
       <div class="two wide column">
           <div class="ui secondary vertical fluid pointing menu" >
             <div class="ui centered grid link item"
-            *ngFor="let itemProperty of formProperty.properties; let i = index"
-            [suiTabHeader]="i" [isActive]="active[i]" (isActiveChange)="onActiveTabChange($event,i)">
+            *ngFor="let itemProperty of formProperty.properties; let i = index">
+            <!-- TODO Tab functionality [suiTabHeader]="i" [isActive]="active[i]" (isActiveChange)="onActiveTabChange($event,i)"> -->
                 <div class="ui center aligned basic segment" >
 
                     <div *ngIf="editable[i]; else notEditable">
                         <input autoFocus type="text" (blur)="disableEditable(i)"
                         [value]="getDataSeriesName(i) | async" (change)="setDataSeriesName(i, $event.target.value)">
-                        
-                        <!-- <button *ngIf="menuArrayLength > 1" suiPopup [popupTemplate]="deleteDataseriesPrompt"
-                            popupTrigger="outsideClick" [popupPlacement]="'top left'" [popupBasic]="'true'"
-                            class="mini compact ui icon basic right attached button ">
-                            <i class="close icon"></i>
-                        </button> -->
                     </div>
                     <ng-template #notEditable>
                         <h4 (dblclick)="enableEditable(i)" style="word-break: break-all; padding-left: 0; padding-right: 0"
                         class="ui center aligned item"> {{getDataSeriesName(i) | async}} </h4>
-                        <!-- <button *ngIf="menuArrayLength > 1" suiPopup [popupTemplate]="deleteDataseriesPrompt"
-                            popupTrigger="outsideClick" [popupPlacement]="'top left'" [popupBasic]="'true'"
-                            class="mini compact ui icon basic right attached button ">
-                            <i class="close icon"></i>
-                        </button> -->
                     </ng-template>
 
                     <ng-template let-popup #deleteDataseriesPrompt>
@@ -40,9 +30,10 @@
                         </div>
                         </div>
                     </ng-template>
-                    <button *ngIf="menuArrayLength > 1" suiPopup [popupTemplate]="deleteDataseriesPrompt"
-                        popupTrigger="outsideClick" [popupPlacement]="'top'" [popupBasic]="'true'"
-                        class="mini fluid compact ui icon basic bottom attached button ">
+                    <button class="mini fluid compact ui icon basic bottom attached button" *ngIf="menuArrayLength > 1">
+                        <!-- TODO suiPopup [popupTemplate]="deleteDataseriesPrompt"
+                        popupTrigger="outsideClick" [popupPlacement]="'top'" [popupBasic]="'true'"> -->
+                        
                         <i class="close icon"></i>
                     </button>
                 </div>
@@ -55,10 +46,12 @@
       </div>
       
       <div class="fourteen wide stretched column">
-        <div class="ui tab" *ngFor="let itemProperty of formProperty.properties; let i = index; trackBy:trackByIndex" [suiTabContent]="i">
+        <div class="ui tab" *ngFor="let itemProperty of formProperty.properties; let i = index; trackBy:trackByIndex" >
+        <!-- TODO Show Tab content [suiTabContent]="i"> -->
             <sf-form-element [formProperty]="itemProperty"></sf-form-element>
         </div>
       </div>
     </div>
-    </sui-tabset>
+    <!-- </sui-tabset> -->
+    </div>
 </div>

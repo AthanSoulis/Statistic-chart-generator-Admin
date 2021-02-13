@@ -8,11 +8,11 @@
   </span>
   <input *ngIf="schema.readOnly; else operatorSelection" [attr.name]="name" type="hidden" [formControl]="control">
   <ng-template #operatorSelection>
-    <sui-select class="selection" style="min-width: 5em !important" [options]="operators | async"
+    <!--TODO Select Dropdown <sui-select class="selection" style="min-width: 5em !important" [options]="operators | async"
           [formControl]="control" [attr.name]="name" 
           [attr.disabled]="schema.readOnly" placeholder={{schema.placeholder}}
           labelField="filterName" valueField="filterOperator" #operatorsSelect>    
       <sui-select-option *ngFor="let operator of operatorsSelect.filteredOptions" [value]='operator'></sui-select-option>
-    </sui-select>
+    </sui-select> -->
   </ng-template>
 </div>

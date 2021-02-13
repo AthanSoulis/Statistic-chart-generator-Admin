@@ -1,7 +1,8 @@
 <form class="ui form">
-  <sui-tabset>
+  <!--TODO tabset <sui-tabset> -->
       <div class="ui five steps ">
-          <a class="step" suiTabHeader="tab-view" [(isActive)]="tabActivationStatusService.viewTabStatus">
+          <a class="step">
+             <!-- TODO Tab Header suiTabHeader="tab-view" [(isActive)]="tabActivationStatusService.viewTabStatus"> -->
             <i class="users icon"></i>
             <div class="content">
               <div class="title">{{this.formProperty.schema.fieldsets[0].title}}</div>
@@ -17,9 +18,10 @@
                 </h1>
             </div>
           </a>
-          <a class="step" suiTabHeader="tab-category" [(isActive)]="tabActivationStatusService.categoryTabStatus"
+          <a class="step">
+          <!-- TODO Tab Header suiTabHeader="tab-category" [(isActive)]="tabActivationStatusService.categoryTabStatus"
           [isDisabled]="!((mappingProfileService.selectedProfile$ | async) !== null &&
-                        (mappingProfileService.selectedProfile$ | async) !== undefined)">
+                        (mappingProfileService.selectedProfile$ | async) !== undefined)"> -->
             <i class="chart bar icon"></i>
             <div class="content">
                 <div class="title">{{this.formProperty.schema.fieldsets[1].title}}</div>
@@ -32,22 +34,24 @@
                 </h1>
             </div>
           </a>
-          <a class="step" suiTabHeader="tab-dataseries" [(isActive)]="tabActivationStatusService.dataseriesTabStatus" 
+          <a class="step">
+          <!-- TODO Tab Header suiTabHeader="tab-dataseries" [(isActive)]="tabActivationStatusService.dataseriesTabStatus" 
           [isDisabled]="!((this.diagramCategoryService.selectedDiagramCategory$ | async) !== null &&
                           (this.diagramCategoryService.selectedDiagramCategory$ | async) !== undefined &&
                           (mappingProfileService.selectedProfile$ | async) !== null &&
-                          (mappingProfileService.selectedProfile$ | async) !== undefined)">
+                          (mappingProfileService.selectedProfile$ | async) !== undefined)"> -->
             <i class="database icon"></i>
             <div class="content">
               <div class="title">{{this.formProperty.schema.fieldsets[2].title}}</div>
               <div class="description">{{this.formProperty.schema.fieldsets[2].description}}</div>
             </div>
           </a>
-          <a class="step" suiTabHeader="tab-appearance"
+          <a class="step">
+          <!-- TODO Tab Header suiTabHeader="tab-appearance"
           [isDisabled]="!((this.diagramCategoryService.selectedDiagramCategory$ | async) !== null &&
                           (this.diagramCategoryService.selectedDiagramCategory$ | async) !== undefined &&
                           (mappingProfileService.selectedProfile$ | async) !== null &&
-                          (mappingProfileService.selectedProfile$ | async) !== undefined)">
+                          (mappingProfileService.selectedProfile$ | async) !== undefined)"> -->
             <i class="paint brush icon"></i>
             <div class="content">
                 <div class="title">{{this.formProperty.schema.fieldsets[3].title}}</div>
@@ -95,5 +99,5 @@
           </div>
         </div>
       </div>
-  </sui-tabset>
+  <!-- </sui-tabset> -->
 </form>

@@ -8,8 +8,8 @@
 
     <label [attr.for]="id" class="horizontal control-label">
       {{ schema.title }}
-      <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" suiPopup popupPlacement="right"
-      popupText={{this.schema.tooltip}}></i>
+      <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" suiPopup popupPlacement="right"></i>
+      <!-- TODO Popup Text popupText={{this.schema.tooltip}}></i> -->
     </label>
     <span *ngIf="schema.description" class="formHelp">{{schema.description}}</span>
 
