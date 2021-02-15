@@ -6,7 +6,7 @@ import {  BehaviorSubject, Subscription } from 'rxjs';
 @Component({
   selector: 'chart-type-selection-widget',
   templateUrl: './chart-type-selection-widget.component.html',
-  styleUrls: ['./chart-type-selection-widget.component.css']
+  styleUrls: ['./chart-type-selection-widget.component.scss']
 })
 export class ChartTypeSelectionWidgetComponent extends ControlWidget implements AfterContentInit, OnDestroy {
 

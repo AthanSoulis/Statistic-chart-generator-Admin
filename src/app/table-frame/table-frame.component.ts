@@ -5,7 +5,7 @@ import { UrlProviderService } from '../services/url-provider-service/url-provide
 @Component({
   selector: 'table-frame',
   templateUrl: './table-frame.component.html',
-  styleUrls: ['./table-frame.component.css']
+  styleUrls: ['./table-frame.component.scss']
 })
 export class TableFrameComponent implements OnInit, OnChanges {
 

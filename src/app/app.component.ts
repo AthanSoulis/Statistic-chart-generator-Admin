@@ -8,7 +8,7 @@ import { DynamicFormHandlingService } from './services/dynamic-form-handling-ser
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, AfterViewInit {
 
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   activePopUp: any/*SuiPopup*/;
 
-  popupPlacement : any  = undefined/*PopupPlacement.Bottom*/;
+  popupPlacement: any  = undefined/*PopupPlacement.Bottom*/;
 
   constructor(private urlProvider: UrlProviderService,
     protected chartExportingService: ChartExportingService,

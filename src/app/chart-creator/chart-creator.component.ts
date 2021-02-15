@@ -13,7 +13,7 @@ declare var jQuery: any;
 @Component({
   selector: 'chart-creator',
   templateUrl: './chart-creator.component.html',
-  styleUrls: ['./chart-creator.component.css']
+  styleUrls: ['./chart-creator.component.scss']
 })
 export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterContentInit {
 

@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'aggregate-selection-widget',
   templateUrl: './aggregate-selection-widget.component.html',
-  styleUrls: ['./aggregate-selection-widget.component.css']
+  styleUrls: ['./aggregate-selection-widget.component.scss']
 })
 export class AggregateSelectionWidgetComponent extends ControlWidget implements AfterContentInit {
 

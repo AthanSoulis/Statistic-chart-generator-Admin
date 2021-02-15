@@ -6,7 +6,7 @@ import { EntityTreeNode } from '../../services/db-schema-service/db-schema.servi
 @Component({
   selector: 'query-filter-selector',
   templateUrl: './query-filter-selector.component.html',
-  styleUrls: ['./query-filter-selector.component.css'],
+  styleUrls: ['./query-filter-selector.component.scss'],
   viewProviders: [
     { provide: ControlContainer, useExisting: FormGroupDirective }
   ]

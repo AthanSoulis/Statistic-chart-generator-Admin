@@ -8,7 +8,7 @@ import { isNullOrUndefined } from 'util';
 @Component({
   selector: 'library-selection-widget',
   templateUrl: './library-selection-widget.component.html',
-  styleUrls: ['./library-selection-widget.component.css']
+  styleUrls: ['./library-selection-widget.component.scss']
 })
 export class LibrarySelectionWidgetComponent extends ControlWidget implements AfterContentInit {
 

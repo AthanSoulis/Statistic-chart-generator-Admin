@@ -170,7 +170,8 @@ export class DynamicFormHandlingService {
       this._formSchema.dataseriesFormSchema.items.properties.data.required = ['yAxisData', 'xAxisData', 'filters'];
       this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.items.required = ['xaxisEntityField'];
       this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.minItems = 1;
-      this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.items.properties.xaxisEntityField.requiredField = true;
+      this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData
+      .items.properties.xaxisEntityField.requiredField = true;
     } else {
       this._xAxisRequired = false;
       // this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.widget = 'hidden';
@@ -178,7 +179,8 @@ export class DynamicFormHandlingService {
       this._formSchema.dataseriesFormSchema.items.properties.data.required = ['yAxisData', 'filters'];
       this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.items.required = [];
       this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.minItems = 0;
-      this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.items.properties.xaxisEntityField.requiredField = false;
+      this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData
+      .items.properties.xaxisEntityField.requiredField = false;
     }
   }
 

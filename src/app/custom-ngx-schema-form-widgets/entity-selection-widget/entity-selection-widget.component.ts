@@ -12,7 +12,7 @@ import { PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
 @Component({
   selector: 'entity-selection-widget',
   templateUrl: './entity-selection-widget.component.html',
-  styleUrls: ['./entity-selection-widget.component.css'],
+  styleUrls: ['./entity-selection-widget.component.scss'],
 })
 export class EntitySelectionWidgetComponent extends ControlWidget implements OnInit, AfterContentInit, OnDestroy {
 

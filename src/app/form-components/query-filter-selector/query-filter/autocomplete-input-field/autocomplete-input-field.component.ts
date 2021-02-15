@@ -7,7 +7,7 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'autocomplete-input-field',
   templateUrl: './autocomplete-input-field.component.html',
-  styleUrls: ['./autocomplete-input-field.component.css']
+  styleUrls: ['./autocomplete-input-field.component.scss']
 })
 export class AutocompleteInputFieldComponent implements OnInit, AfterViewInit, OnDestroy {
 

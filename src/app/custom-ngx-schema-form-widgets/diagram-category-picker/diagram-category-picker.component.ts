@@ -9,7 +9,7 @@ import {DynamicFormHandlingService} from '../../services/dynamic-form-handling-s
 @Component({
   selector: 'diagram-category-picker',
   templateUrl: './diagram-category-picker.component.html',
-  styleUrls: ['./diagram-category-picker.component.css']
+  styleUrls: ['./diagram-category-picker.component.scss']
 })
 export class DiagramCategoryPickerComponent extends ControlWidget implements CardPicker, OnDestroy, AfterContentInit {
 

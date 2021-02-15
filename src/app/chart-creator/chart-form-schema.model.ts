@@ -3,9 +3,12 @@
  *
  * Semantic UI related schema fields
  *
- * ~ fieldsetColumnWidth: Sets the width of the fieldset on the grid based on this https://semantic-ui.com/collections/grid.html#column-widths
- * ~ grouping: Changes the way the fields are grouped based on this https://semantic-ui.com/collections/form.html#fields
- * ~ fieldsets.width: Adds a width to each field based on this https://semantic-ui.com/collections/form.html#width .
+ * ~ fieldsetColumnWidth: Sets the width of the fieldset on the grid based on this
+ *   https://semantic-ui.com/collections/grid.html#column-widths
+ * ~ grouping: Changes the way the fields are grouped based on this
+ *   https://semantic-ui.com/collections/form.html#fields
+ * ~ fieldsets.width: Adds a width to each field based on this
+ *   https://semantic-ui.com/collections/form.html#width .
  *   Works with {csui-property-object}
  *
  * Custom related schema fields

@@ -12,7 +12,7 @@ export enum DeleteButtonPosition {
 @Component({
   selector: 'array-widget',
   templateUrl: './array-widget.component.html',
-  styleUrls: ['./array-widget.component.css'],
+  styleUrls: ['./array-widget.component.scss'],
 })
 export class ArrayWidgetComponent extends ArrayLayoutWidget implements AfterContentInit, AfterViewChecked {
 

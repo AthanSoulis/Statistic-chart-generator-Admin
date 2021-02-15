@@ -4,7 +4,7 @@ import { ControlWidget } from 'ngx-schema-form';
 @Component({
   selector: 'radio-widget',
   templateUrl: './radio-widget.component.html',
-  styleUrls: ['./radio-widget.component.css']
+  styleUrls: ['./radio-widget.component.scss']
 })
 export class RadioWidgetComponent extends ControlWidget {
 

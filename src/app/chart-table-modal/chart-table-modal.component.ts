@@ -12,11 +12,11 @@ interface IChartTableModalContext {
 @Component({
   selector: 'chart-table-modal',
   templateUrl: './chart-table-modal.component.html',
-  styleUrls: ['./chart-table-modal.component.css']
+  styleUrls: ['./chart-table-modal.component.scss']
 })
 export class ChartTableModalComponent {
-  
-  public modal
+
+  public modal;
 
   activeTab = 1;
   constructor(/*public modal: /*SuiModal<IChartTableModalContext, void, void>,*/

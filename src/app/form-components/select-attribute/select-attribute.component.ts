@@ -16,7 +16,7 @@ import { ViewRef_ } from '@angular/core/src/view';
 @Component({
   selector: 'select-attribute',
   templateUrl: './select-attribute.component.html',
-  styleUrls: ['./select-attribute.component.css'],
+  styleUrls: ['./select-attribute.component.scss'],
   viewProviders: [
     { provide: ControlContainer, useExisting: FormGroupDirective }
   ],

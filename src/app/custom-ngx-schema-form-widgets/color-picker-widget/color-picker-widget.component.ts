@@ -4,7 +4,7 @@ import { ControlWidget } from 'ngx-schema-form';
 @Component({
   selector: 'color-picker-widget',
   templateUrl: './color-picker-widget.component.html',
-  styleUrls: ['./color-picker-widget.component.css']
+  styleUrls: ['./color-picker-widget.component.scss']
 })
 export class ColorPickerWidgetComponent extends ControlWidget {
 

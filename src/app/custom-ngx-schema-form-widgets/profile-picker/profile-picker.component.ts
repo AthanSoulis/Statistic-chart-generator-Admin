@@ -15,7 +15,7 @@ export interface IContext {
 @Component({
   selector: 'profile-picker',
   templateUrl: './profile-picker.component.html',
-  styleUrls: ['./profile-picker.component.css']
+  styleUrls: ['./profile-picker.component.scss']
 })
 export class ProfilePickerComponent extends ControlWidget implements OnDestroy, AfterContentInit, CardPicker {
 

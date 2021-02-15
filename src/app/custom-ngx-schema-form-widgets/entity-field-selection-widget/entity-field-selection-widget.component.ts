@@ -9,7 +9,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 @Component({
   selector: 'entity-field-selection-widget',
   templateUrl: './entity-field-selection-widget.component.html',
-  styleUrls: ['./entity-field-selection-widget.component.css'],
+  styleUrls: ['./entity-field-selection-widget.component.scss'],
 })
 export class EntityFieldSelectionWidgetComponent extends ControlWidget implements OnDestroy, AfterContentInit, AfterViewInit {
 

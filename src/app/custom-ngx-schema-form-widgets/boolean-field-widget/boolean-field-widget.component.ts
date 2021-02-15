@@ -4,7 +4,7 @@ import { ControlWidget } from 'ngx-schema-form';
 @Component({
   selector: 'boolean-field-widget',
   templateUrl: './boolean-field-widget.component.html',
-  styleUrls: ['./boolean-field-widget.component.css']
+  styleUrls: ['./boolean-field-widget.component.scss']
 })
 export class BooleanFieldWidgetComponent extends ControlWidget {
 

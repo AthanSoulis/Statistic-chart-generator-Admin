@@ -8,7 +8,7 @@ import { ChartLoadingService } from '../../services/chart-loading-service/chart-
 @Component({
   selector: 'filter-field-array-widget',
   templateUrl: './filter-field-array-widget.component.html',
-  styleUrls: ['./filter-field-array-widget.component.css']
+  styleUrls: ['./filter-field-array-widget.component.scss']
 })
 export class FilterFieldArrayWidgetComponent extends ArrayLayoutWidget implements AfterContentInit {
 
@@ -82,7 +82,7 @@ export class FilterFieldArrayWidgetComponent extends ArrayLayoutWidget implement
         (<FormProperty>this.formProperty.properties[index]).value);
 
       this.formProperty.removeItem(this.formProperty.properties[index]);
-      this.formProperty.removeItem(this.formProperty.properties[index-1]);
+      this.formProperty.removeItem(this.formProperty.properties[index - 1]);
 
     }
   }

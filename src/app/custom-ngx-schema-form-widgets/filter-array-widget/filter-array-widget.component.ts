@@ -6,7 +6,7 @@ import { FormProperty } from 'ngx-schema-form/lib/model/formproperty';
 @Component({
   selector: 'filter-array-widget',
   templateUrl: './filter-array-widget.component.html',
-  styleUrls: ['./filter-array-widget.component.css']
+  styleUrls: ['./filter-array-widget.component.scss']
 })
 export class FilterArrayWidgetComponent extends ArrayLayoutWidget implements AfterContentInit, AfterViewChecked {
 

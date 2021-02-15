@@ -6,7 +6,7 @@ import { UrlProviderService } from '../services/url-provider-service/url-provide
 @Component({
   selector: 'chart-frame',
   templateUrl: './chart-frame.component.html',
-  styleUrls: ['./chart-frame.component.css']
+  styleUrls: ['./chart-frame.component.scss']
 })
 export class ChartFrameComponent implements OnInit, OnChanges {
 

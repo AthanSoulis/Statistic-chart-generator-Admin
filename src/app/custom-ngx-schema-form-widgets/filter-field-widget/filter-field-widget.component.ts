@@ -8,7 +8,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 @Component({
   selector: 'filter-field-widget',
   templateUrl: './filter-field-widget.component.html',
-  styleUrls: ['./filter-field-widget.component.css']
+  styleUrls: ['./filter-field-widget.component.scss']
 })
 export class FilterFieldWidgetComponent extends ControlWidget implements OnDestroy, AfterContentInit {
 

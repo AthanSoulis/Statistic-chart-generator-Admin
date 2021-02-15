@@ -11,7 +11,7 @@ declare var jQuery: any;
 @Component({
   selector: 'head-menu-widget',
   templateUrl: './head-menu-widget.component.html',
-  styleUrls: ['./head-menu-widget.component.css'],
+  styleUrls: ['./head-menu-widget.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeadMenuWidgetComponent extends ObjectLayoutWidget implements OnInit {

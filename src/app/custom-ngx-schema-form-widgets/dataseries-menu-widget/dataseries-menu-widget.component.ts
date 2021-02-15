@@ -8,7 +8,7 @@ import { ChartLoadingService } from '../../services/chart-loading-service/chart-
 @Component({
   selector: 'dataseries-menu-widget',
   templateUrl: './dataseries-menu-widget.component.html',
-  styleUrls: ['./dataseries-menu-widget.component.css']
+  styleUrls: ['./dataseries-menu-widget.component.scss']
 })
 export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements AfterContentInit, OnDestroy {
 

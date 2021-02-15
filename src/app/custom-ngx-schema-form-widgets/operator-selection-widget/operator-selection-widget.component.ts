@@ -8,7 +8,7 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 @Component({
   selector: 'operator-selection-widget',
   templateUrl: './operator-selection-widget.component.html',
-  styleUrls: ['./operator-selection-widget.component.css'],
+  styleUrls: ['./operator-selection-widget.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OperatorSelectionWidgetComponent extends ControlWidget implements OnDestroy, AfterContentInit {

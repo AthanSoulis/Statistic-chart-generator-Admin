@@ -193,19 +193,24 @@ export class DiagramCreator {
             chartObj.orderBy = appearanceOptions.chartAppearance.generalOptions.orderByAxis;
         }
 
-        // tslint:disable-next-line:max-line-length
-        if (appearanceOptions.chartAppearance.highchartsAppearanceOptions !== undefined && appearanceOptions.chartAppearance.highchartsAppearanceOptions !== null) {
+        if (appearanceOptions.chartAppearance.highchartsAppearanceOptions !== undefined
+            && appearanceOptions.chartAppearance.highchartsAppearanceOptions !== null) {
             // Exporting
-            chartObj.chartDescription.exporting.enabled = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.exporting;
-            // tslint:disable-next-line:max-line-length
-            chartObj.chartDescription.plotOptions.series.stacking = appearanceOptions.chartAppearance.highchartsAppearanceOptions.stackedChart === 'undefined' ?
+            chartObj.chartDescription.exporting.enabled =
+                appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.exporting;
+
+            chartObj.chartDescription.plotOptions.series.stacking =
+            appearanceOptions.chartAppearance.highchartsAppearanceOptions.stackedChart === 'undefined' ?
                 undefined : appearanceOptions.chartAppearance.highchartsAppearanceOptions.stackedChart;
 
             // Legend Options
-            chartObj.chartDescription.legend.enabled = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcLegend.hcEnableLegend;
-            chartObj.chartDescription.legend.align = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcLegend.hcLegendHorizontalAlignment;
-            // tslint:disable-next-line:max-line-length
-            chartObj.chartDescription.legend.verticalAlign = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcLegend.hcLegendVerticalAlignment;
+            chartObj.chartDescription.legend.enabled =
+            appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcLegend.hcEnableLegend;
+            chartObj.chartDescription.legend.align =
+            appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcLegend.hcLegendHorizontalAlignment;
+
+            chartObj.chartDescription.legend.verticalAlign =
+            appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcLegend.hcLegendVerticalAlignment;
             chartObj.chartDescription.legend.layout = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcLegend.hcLegendLayout;
 
             // Credits Options
@@ -216,8 +221,9 @@ export class DiagramCreator {
                 chartObj.chartDescription.title.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.titles.title;
                 chartObj.chartDescription.subtitle.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.titles.subtitle;
             }
-            // tslint:disable-next-line:max-line-length
-            chartObj.chartDescription.plotOptions.series.dataLabels.enabled = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.hcEnableDataLabels;
+
+            chartObj.chartDescription.plotOptions.series.dataLabels.enabled =
+            appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.hcEnableDataLabels;
 
             // Chart Area Options
             chartObj.chartDescription.chart.backgroundColor = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcChartArea.hcCABackGroundColor;
@@ -226,10 +232,12 @@ export class DiagramCreator {
             chartObj.chartDescription.chart.borderWidth = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcChartArea.hcCABorderWidth;
 
             // Plot Area Options
-            // tslint:disable-next-line:max-line-length
-            chartObj.chartDescription.chart.plotBackgroundColor = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcPlotArea.hcPABackgroundColor;
-            // tslint:disable-next-line:max-line-length
-            chartObj.chartDescription.chart.plotBackgroundImage = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcPlotArea.hcPABackgroundImageURL;
+
+            chartObj.chartDescription.chart.plotBackgroundColor =
+            appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcPlotArea.hcPABackgroundColor;
+
+            chartObj.chartDescription.chart.plotBackgroundImage =
+            appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcPlotArea.hcPABackgroundImageURL;
             chartObj.chartDescription.chart.plotBorderColor = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcPlotArea.hcPABorderColor;
             chartObj.chartDescription.chart.plotBorderWidth = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcPlotArea.hcPABorderWidth;
 
@@ -250,7 +258,8 @@ export class DiagramCreator {
                 category.categoryType !== 'combo' ? category.categoryType :
                     (isNullOrUndefined(dataElement.chartProperties.chartType) ? 'line' : dataElement.chartProperties.chartType)));
             // Set color for each data series. Works only for bars and columns.
-            // if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.length > 1 || appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray[0] !== '#00000000') {
+            // if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.length > 1
+            //     || appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray[0] !== '#00000000') {
             //   queries[queries.length - 1].color = appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray[queries.length - 1];
             // }
         });

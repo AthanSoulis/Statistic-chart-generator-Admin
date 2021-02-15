@@ -11,7 +11,7 @@ import { FieldAutocompleteService, AutocompleteResponse } from '../../../service
 @Component({
   selector: 'query-filter',
   templateUrl: './query-filter.component.html',
-  styleUrls: ['./query-filter.component.css'],
+  styleUrls: ['./query-filter.component.scss'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class QueryFilterComponent implements OnInit, OnDestroy, OnChanges {

@@ -4,7 +4,7 @@ import { ObjectLayoutWidget } from 'ngx-schema-form';
 @Component({
   selector: 'tabular-menu-widget',
   templateUrl: './tabular-menu-widget.component.html',
-  styleUrls: ['./tabular-menu-widget.component.css']
+  styleUrls: ['./tabular-menu-widget.component.scss']
 })
 export class TabularMenuWidgetComponent extends ObjectLayoutWidget implements AfterContentInit {
 

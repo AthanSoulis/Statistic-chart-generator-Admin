@@ -4,7 +4,7 @@ import { ControlWidget } from 'ngx-schema-form';
 @Component({
   selector: 'string-field-widget',
   templateUrl: './string-field-widget.component.html',
-  styleUrls: ['./string-field-widget.component.css']
+  styleUrls: ['./string-field-widget.component.scss']
 })
 export class StringFieldWidgetComponent extends ControlWidget {
 
