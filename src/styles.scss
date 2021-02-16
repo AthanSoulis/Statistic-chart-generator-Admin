@@ -1,19 +1,62 @@
 /* You can add global styles to this file, and also import other style files */
 /* @import '~angular-tree-component/dist/angular-tree-component.css'; */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
 
-.Site {
+$color-openaire-main-blue: #222080;
+
+.Site
+{
   display: flex;
   height: 100%;
   flex-direction: column;
 }
 
-.Site-header,
-.Site-footer {
-  flex-shrink: 0;
+.Site-header 
+{
+  padding: 10px 30px;
+  @include media-breakpoint-down(md)
+  { padding: 10px 15px; }
+  @include media-breakpoint-down(sm)
+  { padding: 5px 10px; }
+
+  .header-stats-img
+  {
+    max-height: 100px;
+    min-height: 50px;
+  }
 }
 
-.Site-content {
+
+.Site-content 
+{
   flex: 1 0 auto;
   width: 100%;
+}
+
+.Site-footer 
+{
+  background: $color-openaire-main-blue;
+  font-size: 85%;
+
+  .cc-attribution
+  { text-align: center; color: rgba(255,255,255,.7); }
+  
+  .row.no-gutters div
+  {
+    margin-bottom: 10px;
+    
+    @include media-breakpoint-down(md)
+    { text-align: center; }
+  }
+}
+
+.Site-footer.container-fluid
+{
+  padding: 30px;
+  
+  @include media-breakpoint-down(md)
+  { padding: 10px; }
 }
