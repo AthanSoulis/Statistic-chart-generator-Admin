@@ -1,3 +1,30 @@
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+
+.btn-group.btn-group-lg
+{
+    height: 100%;
+    width: fit-content;
+}
+.btn-group.btn-group-lg > a.btn
+{
+    padding: 0.9em 1.53em;
+
+    @include media-breakpoint-down(md)
+    { padding: 0.6em 1.02em }
+    @include media-breakpoint-down(sm)
+    { padding: 0.4em 0.68em }
+}
+a.btn
+{
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .url-holder {
     overflow-wrap: break-word;
     text-align: center;
@@ -14,14 +41,6 @@
 
 .ui.menu {
     padding: 1rem 1rem;
-}
-
-.ui.menu .header.item {
-    /* padding-left: 3rem !important; */
-}
-
-.ui.menu + .ui.grid {
-    /* padding-top: 10rem; */
 }
 
 .ui.menu .item::before {

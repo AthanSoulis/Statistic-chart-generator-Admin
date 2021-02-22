@@ -81,7 +81,7 @@ export class DynamicFormHandlingService {
     // console.log('Load Event', event);
     this._loadFormObjectFile = null;
 
-    if (!isNullOrUndefined(event) ) {
+    if (!(event === null || event === undefined) ) {
       const fr: FileReader = new FileReader();
 
       fr.onload = () => {
@@ -95,6 +95,12 @@ export class DynamicFormHandlingService {
       fr.readAsText(event.target.files[0]);
     }
   }
+  
+  resetLoadForm() {
+    this._loadFormObjectFile = null;
+    this.chartLoadingService.isChartLoaded = false;
+  }
+
   submitForm() {
     console.log('Submitted this form', this.formSchemaObject);
     const value = this.formSchemaObject;

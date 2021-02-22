@@ -5,6 +5,9 @@
 @import "../node_modules/bootstrap/scss/functions";
 @import "../node_modules/bootstrap/scss/variables";
 
+// Introduces much bigger loading times. TODO after development to decide which icons we use and discard this import
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+
 $color-openaire-main-blue: #222080;
 
 .Site
@@ -60,3 +63,42 @@ $color-openaire-main-blue: #222080;
   @include media-breakpoint-down(md)
   { padding: 10px; }
 }
+
+.popover{
+  font-size: 1rem;
+  padding: 1rem;
+}
+//  These are for animation reference
+// 
+// .ui.vertical.animated.button .visible.content,
+// .ui.vertical.animated.button .hidden.content {
+//   -webkit-transition: top 0.3s ease, -webkit-transform 0.3s ease;
+//   transition: top 0.3s ease, -webkit-transform 0.3s ease;
+//   transition: top 0.3s ease, transform 0.3s ease;
+//   transition: top 0.3s ease, transform 0.3s ease, -webkit-transform 0.3s ease;
+// }
+
+// .ui.vertical.animated.button .visible.content {
+//   -webkit-transform: translateY(0%);
+//   transform: translateY(0%);
+//   right: auto;
+// }
+
+// .ui.vertical.animated.button .hidden.content {
+//   top: -50%;
+//   left: 0%;
+//   right: auto;
+// }
+
+// .ui.vertical.animated.button:focus .visible.content,
+// .ui.vertical.animated.button:hover .visible.content {
+//   -webkit-transform: translateY(200%);
+//   transform: translateY(200%);
+//   right: auto;
+// }
+
+// .ui.vertical.animated.button:focus .hidden.content,
+// .ui.vertical.animated.button:hover .hidden.content {
+//   top: 50%;
+//   right: auto;
+// }

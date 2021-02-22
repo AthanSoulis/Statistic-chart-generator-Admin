@@ -33,6 +33,9 @@ import { ChartLoadingService } from './services/chart-loading-service/chart-load
 
 import { ColorPickerModule } from 'ngx-color-picker';
 
+/* ng-bootstrap https://ng-bootstrap.github.io/ components */
+import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from 'ngx-schema-form';
 import { GeneralPropertiesWidgetComponent } from './custom-ngx-schema-form-widgets/general-properties-widget/general-properties-widget.component';
 import { CustomWidgetRegistry } from './custom-ngx-schema-form-widgets/custom-widget-registry';
@@ -64,6 +67,7 @@ import { TabularMenuWidgetComponent } from './custom-ngx-schema-form-widgets/tab
 import { ChartTableModalComponent } from './chart-table-modal/chart-table-modal.component';
 import { RawChartDataFrameComponent } from './raw-chart-data-frame/raw-chart-data-frame-component';
 import { RawDataFrameComponent } from './raw-data-frame/raw-data-frame.component';
+import { GeneratedShortUrlFieldComponent } from './generated-short-url-field/generated-short-url-field.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +107,8 @@ import { RawDataFrameComponent } from './raw-data-frame/raw-data-frame.component
     DiagramCategoryPickerComponent,
     FilterArrayWidgetComponent,
     TabularMenuWidgetComponent,
-    ChartTableModalComponent
+    ChartTableModalComponent,
+    GeneratedShortUrlFieldComponent
   ],
   imports: [
     SchemaFormModule.forRoot(),
@@ -115,7 +120,8 @@ import { RawDataFrameComponent } from './raw-data-frame/raw-data-frame.component
     MatTreeModule,
     MatIconModule,
     MatAutocompleteModule,
-    ColorPickerModule
+    ColorPickerModule,
+    NgbPopoverModule
   ],
   entryComponents: [
     GeneralPropertiesWidgetComponent,

@@ -1,0 +1,10 @@
+<h4 class="ui centered header">Generated {{field_name}} TinyUrl</h4>
+<div class="ui small text container fluid segment">
+    <div class="ui active centered inline loader" *ngIf="( isUrlLoading$ | async); else notLoading">
+
+    </div>
+    <ng-template #notLoading>
+        <a target="_blank" rel="noopener noreferrer" href="{{url$ | async}}"
+           class="url-holder">{{url$ | async}}</a>
+    </ng-template>
+</div>
