@@ -13,23 +13,6 @@
   padding: 0.2em !important;
 }
 
-.app-fab--absolute {
-  position: fixed;
-  margin-top: 2.5rem;
-  right: 0;
-  bottom: 0;
-  transform: translate(-50%, -50%);
-}
-  
-  @media(min-width: 1024px) {
-    .app-fab--absolute {
-    margin-top: 2.5rem;
-    right: 0;
-    bottom: 0;
-    transform: translate(-50%, -50%);
-  }
-}
-
 .ui.sticky {
    margin-top: 60px;
    margin-right: 1rem;

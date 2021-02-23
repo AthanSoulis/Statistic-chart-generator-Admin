@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Component, OnInit, AfterViewInit, Input, AfterContentInit, ChangeDetectorRef } from '@angular/core';
 import { Profile } from '../services/mapping-profiles-service/mapping-profiles.service';
 import { BehaviorSubject } from 'rxjs';
@@ -6,7 +7,6 @@ import { FormSchema } from './chart-form-schema.model';
 import { FormComponent } from 'ngx-schema-form';
 import { ErrorHandlerService } from '../services/error-handler-service/error-handler.service';
 import { DynamicFormHandlingService } from '../services/dynamic-form-handling-service/dynamic-form-handling.service';
-import { isNullOrUndefined } from 'util';
 
 declare var jQuery: any;
 
@@ -23,12 +23,16 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
   fs: FormSchema;
   formErrors: BehaviorSubject<Array<any>>;
 
+  protected showSchemaObject: boolean;
+
   constructor(protected errorHandlerService: ErrorHandlerService,
     protected dynamicFormHandlingService: DynamicFormHandlingService,
     protected cdr: ChangeDetectorRef) {
       // this.fs = new FormSchema();
       this.fs = this.dynamicFormHandlingService.formSchema;
       this.formErrors = new BehaviorSubject<Array<any>>([]);
+
+      this.showSchemaObject = environment.showSchemaObject;
   }
 
   ngOnInit() {}
@@ -42,7 +46,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
   dynamicFormChanged(formSchemaValueObj: {value: SCGAFormSchema}) {
 
     // Updating non Null or Undefined DynamicForm
-    if (!isNullOrUndefined(formSchemaValueObj)) {
+    if (!(formSchemaValueObj === null || formSchemaValueObj === undefined)) {
       // console.log('Updating non Null or Undefined DynamicForm', formSchemaValueObj.value);
       this.dynamicFormHandlingService.formSchemaObject = formSchemaValueObj.value;
     }

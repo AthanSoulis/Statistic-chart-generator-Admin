@@ -18,7 +18,14 @@
     </div>
 </div>
 
-<div class="ui form" id="formContainer">
+<div class="container-fluid p-0" id="formContainer">
+
+    <div class="row no-gutters " *ngIf="!showSchemaObject ;else debugView">
+        <div class="col">
+            <sf-form #form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.customValidators" 
+            (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>
+        </div>
+    </div>
 
     <!-- Error Messages -->
     <!-- <div class="ui basic compact segment container" style="padding: 0">
@@ -30,14 +37,17 @@
         </div>    
     </div> -->
 
-    <!-- <div class="ui two column grid">
-        <div class="three wide column">
+</div>
+
+<!-- Show schema form JSON -->
+<ng-template #debugView>
+    <div class="row no-gutters justify-content-center">
+        <div class="col-md-auto order-last">
             <pre> {{this.dynamicFormHandlingService.formSchemaObject | json}} </pre>
         </div>
-        <div class="thirteen wide column"> -->
+        <div class="col order first">
             <sf-form #form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.customValidators" 
                 (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>  
-        <!-- </div>
-    </div> -->
-
-</div>
+        </div>
+    </div>
+</ng-template>
