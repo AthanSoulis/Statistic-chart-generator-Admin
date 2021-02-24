@@ -54,25 +54,11 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     // this.dynamicFormHandlingService.printLogs();
   }
 
-  reset(form: FormComponent) {
-    this.dynamicFormHandlingService.resetForm(form.rootProperty);
-    // this.cdr.detectChanges();
-    this.closeClearModal();
-  }
-
   // Update the Dynamic Form Handling Service of the errors
   errorsChange(formErrorsObj: {value: Array<any>}) {
     this.dynamicFormHandlingService.$formErrorObject.next(formErrorsObj.value);
   }
 
-  openClearModal() {
-    jQuery('.ui.formClear.modal')
-    .modal('show');
-  }
-  closeClearModal() {
-    jQuery('.ui.formClear.modal')
-    .modal('hide');
-  }
   scrollToTop() {
     jQuery('html, body').animate({scrollTop: 0}, 300);
   }

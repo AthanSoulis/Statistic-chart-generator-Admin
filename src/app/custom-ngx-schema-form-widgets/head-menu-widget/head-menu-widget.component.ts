@@ -5,6 +5,8 @@ import { DiagramCategoryService } from '../../services/diagram-category-service/
 import { TabActivationStatusService } from '../../services/tab-activation-status-service/tab-activation-status.service';
 import { DynamicFormHandlingService } from '../../services/dynamic-form-handling-service/dynamic-form-handling.service';
 import { ChartTableModal } from '../../modals/chart-table-modal/chart-table-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ClearFormModalComponent } from "../../modals/clear-form-modal/clear-form-modal.component";
 
 declare var jQuery: any;
 
@@ -19,7 +21,8 @@ export class HeadMenuWidgetComponent extends ObjectLayoutWidget implements OnIni
   constructor(public mappingProfileService: MappingProfilesService,
               public diagramCategoryService: DiagramCategoryService,
               public tabActivationStatusService: TabActivationStatusService,
-              public dynamicFormHandlingService: DynamicFormHandlingService) {
+              public dynamicFormHandlingService: DynamicFormHandlingService,
+              private modalService: NgbModal) {
     super();
   }
 
@@ -30,8 +33,9 @@ export class HeadMenuWidgetComponent extends ObjectLayoutWidget implements OnIni
   }
 
   openClearModal() {
-    jQuery('.ui.formClear.modal')
-    .modal('show');
+    const modalRef = this.modalService.open(ClearFormModalComponent, { centered: true });
+    (modalRef.componentInstance as ClearFormModalComponent).formRoot = this.formProperty.root;
+
   }
 
   applyChanges() {

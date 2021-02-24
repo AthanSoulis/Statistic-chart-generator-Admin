@@ -8,8 +8,6 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-import { MatButtonModule } from '@angular/material/button';
-
 import { AppComponent } from './app.component';
 import { ChartFrameComponent } from './data-frames/chart-frame/chart-frame.component';
 import { TableFrameComponent } from './data-frames/table-frame/table-frame.component';
@@ -34,7 +32,7 @@ import { ChartLoadingService } from './services/chart-loading-service/chart-load
 import { ColorPickerModule } from 'ngx-color-picker';
 
 /* ng-bootstrap https://ng-bootstrap.github.io/ components */
-import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPopoverModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from 'ngx-schema-form';
 import { GeneralPropertiesWidgetComponent } from './custom-ngx-schema-form-widgets/general-properties-widget/general-properties-widget.component';
@@ -68,6 +66,7 @@ import { ChartTableModalComponent } from './modals/chart-table-modal/chart-table
 import { RawChartDataFrameComponent } from './data-frames/raw-chart-data-frame/raw-chart-data-frame-component';
 import { RawDataFrameComponent } from './data-frames/raw-data-frame/raw-data-frame.component';
 import { GeneratedShortUrlFieldComponent } from './generated-short-url-field/generated-short-url-field.component';
+import { ClearFormModalComponent } from './modals/clear-form-modal/clear-form-modal.component';
 
 @NgModule({
   declarations: [
@@ -108,7 +107,8 @@ import { GeneratedShortUrlFieldComponent } from './generated-short-url-field/gen
     FilterArrayWidgetComponent,
     TabularMenuWidgetComponent,
     ChartTableModalComponent,
-    GeneratedShortUrlFieldComponent
+    GeneratedShortUrlFieldComponent,
+    ClearFormModalComponent
   ],
   imports: [
     SchemaFormModule.forRoot(),
@@ -121,7 +121,8 @@ import { GeneratedShortUrlFieldComponent } from './generated-short-url-field/gen
     MatIconModule,
     MatAutocompleteModule,
     ColorPickerModule,
-    NgbPopoverModule
+    NgbPopoverModule,
+    NgbModalModule
   ],
   entryComponents: [
     GeneralPropertiesWidgetComponent,
@@ -150,7 +151,8 @@ import { GeneratedShortUrlFieldComponent } from './generated-short-url-field/gen
     DiagramCategoryPickerComponent,
     FilterArrayWidgetComponent,
     TabularMenuWidgetComponent,
-    ChartTableModalComponent
+    ChartTableModalComponent,
+    ClearFormModalComponent
   ],
   providers: [
     SupportedLibrariesService,
