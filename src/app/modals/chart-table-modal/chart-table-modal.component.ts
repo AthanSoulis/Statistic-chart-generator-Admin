@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ChartExportingService } from '../services/chart-exporting-service/chart-exporting.service';
-import { DynamicFormHandlingService } from '../services/dynamic-form-handling-service/dynamic-form-handling.service';
+import { ChartExportingService } from '../../services/chart-exporting-service/chart-exporting.service';
+import { DynamicFormHandlingService } from '../../services/dynamic-form-handling-service/dynamic-form-handling.service';
 
 interface IChartTableModalContext {
   chartObj: Object;

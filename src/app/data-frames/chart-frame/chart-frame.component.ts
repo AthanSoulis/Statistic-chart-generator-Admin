@@ -1,7 +1,7 @@
 import { Component, OnInit, SecurityContext, Input, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 import { HttpParams, HttpClient } from '@angular/common/http';
-import { UrlProviderService } from '../services/url-provider-service/url-provider.service';
+import { UrlProviderService } from '../../services/url-provider-service/url-provider.service';
 
 @Component({
   selector: 'chart-frame',

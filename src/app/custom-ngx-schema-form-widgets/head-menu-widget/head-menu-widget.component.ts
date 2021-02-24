@@ -4,7 +4,7 @@ import { MappingProfilesService } from '../../services/mapping-profiles-service/
 import { DiagramCategoryService } from '../../services/diagram-category-service/diagram-category.service';
 import { TabActivationStatusService } from '../../services/tab-activation-status-service/tab-activation-status.service';
 import { DynamicFormHandlingService } from '../../services/dynamic-form-handling-service/dynamic-form-handling.service';
-import { ChartTableModal } from '../../chart-table-modal/chart-table-modal.component';
+import { ChartTableModal } from '../../modals/chart-table-modal/chart-table-modal.component';
 
 declare var jQuery: any;
 

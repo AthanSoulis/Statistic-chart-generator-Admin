@@ -1,6 +1,6 @@
 import { Component, OnInit, SecurityContext, Input, OnChanges, SimpleChanges, ElementRef, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
-import { UrlProviderService } from '../services/url-provider-service/url-provider.service';
+import { UrlProviderService } from '../../services/url-provider-service/url-provider.service';
 
 @Component({
   selector: 'table-frame',

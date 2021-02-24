@@ -11,8 +11,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
-import { ChartFrameComponent } from './chart-frame/chart-frame.component';
-import { TableFrameComponent } from './table-frame/table-frame.component';
+import { ChartFrameComponent } from './data-frames/chart-frame/chart-frame.component';
+import { TableFrameComponent } from './data-frames/table-frame/table-frame.component';
 import { SelectAttributeComponent } from './form-components/select-attribute/select-attribute.component';
 import { ChartCreatorComponent } from './chart-creator/chart-creator.component';
 import { QueryFilterSelectorComponent } from './form-components/query-filter-selector/query-filter-selector.component';
@@ -64,9 +64,9 @@ import { CategoryPropertiesWidgetComponent } from './custom-ngx-schema-form-widg
 import { DiagramCategoryPickerComponent } from './custom-ngx-schema-form-widgets/diagram-category-picker/diagram-category-picker.component';
 import { FilterArrayWidgetComponent } from './custom-ngx-schema-form-widgets/filter-array-widget/filter-array-widget.component';
 import { TabularMenuWidgetComponent } from './custom-ngx-schema-form-widgets/tabular-menu-widget/tabular-menu-widget.component';
-import { ChartTableModalComponent } from './chart-table-modal/chart-table-modal.component';
-import { RawChartDataFrameComponent } from './raw-chart-data-frame/raw-chart-data-frame-component';
-import { RawDataFrameComponent } from './raw-data-frame/raw-data-frame.component';
+import { ChartTableModalComponent } from './modals/chart-table-modal/chart-table-modal.component';
+import { RawChartDataFrameComponent } from './data-frames/raw-chart-data-frame/raw-chart-data-frame-component';
+import { RawDataFrameComponent } from './data-frames/raw-data-frame/raw-data-frame.component';
 import { GeneratedShortUrlFieldComponent } from './generated-short-url-field/generated-short-url-field.component';
 
 @NgModule({
