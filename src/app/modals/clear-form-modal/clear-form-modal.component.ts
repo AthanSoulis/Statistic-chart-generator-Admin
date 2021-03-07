@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-// import { PropertyGroup } from 'ngx-schema-formlib/model/formproperty';
 import { DynamicFormHandlingService } from '../../services/dynamic-form-handling-service/dynamic-form-handling.service';
+import { TabActivationStatusService } from '../../services/tab-activation-status-service/tab-activation-status.service';
 import { NgbModalResolutions } from '../ngb-modal-resolutions.enum';
 
 @Component({
@@ -14,7 +14,8 @@ export class ClearFormModalComponent implements OnInit {
   @Input() formRoot: any;
 
   constructor(public activeModal: NgbActiveModal,
-    protected dynamicFormHandlingService: DynamicFormHandlingService) { }
+    protected dynamicFormHandlingService: DynamicFormHandlingService,
+    protected tabActivationStatusService: TabActivationStatusService) { }
 
   ngOnInit() {
   }
@@ -34,6 +35,7 @@ export class ClearFormModalComponent implements OnInit {
     if(!(this.formRoot === null || this.formRoot === undefined))
     {
       this.dynamicFormHandlingService.resetForm(this.formRoot);
+      this.tabActivationStatusService.viewTabStatus = true;
       this.activeModal.close(NgbModalResolutions.Reset);
     }
   }

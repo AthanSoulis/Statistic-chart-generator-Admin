@@ -6,7 +6,6 @@ import { DiagramCreator } from './dynamic-form-handling-diagram-creator';
 import { SupportedLibrariesService } from '../supported-libraries-service/supported-libraries.service';
 import { ChartExportingService } from '../chart-exporting-service/chart-exporting.service';
 import { ChartLoadingService } from '../chart-loading-service/chart-loading.service';
-import { isNullOrUndefined } from 'util';
 import { DiagramCategoryService } from '../diagram-category-service/diagram-category.service';
 import {FormSchema} from '../../chart-creator/chart-form-schema.model';
 
@@ -107,10 +106,10 @@ export class DynamicFormHandlingService {
     if (this.formSchemaObject !== null && this.isFormValid) {
 
       const forkSub = forkJoin(
-          this._diagramCreator.createChart(value),
+          [this._diagramCreator.createChart(value),
           this._diagramCreator.createTable(value),
           this._diagramCreator.createRawChartData(value),
-          this._diagramCreator.createRawData(value)).subscribe(
+          this._diagramCreator.createRawData(value)]).subscribe(
           ([chartObject, tableObject, rawChartDataObject, rawDataObject]: [Object, Object, Object, Object]) => {
             this._chartObject = chartObject;
             this.chartExportingService.changeChartUrl(chartObject);
@@ -135,10 +134,10 @@ export class DynamicFormHandlingService {
     if (this.formSchemaObject !== null && this.isFormValid) {
 
       const forkSub = forkJoin(
-          this._diagramCreator.createChart(value),
+          [this._diagramCreator.createChart(value),
           this._diagramCreator.createTable(value),
           this._diagramCreator.createRawChartData(value),
-          this._diagramCreator.createRawData(value)).subscribe(
+          this._diagramCreator.createRawData(value)]).subscribe(
           ([chartObject, tableObject, rawChartDataObject, rawDataObject]: [Object, Object, Object, Object]) => {
               this.chartExportingService.changeChartUrl(chartObject);
 

@@ -1,14 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Profile } from './../../services/mapping-profiles-service/mapping-profiles.service';
+import { forkJoin } from 'rxjs';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { ObjectLayoutWidget } from 'ngx-schema-form';
 import { MappingProfilesService } from '../../services/mapping-profiles-service/mapping-profiles.service';
 import { DiagramCategoryService } from '../../services/diagram-category-service/diagram-category.service';
 import { TabActivationStatusService } from '../../services/tab-activation-status-service/tab-activation-status.service';
 import { DynamicFormHandlingService } from '../../services/dynamic-form-handling-service/dynamic-form-handling.service';
 import { ChartTableModal } from '../../modals/chart-table-modal/chart-table-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { ClearFormModalComponent } from "../../modals/clear-form-modal/clear-form-modal.component";
-
-declare var jQuery: any;
 
 @Component({
   selector: 'head-menu-widget',
@@ -18,6 +18,8 @@ declare var jQuery: any;
 })
 export class HeadMenuWidgetComponent extends ObjectLayoutWidget implements OnInit {
 
+  @ViewChild('tabset') tabset:NgbTabset; 
+
   constructor(public mappingProfileService: MappingProfilesService,
               public diagramCategoryService: DiagramCategoryService,
               public tabActivationStatusService: TabActivationStatusService,
@@ -26,7 +28,10 @@ export class HeadMenuWidgetComponent extends ObjectLayoutWidget implements OnIni
     super();
   }
 
-  ngOnInit() {}
+  ngOnInit()
+  {
+    this.tabActivationStatusService.tabset = this.tabset;
+  }
 
   public reset() {
     this.dynamicFormHandlingService.resetForm(this.formProperty.root);
@@ -41,4 +46,5 @@ export class HeadMenuWidgetComponent extends ObjectLayoutWidget implements OnIni
   applyChanges() {
     this.dynamicFormHandlingService.submitForm();
   }
+  
 }
