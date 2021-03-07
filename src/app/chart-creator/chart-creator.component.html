@@ -1,9 +1,13 @@
 <div class="container-fluid p-0" id="formContainer">
 
-    <div class="row no-gutters " *ngIf="!showSchemaObject ;else debugView">
-        <div class="col">
+    <div class="row no-gutters justify-content-center">
+        <div class="col order first">
             <sf-form #form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.customValidators" 
-            (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>
+                (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>  
+        </div>
+        <!-- Show schema form JSON if showSchemaObject env variable is set-->
+        <div *ngIf="showSchemaObject" class="col-md-auto order-last">
+            <pre> {{this.dynamicFormHandlingService.formSchemaObject | json}} </pre>
         </div>
     </div>
 
@@ -18,16 +22,3 @@
     </div> -->
 
 </div>
-
-<!-- Show schema form JSON -->
-<ng-template #debugView>
-    <div class="row no-gutters justify-content-center">
-        <div class="col-md-auto order-last">
-            <pre> {{this.dynamicFormHandlingService.formSchemaObject | json}} </pre>
-        </div>
-        <div class="col order first">
-            <sf-form #form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.customValidators" 
-                (onChange)="dynamicFormChanged($event)" (onErrorChange)="this.errorsChange($event)"></sf-form>  
-        </div>
-    </div>
-</ng-template>
