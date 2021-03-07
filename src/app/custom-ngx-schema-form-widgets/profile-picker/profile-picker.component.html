@@ -1,30 +1,34 @@
-
-<div *ngIf="this.profileInitialized" class="row">
-    <div class="ui basic center aligned container">
-    <div class="ui warning compact message" style="display: inline-block; margin-bottom: 2em;">
-        <p><i class="exclamation icon"></i>Choosing a new View will reset all your <b>Data</b> changes!</p>
+<div class="container">
+    <div *ngIf="this.profileInitialized" class="row justify-content-center align-content-center">
+        <ngb-alert [type]="'warning'" [dismissible]="false">
+            <p class="m-0"><i class="exclamation icon"></i>Choosing a new View will reset all your <b>Data</b> changes!</p>
+        </ngb-alert>
+        <!-- <div class="ui basic center aligned container">
+        <div class="ui warning compact message" style="display: inline-block; margin-bottom: 2em;">
+            <p><i class="exclamation icon"></i>Choosing a new View will reset all your <b>Data</b> changes!</p>
+        </div>
+        </div> -->
     </div>
-    </div>
-</div>
-<div class="row">
-    <div class="ui centered stackable cards">
-        <a *ngFor="let profile of (this.mappingProfileService.mappingProfiles$ | async )"
-        class="ui card" [ngStyle]="setSelectedCardStyle(isProfileSelected(profile))" 
-        (click)="cardButtonAction(profile)">
-            <div class="content">
-                <div class="header"><h2>{{profile.name}}</h2></div>
-                <div class="meta">{{profile.description}}</div>
-            </div>
-            <div class="content">
-                <div class="description">{{profile.usage}}</div>
-            </div>
-            <div class="extra content">
-                <div class="ui circular labels">
-                    <i class="users padded icon"></i> 
-                    <div *ngFor="let shareholder of profile.shareholders" class="ui horizontal  basic label">{{shareholder | titlecase}}</div>
+    <div class="row justify-content-center align-content-center">
+        <div class="ui centered stackable cards">
+            <a *ngFor="let profile of (this.mappingProfileService.mappingProfiles$ | async )"
+            class="ui card" [ngStyle]="setSelectedCardStyle(isProfileSelected(profile))" 
+            (click)="cardButtonAction(profile)">
+                <div class="content">
+                    <div class="header"><h2>{{profile.name}}</h2></div>
+                    <div class="meta">{{profile.description}}</div>
                 </div>
-            </div>
-            <button (click)="cardButtonAction(profile)" class="ui bottom attached primary button">Select</button>
-        </a>
+                <div class="content">
+                    <div class="description">{{profile.usage}}</div>
+                </div>
+                <div class="extra content">
+                    <div class="ui circular labels">
+                        <i class="users padded icon"></i> 
+                        <div *ngFor="let shareholder of profile.shareholders" class="ui horizontal  basic label">{{shareholder | titlecase}}</div>
+                    </div>
+                </div>
+                <button (click)="cardButtonAction(profile)" class="ui bottom attached primary button">Select</button>
+            </a>
+        </div>
     </div>
 </div>

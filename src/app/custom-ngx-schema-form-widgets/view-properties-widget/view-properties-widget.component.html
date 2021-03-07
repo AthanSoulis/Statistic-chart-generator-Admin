@@ -1,5 +1,5 @@
 
-<div class="ui field basic segment" *ngFor="let fieldId of formProperty.schema.fieldsets[0].fields">
+<div class="container-fluid p-4" *ngFor="let fieldId of formProperty.schema.fieldsets[0].fields">
   <sf-form-element [formProperty]="formProperty.getProperty(fieldId)"></sf-form-element>
 </div>
 
