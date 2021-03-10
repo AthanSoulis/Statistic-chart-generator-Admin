@@ -18,7 +18,7 @@ import { ClearFormModalComponent } from "../../modals/clear-form-modal/clear-for
 })
 export class HeadMenuWidgetComponent extends ObjectLayoutWidget implements OnInit {
 
-  @ViewChild('tabset') tabset:NgbTabset; 
+  @ViewChild('headTabset') tabset:NgbTabset; 
 
   constructor(public mappingProfileService: MappingProfilesService,
               public diagramCategoryService: DiagramCategoryService,

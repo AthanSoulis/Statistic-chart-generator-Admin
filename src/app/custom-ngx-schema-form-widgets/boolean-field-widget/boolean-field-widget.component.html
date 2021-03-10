@@ -5,13 +5,10 @@
       {{ schema.title }}
   </label>
   <div *ngIf="schema.type!='array'">
-      
-    <!-- TODO Boolean type input <sui-checkbox [formControl]="control" class="toggle" [name]="name"
-      [isDisabled]="schema.readonly"> {{schema.description}}
-    </sui-checkbox> -->
-    
-    <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" suiPopup popupPlacement="right"></i>
-      <!--TODO Popup Text for tooltip popupText={{this.schema.tooltip}} popupHeader={{this.schema.tooltipHeader}}></i> -->
-      
+    <label>
+      <input type="checkbox" [formControl]="control" [id]="id" [name]="name" [disabled]="schema.readonly" value>
+      {{schema.description}}
+      <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" placement="right" ngbTooltip="{{this.schema.tooltip}}"></i>
+    </label>
   </div>
 </div>

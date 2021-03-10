@@ -1,14 +1,12 @@
-<div class="row" style="padding: 0 2em">
-  <!-- TODO Tabset <sui-tabset> -->
-      <div class="ui secondary pointing menu">
-          <a class="item" style="font-size: 1.25em;" *ngFor="let fieldset of this.schema.fieldsets; let i = index">
-          <!-- TODO Tab Header [suiTabHeader]="i"> -->
-          {{ fieldset.tabTitle }}</a>
-      </div>
-      
-      <div class="ui basic segment" *ngFor="let fieldset of this.schema.fieldsets; let i = index; trackBy:trackByIndex">
-      <!-- TODO Tab Content [suiTabContent]="i"> -->
-          <sf-form-element [formProperty]="formProperty.getProperty(fieldset.fields[0])"></sf-form-element>
-      </div>
-  <!-- </sui-tabset> -->
-</div>
+<ngb-tabset type="tabs" [justify]="'center'" [destroyOnHide]="false">
+    <ngb-tab *ngFor="let fieldset of this.schema.fieldsets; let i = index; trackBy:trackByIndex">
+        <ng-template ngbTabTitle>
+            <div>{{ fieldset.tabTitle }}</div>
+        </ng-template>
+        <ng-template ngbTabContent>
+            <div class="container-fluid">
+                <sf-form-element [formProperty]="formProperty.getProperty(fieldset.fields[0])"></sf-form-element>
+            </div>
+        </ng-template>
+    </ngb-tab>
+</ngb-tabset>

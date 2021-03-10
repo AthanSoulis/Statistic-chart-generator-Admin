@@ -1,5 +1,5 @@
 <form>
-  <ngb-tabset type="tabs" [justify]="'justified'" #tabset="ngbTabset" [activeId]="'tab-data-view'" [destroyOnHide]="false">
+  <ngb-tabset type="tabs" [justify]="'justified'" #headTabset="ngbTabset" activeId="{{tabActivationStatusService.tabs[0]}}" [destroyOnHide]="false">
     <ngb-tab id="{{tabActivationStatusService.tabs[0]}}" [disabled]="!tabActivationStatusService.viewTabStatus">
       <ng-template ngbTabTitle>
         <div class="container-fluid no-gutters text-left">

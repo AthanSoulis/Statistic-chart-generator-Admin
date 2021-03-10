@@ -32,7 +32,7 @@ import { ChartLoadingService } from './services/chart-loading-service/chart-load
 import { ColorPickerModule } from 'ngx-color-picker';
 
 /* ng-bootstrap https://ng-bootstrap.github.io/ components */
-import { NgbPopoverModule, NgbModalModule, NgbTabsetModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPopoverModule, NgbModalModule, NgbTabsetModule, NgbAlertModule, NgbTooltipModule,NgbCheckBox, NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from 'ngx-schema-form';
 import { GeneralPropertiesWidgetComponent } from './custom-ngx-schema-form-widgets/general-properties-widget/general-properties-widget.component';
@@ -124,7 +124,9 @@ import { ClearFormModalComponent } from './modals/clear-form-modal/clear-form-mo
     NgbPopoverModule,
     NgbModalModule,
     NgbTabsetModule,
-    NgbAlertModule
+    NgbAlertModule,
+    NgbTooltipModule,
+    NgbButtonsModule
   ],
   entryComponents: [
     GeneralPropertiesWidgetComponent,

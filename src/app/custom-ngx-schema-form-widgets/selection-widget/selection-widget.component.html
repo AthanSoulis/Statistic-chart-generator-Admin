@@ -2,8 +2,7 @@
 (control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'">
 	<label [attr.for]="id" class="horizontal control-label">
 		{{ schema.title }}
-		<!-- TODO Tooltip <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" suiPopup popupPlacement="right"
-		popupText={{this.schema.tooltip}} popupHeader={{this.schema.tooltipHeader}}></i> -->
+		<i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" placement="right" ngbTooltip="{{this.schema.tooltip}}"></i> 
 	</label>
 	<span *ngIf="schema.description" class="formHelp">
 		{{schema.description}}
