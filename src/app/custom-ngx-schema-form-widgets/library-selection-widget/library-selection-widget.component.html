@@ -6,11 +6,11 @@
   <span *ngIf="schema.description" class="formHelp">
     {{schema.description}}
   </span>
-  <input *ngIf="schema.readOnly; else librarySelection" [attr.name]="name" type="hidden" [formControl]="control">
+  <input *ngIf="schema.readOnly; else librarySelection" [id]="id" [attr.name]="name" type="hidden" [formControl]="control">
   <ng-template #librarySelection>
-    <!--TODO Selection Dropdown <sui-select class="selection" [options]="availableLibraries" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly"
-      placeholder={{schema.placeholder}} #librarySelect>    
-      <sui-select-option *ngFor="let library of librarySelect.filteredOptions" [value]='library'></sui-select-option>
-    </sui-select> -->
+    <select class="custom-select" [id]="id" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly">
+      <option *ngIf="schema.placeholder" [label]="schema.placeholder" disabled></option>
+      <option *ngFor="let library of availableLibraries" [value]='library'>{{library}}</option>
+    </select>
   </ng-template>
 </div>
