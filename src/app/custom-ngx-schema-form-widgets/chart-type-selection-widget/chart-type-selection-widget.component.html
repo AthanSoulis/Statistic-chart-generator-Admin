@@ -10,24 +10,12 @@
   </span>
   <input *ngIf="schema.readOnly; else chartTypeSelection" [attr.name]="name" type="hidden" [formControl]="control">
   <ng-template #chartTypeSelection>
-
     <select class="custom-select" [formControl]="control"  [attr.name]="name"
     [attr.disabled]="schema.readOnly" [id]="id">
       <option *ngIf="schema.placeholder" [label]="schema.placeholder" disabled></option>
       <option *ngIf="!schema.placeholder" label="Select one" disabled></option>
       <option *ngFor="let option of supportedChartTypes" [value]="option">{{option | titlecase}}</option>
     </select>
-    <!--TODO Select Dropdown <sui-select class="selection" [formControl]="control"
-    [attr.name]="name" [attr.disabled]="schema.readOnly"
-                placeholder={{schema.placeholder}} 
-                [options]="supportedChartTypes"
-                [optionTemplate]="chartTypeOptionTemplate"
-                #chartTypeSelect>
-      <sui-select-option *ngFor="let chartType of chartTypeSelect.filteredOptions" [value]="chartType"></sui-select-option>
-    </sui-select> 
-    <ng-template let-option #chartTypeOptionTemplate>
-        {{ option| titlecase }}
-    </ng-template>-->
   </ng-template>
 </div>
 </div>

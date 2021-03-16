@@ -8,10 +8,7 @@
     <div class="field" *ngFor="let option of schema.oneOf" (click)="handleChange(option.enum[0])">
       <label>
         <input type="radio" [formControl]="control" [id]="id" [name]="name" [disabled]="schema.readonly" [readonly]="schema.readOnly" value="{{option.enum[0]}}">
-      {{schema.description}}</label>
-      <!-- TODO Radio Button : Check if it is done correctly
-        <sui-radio-button name="name" value="{{option.enum[0]}}" [formControl]="control"
-      [isDisabled]="schema.readOnly" [isReadonly]="schema.readOnly">{{option.description}}</sui-radio-button> -->
+        {{option.description}}</label>
     </div>
   </div>
 </div>

@@ -10,16 +10,10 @@
   </span>
   <input *ngIf="schema.readOnly; else entitySelection" [attr.name]="name" type="hidden" [formControl]="control">
   <ng-template #entitySelection>
-    <select [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly">
-      <option [value]="undefined" selected hidden>{{schema.placeholder}}</option>
+    <select class="custom-select" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly">
+      <option *ngIf="schema.placeholder" [label]="schema.placeholder" disabled></option>
+      <option *ngIf="!schema.placeholder" label="Select one" disabled></option>
       <option *ngFor="let entity of entities" [value]="entity">{{ entity | titlecase }}</option>
     </select>
-    <!-- TODO Select Dropdown <sui-select class="selection" [options]="entities" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly"
-      placeholder={{schema.placeholder}} [optionTemplate]="entityOptionTemplate" #entitySelect>    
-      <sui-select-option *ngFor="let entity of entitySelect.filteredOptions" [value]='entity'></sui-select-option>
-    </sui-select> 
-    <ng-template let-option #entityOptionTemplate>
-      {{ option | titlecase }}
-    </ng-template>-->
   </ng-template>
 </div>
