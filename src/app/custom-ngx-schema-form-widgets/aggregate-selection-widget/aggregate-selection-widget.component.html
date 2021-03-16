@@ -13,5 +13,11 @@
         placeholder={{schema.placeholder}} labelField="name" valueField="code" #aggregateSelect>    
         <sui-select-option *ngFor="let aggregate of aggregateSelect.filteredOptions" [value]="aggregate"></sui-select-option>
       </sui-select> -->
+      <select class="custom-select" *ngIf="schema.type!='array'" [formControl]="control"  [attr.name]="name"
+      [attr.disabled]="schema.readOnly" [id]="id">
+        <option *ngIf="schema.placeholder" [label]="schema.placeholder" disabled></option>
+        <option *ngIf="!schema.placeholder" label="Select one" disabled></option>
+        <option *ngFor="let option of aggregateFunctions" [value]="option.code">{{option.name}}</option>
+      </select>
     </ng-template>
   </div>

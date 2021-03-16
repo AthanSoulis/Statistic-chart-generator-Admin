@@ -8,17 +8,19 @@
 		{{schema.description}}
 	</span>
   
-  <!--TODO Selection Dropdown <sui-select *ngIf="schema.type!='array'" [options]="schema.oneOf" [formControl]="control"  [attr.name]="name"
-  [attr.disabled]="schema.readOnly" class="form-control selection" 
-  labelField="description" valueField="value" #customSelect>
-		<sui-select-option *ngFor="let option of customSelect.filteredOptions" [value]="option">{{option.description}}</sui-select-option>
-  </sui-select> -->
+	<select class="custom-select" *ngIf="schema.type!='array'" [formControl]="control"  [attr.name]="name"
+	[attr.disabled]="schema.readOnly" [id]="id">
+		<option *ngIf="schema.placeholder" [label]="schema.placeholder" disabled></option>
+		<option *ngIf="!schema.placeholder" label="Select one" disabled></option>
+		<option *ngFor="let option of schema.oneOf" [value]="option.value">{{option.description}}</option>
+	</select>
+	
+	<select multiple class="custom-select" *ngIf="schema.type==='array'" [formControl]="control"  [attr.name]="name"
+	[attr.disabled]="schema.readOnly" [size]="schema.size" [id]="id">
+		<option *ngIf="schema.placeholder" [label]="schema.placeholder" disabled></option>
+		<option *ngIf="!schema.placeholder" label="Select {{schema.size}}" disabled></option>
+		<option *ngFor="let option of schema.oneOf" [value]="option.value">{{option.description}}</option>
+	</select>
   
-  <!--TODO Multiple Selection Dropdown <sui-multi-select *ngIf="schema.type==='array'" multiple [options]="schema.items.oneOf" [formControl]="control" [attr.name]="name" 
-  [attr.disabled]="schema.readOnly" class="form-control selection" 
-  labelField="description" valueField="value" #customSelectArray>
-		<sui-select-option *ngFor="let option of customSelectArray.filteredOptions" [value]="option" >{{option.description}}</sui-select-option>
-	</sui-multi-select> -->
-  
-  <input *ngIf="schema.readOnly" [attr.name]="name" type="hidden" [formControl]="control">
+  <input *ngIf="schema.readOnly" [attr.name]="name" type="hidden" [formControl]="control" [id]="id">
 </div>

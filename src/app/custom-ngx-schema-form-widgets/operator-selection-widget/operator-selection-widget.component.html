@@ -8,6 +8,12 @@
   </span>
   <input *ngIf="schema.readOnly; else operatorSelection" [attr.name]="name" type="hidden" [formControl]="control">
   <ng-template #operatorSelection>
+    <select class="custom-select" *ngIf="schema.type!='array'" [formControl]="control"  [attr.name]="name"
+    [attr.disabled]="schema.readOnly" [id]="id">
+      <option *ngIf="schema.placeholder" [label]="schema.placeholder" disabled></option>
+      <option *ngIf="!schema.placeholder" label="Select one" disabled></option>
+      <option *ngFor="let option of (operators | async)" [value]="option.filterOperator">{{option.filterName}}</option>
+    </select>
     <!--TODO Select Dropdown <sui-select class="selection" style="min-width: 5em !important" [options]="operators | async"
           [formControl]="control" [attr.name]="name" 
           [attr.disabled]="schema.readOnly" placeholder={{schema.placeholder}}
