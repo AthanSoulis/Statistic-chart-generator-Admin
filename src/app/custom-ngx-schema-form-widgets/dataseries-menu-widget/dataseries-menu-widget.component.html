@@ -1,12 +1,63 @@
-<div class="row">
-    <!--TODO the whole tabset <sui-tabset > -->
-    <div>
+    <ngb-tabset type="tabs" orientation="vertical" [destroyOnHide]="false" class="d-flex">
+        <ngb-tab *ngFor="let itemProperty of formProperty.properties; let i = index; trackBy:trackByIndex" [id]="i">
+            <ng-template ngbTabTitle>
+                <div class="container-fluid">
+
+                    <div *ngIf="editable[i]; else notEditable">
+                        <input autoFocus type="text" (blur)="disableEditable(i)"
+                        [value]="getDataSeriesName(i) | async" (change)="setDataSeriesName(i, $event.target.value)">
+                    </div>
+                    <!-- TODO pressing enter to stop editing opens the Clear modal. This happens because the focus must be on that element -->
+                    <ng-template #notEditable>
+                        <h4 (dblclick)="enableEditable(i)" style="word-break: break-all; padding-left: 0; padding-right: 0"
+                        class="ui center aligned item"> {{getDataSeriesName(i) | async}} </h4>
+                    </ng-template>
+                    
+                    <!-- TODO Deleting refreshes the page ??? -->
+                    <button class="mini fluid compact ui icon basic bottom attached button" *ngIf="menuArrayLength > 1"
+                        [ngbPopover]="deleteDataseriesPrompt" #deletePrompt="ngbPopover" triggers="manual" [autoClose]="'outside'"
+                        (click)="deletePrompt.open()">
+                        
+                        <i class="close icon"></i>
+
+                        <ng-template let-popup #deleteDataseriesPrompt>
+                            <div class="ui center aligned grid">
+                            <div class="column">
+                                <h5 class="ui header">Deleting {{getDataSeriesName(i) | async}}</h5>
+                                <p>Are you sure ?</p>
+                                <div class="buttons">
+                                    <button class="ui tiny compact positive button" (click)="removeItem(i)">Yes</button>
+                                    <button class="ui tiny compact negative button" (click)="deletePrompt.close()">No</button>
+                                </div>
+                            </div>
+                            </div>
+                        </ng-template>
+                    </button>
+                </div>
+            </ng-template>
+            <ng-template ngbTabContent>
+                <div class="container-fluid no-gutters">
+                    <sf-form-element [formProperty]="itemProperty"></sf-form-element>
+                  </div>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab [disabled]="true" id="dataseries-add-action">
+            <ng-template ngbTabTitle>
+                <div class="pointer-events-auto">
+                    <!--TODO Adding data does not change the tab to latest created tab-->
+                    <button type="button" class="btn btn-primary" (click)="addItem()">Add Data</button>
+                </div>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+    <!-- ----------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- <div> --
     <div class="ui two column fluid grid ">
       <div class="two wide column">
           <div class="ui secondary vertical fluid pointing menu" >
             <div class="ui centered grid link item"
             *ngFor="let itemProperty of formProperty.properties; let i = index">
-            <!-- TODO Tab functionality [suiTabHeader]="i" [isActive]="active[i]" (isActiveChange)="onActiveTabChange($event,i)"> -->
+            <!-- TODO Tab functionality [suiTabHeader]="i" [isActive]="active[i]" (isActiveChange)="onActiveTabChange($event,i)"> --
                 <div class="ui center aligned basic segment" >
 
                     <div *ngIf="editable[i]; else notEditable">
@@ -32,7 +83,7 @@
                     </ng-template>
                     <button class="mini fluid compact ui icon basic bottom attached button" *ngIf="menuArrayLength > 1">
                         <!-- TODO suiPopup [popupTemplate]="deleteDataseriesPrompt"
-                        popupTrigger="outsideClick" [popupPlacement]="'top'" [popupBasic]="'true'"> -->
+                        popupTrigger="outsideClick" [popupPlacement]="'top'" [popupBasic]="'true'"> --
                         
                         <i class="close icon"></i>
                     </button>
@@ -47,11 +98,12 @@
       
       <div class="fourteen wide stretched column">
         <div class="ui tab" *ngFor="let itemProperty of formProperty.properties; let i = index; trackBy:trackByIndex" >
-        <!-- TODO Show Tab content [suiTabContent]="i"> -->
+        <!-- TODO Show Tab content [suiTabContent]="i"> --
             <sf-form-element [formProperty]="itemProperty"></sf-form-element>
         </div>
       </div>
     </div>
-    <!-- </sui-tabset> -->
+    <!-- </sui-tabset> --
     </div>
 </div>
+<!--  -->

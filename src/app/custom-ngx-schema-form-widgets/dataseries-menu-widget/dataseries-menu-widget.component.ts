@@ -1,3 +1,4 @@
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover.module';
 import { Component, OnInit, AfterContentInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ArrayLayoutWidget } from 'ngx-schema-form';
 import { FormProperty } from 'ngx-schema-form/lib/model/formproperty';
