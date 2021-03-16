@@ -1,15 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 /* @import '~angular-tree-component/dist/angular-tree-component.css'; */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import "../node_modules/bootstrap/scss/mixins";
-@import "../node_modules/bootstrap/scss/functions";
-@import "../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
 
 // Introduces much bigger loading times. TODO after development to decide which icons we use and discard this import
-@import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
-
-$color-openaire-main-blue: #222080;
-$color-openaire-main-danger: #dc3545;
+@import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+@import "variables.scss";
 
 .Site
 {

@@ -1,6 +1,7 @@
+@import "../../../styles/variables";
+
 .destructive-action
 {
     font-weight: bold;
-    // color: $color-openaire-main-danger;
-    color: #dc3545;
+    color: $color-openaire-main-danger;
 }

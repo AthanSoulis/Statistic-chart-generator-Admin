@@ -24,12 +24,13 @@
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/scss",
-                "node_modules/@material"
+                "node_modules/@material",
+                "src/styles"
               ]
             },
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.scss"
+              "src/styles/styles.scss"
             ],
             "scripts": [
 
@@ -113,15 +114,23 @@
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [
-              
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
             "assets": [
               "src/assets",
               "src/ARC.ico"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/scss",
+                "node_modules/@material",
+                "src/styles"
+              ]
+            },
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles/styles.scss"
+            ],
+            "scripts": [
+              
             ]
           }
         },
