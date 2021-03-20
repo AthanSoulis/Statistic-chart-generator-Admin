@@ -1,46 +1,44 @@
+import { DataseriesTabService } from './dataseries-tab.service';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover.module';
-import { Component, OnInit, AfterContentInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterContentInit, ChangeDetectorRef, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { ArrayLayoutWidget } from 'ngx-schema-form';
 import { FormProperty } from 'ngx-schema-form/lib/model/formproperty';
 import { Observable, Subscription, of } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
+import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'dataseries-menu-widget',
   templateUrl: './dataseries-menu-widget.component.html',
   styleUrls: ['./dataseries-menu-widget.component.scss']
 })
-export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements AfterContentInit, OnDestroy {
+export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements AfterContentInit, OnDestroy, OnInit {
 
-  active: boolean[] = [];
-  editable: boolean[] = [];
+  @ViewChild('dataseriesTabset') dataseriesTabset:NgbTabset;
+
   subscriptions: Subscription[] = [];
 
-  constructor(private cdr: ChangeDetectorRef, private loadingService: ChartLoadingService) {
+  constructor(private cdr: ChangeDetectorRef, private loadingService: ChartLoadingService, protected dataseriesTabService: DataseriesTabService) 
+  {
     super();
-   }
+  }
 
-  ngAfterContentInit() {
-
-    this.addItem();
-
+  ngOnInit() {
     this.subscriptions.push(this.formProperty.valueChanges.
       pipe(distinctUntilChanged()).subscribe(
       (value: FormProperty[]) => {
 
-        if (value.length === 0) {
-          this.active = [true];
-        }
         if (this.loadingService.chartLoadingStatus) {
-          this.active = new Array<boolean>(value.length);
-          this.active[0] = true;
-          for (let index = 1; index < this.active.length; index++) {
-            this.active[index] = false;
-          }
+          this.dataseriesTabService.active = new Array<boolean>(value.length).fill(false);
+          this.dataseriesTabService.active[0] = true;
         }
       }
     ));
+  }
+
+  ngAfterContentInit() {
+    // this.addItem();
   }
 
   ngOnDestroy() {
@@ -49,18 +47,13 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
     });
   }
 
-  onActiveTabChange(value: boolean, index: number) {
-    // console.log('[' + index + ']:' + value);
-    this.active[index] = value;
-  }
-
   enableEditable(index: number) {
     console.log('Edit enabled', index);
-    this.editable[index] = true;
+    this.dataseriesTabService.editable[index] = true;
   }
   disableEditable(index: number) {
     console.log('Edit disabled', index);
-    this.editable[index] = false;
+    this.dataseriesTabService.editable[index] = false;
   }
 
   get menuArrayLength(): number {
@@ -79,40 +72,49 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
 
   addItem() {
     if ( this.schema.maxItems === undefined || (<FormProperty[]>this.formProperty.properties).length < this.schema.maxItems) {
-      const addedItem = this.formProperty.addItem().searchProperty((this.menuArrayLength - 1) + '/chartProperties/dataseriesName');
-
+      let addedItemId: number = this.menuArrayLength-1;
+      const addedItem = this.formProperty.addItem().searchProperty(addedItemId + '/chartProperties/dataseriesName');
+      
       // Make sure the addedItem name is unique
-      const itemNames: string[]  = [];
-      for (let i = 0; i < this.menuArrayLength - 1; i++) {
-        itemNames.push((<string>(<FormProperty[]>this.formProperty.properties)[i]
-        .searchProperty(i + '/chartProperties/dataseriesName').value));
-      }
-
-      const similarItemNames = itemNames.filter(
-        itemname => itemname.match(
-          new RegExp(addedItem.value + '(\([1-9]+\))*', 'g')));
-
       let dif = 0;
+      const regExpToMatch = new RegExp(addedItem.value + '(\([1-9]+\))*', 'g');
       let newItemName: string = addedItem.value;
-      while (similarItemNames.includes(newItemName)) {
+      (<FormProperty[]>this.formProperty.properties).forEach(property => {
+        let dataseriesName: string = property.searchProperty('*/chartProperties/dataseriesName').value
+        if(dataseriesName.match(regExpToMatch))
+        {
           dif++;
           newItemName = addedItem.value + '(' + dif + ')';
-      }
+        }
+      });
+      // for (let i = 0; i < this.menuArrayLength - 1; i++) {
+      //   let dataseriesName: string = (<string>(<FormProperty[]>this.formProperty.properties)[i].searchProperty(i + '/chartProperties/dataseriesName').value);
+      //   if(dataseriesName.match(regExpToMatch))
+      //   {
+      //     dif++;
+      //     newItemName = addedItem.value + '(' + dif + ')';
+      //   }
+      // }
       addedItem.setValue(newItemName, false);
 
       // Set initial values to the input box
-      this.editable.push(false);
-      this.active.push(true);
+      this.dataseriesTabService.editable.push(false);
+      this.dataseriesTabService.active.push(true);
+      this.dataseriesTabService.dataseriesTabIds.push(addedItemId.toString())
+      this.dataseriesTabset.select(this.dataseriesTabService.dataseriesTabIds[addedItemId.toString()]);
+      console.log("Added an Item!");
     }
   }
 
   removeItem(index: number) {
     if ( this.menuArrayLength > 1 || index > 0) {
 
-      const activeIndex = this.active.indexOf(true);
+      const activeIndex = this.dataseriesTabService.active.indexOf(true);
       this.formProperty.removeItem(this.formProperty.properties[index]);
-      this.editable.splice(index);
-      this.active.splice(index);
+      this.dataseriesTabService.editable.splice(index);
+      this.dataseriesTabService.active.splice(index);
+
+      this.dataseriesTabset.select(this.dataseriesTabService.dataseriesTabIds[index-1]);
 
       this.cdr.markForCheck();
     }

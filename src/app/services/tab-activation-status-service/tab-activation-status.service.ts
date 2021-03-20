@@ -18,7 +18,6 @@ export class TabActivationStatusService {
   public set tabset(tabset: NgbTabset)
   {
       this._tabset = tabset;
-      console.log(this._tabset);
   }
 
   public get viewTabStatus(): boolean { return this.steps[0]; }

@@ -1,9 +1,12 @@
-    <ngb-tabset type="tabs" orientation="vertical" [destroyOnHide]="false" class="d-flex">
+    <pre>{{dataseriesTabService.dataseriesTabIds | json}}</pre>
+    <pre>{{dataseriesTabService.active | json}}</pre>
+    <pre>{{dataseriesTabService.editable | json}}</pre>
+    <ngb-tabset #dataseriesTabset="ngbTabset" type="tabs" orientation="vertical" [destroyOnHide]="false" class="d-flex">
         <ngb-tab *ngFor="let itemProperty of formProperty.properties; let i = index; trackBy:trackByIndex" [id]="i">
             <ng-template ngbTabTitle>
                 <div class="container-fluid">
 
-                    <div *ngIf="editable[i]; else notEditable">
+                    <div *ngIf="dataseriesTabService.isEditable[i]; else notEditable">
                         <input autoFocus type="text" (blur)="disableEditable(i)"
                         [value]="getDataSeriesName(i) | async" (change)="setDataSeriesName(i, $event.target.value)">
                     </div>
@@ -41,6 +44,7 @@
                   </div>
             </ng-template>
         </ngb-tab>
+        <!--TODO Handle this last Tab-->
         <ngb-tab [disabled]="true" id="dataseries-add-action">
             <ng-template ngbTabTitle>
                 <div class="pointer-events-auto">
