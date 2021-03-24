@@ -5,17 +5,19 @@ import { Injectable } from '@angular/core';
 })
 export class DataseriesTabService {
 
-  // 1-1 relation to the FormProperty[] showing which index is active and which is not
-  active: boolean[] = [true];
-  // 1-1 relation to the FormProperty[] showing which index is editable and which is not
-  editable: boolean[] = [false];
+  dataseriesTabs: DataseriesTabStatus[];
 
-  dataseriesTabIds: string[] = ['0'];
-
-  constructor() { }
+  constructor() { this.dataseriesTabs=[]; }
 
   public isEditable(index: number): boolean
-  {
-    return this.editable[index];
-  }
+  { return this.dataseriesTabs[index].editable;}
+
+  public setEditable(index: number, editable: boolean)
+  { this.dataseriesTabs[index].editable = editable;}
+}
+
+interface DataseriesTabStatus {
+  
+  active: boolean
+  editable: boolean
 }
