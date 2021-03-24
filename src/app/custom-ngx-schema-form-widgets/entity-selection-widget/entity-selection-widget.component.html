@@ -8,12 +8,13 @@
   <span *ngIf="schema.description" class="formHelp">
     {{schema.description}}
   </span>
-  <input *ngIf="schema.readOnly; else entitySelection" [attr.name]="name" type="hidden" [formControl]="control">
-  <ng-template #entitySelection>
-    <select class="custom-select" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly">
+  <select *ngIf="!schema.readOnly; else readOnly"
+     class="custom-select" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly">
       <option *ngIf="schema.placeholder" [label]="schema.placeholder" disabled></option>
       <option *ngIf="!schema.placeholder" label="Select one" disabled></option>
       <option *ngFor="let entity of entities" [value]="entity">{{ entity | titlecase }}</option>
-    </select>
+  </select>
+  <ng-template #readOnly>
+    <input [attr.name]="name" type="hidden" [formControl]="control">  
   </ng-template>
 </div>

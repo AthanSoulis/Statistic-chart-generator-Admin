@@ -1,18 +1,19 @@
-import { Component, AfterViewInit, Injectable, OnChanges, SimpleChanges, AfterContentInit, OnDestroy, forwardRef, Inject, OnInit, Output, EventEmitter, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, AfterViewInit, Injectable, OnChanges, SimpleChanges, AfterContentInit, OnDestroy, forwardRef, Inject, OnInit, Output, EventEmitter, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
 import { DbSchemaService } from '../../services/db-schema-service/db-schema.service';
 import { BehaviorSubject, Observable, Subscription, of } from 'rxjs';
-import { MappingProfilesService } from '../../services/mapping-profiles-service/mapping-profiles.service';
-import { distinctUntilChanged, filter, catchError } from 'rxjs/operators';
+import { MappingProfilesService, Profile } from '../../services/mapping-profiles-service/mapping-profiles.service';
+import { distinctUntilChanged, filter, catchError, retry } from 'rxjs/operators';
 import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
 import { ErrorHandlerService } from '../../services/error-handler-service/error-handler.service';
 import { ArrayProperty } from 'ngx-schema-form/lib/model/arrayproperty';
-import { PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
+import { PropertyGroup, FormProperty } from 'ngx-schema-form/lib/model/formproperty';
 
 @Component({
   selector: 'entity-selection-widget',
   templateUrl: './entity-selection-widget.component.html',
   styleUrls: ['./entity-selection-widget.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntitySelectionWidgetComponent extends ControlWidget implements OnInit, AfterContentInit, OnDestroy {
 
@@ -26,8 +27,10 @@ export class EntitySelectionWidgetComponent extends ControlWidget implements OnI
   constructor(private dbSchemaService: DbSchemaService,
     private mappingProfileService: MappingProfilesService,
     private chartLoadingService: ChartLoadingService,
-    private errorHandler: ErrorHandlerService) {
+    private errorHandler: ErrorHandlerService,
+    private cdr: ChangeDetectorRef) {
     super();
+      
   }
 
   ngOnInit() {
@@ -40,62 +43,18 @@ export class EntitySelectionWidgetComponent extends ControlWidget implements OnI
     this.valueChangesSubscription = this.formProperty.valueChanges.pipe(distinctUntilChanged()).subscribe(
       (data) => {
 
-        if (!this.chartLoadingService.chartLoadingStatus) {
-          // Reset xAxis GroupBy
-          (<PropertyGroup[]> xAxisData.properties).forEach(
-            (groupBy: PropertyGroup) => groupBy.reset(null, false)
-          );
-          // Reset Filter Rules
-          (<PropertyGroup[]> filters.properties).forEach(
-            (filterGroup: PropertyGroup) => {
-              const filterRules: ArrayProperty = filterGroup.getProperty('groupFilters');
-              (<PropertyGroup[]> filterRules.properties).forEach(
-                (filterRule: PropertyGroup) => filterRule.reset(null, false)
-              );
-            }
-          );
-        }});
+        if (this.chartLoadingService.chartLoadingStatus)
+          return;
+        
+        // Reset xAxis GroupBy
+        this.resetXAxisGroupBy(xAxisData);
+        // Reset Filter Rules
+        this.resetDataseriesFilterRules(filters);
+      });
 
     // Subscribe to the mappingProfileService in order to get notified of any mapping profile changes
     this.mappingProfileServiceSubscription = this.mappingProfileService.selectedProfile$
-    .subscribe(profile => {
-
-      // We want to avoid certain functionality when a chart is Loading
-      // so notify that this Dataseries is loading
-      if (this.chartLoadingService.chartLoadingStatus) {
-        this.chartLoadingService.increaseLoadingObs();
-      }
-
-      this.dbSchemaServiceSubscription = this.dbSchemaService.getAvailableEntities(profile)
-      .pipe(
-      distinctUntilChanged(),
-      catchError(
-        err => {
-          this.errorHandler.handleError(err);
-          return of([]);
-      }))
-      .subscribe(
-        // success path
-        (data: Array<string>) => {
-
-          // Reset the entity when a profile changes and its not loading a chart
-          if (!this.chartLoadingService.chartLoadingStatus) {
-            this.formProperty.reset(null, false);
-          } else {
-            // We want to avoid certain functionality when a chart is Loading
-            // so notify that this Dataseries stopped loading
-            this.chartLoadingService.decreaseLoadingObs();
-          }
-          // Get a hold of the new entities
-          this.entities = data;
-        },
-        () => {
-          if ( this.dbSchemaServiceSubscription ) {
-            this.dbSchemaServiceSubscription.unsubscribe();
-          }
-        }
-      );
-    });
+    .subscribe(profile => this.handleProfileChange(profile));
   }
 
   ngOnDestroy() {
@@ -108,4 +67,51 @@ export class EntitySelectionWidgetComponent extends ControlWidget implements OnI
   }
 
   ngAfterContentInit() {}
+
+  resetXAxisGroupBy(xAxisData: ArrayProperty)
+  {
+    (<PropertyGroup[]> xAxisData.properties).forEach(
+      (groupBy: PropertyGroup) => groupBy.reset(null, false)
+    );
+  }
+  
+  resetDataseriesFilterRules(filters: ArrayProperty)
+  {
+    (<PropertyGroup[]> filters.properties).forEach(
+      (filterGroup: PropertyGroup) => {
+        const filterRules: ArrayProperty = filterGroup.getProperty('groupFilters');
+        
+        (<PropertyGroup[]> filterRules.properties).forEach(
+          (filterRule: PropertyGroup) => filterRule.reset(null, false));
+      });
+  }
+  handleProfileChange(profile: Profile)
+  {
+    // We want to avoid certain functionality when a chart is Loading so notify that this Dataseries is loading
+    if (this.chartLoadingService.chartLoadingStatus)
+      this.chartLoadingService.increaseLoadingObs();
+
+    this.dbSchemaServiceSubscription = this.dbSchemaService.getAvailableEntities(profile)
+    .pipe(distinctUntilChanged(),
+          catchError(err => { this.errorHandler.handleError(err); return of([]); })
+      )
+    .subscribe(
+      // success path
+      (data: Array<string>) => {
+        
+        // We want to avoid certain functionality when a chart is Loading so notify that this Dataseries stopped loading
+        // When its not loading a chart and a profile change Reset the entity when a profile changes and its not loading a chart
+        if (this.chartLoadingService.chartLoadingStatus)
+          this.chartLoadingService.decreaseLoadingObs();
+        else
+          this.formProperty.reset(null, false);
+        
+        // Populate the entities field
+        this.entities = data;
+
+        // Let Angular know that the entities have changed
+        this.cdr.markForCheck();
+      },
+      () => { if ( this.dbSchemaServiceSubscription )  this.dbSchemaServiceSubscription.unsubscribe(); });
+  }
 }
