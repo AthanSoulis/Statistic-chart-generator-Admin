@@ -1,4 +1,4 @@
-import { Filter, FilterGroup } from '../form-components/query-filter-selector/query-filter/query-filter.model';
+import { Filter, FilterGroup } from './query-filter.model';
 import { DataseriesFormSchema, DataFormSchema } from './chart-form-schema.classes';
 
 export class Query {

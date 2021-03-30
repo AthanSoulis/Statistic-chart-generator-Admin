@@ -13,9 +13,7 @@ import { ChartFrameComponent } from './data-frames/chart-frame/chart-frame.compo
 import { TableFrameComponent } from './data-frames/table-frame/table-frame.component';
 import { SelectAttributeComponent } from './form-components/select-attribute/select-attribute.component';
 import { ChartCreatorComponent } from './chart-creator/chart-creator.component';
-import { QueryFilterSelectorComponent } from './form-components/query-filter-selector/query-filter-selector.component';
-import { QueryFilterComponent } from './form-components/query-filter-selector/query-filter/query-filter.component';
-import { AutocompleteInputFieldComponent } from './form-components/query-filter-selector/query-filter/autocomplete-input-field/autocomplete-input-field.component';
+import { AutocompleteInputFieldComponent } from './form-components/autocomplete-input-field/autocomplete-input-field.component';
 
 import { SupportedLibrariesService } from './services/supported-libraries-service/supported-libraries.service';
 import { DbSchemaService } from './services/db-schema-service/db-schema.service';
@@ -32,7 +30,8 @@ import { ChartLoadingService } from './services/chart-loading-service/chart-load
 import { ColorPickerModule } from 'ngx-color-picker';
 
 /* ng-bootstrap https://ng-bootstrap.github.io/ components */
-import { NgbPopoverModule, NgbModalModule, NgbTabsetModule, NgbAlertModule, NgbTooltipModule,NgbCheckBox, NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPopoverModule, NgbModalModule, NgbTabsetModule, NgbAlertModule,
+  NgbTooltipModule,NgbCheckBox,NgbButtonsModule,NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from 'ngx-schema-form';
 import { GeneralPropertiesWidgetComponent } from './custom-ngx-schema-form-widgets/general-properties-widget/general-properties-widget.component';
@@ -77,8 +76,6 @@ import { DataseriesTabService } from './custom-ngx-schema-form-widgets/dataserie
     RawChartDataFrameComponent,
     RawDataFrameComponent,
     ChartCreatorComponent,
-    QueryFilterSelectorComponent,
-    QueryFilterComponent,
     SelectAttributeComponent,
     AutocompleteInputFieldComponent,
     GeneralPropertiesWidgetComponent,
@@ -127,7 +124,8 @@ import { DataseriesTabService } from './custom-ngx-schema-form-widgets/dataserie
     NgbTabsetModule,
     NgbAlertModule,
     NgbTooltipModule,
-    NgbButtonsModule
+    NgbButtonsModule,
+    NgbDropdownModule
   ],
   entryComponents: [
     GeneralPropertiesWidgetComponent,

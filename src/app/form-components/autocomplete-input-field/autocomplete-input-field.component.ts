@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Observable, of, fromEvent, Subscription } from 'rxjs';
 import { map, filter, debounceTime, tap, switchAll, distinctUntilChanged } from 'rxjs/operators';
-import { FieldAutocompleteService, AutocompleteResponse } from '../../../../services/field-autocomplete-service/field-autocomplete.service';
+import { FieldAutocompleteService, AutocompleteResponse } from '../../services/field-autocomplete-service/field-autocomplete.service';
 import { FormControl } from '@angular/forms';
 
 @Component({
