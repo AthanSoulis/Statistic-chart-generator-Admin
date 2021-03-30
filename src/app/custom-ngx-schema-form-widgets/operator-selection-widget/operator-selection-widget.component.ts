@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit, OnDestroy, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, AfterContentInit, OnDestroy, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
 import { SupportedFilterTypesService, FilterType, FieldType } from '../../services/supported-filter-types-service/supported-filter-types.service';
 import { FieldNode } from '../../services/db-schema-service/db-schema.service';
@@ -18,7 +18,7 @@ export class OperatorSelectionWidgetComponent extends ControlWidget implements O
 
   private entityFieldSub: Subscription;
 
-  constructor(private operatorsService: SupportedFilterTypesService) {
+  constructor(private operatorsService: SupportedFilterTypesService, private cdr: ChangeDetectorRef) {
     super();
    }
 
@@ -58,6 +58,8 @@ export class OperatorSelectionWidgetComponent extends ControlWidget implements O
       // Reset the operator
       this.control.setValue(null);
 
+      // Let Angular know that the entities have changed
+      this.cdr.markForCheck();
     } else if ( field.name !== this.selectedField.name) {
       this.selectedField = field;
     }
