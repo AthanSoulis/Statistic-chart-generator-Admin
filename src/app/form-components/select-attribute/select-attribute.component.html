@@ -1,63 +1,77 @@
 <div class="simple segment">
-    <!--TODO Selection Dropdown this is replaced by below
-      <div class="ui fluid selection dropdown" suiDropdown (isOpenChange)="this._onTouched($event)" [isDisabled]="isDisabled"> -->
-    <input class="ui fluid selection dropdown" suiDropdown (isOpenChange)="this._onTouched($event)" [disabled]="isDisabled">
 
-    <div *ngIf="this.checkValidFieldNode(selectedNode) !== null; else nullSelectedField">
-      <div class="ui breadcrumb" #selectedFieldLength *ngFor="let field of selectedNode.name.split('.'); let i = index">
-        <div *ngIf="i !== selectedNode.name.split('.').length - 1 ; else activeField">
-          <span class="section">{{field | titlecase}}</span>
-          <div class="divider"> > </div>
+  <div class="ui fluid selection" *ngIf="isDisabled; else activeDropdown">
+      <div *ngIf="this.checkValidFieldNode(selectedNode) !== null; else nullSelectedField">
+        <div class="ui breadcrumb" #selectedFieldLength *ngFor="let field of selectedNode.name.split('.'); let i = index">
+          <div *ngIf="i !== selectedNode.name.split('.').length - 1 ; else activeField">
+            <span class="section">{{field | titlecase}}</span>
+            <div class="divider"> > </div>
+          </div>
+          <ng-template #activeField>
+            <span class="active section">{{field | titlecase}}</span>
+          </ng-template>
         </div>
-        <ng-template #activeField>
-          <span class="active section">{{field | titlecase}}</span>
-        </ng-template>
       </div>
-    </div>
-    <ng-template #nullSelectedField>
-      <div class="default text">Select Entity Field</div>
-    </ng-template>
-    <i class="dropdown icon"></i>
+      <ng-template #nullSelectedField>
+        <div class="default text">Select Entity Field</div>
+      </ng-template>
+  </div>
 
-    <div class="menu" suiDropdownMenu>
-    <div class="item">
-    <div class="mat-app-background basic-container">
-
-      <mat-tree [dataSource]="nestedEntityDataSource" [treeControl]="nestedEntityTreeControl" class="data-tree ui link list" >
-
-        <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
-          <div class="item">
-            <div class="mat-tree-node  header" id="data-tree-entity-field"
-            matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
-            
-              <button type="button" id="data-tree-button" class="ui compact icon button" mat-icon-button>
-                <mat-icon class="mat-icon-rtl-mirror">
-                  {{nestedEntityTreeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                </mat-icon>
-              </button>
-              {{node.name | titlecase}}
+  <ng-template #activeDropdown>
+    <div class="ui fluid selection" id="attributeDropdownMenu"  ngbDropdown (openChange)="this._onTouched($event)" autoClose="'inside'">
+      <span ngbDropdownToggle>
+        <div *ngIf="this.checkValidFieldNode(selectedNode) !== null; else nullSelectedField">
+          <div class="ui breadcrumb" #selectedFieldLength *ngFor="let field of selectedNode.name.split('.'); let i = index">
+            <div *ngIf="i !== selectedNode.name.split('.').length - 1 ; else activeField">
+              <span class="section">{{field | titlecase}}</span>
+              <div class="divider"> > </div>
             </div>
-            <div class="ui fitted divider"></div>
+            <ng-template #activeField>
+              <span class="active section">{{field | titlecase}}</span>
+            </ng-template>
           </div>
-      
-          <div class="ui link list" [class.data-tree-invisible]="!nestedEntityTreeControl.isExpanded(node)">
-          <div class="content">
-            <div *ngFor="let field of node.fields; trackBy:trackByFieldName; let first = first" >
-              <a class="mat-tree-node item" (click)="nodeSelected(field, node)" style="padding-inline-start: 1em">
-                {{field.name | titlecase}}
-              </a>
-              <div class="ui fitted divider"></div>
-            </div>
+        </div>
+        <ng-template #nullSelectedField>
+          <div class="default text">Select Entity Field</div>
+        </ng-template>
+      </span>
+
+      <div ngbDropdownMenu>
+        <div class="mat-app-background basic-container">
+          <mat-tree [dataSource]="nestedEntityDataSource" [treeControl]="nestedEntityTreeControl" class="data-tree ui link list" >
+            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
+              <div class="item">
+                <div class="mat-tree-node  header" id="data-tree-entity-field"
+                matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+                
+                  <button type="button" id="data-tree-button" class="ui compact icon button" mat-icon-button>
+                    <mat-icon class="mat-icon-rtl-mirror">
+                      {{nestedEntityTreeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                    </mat-icon>
+                  </button>
+                  {{node.name | titlecase}}
+                </div>
+                <div class="ui fitted divider"></div>
+              </div>
           
-            <ng-container matTreeNodeOutlet></ng-container>
-          </div>
-          </div>
+              <div class="ui link list" [class.data-tree-invisible]="!nestedEntityTreeControl.isExpanded(node)">
+              <div class="content">
+                <div *ngFor="let field of node.fields; trackBy:trackByFieldName; let first = first" >
+                  <a class="mat-tree-node item" (click)="nodeSelected(field, node)" style="padding-inline-start: 1em">
+                    {{field.name | titlecase}}
+                  </a>
+                  <div class="ui fitted divider"></div>
+                </div>
+              
+                <ng-container matTreeNodeOutlet></ng-container>
+              </div>
+              </div>
 
-        </mat-nested-tree-node>
-      </mat-tree>
+            </mat-nested-tree-node>
+          </mat-tree>
+        </div>
+      </div>
 
     </div>
-    </div>
-    </div>
-  <!-- </div> -->
+  </ng-template>
 </div>
