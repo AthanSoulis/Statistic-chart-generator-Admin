@@ -3,12 +3,10 @@ import { SCGAFormSchema } from '../../chart-creator/chart-form-schema.classes';
 import { FormProperty } from 'ngx-schema-form/lib/model/formproperty';
 import { BehaviorSubject, forkJoin, of } from 'rxjs';
 import { DiagramCreator } from './dynamic-form-handling-diagram-creator';
-import { SupportedLibrariesService } from '../supported-libraries-service/supported-libraries.service';
 import { ChartExportingService } from '../chart-exporting-service/chart-exporting.service';
 import { ChartLoadingService } from '../chart-loading-service/chart-loading.service';
 import { DiagramCategoryService } from '../diagram-category-service/diagram-category.service';
 import {FormSchema} from '../../chart-creator/chart-form-schema.model';
-
 @Injectable({
   providedIn: 'root'
 })
