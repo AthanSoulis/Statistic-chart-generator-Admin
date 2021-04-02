@@ -15,7 +15,7 @@ import { NgbTabset, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 })
 export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements AfterViewInit, OnDestroy, OnInit {
 
-  @ViewChild('dataseriesTabset') dataseriesTabset:NgbTabset;
+  @ViewChild('dataseriesTabset', {static: false}) dataseriesTabset:NgbTabset;
 
   subscriptions: Subscription[] = [];
 

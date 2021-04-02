@@ -15,9 +15,9 @@ import { ClearFormModalComponent } from "../../modals/clear-form-modal/clear-for
   styleUrls: ['./head-menu-widget.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeadMenuWidgetComponent extends ObjectLayoutWidget implements OnInit {
+export class HeadMenuWidgetComponent extends ObjectLayoutWidget implements AfterViewInit {
 
-  @ViewChild('headTabset') tabset:NgbTabset; 
+  @ViewChild('headTabset', {static: false}) tabset:NgbTabset; 
 
   constructor(public mappingProfileService: MappingProfilesService,
               public diagramCategoryService: DiagramCategoryService,
@@ -27,8 +27,9 @@ export class HeadMenuWidgetComponent extends ObjectLayoutWidget implements OnIni
     super();
   }
 
-  ngOnInit()
+  ngAfterViewInit()
   {
+    super.ngAfterViewInit();
     this.tabActivationStatusService.tabset = this.tabset;
   }
 

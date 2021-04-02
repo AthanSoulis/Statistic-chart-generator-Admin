@@ -8,7 +8,7 @@ import { UrlProviderService } from '../../services/url-provider-service/url-prov
 })
 export class RawDataFrameComponent implements OnInit, OnChanges {
 
-    @ViewChild('rawDataIframe') iframe: ElementRef;
+    @ViewChild('rawDataIframe',{static:true}) iframe: ElementRef;
     @Input() rawData: Object;
     frameUrl: SafeResourceUrl;
 
@@ -21,8 +21,8 @@ export class RawDataFrameComponent implements OnInit, OnChanges {
     ngOnInit() {
         this.frameHeight = (3 * window.outerHeight) / 5;
 
-        const iframe = <HTMLIFrameElement>document.getElementById('rawDataIframe');
-        if ( iframe ) {
+        // const iframe = <HTMLIFrameElement>document.getElementById('rawDataIframe');
+        if ( this.iframe.nativeElement ) {
             window.addEventListener('message',
                 (event: any) => {
 
@@ -33,7 +33,7 @@ export class RawDataFrameComponent implements OnInit, OnChanges {
                     }
 
                     // console.log('Table:', event);
-                    iframe.style.height = event.data + 'px';
+                    this.iframe.nativeElement.style.height = event.data + 'px';
                 });
         }
     }

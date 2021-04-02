@@ -18,7 +18,7 @@ export class AutocompleteInputFieldComponent implements OnInit, AfterViewInit, O
   // The selected field for the current filter
   @Input() filterfield: string;
   // Dom element for the autocomplete
-  @ViewChild('autoInputField') valueInput: ElementRef;
+  @ViewChild('autoInputField', {static: false}) valueInput: ElementRef;
 
   possibleFieldValues: Observable<Array<string>>;
   numberOfpossibleFieldValues: number;

@@ -12,7 +12,7 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover.module';
 })
 export class AppComponent implements OnInit {
 
-  @ViewChild(ChartCreatorComponent) childChartCreator: ChartCreatorComponent;
+  @ViewChild(ChartCreatorComponent, {static: false}) childChartCreator: ChartCreatorComponent;
 
   chartModel: Object;
   loadedChartFile: File = null;

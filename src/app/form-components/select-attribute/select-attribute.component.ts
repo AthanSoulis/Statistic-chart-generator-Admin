@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, forwardRef, OnChanges, SimpleChanges, AfterViewInit, ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, OnChanges, SimpleChanges, AfterViewInit, ChangeDetectorRef, OnDestroy, OnInit, ViewRef } from '@angular/core';
 import { FormGroup, ControlContainer, FormGroupDirective, FormBuilder, FormGroupName, ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource, MatTreeNodeOutlet } from '@angular/material/tree';
@@ -11,7 +11,6 @@ import { map, distinctUntilChanged } from 'rxjs/operators';
 import { ErrorHandlerService } from '../../services/error-handler-service/error-handler.service';
 import { MappingProfilesService, Profile } from '../../services/mapping-profiles-service/mapping-profiles.service';
 import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
-import { ViewRef_ } from '@angular/core/src/view';
 
 @Component({
   selector: 'select-attribute',
@@ -166,7 +165,7 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
     console.log('Updating DOM from model value: ', value);
     if (this.checkValidFieldNode(value)) {
       this.selectedFieldChanged(value);
-      if ( this.cdr !== null && this.cdr !== undefined && !(this.cdr as ViewRef_).destroyed ) {
+      if ( this.cdr !== null && this.cdr !== undefined && !(this.cdr as ViewRef).destroyed ) {
             this.cdr.markForCheck();
       }
     }

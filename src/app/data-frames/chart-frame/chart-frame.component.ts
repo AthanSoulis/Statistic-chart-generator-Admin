@@ -10,7 +10,7 @@ import { UrlProviderService } from '../../services/url-provider-service/url-prov
 })
 export class ChartFrameComponent implements OnInit, OnChanges {
 
-  @ViewChild('chartFrame')
+  @ViewChild('chartFrame', {static: false})
   private chartFrameRef: ElementRef;
 
   @Input() chart: Object;

@@ -9,7 +9,7 @@ import { UrlProviderService } from '../../services/url-provider-service/url-prov
 })
 export class TableFrameComponent implements OnInit, OnChanges {
 
-  @ViewChild('tableIframe') iframe: ElementRef;
+  @ViewChild('tableIframe', {static:true}) iframe: ElementRef;
   @Input() table: Object;
   frameUrl: SafeResourceUrl;
 
@@ -23,7 +23,7 @@ export class TableFrameComponent implements OnInit, OnChanges {
     this.frameHeight = (3 * window.outerHeight) / 5;
 
     const iframe = <HTMLIFrameElement>document.getElementById('tableIframe');
-    if ( iframe ) {
+    if ( this.iframe.nativeElement ) {
       window.addEventListener('message',
       (event: any) => {
 
@@ -34,7 +34,7 @@ export class TableFrameComponent implements OnInit, OnChanges {
         }
 
         // console.log('Table:', event);
-        iframe.style.height = event.data + 'px';
+        this.iframe.nativeElement.style.height = event.data + 'px';
       });
     }
   }
