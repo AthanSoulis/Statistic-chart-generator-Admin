@@ -40,10 +40,10 @@ export class RawChartDataFrameComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
 
-        const stringObj = JSON.stringify(changes.rawData.currentValue);
+        const stringObj = JSON.stringify(changes.rawChartData.currentValue);
         console.log('[raw-chart-data-frame.component] On changes: ' + stringObj);
 
-        if (changes.rawData.currentValue) {
+        if (changes.rawChartData.currentValue) {
             this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/chart/json?json=' + encodeURIComponent(stringObj));
             console.log(this.frameUrl);
         } else {
