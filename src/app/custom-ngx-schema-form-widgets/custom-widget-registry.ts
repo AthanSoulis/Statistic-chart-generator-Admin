@@ -25,7 +25,9 @@ import { CategoryPropertiesWidgetComponent } from './category-properties-widget/
 import { DiagramCategoryPickerComponent } from './diagram-category-picker/diagram-category-picker.component';
 import { FilterArrayWidgetComponent } from './filter-array-widget/filter-array-widget.component';
 import { TabularMenuWidgetComponent } from './tabular-menu-widget/tabular-menu-widget.component';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class CustomWidgetRegistry extends DefaultWidgetRegistry {
   constructor() {
     super();
