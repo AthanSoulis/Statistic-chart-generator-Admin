@@ -20,6 +20,7 @@
     "@angular/compiler": "^9.1.13",
     "@angular/core": "^9.1.13",
     "@angular/forms": "^9.1.13",
+    "@angular/localize": "^9.0.0",
     "@angular/material": "^7.3.7",
     "@angular/platform-browser": "^9.1.13",
     "@angular/platform-browser-dynamic": "^9.1.13",
@@ -34,12 +35,11 @@
     "jexl": "^2.1.1",
     "ngx-color-picker": "^7.1.0",
     "ngx-schema-form": "~2.5.11",
-    "node": "^10.23.2",
     "rxjs": "^6.6.7",
     "rxjs-tslint": "^0.1.8",
     "tslib": "^1.9.0",
-    "typescript": "~3.8.3",
-    "z-schema": "^3.23.0",
+    "typescript": "~3.7.5",
+    "z-schema": "^4.2.2",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
