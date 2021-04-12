@@ -1,114 +1,103 @@
 <form>
-  <ngb-tabset type="tabs" [justify]="'justified'" #headTabset="ngbTabset" activeId="{{tabActivationStatusService.tabs[0]}}" [destroyOnHide]="false">
-    <ngb-tab id="{{tabActivationStatusService.tabs[0]}}" [disabled]="!tabActivationStatusService.viewTabStatus">
-      <ng-template ngbTabTitle>
-        <div class="container-fluid no-gutters text-left">
-          <div class="row">
-            <div class="col-2 p-0">
-              <svg class="h-100 bi bi-people-fill w-fill-available mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
-                <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
-              </svg>  
-            </div>
-            <div class="col-10 p-0">
-              <h4>{{this.formProperty.schema.fieldsets[0].title}}</h4>
-              <div>{{this.formProperty.schema.fieldsets[0].description}}</div>
-            </div>
+  <nav ngbNav #headNav="ngbNav" class="nav nav-tabs nav-justified" [destroyOnHide]="false" [(activeId)]="tabActivationStatusService.activeId">
+    <ng-container [ngbNavItem]="tabActivationStatusService.tabIds[0]" >
+      <a class="container-fluid no-gutters text-left" ngbNavLink>
+        <div class="row">
+          <div class="col-2 p-0">
+            <svg class="h-100 bi bi-people-fill w-fill-available mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+              <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+              <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+            </svg>  
           </div>
-          <div class="row text-center">
-            <div class="col" *ngIf="(mappingProfileService.selectedProfile$ | async) !== null && (mappingProfileService.selectedProfile$ | async) !== undefined">
-                <b>{{(mappingProfileService.selectedProfile$ | async).name}} </b>
-                <span *ngFor="let shareholder of (mappingProfileService.selectedProfile$ | async).shareholders">{{shareholder}}</span>
-            </div>
+          <div class="col-10 p-0">
+            <h4>{{this.formProperty.schema.fieldsets[0].title}}</h4>
+            <div>{{this.formProperty.schema.fieldsets[0].description}}</div>
           </div>
         </div>
-      </ng-template>
-      <ng-template ngbTabContent>
+        <div class="row text-center">
+          <div class="col" *ngIf="(mappingProfileService.selectedProfile$ | async) !== null && (mappingProfileService.selectedProfile$ | async) !== undefined">
+              <b>{{(mappingProfileService.selectedProfile$ | async).name}} </b>
+              <span *ngFor="let shareholder of (mappingProfileService.selectedProfile$ | async).shareholders">{{shareholder}}</span>
+          </div>
+        </div>
+      </a>
+      <ng-template ngbNavContent>
         <div class="container-fluid">
           <sf-form-element [formProperty]="formProperty.getProperty(formProperty.schema.fieldsets[0].fields[0])"></sf-form-element>
         </div>
       </ng-template>
-    </ngb-tab>
-    <ngb-tab id="{{tabActivationStatusService.tabs[1]}}" [disabled]="((mappingProfileService.selectedProfile$ | async) === null || (mappingProfileService.selectedProfile$ | async) === undefined)">
-      <ng-template ngbTabTitle>
-        <div class="container-fluid no-gutters text-left">
-          <div class="row">
-            <div class="col-2 p-0">
-              <svg class="h-100 bi bi-bar-chart-line-fill w-fill-available mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"  viewBox="0 0 16 16">
-                <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
-              </svg>
-            </div>
-            <div class="col-10 p-0">
-              <h4>{{this.formProperty.schema.fieldsets[1].title}}</h4>
-              <div>{{this.formProperty.schema.fieldsets[1].description}}</div>
-            </div>
+    </ng-container>
+    <ng-container [ngbNavItem]="tabActivationStatusService.tabIds[1]" [disabled]="((mappingProfileService.selectedProfile$ | async) === null || (mappingProfileService.selectedProfile$ | async) === undefined)">
+      <a class="container-fluid no-gutters text-left" ngbNavLink>
+        <div class="row">
+          <div class="col-2 p-0">
+            <svg class="h-100 bi bi-bar-chart-line-fill w-fill-available mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"  viewBox="0 0 16 16">
+              <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+            </svg>
           </div>
-          <div class="row text-center">
-            <div class="col" *ngIf="(this.diagramCategoryService.selectedDiagramCategory$ | async) !== null && (this.diagramCategoryService.selectedDiagramCategory$ | async) !== undefined">
-              <b>{{(this.diagramCategoryService.selectedDiagramCategory$ | async) | titlecase}} Diagram</b>
-            </div>
+          <div class="col-10 p-0">
+            <h4>{{this.formProperty.schema.fieldsets[1].title}}</h4>
+            <div>{{this.formProperty.schema.fieldsets[1].description}}</div>
           </div>
         </div>
-      </ng-template>
-      <ng-template ngbTabContent>
+        <div class="row text-center">
+          <div class="col" *ngIf="(this.diagramCategoryService.selectedDiagramCategory$ | async) !== null && (this.diagramCategoryService.selectedDiagramCategory$ | async) !== undefined">
+            <b>{{(this.diagramCategoryService.selectedDiagramCategory$ | async) | titlecase}} Diagram</b>
+          </div>
+        </div>
+      </a>
+      <ng-template ngbNavContent>
         <div class="container-fluid">
           <sf-form-element [formProperty]="formProperty.getProperty(formProperty.schema.fieldsets[1].fields[0])"></sf-form-element>
         </div>
       </ng-template>
-    </ngb-tab>
-    <ngb-tab id="{{tabActivationStatusService.tabs[2]}}"
-            [disabled]="((mappingProfileService.selectedProfile$ | async) === null || (mappingProfileService.selectedProfile$ | async) === undefined) ||
-                    (this.diagramCategoryService.selectedDiagramCategory$ | async) === null || (this.diagramCategoryService.selectedDiagramCategory$ | async) === undefined">
-      <ng-template ngbTabTitle>
-        <div class="container-fluid no-gutters text-left">
-          <div class="row">
-            <div class="col-2 p-0">
-              <svg class="h-100 bi bi-server w-fill-available mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M1.333 2.667C1.333 1.194 4.318 0 8 0s6.667 1.194 6.667 2.667V4c0 1.473-2.985 2.667-6.667 2.667S1.333 5.473 1.333 4V2.667z"/>
-                <path d="M1.333 6.334v3C1.333 10.805 4.318 12 8 12s6.667-1.194 6.667-2.667V6.334c-.43.32-.931.58-1.458.79C11.81 7.684 9.967 8 8 8c-1.967 0-3.81-.317-5.21-.876a6.508 6.508 0 0 1-1.457-.79z"/>
-                <path d="M14.667 11.668c-.43.319-.931.578-1.458.789-1.4.56-3.242.876-5.209.876-1.967 0-3.81-.316-5.21-.876a6.51 6.51 0 0 1-1.457-.79v1.666C1.333 14.806 4.318 16 8 16s6.667-1.194 6.667-2.667v-1.665z"/>
-              </svg>
-            </div>
-            <div class="col-10 p-0">
-              <h4>{{this.formProperty.schema.fieldsets[2].title}}</h4>
-              <div>{{this.formProperty.schema.fieldsets[2].description}}</div>
-            </div>
+    </ng-container>
+    <ng-container [ngbNavItem]="tabActivationStatusService.tabIds[2]" [disabled]="((mappingProfileService.selectedProfile$ | async) === null || (mappingProfileService.selectedProfile$ | async) === undefined) ||
+    (this.diagramCategoryService.selectedDiagramCategory$ | async) === null || (this.diagramCategoryService.selectedDiagramCategory$ | async) === undefined">
+      <a class="container-fluid no-gutters text-left" ngbNavLink>
+        <div class="row">
+          <div class="col-2 p-0">
+            <svg class="h-100 bi bi-server w-fill-available mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M1.333 2.667C1.333 1.194 4.318 0 8 0s6.667 1.194 6.667 2.667V4c0 1.473-2.985 2.667-6.667 2.667S1.333 5.473 1.333 4V2.667z"/>
+              <path d="M1.333 6.334v3C1.333 10.805 4.318 12 8 12s6.667-1.194 6.667-2.667V6.334c-.43.32-.931.58-1.458.79C11.81 7.684 9.967 8 8 8c-1.967 0-3.81-.317-5.21-.876a6.508 6.508 0 0 1-1.457-.79z"/>
+              <path d="M14.667 11.668c-.43.319-.931.578-1.458.789-1.4.56-3.242.876-5.209.876-1.967 0-3.81-.316-5.21-.876a6.51 6.51 0 0 1-1.457-.79v1.666C1.333 14.806 4.318 16 8 16s6.667-1.194 6.667-2.667v-1.665z"/>
+            </svg>
+          </div>
+          <div class="col-10 p-0">
+            <h4>{{this.formProperty.schema.fieldsets[2].title}}</h4>
+            <div>{{this.formProperty.schema.fieldsets[2].description}}</div>
           </div>
         </div>
-      </ng-template>
-      <ng-template ngbTabContent>
+      </a>
+      <ng-template ngbNavContent>
         <div class="container-fluid">
           <sf-form-element [formProperty]="formProperty.getProperty(formProperty.schema.fieldsets[2].fields[0])"></sf-form-element>
         </div>
       </ng-template>
-    </ngb-tab>
-    <ngb-tab id="{{tabActivationStatusService.tabs[3]}}" 
-            [disabled]="((mappingProfileService.selectedProfile$ | async) === null || (mappingProfileService.selectedProfile$ | async) === undefined) ||
-            (this.diagramCategoryService.selectedDiagramCategory$ | async) === null || (this.diagramCategoryService.selectedDiagramCategory$ | async) === undefined">
-      <ng-template ngbTabTitle>
-        <div class="container-fluid no-gutters text-left">
-          <div class="row">
-            <div class="col-2 p-0">
-              <svg class="h-100 bi bi-brush-fill w-fill-available mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M15.825.12a.5.5 0 0 1 .132.584c-1.53 3.43-4.743 8.17-7.095 10.64a6.067 6.067 0 0 1-2.373 1.534c-.018.227-.06.538-.16.868-.201.659-.667 1.479-1.708 1.74a8.117 8.117 0 0 1-3.078.132 3.658 3.658 0 0 1-.563-.135 1.382 1.382 0 0 1-.465-.247.714.714 0 0 1-.204-.288.622.622 0 0 1 .004-.443c.095-.245.316-.38.461-.452.393-.197.625-.453.867-.826.094-.144.184-.297.287-.472l.117-.198c.151-.255.326-.54.546-.848.528-.739 1.2-.925 1.746-.896.126.007.243.025.348.048.062-.172.142-.38.238-.608.261-.619.658-1.419 1.187-2.069 2.175-2.67 6.18-6.206 9.117-8.104a.5.5 0 0 1 .596.04z"/>
-              </svg>
-            </div>
-            <div class="col-10 p-0">
-              <h4>{{this.formProperty.schema.fieldsets[3].title}}</h4>
-              <div>{{this.formProperty.schema.fieldsets[3].description}}</div>
-            </div>
+    </ng-container>
+    <ng-container [ngbNavItem]="tabActivationStatusService.tabIds[3]" [disabled]="((mappingProfileService.selectedProfile$ | async) === null || (mappingProfileService.selectedProfile$ | async) === undefined) ||
+    (this.diagramCategoryService.selectedDiagramCategory$ | async) === null || (this.diagramCategoryService.selectedDiagramCategory$ | async) === undefined">
+      <a class="container-fluid no-gutters text-left" ngbNavLink>
+        <div class="row">
+          <div class="col-2 p-0">
+            <svg class="h-100 bi bi-brush-fill w-fill-available mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M15.825.12a.5.5 0 0 1 .132.584c-1.53 3.43-4.743 8.17-7.095 10.64a6.067 6.067 0 0 1-2.373 1.534c-.018.227-.06.538-.16.868-.201.659-.667 1.479-1.708 1.74a8.117 8.117 0 0 1-3.078.132 3.658 3.658 0 0 1-.563-.135 1.382 1.382 0 0 1-.465-.247.714.714 0 0 1-.204-.288.622.622 0 0 1 .004-.443c.095-.245.316-.38.461-.452.393-.197.625-.453.867-.826.094-.144.184-.297.287-.472l.117-.198c.151-.255.326-.54.546-.848.528-.739 1.2-.925 1.746-.896.126.007.243.025.348.048.062-.172.142-.38.238-.608.261-.619.658-1.419 1.187-2.069 2.175-2.67 6.18-6.206 9.117-8.104a.5.5 0 0 1 .596.04z"/>
+            </svg>
+          </div>
+          <div class="col-10 p-0">
+            <h4>{{this.formProperty.schema.fieldsets[3].title}}</h4>
+            <div>{{this.formProperty.schema.fieldsets[3].description}}</div>
           </div>
         </div>
-      </ng-template>
-      <ng-template ngbTabContent>
+      </a>
+      <ng-template ngbNavContent>
         <div class="container-fluid">
           <sf-form-element [formProperty]="formProperty.getProperty(formProperty.schema.fieldsets[3].fields[0])"></sf-form-element>
         </div>
       </ng-template>
-    </ngb-tab>
-    <ngb-tab [disabled]="true" id="tab-form-actions">
-      <ng-template ngbTabTitle>
+    </ng-container>
+    <ng-container ngbNavItem [disabled]="true" id="tab-form-actions">
         <div class="pointer-events-auto d-flex align-items-stretch btn-group" role="group" aria-label="Form Actions">
           <button type="button" class="btn btn-primary" [disabled]="!this.dynamicFormHandlingService.isFormValid"
           (click)="applyChanges()">
@@ -122,7 +111,7 @@
             </svg><span>Clear</span>
           </button>
         </div>
-      </ng-template>
-    </ngb-tab>
-  </ngb-tabset>
+    </ng-container>
+  </nav>
+  <div [ngbNavOutlet]="headNav" class="mt-2"></div>
 </form>

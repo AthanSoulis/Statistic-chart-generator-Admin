@@ -1,71 +1,71 @@
 <div class="content">
-  <ngb-tabset [destroyOnHide]="false">
+  <nav ngbNav #nav="ngbNav" class="nav nav-tabs nav-justified" [destroyOnHide]="false">
     <!-- Diagram -->
-    <ngb-tab *ngIf="dynamicFormHandlingService.isxAxisRequired">
-      <ng-template ngbTabTitle><span class="item" style="font-size: 1.25em;">Diagram</span></ng-template>
-      <ng-template ngbTabContent>
-        <div class="ui basic segment">
-          <chart-frame [chart]="this.modalContext.chartObj"></chart-frame>
-        </div>
-        <div class="actions">
-          <i class="big linkify icon" style="vertical-align: inherit;"></i>
-          <div class="ui basic big label" style="max-width: 20em">  
-            <a *ngIf="dynamicFormHandlingService.isxAxisRequired" class="url-holder" style="cursor: pointer; color: #1e70bf"
-            target="_blank" rel="noopener noreferrer" href="{{chartExportingService.chartTinyUrl$ | async}}">{{chartExportingService.chartTinyUrl$ | async}}</a>
+    <ng-container ngbNavItem *ngIf="dynamicFormHandlingService.isxAxisRequired">
+        <a class="nav-link" ngbNavLink><span style="font-size: 1.25em;">Diagram</span></a>
+        <ng-template ngbNavContent>
+          <div class="ui basic segment">
+            <chart-frame [chart]="this.modalContext.chartObj"></chart-frame>
           </div>
-        </div>
-      </ng-template>
-    </ngb-tab>
+          <div class="actions">
+            <i class="big linkify icon" style="vertical-align: inherit;"></i>
+            <div class="ui basic big label" style="max-width: 20em">  
+              <a class="url-holder" style="cursor: pointer; color: #1e70bf" target="_blank" rel="noopener noreferrer" 
+              href="{{chartExportingService.chartTinyUrl$ | async}}">{{chartExportingService.chartTinyUrl$ | async}}</a>
+            </div>
+          </div>
+        </ng-template>
+    </ng-container>
     <!-- Table -->
-    <ngb-tab *ngIf="dynamicFormHandlingService.isxAxisRequired">
-      <ng-template ngbTabTitle><span class="item" style="font-size: 1.25em;">Table</span></ng-template>
-      <ng-template ngbTabContent>
+    <ng-container ngbNavItem *ngIf="dynamicFormHandlingService.isxAxisRequired">
+      <a class="nav-link" ngbNavLink><span style="font-size: 1.25em;">Table</span></a>
+      <ng-template ngbNavContent>
         <div class="ui basic segment">
           <table-frame [table]="this.modalContext.tableObj"></table-frame>
         </div>
         <div class="actions">
           <i class="big linkify icon" style="vertical-align: inherit;"></i>
           <div class="ui basic big label" style="max-width: 20em">  
-            <a *ngIf="dynamicFormHandlingService.isxAxisRequired" class="url-holder" style="cursor: pointer; color: #1e70bf"
-            target="_blank" rel="noopener noreferrer" href="{{chartExportingService.tableTinyUrl$ | async}}">{{chartExportingService.tableTinyUrl$ | async}}</a>
+            <a class="url-holder" style="cursor: pointer; color: #1e70bf" target="_blank" rel="noopener noreferrer" 
+            href="{{chartExportingService.tableTinyUrl$ | async}}">{{chartExportingService.tableTinyUrl$ | async}}</a>
           </div>
         </div>
       </ng-template>
-    </ngb-tab>
+    </ng-container>
     <!-- Raw Chart Data -->
-    <ngb-tab *ngIf="dynamicFormHandlingService.isxAxisRequired">
-      <ng-template ngbTabTitle><span class="item" style="font-size: 1.25em;">Raw Chart Data</span></ng-template>
-      <ng-template ngbTabContent>
+    <ng-container ngbNavItem *ngIf="dynamicFormHandlingService.isxAxisRequired">
+      <a class="nav-link" ngbNavLink><span style="font-size: 1.25em;">Raw Chart Data</span></a>
+      <ng-template ngbNavContent>
         <div class="ui basic segment">
           <raw-chart-data-frame [rawChartData]="this.modalContext.rawChartDataObj"></raw-chart-data-frame>
         </div>
         <div class="actions">
           <i class="big linkify icon" style="vertical-align: inherit;"></i>
           <div class="ui basic big label" style="max-width: 20em">  
-            <a *ngIf="dynamicFormHandlingService.isxAxisRequired" class="url-holder" style="cursor: pointer; color: #1e70bf"
-               target="_blank" rel="noopener noreferrer" href="{{chartExportingService.rawChartDataTinyUrl$ | async}}">{{chartExportingService.rawChartDataTinyUrl$
-                | async}}</a>
+            <a class="url-holder" style="cursor: pointer; color: #1e70bf" target="_blank" rel="noopener noreferrer" 
+            href="{{chartExportingService.rawChartDataTinyUrl$ | async}}">{{chartExportingService.rawChartDataTinyUrl$ | async}}</a>
           </div>
         </div>
       </ng-template>
-    </ngb-tab>
+    </ng-container>
     <!-- Raw Data -->
-    <ngb-tab *ngIf="dynamicFormHandlingService.isxAxisRequired">
-      <ng-template ngbTabTitle><span class="item" style="font-size: 1.25em;">Raw Data</span></ng-template>
-      <ng-template ngbTabContent>
+    <ng-container ngbNavItem>
+      <a class="nav-link" ngbNavLink><span style="font-size: 1.25em;">Raw Data</span></a>
+      <ng-template ngbNavContent>
         <div class="ui basic segment">
           <raw-data-frame [rawData]="this.modalContext.rawDataObj"></raw-data-frame>
         </div>
         <div class="actions">
           <i class="big linkify icon" style="vertical-align: inherit;"></i>
           <div class="ui basic big label" style="max-width: 20em">  
-            <a class="url-holder" style="cursor: pointer; color: #1e70bf"
-               target="_blank" rel="noopener noreferrer" href="{{chartExportingService.rawDataTinyUrl$ | async}}">{{chartExportingService.rawDataTinyUrl$
-              | async}}</a>
+            <a class="url-holder" style="cursor: pointer; color: #1e70bf" target="_blank" rel="noopener noreferrer" 
+            href="{{chartExportingService.rawDataTinyUrl$ | async}}">{{chartExportingService.rawDataTinyUrl$ | async}}</a>
           </div>
         </div>
       </ng-template>
-    </ngb-tab>
-  </ngb-tabset>
+    </ng-container>
+  </nav>
+
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
 </div>
 

@@ -1,11 +1,11 @@
 import { DataseriesTabService } from './dataseries-tab.service';
-import { Component, OnInit, AfterContentInit, ChangeDetectorRef, OnDestroy, ViewChild, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, ViewChild, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { ArrayLayoutWidget } from 'ngx-schema-form';
 import { FormProperty } from 'ngx-schema-form/lib/model/formproperty';
 import { Observable, Subscription, of } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
-import { NgbTabset, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'dataseries-menu-widget',
@@ -15,7 +15,7 @@ import { NgbTabset, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 })
 export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements AfterViewInit, OnDestroy, OnInit {
 
-  @ViewChild('dataseriesTabset', {static: false}) dataseriesTabset:NgbTabset;
+  @ViewChild('nav', {static: false}) dataseriesMenu:NgbNav;
 
   subscriptions: Subscription[] = [];
 
@@ -108,20 +108,27 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
       addedItemDataseriesNameProperty.setValue(newItemName, false);
       console.log("Added an Item!");
       
-      this.dataseriesTabset.select(newItemName);
+      this.dataseriesMenu.select(addedItemId);
       this.cdr.markForCheck();
     }
   }
 
-  removeItem(index: number) {
+  removeItem(index: number, $event: Event) {
 
     if ( this.menuArrayLength <= 1 || index < 0)
       return;
 
+    var newActiveId = this.dataseriesMenu.activeId-1 < 0 ? 0 : this.dataseriesMenu.activeId-1 ;
+      
     this.formProperty.removeItem(this.formProperty.properties[index]);
     this.dataseriesTabService.dataseriesTabs.splice(index);
+    // The $event.preventDefault() is a workaround to stop web-app reloading
+    // https://github.com/ng-bootstrap/ng-bootstrap/issues/1909 
+    $event.preventDefault();
+    $event.stopImmediatePropagation();
 
     this.cdr.markForCheck();
+    this.dataseriesMenu.select(newActiveId);
   }
 
   trackByIndex(index: number, item: any) {

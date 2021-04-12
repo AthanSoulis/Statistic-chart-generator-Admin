@@ -1,8 +1,8 @@
-<ngb-tabset #dataseriesTabset="ngbTabset" type="tabs" orientation="vertical" [destroyOnHide]="false" class="d-flex">
-    <ngb-tab *ngFor="let itemProperty of formProperty.properties; let i = index; trackBy:trackByIndex" [attr.id]="getDataSeriesName(i) | async">
-        <ng-template ngbTabTitle>
+<div class="d-flex">
+    <ul ngbNav #nav="ngbNav"  class="nav-tabs" orientation="vertical" [destroyOnHide]="false">
+        <li [ngbNavItem]="i" *ngFor="let itemProperty of formProperty.properties; let i = index; trackBy:trackByIndex" [attr.id]="getDataSeriesName(i) | async">
+            <a ngbNavLink>
             <div class="container-fluid">
-
                 <div *ngIf="dataseriesTabService.isEditable[i]; else notEditable">
                     <input autoFocus type="text" (blur)="disableEditable(i)"
                     [value]="getDataSeriesName(i) | async" (change)="setDataSeriesName(i, $event.target.value)">
@@ -13,7 +13,7 @@
                     class="ui center aligned item"> {{getDataSeriesName(i) | async}} </h4>
                 </ng-template>
 
-                <button class="mini fluid compact ui icon basic bottom attached button" *ngIf="menuArrayLength > 1"
+                <button *ngIf="menuArrayLength > 1" class="mini fluid compact ui icon basic bottom attached button" 
                 [ngbPopover]="deleteDataseriesPrompt" #deletePrompt="ngbPopover" triggers="manual" [autoClose]="'outside'"
                 (click)="deletePrompt.open()">
                     <ng-template let-popup #deleteDataseriesPrompt>
@@ -22,9 +22,7 @@
                             <h5 class="ui header">Deleting {{getDataSeriesName(i) | async}}</h5>
                             <p>Are you sure ?</p>
                             <div class="buttons">
-                                <!-- The $event.preventDefault() is a workaround to stop web-app reloading caused by NgbTabset
-                                    https://github.com/ng-bootstrap/ng-bootstrap/issues/1909 -->
-                                <button class="ui tiny compact positive button" (click)="$event.preventDefault(); removeItem(i)">Yes</button>
+                                <button class="ui tiny compact positive button" (click)="removeItem(i, $event)">Yes</button>
                                 <button class="ui tiny compact negative button" (click)="deletePrompt.close()">No</button>
                             </div>
                         </div>
@@ -33,20 +31,19 @@
                     <i class="close icon"></i>
                 </button>
             </div>
-        </ng-template>
-        <ng-template ngbTabContent>
-            <div class="container-fluid no-gutters">
-                <sf-form-element [formProperty]="itemProperty"></sf-form-element>
+            </a>
+            <ng-template ngbNavContent>
+                <div class="container-fluid no-gutters">
+                    <sf-form-element [formProperty]="itemProperty"></sf-form-element>
                 </div>
-        </ng-template>
-    </ngb-tab>
-    <!--TODO Handle this last Tab-->
-    <ngb-tab [disabled]="true" id="dataseries-add-action">
-        <ng-template ngbTabTitle>
+            </ng-template>
+        </li>
+        <li class="nav-item" ngbNavItem="dataseries-add-action" [disabled]="true">
             <div class="pointer-events-auto">
-                <!--TODO Adding data does not change the tab to latest created tab-->
                 <button type="button" class="btn btn-primary" (click)="addItem()">Add Data</button>
             </div>
-        </ng-template>
-    </ngb-tab>
-</ngb-tabset>
+        </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav" class="ml-4"></div>
+</div>

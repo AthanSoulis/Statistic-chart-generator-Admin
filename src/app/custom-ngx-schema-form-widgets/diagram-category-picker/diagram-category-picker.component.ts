@@ -47,7 +47,7 @@ export class DiagramCategoryPickerComponent extends ControlWidget implements Car
   diagramSelectionAction(diagram: string) {
 
     // Changes active tab to the next
-    this.tabActivationStatusService.dataseriesTabStatus = true;
+    this.tabActivationStatusService.activeId = this.tabActivationStatusService.tabIds[2];
 
     if ( this.formProperty.value !== diagram ) {
       this.formProperty.setValue(diagram, false);

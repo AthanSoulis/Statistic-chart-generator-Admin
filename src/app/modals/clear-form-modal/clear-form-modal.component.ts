@@ -35,7 +35,8 @@ export class ClearFormModalComponent implements OnInit {
     if(!(this.formRoot === null || this.formRoot === undefined))
     {
       this.dynamicFormHandlingService.resetForm(this.formRoot);
-      this.tabActivationStatusService.viewTabStatus = true;
+      // Set the active tab of the Head Menu Nav to be the first tab.
+      this.tabActivationStatusService.activeId = this.tabActivationStatusService.tabIds[0];
       this.activeModal.close(NgbModalResolutions.Reset);
     }
   }

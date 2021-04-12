@@ -8,6 +8,7 @@ import { ObjectLayoutWidget } from 'ngx-schema-form';
 })
 export class TabularMenuWidgetComponent extends ObjectLayoutWidget implements AfterContentInit {
 
+  active=1;
   ngAfterContentInit() {
   }
 

@@ -1,12 +1,12 @@
 import { ChartTableModalContext } from './../../modals/chart-table-modal/chart-table-modal.component';
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ObjectLayoutWidget } from 'ngx-schema-form';
 import { MappingProfilesService } from '../../services/mapping-profiles-service/mapping-profiles.service';
 import { DiagramCategoryService } from '../../services/diagram-category-service/diagram-category.service';
 import { TabActivationStatusService } from '../../services/tab-activation-status-service/tab-activation-status.service';
 import { DynamicFormHandlingService } from '../../services/dynamic-form-handling-service/dynamic-form-handling.service';
 import { ChartTableModalComponent } from '../../modals/chart-table-modal/chart-table-modal.component';
-import { NgbModal, NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbNav } from '@ng-bootstrap/ng-bootstrap';
 import { ClearFormModalComponent } from "../../modals/clear-form-modal/clear-form-modal.component";
 
 @Component({
@@ -15,9 +15,9 @@ import { ClearFormModalComponent } from "../../modals/clear-form-modal/clear-for
   styleUrls: ['./head-menu-widget.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeadMenuWidgetComponent extends ObjectLayoutWidget implements AfterViewInit {
+export class HeadMenuWidgetComponent extends ObjectLayoutWidget {
 
-  @ViewChild('headTabset', {static: false}) tabset:NgbTabset; 
+  @ViewChild('headNav', {static: false}) nav:NgbNav; 
 
   constructor(public mappingProfileService: MappingProfilesService,
               public diagramCategoryService: DiagramCategoryService,
@@ -25,12 +25,6 @@ export class HeadMenuWidgetComponent extends ObjectLayoutWidget implements After
               public dynamicFormHandlingService: DynamicFormHandlingService,
               private modalService: NgbModal) {
     super();
-  }
-
-  ngAfterViewInit()
-  {
-    super.ngAfterViewInit();
-    this.tabActivationStatusService.tabset = this.tabset;
   }
 
   public reset() {

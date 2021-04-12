@@ -27,7 +27,7 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
   subscriptions: Array<Subscription>;
 
   constructor(public mappingProfileService: MappingProfilesService,
-              private tabActicationStatusService: TabActivationStatusService,
+              private tabActivationStatusService: TabActivationStatusService,
               private cdr: ChangeDetectorRef) {
     super();
     this.subscriptions = new Array();
@@ -54,7 +54,7 @@ export class ProfilePickerComponent extends ControlWidget implements OnDestroy, 
   cardButtonAction(profile: Profile) {
 
     // Changes active tab to the next
-    this.tabActicationStatusService.categoryTabStatus = true;
+    this.tabActivationStatusService.activeId = this.tabActivationStatusService.tabIds[1];
 
     if ( this.formProperty.value !== profile.name ) {
       this.formProperty.setValue(profile.name, false);

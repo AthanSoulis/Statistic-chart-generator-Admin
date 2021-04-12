@@ -1,12 +1,12 @@
-<ngb-tabset type="tabs" [justify]="'center'" [destroyOnHide]="false">
-    <ngb-tab *ngFor="let fieldset of this.schema.fieldsets; let i = index; trackBy:trackByIndex">
-        <ng-template ngbTabTitle>
-            <div>{{ fieldset.tabTitle }}</div>
-        </ng-template>
-        <ng-template ngbTabContent>
+<nav ngbNav #nav="ngbNav" class="nav nav-pills nav-justified" [destroyOnHide]="false">
+    <ng-container ngbNavItem [ngbNavItem]="i" *ngFor="let fieldset of this.schema.fieldsets; let i = index; trackBy:trackByIndex">
+        <a class="nav-link" ngbNavLink>{{ fieldset.tabTitle }}</a>
+        <ng-template ngbNavContent>
             <div class="container-fluid">
                 <sf-form-element [formProperty]="formProperty.getProperty(fieldset.fields[0])"></sf-form-element>
             </div>
         </ng-template>
-    </ngb-tab>
-</ngb-tabset>
+    </ng-container>
+</nav>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
