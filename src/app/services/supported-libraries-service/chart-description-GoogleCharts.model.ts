@@ -35,7 +35,7 @@ class GoogleChartsTableDescription {
 }
 
 class GoogleChartsDescription {
-    chartType: string;
+    chartType: 'AreaChart'|'BarChart'|'ColumnChart'|'LineChart'|'PieChart'|'ComboChart' = 'ComboChart';
     columns: string[];
     queriesInfo: ChartInfo[];
     options: GoogleChartsOptions;
@@ -71,8 +71,8 @@ class GoogleChartsDescription {
 }
 
 class GoogleChartsOptions {
-    title: string;
-    backgroundColor: string;
+    title: string | undefined;
+    backgroundColor: string | undefined;
     hAxis: GoogleChartsAxis;
     vAxis: GoogleChartsAxis;
     series: GoogleChartSeries [];
@@ -93,15 +93,15 @@ class GoogleChartsOptions {
 }
 
 class GoogleChartsChartArea {
-    backgroundColor: string;
+    backgroundColor: string | undefined;
 }
 
 class GoogleChartsAxis {
-    title: string;
+    title: string | undefined;
 }
 
 class GoogleChartSeries {
-    type: string;
+    type: 'area' | 'bars' | 'line' = 'line';
 
     setGoogleChartType(type: string) {
         switch (type) {

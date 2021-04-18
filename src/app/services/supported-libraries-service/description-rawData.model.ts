@@ -2,8 +2,8 @@ import {ChartInfo, Query} from '../../chart-creator/chart-query.model';
 import {DataFormSchema} from '../../chart-creator/chart-form-schema.classes';
 
 export class RawDataModel {
-    orderBy: string;
-    verbose: boolean;
+    orderBy: string | null = null;
+    verbose: boolean = false;
     series: Array<QueryInfo> = [];
 
     constructor() {}

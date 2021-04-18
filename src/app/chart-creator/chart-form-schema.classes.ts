@@ -68,7 +68,7 @@ export interface HighchartsOptionsFormSchema {
     hcCredits ?: HCCreditsOptionsFormSchema;
     hcLegend ?: HCLegendOptionsFormSchema;
     hcMiscOptions ?: HCMiscOptionsFormSchema;
-    stackedChart ?: string;
+    stackedChart ?: undefined | "normal" | "percent" | "stream" | "overlap";
 }
 export interface EchartsOptionsFormSchema {
     titles ?: TitlesOptionsFormSchema;
@@ -124,13 +124,13 @@ export interface HCCreditsOptionsFormSchema {
 }
 export interface HCLegendOptionsFormSchema {
     hcEnableLegend ?: boolean;
-    hcLegendLayout ?: string;
-    hcLegendHorizontalAlignment ?: string;
-    hcLegendVerticalAlignment ?: string;
+    hcLegendLayout ?: "horizontal" | "vertical" | "proximate";
+    hcLegendHorizontalAlignment ?: "left" | "center" | "right";
+    hcLegendVerticalAlignment ?: "bottom" | "top" | "middle";
 }
 export interface ECLegendOptionsFormSchema {
     ecEnableLegend ?: boolean;
-    ecLegendLayout ?: string;
+    ecLegendLayout ?: "horizontal" | "vertical";
     ecLegendHorizontalAlignment ?: string;
     ecLegendVerticalAlignment ?: string;
 }

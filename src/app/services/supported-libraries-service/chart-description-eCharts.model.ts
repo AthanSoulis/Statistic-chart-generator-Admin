@@ -17,14 +17,14 @@ class EChartsDescription {
     title: ECtitle;
     yAxis: ECaxis;
     xAxis: ECaxis;
-    backgroundColor: string;
+    backgroundColor: string | undefined;
     tooltip: ECTooltip;
     queries: Array<ChartInfo> = [];
     lang: ECLang;
     toolbox: ECExporting;
     plotOptions: ECPlotOptions;
     legend: ECLegend;
-    color: string[];
+    color: string[] = ['#7cb5ec'];
 
     constructor() {
         this.chart = new ECchart();
@@ -40,8 +40,8 @@ class EChartsDescription {
 }
 
 class ECchart {
-    type: string;
-    backgroundColor: string;
+    type: string = 'line';
+    backgroundColor: string = '#7cb5ec';
     borderColor: string;
     borderRadius: number;
     borderWidth: number;
@@ -52,11 +52,11 @@ class ECchart {
     plotBorderWidth: number;
 }
 export class ECtitle {
-    text: string;
-    subtext: string;
+    text: string = '';
+    subtext: string = '';
 }
 class ECaxis {
-    name: string;
+    name: string | undefined;
 }
 class ECLang {
     noData = 'No Data available for the Query';
@@ -64,16 +64,20 @@ class ECLang {
 
 export class ECExporting {
     show: boolean;
-    right: string;
+    right: string | number = 'auto';
+    left: string | number = 'auto';
+    top: string | number = 'auto';
+    bottom: string | number = 'auto';
     feature: ECToolboxFeature;
     constructor() {
         this.show = false;
+        this.feature = new ECToolboxFeature();
     }
 }
 
 export class ECToolboxFeature {
-    saveAsImage: any;
-    dataView: any;
+    saveAsImage: ECToolboxFeatureItem;
+    dataView: ECToolboxFeatureItem;
     constructor() {
         this.saveAsImage = new ECToolboxFeatureItem('Save as image');
         this.dataView = new ECToolboxFeatureItem('Data view');
@@ -88,10 +92,12 @@ export class ECToolboxFeatureItem {
 }
 
 export class ECLegend {
-    show: boolean;
-    orient: string;
-    left: string;
-    top: string;
+    show: boolean = true;
+    orient: 'horizontal' | 'vertical' = 'horizontal';
+    right: string | number = 'auto';
+    left: string | number = 'auto';
+    top: string | number = 'auto';
+    bottom: string | number = 'auto';
 }
 
 class ECPlotOptions {
@@ -111,8 +117,8 @@ class ECPlotOptionsSeries {
 }
 
 export class ECDataLabels {
-    enabled: boolean;
-    format: string = undefined;
+    enabled: boolean = false;
+    format: string | undefined = undefined;
 }
 
 export class ECTooltip {

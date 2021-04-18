@@ -24,7 +24,7 @@ class HighChartsDescription {
     plotOptions: HCPlotOptions;
     legend: HCLegend;
     credits: HCCredits;
-    colors: string[];
+    colors: string[] = ['#7cb5ec'];
 
     constructor() {
         this.chart = new HCchart();
@@ -41,22 +41,24 @@ class HighChartsDescription {
 }
 
 class HCchart {
-    type: string;
-    backgroundColor: string;
-    borderColor: string;
-    borderRadius: number;
-    borderWidth: number;
+    /* In TypeScript this option has no effect in sense of typing and instead the type option must always be set in the series. 
+     https://api.highcharts.com/highcharts/chart.type */
+    type: string = 'line';
+    backgroundColor: string = '#ffffff';
+    borderColor: string = '#335cad';
+    borderRadius: number = 0;
+    borderWidth: number = 0;
 
-    plotBackgroundImage: string;
-    plotBackgroundColor: string;
-    plotBorderColor: string;
-    plotBorderWidth: number;
+    plotBackgroundImage: string | undefined;
+    plotBackgroundColor: string | undefined;
+    plotBorderColor: string = '#cccccc';
+    plotBorderWidth: number = 0;
 }
 export class HCsubtitle {
-    text: string;
+    text: string | undefined;
 }
 export class HCtitle {
-    text: string;
+    text: string | undefined;
 }
 class HCaxis {
     title: HCtitle;
@@ -77,10 +79,10 @@ export class HCExporting {
 }
 
 export class HCLegend {
-    enabled: boolean;
-    layout: string;
-    align: string;
-    verticalAlign: string;
+    enabled: boolean | undefined;
+    layout: 'horizontal'|'vertical'|'proximate' = 'horizontal';
+    align: 'left' | 'center' | 'right' = 'center';
+    verticalAlign: 'bottom' | 'top' | 'middle' = 'bottom';
 }
 
 class HCPlotOptions {
@@ -92,7 +94,7 @@ class HCPlotOptions {
 
 class HCPlotOptionsSeries {
     dataLabels: HCDataLabels;
-    stacking: string;
+    stacking: undefined | 'normal' | 'percent' | 'stream' | 'overlap';
     constructor() {
         this.dataLabels = new HCDataLabels();
         this.stacking = undefined;
@@ -100,12 +102,12 @@ class HCPlotOptionsSeries {
 }
 
 export class HCDataLabels {
-    enabled: boolean;
-    format: string = undefined;
+    enabled: boolean = false;
+    format: string | undefined = undefined;
 }
 
 export class HCCredits {
-    enabled: boolean;
-    text: string;
-    href: string = null;
+    enabled: boolean = true;
+    text: string | null = null;
+    href: string | null = null;
 }

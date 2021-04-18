@@ -29,7 +29,7 @@ export class DiagramCreator {
     constructor(private diagramCategoryService: DiagramCategoryService) {
     }
 
-    public createChart(formObj: SCGAFormSchema): Observable<Object> {
+    public createChart(formObj: SCGAFormSchema): Observable<Object|null> {
 
         const view: ViewFormSchema = formObj.view;
         const category: CategoryFormSchema = formObj.category;
@@ -199,9 +199,7 @@ export class DiagramCreator {
             chartObj.chartDescription.exporting.enabled =
                 appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.exporting;
 
-            chartObj.chartDescription.plotOptions.series.stacking =
-            appearanceOptions.chartAppearance.highchartsAppearanceOptions.stackedChart === 'undefined' ?
-                undefined : appearanceOptions.chartAppearance.highchartsAppearanceOptions.stackedChart;
+            chartObj.chartDescription.plotOptions.series.stacking = appearanceOptions.chartAppearance.highchartsAppearanceOptions.stackedChart;
 
             // Legend Options
             chartObj.chartDescription.legend.enabled =
@@ -256,7 +254,8 @@ export class DiagramCreator {
         dataseries.forEach(dataElement => {
             queries.push(new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
                 category.categoryType !== 'combo' ? category.categoryType :
-                    (isNullOrUndefined(dataElement.chartProperties.chartType) ? 'line' : dataElement.chartProperties.chartType)));
+                    ((dataElement.chartProperties.chartType === null || dataElement.chartProperties.chartType === undefined) ? 
+                    'line' : dataElement.chartProperties.chartType)));
             // Set color for each data series. Works only for bars and columns.
             // if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.length > 1
             //     || appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray[0] !== '#00000000') {

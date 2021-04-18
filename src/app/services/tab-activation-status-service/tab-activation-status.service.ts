@@ -27,14 +27,21 @@ export class TabActivationStatusService {
         return key;
     }
   }
+
   public set activeId( activeIndex: string)
   {
-    let lastActiveId: string;
+    let lastActiveId: string | null = null;
 
     for (let [key, value] of this.tabs.entries())
-      if(value) { lastActiveId = key; break; }
-        
-    this.tabs.set(lastActiveId,false);
+      if(value) 
+      { 
+        lastActiveId = key;
+        break; 
+      }
+    
+    if(lastActiveId !== null)
+      this.tabs.set(lastActiveId,false);
+    
     if(activeIndex !== null && activeIndex!== undefined)
       this.tabs.set(activeIndex,true);
   }

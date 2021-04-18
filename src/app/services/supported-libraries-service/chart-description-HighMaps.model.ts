@@ -48,8 +48,8 @@ class HMNavigation {
 }
 
 class HMColorAxis {
-    min: number = undefined;
-    max: number = undefined;
+    min: number | undefined = undefined;
+    max: number | undefined= undefined;
     type = 'linear';
     minColor = '#e6ebf5';
     maxColor = '#003399';
