@@ -76,7 +76,9 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
   }
 
   _onChange = (arg: any) => {};
-  _onTouched = (arg: boolean) => {};
+  /* The _onTouched should accept a boolean argument like so:
+  _onTouched = (arg: boolean) => {}; */
+  _onTouched = (arg: any) => {}; 
 
   handleChange(arg: FieldNode) {
     if (this.checkValidFieldNode(arg) !== null) {
