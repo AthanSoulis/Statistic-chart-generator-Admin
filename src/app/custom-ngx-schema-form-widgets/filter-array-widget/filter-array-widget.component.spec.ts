@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FilterArrayWidgetComponent } from './filter-array-widget.component';
 
@@ -6,7 +6,7 @@ describe('FilterArrayWidgetComponent', () => {
   let component: FilterArrayWidgetComponent;
   let fixture: ComponentFixture<FilterArrayWidgetComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FilterArrayWidgetComponent ]
     })

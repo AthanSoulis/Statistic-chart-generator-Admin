@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { StringFieldWidgetComponent } from './string-field-widget.component';
 
@@ -6,7 +6,7 @@ describe('StringFieldWidgetComponent', () => {
   let component: StringFieldWidgetComponent;
   let fixture: ComponentFixture<StringFieldWidgetComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ StringFieldWidgetComponent ]
     })

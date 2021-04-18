@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TabularMenuWidgetComponent } from './tabular-menu-widget.component';
 
@@ -6,7 +6,7 @@ describe('TabularMenuWidgetComponent', () => {
   let component: TabularMenuWidgetComponent;
   let fixture: ComponentFixture<TabularMenuWidgetComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TabularMenuWidgetComponent ]
     })

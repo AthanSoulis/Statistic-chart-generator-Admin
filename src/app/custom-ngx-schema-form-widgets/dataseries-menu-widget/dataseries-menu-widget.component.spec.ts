@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DataseriesMenuWidgetComponent } from './dataseries-menu-widget.component';
 
@@ -6,7 +6,7 @@ describe('TabularMenuWidgetComponent', () => {
   let component: DataseriesMenuWidgetComponent;
   let fixture: ComponentFixture<DataseriesMenuWidgetComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ DataseriesMenuWidgetComponent ]
     })

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ChartTypeSelectionWidgetComponent } from './chart-type-selection-widget.component';
 
@@ -6,7 +6,7 @@ describe('ChartTypeSelectionWidgetComponent', () => {
   let component: ChartTypeSelectionWidgetComponent;
   let fixture: ComponentFixture<ChartTypeSelectionWidgetComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ChartTypeSelectionWidgetComponent ]
     })

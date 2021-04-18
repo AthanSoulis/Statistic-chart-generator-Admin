@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GeneratedShortUrlFieldComponent } from './generated-short-url-field.component';
 
@@ -6,7 +6,7 @@ describe('GeneratedShortUrlFieldComponent', () => {
   let component: GeneratedShortUrlFieldComponent;
   let fixture: ComponentFixture<GeneratedShortUrlFieldComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ GeneratedShortUrlFieldComponent ]
     })
