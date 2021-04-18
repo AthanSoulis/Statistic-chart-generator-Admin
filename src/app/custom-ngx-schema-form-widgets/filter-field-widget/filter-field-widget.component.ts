@@ -51,7 +51,7 @@ export class FilterFieldWidgetComponent extends ControlWidget implements OnDestr
   }
 
   numericChangeHandler(event: any) {
-    // console.log('Input:', event);
+    console.log('NumbericChangeHandler Input:', event);
     this.control.setValue(event.target.value);
   }
 }
