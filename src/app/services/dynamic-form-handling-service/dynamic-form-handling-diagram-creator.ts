@@ -1,4 +1,4 @@
-import {Subject, BehaviorSubject, Observable, of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {
     SCGAFormSchema,
     ViewFormSchema,
@@ -12,7 +12,6 @@ import {
 } from '../supported-libraries-service/chart-description-GoogleCharts.model';
 import {ChartInfo, Query} from '../../chart-creator/chart-query.model';
 import {HighChartsChart} from '../supported-libraries-service/chart-description-HighCharts.model';
-import {isNullOrUndefined} from 'util';
 import {HighMapsMap, HMSeriesInfo} from '../supported-libraries-service/chart-description-HighMaps.model';
 import {DiagramCategoryService} from '../diagram-category-service/diagram-category.service';
 import {ISupportedMap} from '../supported-chart-types-service/supported-chart-types.service';
@@ -89,7 +88,7 @@ export class DiagramCreator {
             tableObj.tableDescription.queriesInfo.push(
                 new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
                     category.categoryType !== 'combo' ? category.categoryType :
-                        (isNullOrUndefined(dataElement.chartProperties.chartType) ? 'line' : dataElement.chartProperties.chartType)));
+                        (dataElement.chartProperties.chartType == null) ? 'line' : dataElement.chartProperties.chartType));
         });
         console.log('Creating a table!', tableObj);
         tableObj.tableDescription.options.pageSize = formObj.appearance.tableAppearance.paginationSize;
@@ -114,7 +113,7 @@ export class DiagramCreator {
             rawChartDataModel.chartsInfo.push(
                 new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
                     category.categoryType !== 'combo' ? category.categoryType :
-                        (isNullOrUndefined(dataElement.chartProperties.chartType) ? 'line' : dataElement.chartProperties.chartType)));
+                        (dataElement.chartProperties.chartType == null) ? 'line' : dataElement.chartProperties.chartType));
         });
         console.log('Creating a rawChartData model!', rawChartDataModel);
         return of(rawChartDataModel);
@@ -177,7 +176,7 @@ export class DiagramCreator {
             chartDescription.queriesInfo.push(
                 new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
                     category.categoryType !== 'combo' ? category.categoryType :
-                        (isNullOrUndefined(dataElement.chartProperties.chartType) ? 'line' : dataElement.chartProperties.chartType)));
+                        (dataElement.chartProperties.chartType == null) ? 'line' : dataElement.chartProperties.chartType));
         });
 
         return chartObj;
@@ -327,7 +326,7 @@ export class DiagramCreator {
         dataseries.forEach(dataElement => {
             queries.push(new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
                 category.categoryType !== 'combo' ? category.categoryType :
-                    (isNullOrUndefined(dataElement.chartProperties.chartType) ? 'line' : dataElement.chartProperties.chartType)));
+                    (dataElement.chartProperties.chartType == null) ? 'line' : dataElement.chartProperties.chartType));
             // if (appearanceOptions.chartAppearance.echartsAppearanceOptions.hcMiscOptions.hcEnableDataLabels) {
             //     queries.push(new ECChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
             //         category.categoryType !== 'combo' ? category.categoryType :
@@ -363,7 +362,7 @@ export class DiagramCreator {
             mapObj.mapDescription.colorAxis.type = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmColorAxis.hmColorAxisType;
             // Exporting
             mapObj.mapDescription.exporting.enabled = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmMiscOptions.exporting;
-            if (!isNullOrUndefined(appearanceOptions.chartAppearance.highmapsAppearanceOptions.titles)) {
+            if (appearanceOptions.chartAppearance.highmapsAppearanceOptions.titles != null) {
                 // Title
                 mapObj.mapDescription.title.text = appearanceOptions.chartAppearance.highmapsAppearanceOptions.titles.title;
                 // Subtitle

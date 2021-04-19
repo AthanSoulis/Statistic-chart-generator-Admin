@@ -8,7 +8,6 @@ import {
     ISupportedCategory,
     ISupportedMiscType
 } from '../supported-chart-types-service/supported-chart-types.service';
-import { isNullOrUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'

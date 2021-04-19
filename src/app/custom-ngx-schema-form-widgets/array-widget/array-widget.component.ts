@@ -2,7 +2,6 @@ import { Component, OnInit, AfterContentInit, ChangeDetectionStrategy, AfterView
 import { ArrayLayoutWidget, ControlWidget } from 'ngx-schema-form';
 import { FormProperty } from '../../../../node_modules/ngx-schema-form/lib/model/formproperty';
 import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
-import { isNullOrUndefined } from 'util';
 
 export enum DeleteButtonPosition {
   out = 'out',
@@ -30,7 +29,7 @@ export class ArrayWidgetComponent extends ArrayLayoutWidget implements AfterCont
       this.deleteButtonPosition = this.schema.deleteButtonPosition;
     }
 
-    if (!this.chartloadingService.chartLoadingStatus && !isNullOrUndefined(this.schema.minItems)
+    if (!this.chartloadingService.chartLoadingStatus && this.schema.minItems !== null && this.schema.minItems !== undefined
     && this.arrayItems < this.schema.minItems) {
       while ( this.arrayItems < this.schema.minItems) { this.addItem(); }
     }

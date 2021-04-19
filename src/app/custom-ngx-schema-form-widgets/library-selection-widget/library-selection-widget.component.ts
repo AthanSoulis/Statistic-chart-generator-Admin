@@ -3,7 +3,6 @@ import { ControlWidget } from 'ngx-schema-form';
 import { SupportedLibrariesService } from '../../services/supported-libraries-service/supported-libraries.service';
 import { DiagramCategoryService } from '../../services/diagram-category-service/diagram-category.service';
 import { ISupportedCategory } from '../../services/supported-chart-types-service/supported-chart-types.service';
-import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'library-selection-widget',
