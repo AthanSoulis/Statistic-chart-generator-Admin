@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
-import { Observable, throwError, BehaviorSubject, of as observableOf, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { UrlProviderService } from '../url-provider-service/url-provider.service';
 import { Profile, MappingProfilesService } from '../mapping-profiles-service/mapping-profiles.service';
@@ -38,7 +37,7 @@ export class DbSchemaService {
   constructor(private http: HttpClient, private urlProvider: UrlProviderService,
     private profileMappingService: MappingProfilesService, private errorHandler: ErrorHandlerService) {}
 
-  getAvailableEntities(profile: Profile): Observable<Array<string>> {
+  getAvailableEntities(profile: Profile|null|undefined): Observable<Array<string>> {
 
     if (profile === undefined || profile === null) {
       // return this.getAvailableEntitiesNoMapping();

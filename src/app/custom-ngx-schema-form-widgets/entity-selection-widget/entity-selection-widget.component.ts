@@ -1,13 +1,13 @@
-import { Component, AfterViewInit, Injectable, OnChanges, SimpleChanges, AfterContentInit, OnDestroy, forwardRef, Inject, OnInit, Output, EventEmitter, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterContentInit, OnDestroy, OnInit, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
 import { DbSchemaService } from '../../services/db-schema-service/db-schema.service';
-import { BehaviorSubject, Observable, Subscription, of } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { MappingProfilesService, Profile } from '../../services/mapping-profiles-service/mapping-profiles.service';
-import { distinctUntilChanged, filter, catchError, retry } from 'rxjs/operators';
+import { distinctUntilChanged, catchError } from 'rxjs/operators';
 import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
 import { ErrorHandlerService } from '../../services/error-handler-service/error-handler.service';
 import { ArrayProperty } from 'ngx-schema-form/lib/model/arrayproperty';
-import { PropertyGroup, FormProperty } from 'ngx-schema-form/lib/model/formproperty';
+import { PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
 
 @Component({
   selector: 'entity-selection-widget',
@@ -19,10 +19,10 @@ export class EntitySelectionWidgetComponent extends ControlWidget implements OnI
 
   @Output() entityChange: EventEmitter<any> = new EventEmitter();
 
-  entities: Array<string>;
-  mappingProfileServiceSubscription: Subscription;
-  dbSchemaServiceSubscription: Subscription;
-  valueChangesSubscription: Subscription;
+  entities: Array<string> = [];
+  mappingProfileServiceSubscription: Subscription|null = null;
+  dbSchemaServiceSubscription: Subscription|null = null;
+  valueChangesSubscription: Subscription|null = null;
 
   constructor(private dbSchemaService: DbSchemaService,
     private mappingProfileService: MappingProfilesService,
@@ -54,11 +54,16 @@ export class EntitySelectionWidgetComponent extends ControlWidget implements OnI
 
     // Subscribe to the mappingProfileService in order to get notified of any mapping profile changes
     this.mappingProfileServiceSubscription = this.mappingProfileService.selectedProfile$
-    .subscribe(profile => this.handleProfileChange(profile));
+    .subscribe(profile => {
+      // if(profile !== null)
+        this.handleProfileChange(profile)});
   }
 
   ngOnDestroy() {
-    this.valueChangesSubscription.unsubscribe();
+    if(this.valueChangesSubscription !== null)
+      this.valueChangesSubscription.unsubscribe();
+    
+      if(this.mappingProfileServiceSubscription !== null)
     this.mappingProfileServiceSubscription.unsubscribe();
 
     if (this.dbSchemaServiceSubscription && !this.chartLoadingService.chartLoadingStatus) {
@@ -85,7 +90,7 @@ export class EntitySelectionWidgetComponent extends ControlWidget implements OnI
           (filterRule: PropertyGroup) => filterRule.reset(null, false));
       });
   }
-  handleProfileChange(profile: Profile)
+  handleProfileChange(profile: Profile|null)
   {
     // We want to avoid certain functionality when a chart is Loading so notify that this Dataseries is loading
     if (this.chartLoadingService.chartLoadingStatus)

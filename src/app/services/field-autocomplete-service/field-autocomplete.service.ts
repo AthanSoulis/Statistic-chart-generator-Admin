@@ -9,7 +9,7 @@ import { ErrorHandlerService } from '../error-handler-service/error-handler.serv
 import { MappingProfilesService, Profile } from '../mapping-profiles-service/mapping-profiles.service';
 
 export class AutocompleteResponse {
-  count: number =  null;
+  count: number | null =  null;
   values: Array<string> = [];
 }
 

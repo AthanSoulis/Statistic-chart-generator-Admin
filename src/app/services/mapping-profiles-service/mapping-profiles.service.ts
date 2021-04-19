@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
-import { Observable, of, throwError, BehaviorSubject } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { UrlProviderService } from '../url-provider-service/url-provider.service';
 import { ErrorHandlerService } from '../error-handler-service/error-handler.service';
 
 export class Profile {
-  name: string;
-  description: string;
-  usage: string;
-  shareholders: string[];
-  complexity: number;
+  name: string = '';
+  description: string = '';
+  usage: string = '';
+  shareholders: string[] = [];
+  complexity: number = -1;
 }
 
 @Injectable({
@@ -20,10 +18,10 @@ export class Profile {
 })
 export class MappingProfilesService {
   mappingProfiles$: BehaviorSubject<Array<Profile>>;
-  selectedProfile$: BehaviorSubject<Profile>;
+  selectedProfile$: BehaviorSubject<Profile|null>;
 
   constructor(private http: HttpClient, private urlProvider: UrlProviderService, private errorHandler: ErrorHandlerService) {
-      this.selectedProfile$ = new BehaviorSubject<Profile>(null);
+      this.selectedProfile$ = new BehaviorSubject<Profile|null>(null);
       this.mappingProfiles$ = new BehaviorSubject<Array<Profile>>([]);
 
       const sub = this.getProfileMappings().subscribe(
@@ -41,10 +39,12 @@ export class MappingProfilesService {
 
   changeSelectedProfile(profile: string) {
 
-    this.selectedProfile$.next(
-      this.mappingProfiles$.value.find(
-      (e: Profile) => e.name === profile
-    ));
+    var selectedProfile = this.mappingProfiles$.value.find((e: Profile) => e.name === profile);
+
+    if(selectedProfile !== undefined)
+      this.selectedProfile$.next(selectedProfile);
+    else
+    this.selectedProfile$.next(null);
   }
 
   private getProfileMappings(): Observable<Array<Profile>> {

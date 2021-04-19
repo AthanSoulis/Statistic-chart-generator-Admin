@@ -10,7 +10,7 @@ import { FormProperty } from 'ngx-schema-form/lib/model/formproperty';
 })
 export class FilterArrayWidgetComponent extends ArrayLayoutWidget implements AfterContentInit, AfterViewChecked {
 
-  deleteButtonPosition: DeleteButtonPosition;
+  deleteButtonPosition: 'out'|'in' = 'out';
 
   constructor(private chartloadingService: ChartLoadingService,
               private cdr: ChangeDetectorRef) {
@@ -18,11 +18,7 @@ export class FilterArrayWidgetComponent extends ArrayLayoutWidget implements Aft
   }
 
   ngAfterContentInit() {
-    if (this.schema.deleteButtonPosition === null || this.schema.deleteButtonPosition === undefined ) {
-      this.deleteButtonPosition = DeleteButtonPosition.out;
-    } else {
-      this.deleteButtonPosition = this.schema.deleteButtonPosition;
-    }
+    this.deleteButtonPosition = this.schema.deleteButtonPosition;
 
     if (!this.chartloadingService.chartLoadingStatus && this.schema.minItems !== null && this.schema.minItems !== undefined) {
       for (let index = 0; index < this.schema.minItems; index++ ) {
@@ -48,15 +44,11 @@ export class FilterArrayWidgetComponent extends ArrayLayoutWidget implements Aft
   }
 
   removeItem(index: number) {
-    this.formProperty.removeItem(this.formProperty.properties[index]);
+    var formProperties = this.formProperty.properties;
+    this.formProperty.removeItem(formProperties[index]);
   }
 
   trackByIndex(index: number, item: any) {
     return item;
   }
-}
-
-enum DeleteButtonPosition {
-  out = 'out',
-  in = 'in'
 }

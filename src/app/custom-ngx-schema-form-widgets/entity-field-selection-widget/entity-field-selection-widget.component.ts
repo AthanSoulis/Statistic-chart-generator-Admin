@@ -13,7 +13,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 })
 export class EntityFieldSelectionWidgetComponent extends ControlWidget implements OnDestroy, AfterContentInit, AfterViewInit {
 
-  entityValue: string;
+  entityValue: string|null = null;
   private subscriptions: Subscription[] = [];
   entityFieldDisabled = true;
 
@@ -66,6 +66,6 @@ export class EntityFieldSelectionWidgetComponent extends ControlWidget implement
     this.subscriptions.forEach(element => {
       element.unsubscribe();
     });
-    this.subscriptions = null;
+    this.subscriptions = [];
   }
 }

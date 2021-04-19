@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
+import { Component, OnDestroy, AfterContentInit } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
-import { FieldType, FilterType } from '../../services/supported-filter-types-service/supported-filter-types.service';
+import { FieldType} from '../../services/supported-filter-types-service/supported-filter-types.service';
 import { FieldNode } from '../../services/db-schema-service/db-schema.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 
@@ -12,12 +12,12 @@ import { distinctUntilChanged } from 'rxjs/operators';
 })
 export class FilterFieldWidgetComponent extends ControlWidget implements OnDestroy, AfterContentInit {
 
-  fieldType: FieldType = null;
-  selectedField: FieldNode = null;
-  filterOperator: string;
+  fieldType: FieldType|null = null;
+  selectedField: FieldNode|null = null;
+  filterOperator: string|null = null;
 
-  entityFieldSub: Subscription;
-  operatorSub: Subscription;
+  entityFieldSub: Subscription|null = null;
+  operatorSub: Subscription|null = null;
 
   constructor() {
     super();
@@ -46,8 +46,11 @@ export class FilterFieldWidgetComponent extends ControlWidget implements OnDestr
   }
 
   ngOnDestroy() {
-    this.entityFieldSub.unsubscribe();
-    this.operatorSub.unsubscribe();
+    if(this.entityFieldSub !== null)
+      this.entityFieldSub.unsubscribe();
+    
+      if(this.operatorSub !== null)
+      this.operatorSub.unsubscribe();
   }
 
   numericChangeHandler(event: any) {

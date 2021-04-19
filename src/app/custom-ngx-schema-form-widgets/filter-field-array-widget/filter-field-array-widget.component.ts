@@ -12,8 +12,8 @@ import { ChartLoadingService } from '../../services/chart-loading-service/chart-
 })
 export class FilterFieldArrayWidgetComponent extends ArrayLayoutWidget implements AfterContentInit {
 
-  operatorSub: Subscription;
-  filterOperator: string;
+  operatorSub: Subscription|null = null;
+  filterOperator: string|null = null;
 
   constructor(private chartLoadingService: ChartLoadingService) {
     super();
@@ -54,23 +54,21 @@ export class FilterFieldArrayWidgetComponent extends ArrayLayoutWidget implement
 
   addFilterValue() {
 
-    const addFilter = function (filterOperator) {
-      if (!this.filterOperator) { return; }
-
-      this.formProperty.addItem();
-      if (this.filterOperator === 'between') {
-        this.formProperty.addItem();
-      }
-    };
-
     if ( (<FormProperty[]>this.formProperty.properties).length < this.schema.maxItems) {
-      addFilter.call(this);
+      this.addFilter.call(this);
     } else if (this.schema.maxItems === undefined ) {
-      addFilter.call(this);
+      this.addFilter.call(this);
     }
-
   }
+  
+  private addFilter = () => {
+    if (!this.filterOperator) { return; }
 
+    this.formProperty.addItem();
+    if (this.filterOperator === 'between') {
+      this.formProperty.addItem();
+    }
+  };
   removeFilterValue(index: number) {
     if (this.filterOperator !== 'between') {
         console.log('Removed index: ' + (<FormProperty>this.formProperty.properties[index]).value);
