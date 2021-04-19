@@ -54,9 +54,7 @@ export class EntitySelectionWidgetComponent extends ControlWidget implements OnI
 
     // Subscribe to the mappingProfileService in order to get notified of any mapping profile changes
     this.mappingProfileServiceSubscription = this.mappingProfileService.selectedProfile$
-    .subscribe(profile => {
-      // if(profile !== null)
-        this.handleProfileChange(profile)});
+    .subscribe(profile => this.handleProfileChange(profile));
   }
 
   ngOnDestroy() {
