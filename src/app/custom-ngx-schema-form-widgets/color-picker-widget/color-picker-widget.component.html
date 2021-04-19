@@ -13,7 +13,7 @@
     <span *ngIf="schema.description" class="formHelp">{{schema.description}}</span>
 
     <input [name]="name" class="text-widget.id textline-widget form-control"
-    [(colorPicker)]="control.value" (colorPickerChange)="changeColor($event)" [cpOutputFormat]="'hex'" [cpAlphaChannel]="'always'" 
+    [colorPicker]="control.value" (colorPickerChange)="changeColor($event)" [cpOutputFormat]="'hex'" [cpAlphaChannel]="'always'" 
     [style.background]="this.formProperty.valueChanges | async" [cpCancelButton]="true" [cpPosition]="'bottom'"
     [attr.id]="id"
     [attr.readonly]="true"

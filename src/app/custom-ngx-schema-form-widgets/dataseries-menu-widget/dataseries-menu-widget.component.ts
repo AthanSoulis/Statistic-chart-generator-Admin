@@ -19,7 +19,7 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
 
   subscriptions: Subscription[] = [];
 
-  constructor(private cdr: ChangeDetectorRef, private loadingService: ChartLoadingService, protected dataseriesTabService: DataseriesTabService) 
+  constructor(private cdr: ChangeDetectorRef, private loadingService: ChartLoadingService, public dataseriesTabService: DataseriesTabService) 
   {
     super();
   }
@@ -68,7 +68,9 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
     .searchProperty(index + '/chartProperties/dataseriesName').valueChanges.asObservable();
   }
 
-  setDataSeriesName(index: number, value: any) {
+  setDataSeriesName(index: number, event: Event) {
+    const value = (event.target as HTMLTextAreaElement).value;
+    
     (<FormProperty>this.formProperty.properties[index])
       .searchProperty(index + '/chartProperties/dataseriesName').setValue(value, false);
   }

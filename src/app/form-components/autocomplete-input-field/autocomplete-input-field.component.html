@@ -1,7 +1,7 @@
 <div [ngClass]="loading ? 'ui right icon input loading' : 'ui right icon input gone'">
   <i class="icon"></i>
   <input #autoInputField style="width: 100% !important" [formControl]="inputFormGroup" type="text" name="filterValue" placeholder="Value" [matAutocomplete]="auto">
-    <mat-autocomplete [panelWidth]="auto" #auto="matAutocomplete">
+    <mat-autocomplete [panelWidth]="'auto'" #auto="matAutocomplete">
       <mat-option *ngIf="(possibleFieldValues | async) === null; else noResultsBlock" [value]=null>
           <span class="autocomplete field">Give a more verbose input !</span>
       </mat-option>

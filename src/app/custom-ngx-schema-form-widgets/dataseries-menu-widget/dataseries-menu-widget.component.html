@@ -5,7 +5,7 @@
             <div class="container-fluid">
                 <div *ngIf="dataseriesTabService.isEditable[i]; else notEditable">
                     <input autoFocus type="text" (blur)="disableEditable(i)"
-                    [value]="getDataSeriesName(i) | async" (change)="setDataSeriesName(i, $event.target.value)">
+                    [value]="getDataSeriesName(i) | async" (change)="setDataSeriesName(i, $event)">
                 </div>
                 <!-- TODO pressing enter to stop editing opens the Clear modal. This happens because the focus must be on that element -->
                 <ng-template #notEditable>
