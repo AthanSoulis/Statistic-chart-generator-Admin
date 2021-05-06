@@ -15,4 +15,12 @@ export class RadioWidgetComponent extends ControlWidget {
   handleChange(value: any) {
     this.control.setValue(value);
   }
+
+  ngAfterViewInit()
+  {
+    super.ngAfterViewInit();
+
+    if(this.schema.readOnly)
+      this.control.disable();
+  }
 }

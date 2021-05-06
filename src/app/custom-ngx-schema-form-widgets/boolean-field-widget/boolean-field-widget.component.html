@@ -6,7 +6,7 @@
   </label>
   <div *ngIf="schema.type!='array'">
     <label>
-      <input type="checkbox" [formControl]="control" [id]="id" [name]="name" [disabled]="schema.readonly" value>
+      <input type="checkbox" [formControl]="control" [id]="id" [name]="name" value>
       {{schema.description}}
       <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" placement="right" ngbTooltip="{{this.schema.tooltip}}"></i>
     </label>

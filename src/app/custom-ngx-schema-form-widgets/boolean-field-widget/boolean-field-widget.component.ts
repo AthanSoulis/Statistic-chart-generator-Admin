@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
 
 @Component({
@@ -10,5 +10,13 @@ export class BooleanFieldWidgetComponent extends ControlWidget {
 
   handleChange(value: boolean) {
     this.formProperty.setValue(value, false);
+  }
+
+  ngAfterViewInit()
+  {
+    super.ngAfterViewInit();
+
+    if(this.schema.readOnly)
+      this.control.disable();
   }
 }
