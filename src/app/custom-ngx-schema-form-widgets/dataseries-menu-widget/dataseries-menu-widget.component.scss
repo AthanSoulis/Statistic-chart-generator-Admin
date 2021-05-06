@@ -22,3 +22,27 @@ input:read-only{
 .ui.centered.grid.link.item.active {
     border-color: rgb(8, 131, 192) !important;
 }
+
+.nav {
+    border-right: 2px solid rgba(34,36,38,.15);
+}
+
+.nav .nav-link {
+    padding: .85714286em 1.14285714em;
+}
+
+.nav .nav-link .container-fluid {
+    padding: 15px;
+}
+
+.nav .nav-link.active {
+    border-right: 2px solid #0883c0 !important;
+    margin-right: -2px;
+}
+
+.nav .nav-item h4 {
+    color: rgba(0,0,0,.87);
+    font-weight: 400;
+    font-size: 1.07142857rem;
+    text-align: center;
+}

@@ -56,3 +56,33 @@
 .ui.dropdown .menu>.item:hover {
     background: white ;
 }
+
+#attributeDropdownMenu .default.text {
+    display: inline-block;
+}
+
+#attributeDropdownMenu .dropdown-menu {
+    min-width: calc(100% + 1px);
+    transform: translate(0px, 35px) !important;
+    will-change: transform, opacity !important;
+}
+
+#attributeDropdownMenu .dropdown-toggle div {
+    display: inline-block;
+}
+
+#attributeDropdownMenu .ui.breadcrumb {
+    margin-right: 10px;
+    padding: 2px;
+    background-color: #fff;
+}
+
+.dropdown-toggle {
+    white-space: normal;
+}
+
+.dropdown-toggle::after {
+    margin-right: -20px;
+    margin-top: 7px;
+    float: right;
+}
