@@ -17,8 +17,8 @@ export class AppComponent implements OnInit {
   chartModel: Object;
   loadedChartFile: File = null;
 
-  constructor(protected chartExportingService: ChartExportingService,
-    protected chartLoadingService: ChartLoadingService,
+  constructor(public chartExportingService: ChartExportingService,
+    public chartLoadingService: ChartLoadingService,
     public dfhs: DynamicFormHandlingService) {}
 
   ngOnInit() {}

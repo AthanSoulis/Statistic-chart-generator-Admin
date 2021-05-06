@@ -4,12 +4,8 @@ import { Profile } from '../services/mapping-profiles-service/mapping-profiles.s
 import { BehaviorSubject } from 'rxjs';
 import { SCGAFormSchema } from './chart-form-schema.classes';
 import { FormSchema } from './chart-form-schema.model';
-import { FormComponent } from 'ngx-schema-form';
 import { ErrorHandlerService } from '../services/error-handler-service/error-handler.service';
 import { DynamicFormHandlingService } from '../services/dynamic-form-handling-service/dynamic-form-handling.service';
-
-declare var jQuery: any;
-
 @Component({
   selector: 'chart-creator',
   templateUrl: './chart-creator.component.html',
@@ -23,13 +19,13 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
   fs: FormSchema;
   formErrors: BehaviorSubject<Array<any>>;
 
-  protected showSchemaObject: boolean;
+  showSchemaObject: boolean;
 
-  constructor(protected errorHandlerService: ErrorHandlerService,
-    protected dynamicFormHandlingService: DynamicFormHandlingService,
+  constructor( public errorHandlerService: ErrorHandlerService,
+    public dynamicFormHandlingService: DynamicFormHandlingService,
     protected cdr: ChangeDetectorRef) {
       // this.fs = new FormSchema();
-      this.fs = this.dynamicFormHandlingService.formSchema;
+      this.fs = dynamicFormHandlingService.formSchema;
       this.formErrors = new BehaviorSubject<Array<any>>([]);
 
       this.showSchemaObject = environment.showSchemaObject;
@@ -59,7 +55,4 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
     this.dynamicFormHandlingService.$formErrorObject.next(formErrorsObj.value);
   }
 
-  scrollToTop() {
-    jQuery('html, body').animate({scrollTop: 0}, 300);
-  }
 }
