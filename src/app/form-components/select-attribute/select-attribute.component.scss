@@ -63,7 +63,6 @@
 
 #attributeDropdownMenu .dropdown-menu {
     min-width: calc(100% + 1px);
-    transform: translate(0px, 35px) !important;
     will-change: transform, opacity !important;
 }
 
@@ -72,17 +71,18 @@
 }
 
 #attributeDropdownMenu .ui.breadcrumb {
-    margin-right: 10px;
     padding: 2px;
     background-color: #fff;
 }
 
 .dropdown-toggle {
     white-space: normal;
+    display: inline-block;
+    padding-right: 24px;
 }
 
 .dropdown-toggle::after {
-    margin-right: -20px;
-    margin-top: 7px;
+    margin-top: -0.7em;
     float: right;
+    margin-right: -24px;
 }

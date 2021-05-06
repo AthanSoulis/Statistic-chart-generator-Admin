@@ -54,20 +54,17 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
 
   ngOnChanges(changes: SimpleChanges) {
 
-    for (const changedField of Object.keys(changes)) {
+    const change = changes['chosenEntity'];
 
-      const change = changes[changedField];
-
-      if (changedField === 'chosenEntity') {
-        // console.log('Entity changed from: ' + change.previousValue + ' to ' + change.currentValue);
-        if (change.currentValue !== change.previousValue) {
-          if (this.chartLoadingService.chartLoadingStatus) {
-            this.getEntityTreeNode(change.currentValue, false);
-          } else {
-            this.getEntityTreeNode(change.currentValue, true);
-          }
-        }
-      }
+    if(change === null || change === undefined)
+      return;
+    if(change.currentValue == change.previousValue)
+      return;
+    
+    if (this.chartLoadingService.chartLoadingStatus) {
+      this.getEntityTreeNode(change.currentValue, false);
+    } else {
+      this.getEntityTreeNode(change.currentValue, true);
     }
   }
 
@@ -108,42 +105,42 @@ export class SelectAttributeComponent implements OnInit, ControlValueAccessor, O
 
   getEntityTreeNode(entity: string, resetSelectField?: boolean) {
 
-    if (entity === null) {
+    if (entity === null || entity === undefined) {
 
       this.nestedEntityDataSource.data = [];
       this.selectedFieldChanged(null);
       return;
     }
 
-    if ( entity === this.chosenEntity) {
+    if ( entity !== this.chosenEntity)
+      return;
 
           const dbSchemaSubscription: Subscription =
           this.dbSchemaService.getEntityFields(this.chosenEntity, this.profileMappingService.selectedProfile$.value)
           .pipe(distinctUntilChanged()).subscribe(
             (value: EntityNode) => {
-              if (value !== null) {
+                if(value === null || value === undefined)
+                  return;
+              
                 const rootTreeNode: EntityTreeNode = this.dbSchemaService.getEntityTree(value);
-                if (rootTreeNode !== null) {
-                  const initArray = new Array<EntityTreeNode>();
-                  initArray.push(rootTreeNode);
-                  this.nestedEntityDataSource.data = initArray;
+                if (rootTreeNode === null)
+                  return;
 
-                  // Expand root node
-                  this.nestedEntityTreeControl.expand(rootTreeNode);
+                const initArray = new Array<EntityTreeNode>();
+                initArray.push(rootTreeNode);
+                this.nestedEntityDataSource.data = initArray;
 
-                  if (resetSelectField) {
-                    this.selectedFieldChanged(null);
-                  }
-                  return rootTreeNode;
-                }
-              }},
+                // Expand root node
+                this.nestedEntityTreeControl.expand(rootTreeNode);
+
+                if (resetSelectField)
+                  this.selectedFieldChanged(null);
+              },
               error => {
                 dbSchemaSubscription.unsubscribe();
-                return null;
               },
               () => dbSchemaSubscription.unsubscribe()
           );
-    }
   }
 
   selectedFieldChanged(value: FieldNode) {

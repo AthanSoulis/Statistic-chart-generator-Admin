@@ -5,7 +5,7 @@
         <div class="ui breadcrumb" #selectedFieldLength *ngFor="let field of selectedNode.name.split('.'); let i = index">
           <div *ngIf="i !== selectedNode.name.split('.').length - 1 ; else activeField">
             <span class="section">{{field | titlecase}}</span>
-            <div class="divider"> > </div>
+            <span class="divider"> > </span>
           </div>
           <ng-template #activeField>
             <span class="active section">{{field | titlecase}}</span>
@@ -18,13 +18,12 @@
   </div>
 
   <ng-template #activeDropdown>
-    <div class="ui fluid selection" id="attributeDropdownMenu"  ngbDropdown (openChange)="this._onTouched($event)" autoClose="'inside'">
-      <span ngbDropdownToggle>
+    <div class="ui fluid selection" id="attributeDropdownMenu"  ngbDropdown ngbDropdownToggle (openChange)="this._onTouched($event)" autoClose="'inside'">
         <div *ngIf="this.checkValidFieldNode(selectedNode) !== null; else nullSelectedField">
           <div class="ui breadcrumb" #selectedFieldLength *ngFor="let field of selectedNode.name.split('.'); let i = index">
             <div *ngIf="i !== selectedNode.name.split('.').length - 1 ; else activeField">
               <span class="section">{{field | titlecase}}</span>
-              <div class="divider"> > </div>
+              <span class="divider"> > </span>
             </div>
             <ng-template #activeField>
               <span class="active section">{{field | titlecase}}</span>
@@ -32,9 +31,8 @@
           </div>
         </div>
         <ng-template #nullSelectedField>
-          <div class="default text mr-2">Select Entity Field</div>
+          <div>Select Entity Field</div>
         </ng-template>
-      </span>
 
       <div ngbDropdownMenu>
         <div class="mat-app-background basic-container">
@@ -57,10 +55,12 @@
               <div class="ui link list" [class.data-tree-invisible]="!nestedEntityTreeControl.isExpanded(node)">
               <div class="content">
                 <div *ngFor="let field of node.fields; trackBy:trackByFieldName; let first = first" >
-                  <a class="mat-tree-node item" (click)="nodeSelected(field, node)" style="padding-inline-start: 1em">
-                    {{field.name | titlecase}}
-                  </a>
-                  <div class="ui fitted divider"></div>
+                  <div *ngIf="field !== null">
+                    <a class="mat-tree-node item" (click)="nodeSelected(field, node)" style="padding-inline-start: 1em">
+                      {{field.name | titlecase}}
+                    </a>
+                    <div class="ui fitted divider"></div>
+                  </div>
                 </div>
               
                 <ng-container matTreeNodeOutlet></ng-container>
