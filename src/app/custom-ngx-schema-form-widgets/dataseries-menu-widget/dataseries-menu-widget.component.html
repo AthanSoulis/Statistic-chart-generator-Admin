@@ -2,11 +2,11 @@
     <div class="row">
         <div class="col">
             <ul ngbNav #nav="ngbNav"  class="nav" orientation="vertical" [destroyOnHide]="false">
-                <li [ngbNavItem]="i" *ngFor="let itemProperty of formProperty.properties; let i = index; trackBy:trackByIndex" [attr.id]="getDataSeriesName(i) | async">
+                <li [ngbNavItem]="i" *ngFor="let itemProperty of formProperty.properties; index as i; trackBy:trackByIndex" [attr.id]="getDataSeriesName(i) | async">
                     <a ngbNavLink>
                         <div class="container-fluid">
-                            <div *ngIf="dataseriesTabService.isEditable[i]; else notEditable">
-                                <input autoFocus type="text" (blur)="disableEditable(i)"
+                            <div *ngIf="this.isEditableName(i) ; else notEditable" #editDataseriesName>
+                                <input id="editDataseriesName-{{i}}" type="text" (blur)="disableEditable(i)"
                                        [value]="getDataSeriesName(i) | async" (change)="setDataSeriesName(i, $event)">
                             </div>
                             <!-- TODO pressing enter to stop editing opens the Clear modal. This happens because the focus must be on that element -->

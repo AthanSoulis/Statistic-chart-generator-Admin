@@ -66,7 +66,6 @@ import { RawChartDataFrameComponent } from './data-frames/raw-chart-data-frame/r
 import { RawDataFrameComponent } from './data-frames/raw-data-frame/raw-data-frame.component';
 import { GeneratedShortUrlFieldComponent } from './generated-short-url-field/generated-short-url-field.component';
 import { ClearFormModalComponent } from './modals/clear-form-modal/clear-form-modal.component';
-import { DataseriesTabService } from './custom-ngx-schema-form-widgets/dataseries-menu-widget/dataseries-tab.service';
 
 @NgModule({
   declarations: [
@@ -140,7 +139,6 @@ import { DataseriesTabService } from './custom-ngx-schema-form-widgets/dataserie
     ErrorHandlerService,
     ChartLoadingService,
     {provide: WidgetRegistry, useClass: CustomWidgetRegistry},
-    DataseriesTabService
   ],
   bootstrap: [AppComponent]
 })

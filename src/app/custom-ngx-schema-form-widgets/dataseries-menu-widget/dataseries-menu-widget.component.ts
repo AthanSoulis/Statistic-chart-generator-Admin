@@ -1,11 +1,11 @@
-import { DataseriesTabService } from './dataseries-tab.service';
-import { Component, OnInit, ChangeDetectorRef, OnDestroy, ViewChild, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
+import { element } from 'protractor';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, ViewChild, AfterViewInit, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { ArrayLayoutWidget } from 'ngx-schema-form';
 import { FormProperty } from 'ngx-schema-form/lib/model/formproperty';
 import { Observable, Subscription, of } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
-import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavItem } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'dataseries-menu-widget',
@@ -16,10 +16,18 @@ import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements AfterViewInit, OnDestroy, OnInit {
 
   @ViewChild('nav', {static: false}) dataseriesMenu:NgbNav;
+  
+  @ViewChild('editDataseriesName') set userContent(element: ElementRef) {
+    if (element) {
+      // Here we get access only when element is rendered
+      (element.nativeElement as HTMLElement).getElementsByTagName("input")[0].focus();
+    }
+  }
 
   subscriptions: Subscription[] = [];
+  public editableName: NgbNavItem | null = null;
 
-  constructor(private cdr: ChangeDetectorRef, private loadingService: ChartLoadingService, public dataseriesTabService: DataseriesTabService) 
+  constructor(private cdr: ChangeDetectorRef, private loadingService: ChartLoadingService) 
   {
     super();
   }
@@ -49,23 +57,32 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
   }
 
   enableEditable(index: number) {
-    console.log('Edit enabled', index);
-    this.dataseriesTabService.setEditable(index, true);
+    this.editableName = this.dataseriesMenu.items.get(index);
     this.cdr.markForCheck();
+    console.log('Edit enabled', index);
   }
   disableEditable(index: number) {
-    console.log('Edit disabled', index);
-    this.dataseriesTabService.setEditable(index, false);
+    this.editableName = null;
     this.cdr.markForCheck();
+    console.log('Edit disabled', index);
+  }
+
+  isEditableName(index: number) : boolean
+  {
+    return this.editableName !== null && this.editableName.id == index;
   }
 
   get menuArrayLength(): number {
     return (<FormProperty[]>this.formProperty.properties).length;
   }
 
-  getDataSeriesName(index: number): Observable<string> {
-    return (<FormProperty>this.formProperty.properties[index])
-    .searchProperty(index + '/chartProperties/dataseriesName').valueChanges.asObservable();
+  getDataSeriesName(index: number): Observable<string> | null{
+    
+    let property = (<FormProperty>this.formProperty.properties[index]);
+    if(property != null)
+      return property.searchProperty(index + '/chartProperties/dataseriesName').valueChanges.asObservable();
+    
+    return null;
   }
 
   setDataSeriesName(index: number, event: Event) {
@@ -77,9 +94,6 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
 
   addItem() {
     if ( this.schema.maxItems === undefined || (<FormProperty[]>this.formProperty.properties).length < this.schema.maxItems) {
-      
-      // Set initial values to the input box
-      this.dataseriesTabService.dataseriesTabs.push({active: false, editable: false});
       
       let addedItemId: number = this.menuArrayLength;
       
@@ -123,7 +137,6 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
     var newActiveId = this.dataseriesMenu.activeId-1 < 0 ? 0 : this.dataseriesMenu.activeId-1 ;
       
     this.formProperty.removeItem(this.formProperty.properties[index]);
-    this.dataseriesTabService.dataseriesTabs.splice(index);
     // The $event.preventDefault() is a workaround to stop web-app reloading
     // https://github.com/ng-bootstrap/ng-bootstrap/issues/1909 
     $event.preventDefault();
