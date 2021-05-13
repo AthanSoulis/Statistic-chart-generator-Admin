@@ -5,17 +5,16 @@
                 <li [ngbNavItem]="i" *ngFor="let itemProperty of formProperty.properties; index as i; trackBy:trackByIndex" [attr.id]="getDataSeriesName(i) | async">
                     <a ngbNavLink>
                         <div class="container-fluid">
-                            <div *ngIf="this.isEditableName(i) ; else notEditable" #editDataseriesName>
-                                <input id="editDataseriesName-{{i}}" type="text" (blur)="disableEditable(i)"
+                            <div *ngIf="this.isEditableName(i) ; else notEditable" #editDataseriesName tabindex="0">
+                                <input id="editDataseriesName-{{i}}" type="text" (blur)="disableEditable(i)" (keyup.enter)="changeOnEnter($event)"
                                        [value]="getDataSeriesName(i) | async" (change)="setDataSeriesName(i, $event)">
                             </div>
-                            <!-- TODO pressing enter to stop editing opens the Clear modal. This happens because the focus must be on that element -->
                             <ng-template #notEditable>
                                 <h4 (dblclick)="enableEditable(i)" style="word-break: break-all; padding-left: 0; padding-right: 0"
                                     class="ui center aligned item mb-3"> {{getDataSeriesName(i) | async}} </h4>
                             </ng-template>
 
-                            <button *ngIf="menuArrayLength > 1" class="mini fluid compact ui icon basic bottom attached button"
+                            <button *ngIf="menuArrayLength > 1" class="mini fluid compact ui icon basic bottom attached button" type="button"
                                     [ngbPopover]="deleteDataseriesPrompt" #deletePrompt="ngbPopover" triggers="manual" [autoClose]="'outside'"
                                     (click)="deletePrompt.open()">
                                 <ng-template let-popup #deleteDataseriesPrompt>
@@ -24,8 +23,8 @@
                                             <h5 class="ui header">Deleting {{getDataSeriesName(i) | async}}</h5>
                                             <p>Are you sure ?</p>
                                             <div class="buttons">
-                                                <button class="ui tiny compact positive button" (click)="removeItem(i, $event)">Yes</button>
-                                                <button class="ui tiny compact negative button" (click)="deletePrompt.close()">No</button>
+                                                <button type="button" class="ui tiny compact positive button" (click)="removeItem(i, $event)">Yes</button>
+                                                <button type="button" class="ui tiny compact negative button" (click)="deletePrompt.close()">No</button>
                                             </div>
                                         </div>
                                     </div>

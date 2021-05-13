@@ -22,7 +22,7 @@
                         <div *ngFor="let shareholder of profile.shareholders" class="ui horizontal  basic label">{{shareholder | titlecase}}</div>
                     </div>
                 </div>
-                <button (click)="cardButtonAction(profile)" class="ui bottom attached primary button">Select</button>
+                <button type="button" (click)="cardButtonAction(profile)" class="ui bottom attached primary button">Select</button>
             </a>
         </div>
     </div>
