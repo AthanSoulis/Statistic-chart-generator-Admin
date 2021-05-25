@@ -20,17 +20,17 @@ export class ClearFormModalComponent implements OnInit {
   ngOnInit() {
   }
 
-  protected dismissModal()
+  public dismissModal()
   {
     this.activeModal.dismiss(NgbModalResolutions.Dismiss);
   }
 
-  protected closeModal()
+  public closeModal()
   {
     this.activeModal.close(NgbModalResolutions.Cancel);
   }
 
-  protected resetForm()
+  public resetForm()
   {
     if(!(this.formRoot === null || this.formRoot === undefined))
     {

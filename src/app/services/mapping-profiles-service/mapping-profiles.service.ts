@@ -54,4 +54,9 @@ export class MappingProfilesService {
     return this.http.get<Array<Profile>>(profileMappingsUrl);
   }
 
+  get activeProfile()
+  {
+    return this.selectedProfile$.getValue();
+  }
+
 }

@@ -37,7 +37,6 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
     this.subscriptions.push(this.formProperty.valueChanges.
       pipe(distinctUntilChanged(this.compareDataseriesSchema)).subscribe(
       (value: DataseriesFormSchema[]) => {
-        console.log(value);
         
         // After a chart load make the last Dataseries active.
         if (this.loadingService.chartLoadingStatus) {
