@@ -44,8 +44,7 @@
             <!-- This is the tree node template for expandable nodes -->
             <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
               <div class="item">
-                <div class="mat-tree-node  header" id="data-tree-entity-field"
-                matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+                <div class="mat-tree-node  header" id="data-tree-entity-field" matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
                 
                   <button type="button" id="data-tree-button" class="ui compact icon button" mat-icon-button>
                     <mat-icon class="mat-icon-rtl-mirror">
@@ -60,7 +59,7 @@
               <!-- This is the content when the leaf is expanded -->
               <div class="ui link list" [class.data-tree-invisible]="!nestedEntityTreeControl.isExpanded(node)">
                 <div class="content">
-                  <div *ngFor="let field of node.fields; trackBy:trackByFieldName; let first = first" >
+                  <div *ngFor="let field of node.fields; let first = first" >
                     <div *ngIf="field !== null">
                       <a class="mat-tree-node item" (click)="nodeSelected(field, node)" style="padding-inline-start: 1em">
                         {{field.name | titlecase}}
@@ -68,7 +67,7 @@
                       <div class="ui fitted divider"></div>
                     </div>
                   </div>
-                
+                  <mat-progress-bar *ngIf="node.loading"  class="example-tree-progress-bar"></mat-progress-bar>
                   <ng-container matTreeNodeOutlet></ng-container>
                 </div>
               </div>

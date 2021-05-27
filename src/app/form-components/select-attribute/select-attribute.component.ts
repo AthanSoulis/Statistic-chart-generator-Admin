@@ -1,12 +1,12 @@
+import { DynamicDataSource, DynamicTreeDatabase } from './dynamic-entity-tree/dynamic-entity-tree';
+import { EntityTreeNode, FieldNode, EntityNode, DynamicEntityNode } from './dynamic-entity-tree/entity-tree-nodes.types';
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, Output, EventEmitter, forwardRef, OnChanges, SimpleChanges, AfterViewInit, ChangeDetectorRef, OnDestroy, OnInit, ViewRef, Injectable } from '@angular/core';
 import { FormGroup, ControlContainer, FormGroupDirective, FormBuilder, FormGroupName, ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource, MatTreeNodeOutlet } from '@angular/material/tree';
-
 import { FieldType } from '../../services/supported-filter-types-service/supported-filter-types.service';
-import { DbSchemaService, EntityNode, FieldNode, EntityTreeNode } from '../../services/db-schema-service/db-schema.service';
-
+import { DbSchemaService } from '../../services/db-schema-service/db-schema.service';
 import { BehaviorSubject, of as observableOf, Observable, Subscription} from 'rxjs';
 import { map, distinctUntilChanged, first } from 'rxjs/operators';
 import { ErrorHandlerService } from '../../services/error-handler-service/error-handler.service';
@@ -24,8 +24,10 @@ import { ChartLoadingService } from '../../services/chart-loading-service/chart-
 })
 export class SelectAttributeComponent implements ControlValueAccessor, OnChanges, AfterViewInit {
 
-  nestedEntityTreeControl: NestedTreeControl<EntityTreeNode>;
-  nestedEntityDataSource: MatTreeNestedDataSource<EntityTreeNode>;
+  // nestedEntityTreeControl: NestedTreeControl<EntityTreeNode>;
+  // nestedEntityDataSource: MatTreeNestedDataSource<EntityTreeNode>;
+  nestedEntityTreeControl: NestedTreeControl<DynamicEntityNode>;
+  nestedEntityDataSource: DynamicDataSource;
 
   @Input() isDisabled = false;
   @Input() formControl: FormControl;
@@ -35,13 +37,18 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
   selectedNode: FieldNode = null;
 
   constructor(private dbSchemaService: DbSchemaService,
+    private dynamicTreeDB: DynamicTreeDatabase,
     private errorHandlerService: ErrorHandlerService,
     private profileMappingService: MappingProfilesService,
     private chartLoadingService: ChartLoadingService,
     private cdr: ChangeDetectorRef) {
 
-      this.nestedEntityTreeControl = new NestedTreeControl<EntityTreeNode>(this.getChildren);
-      this.nestedEntityDataSource = new MatTreeNestedDataSource<EntityTreeNode>();
+      // this.nestedEntityTreeControl = new NestedTreeControl<EntityTreeNode>(this.getChildren);
+      // this.nestedEntityDataSource = new MatTreeNestedDataSource<EntityTreeNode>();
+      this.nestedEntityTreeControl = new NestedTreeControl<DynamicEntityNode>(node => node.relations);
+      this.nestedEntityDataSource = new DynamicDataSource(this.nestedEntityTreeControl, this.dynamicTreeDB);
+
+      dynamicTreeDB.initialData.subscribe(data => (this.nestedEntityDataSource.data = data));
   }
 /**
  * Angular callbacks
@@ -82,18 +89,21 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
     return observableOf(null);
   }
 
-  hasNestedChild = (_number: number, nodeData: EntityTreeNode) => {
-    if (nodeData.relations !== undefined && nodeData.fields !== undefined)
-      return (nodeData.relations.length !== 0 || nodeData.fields.length !== 0);
+  // hasNestedChild = (_number: number, nodeData: EntityTreeNode) => {
+  //   if (nodeData.relations !== undefined && nodeData.fields !== undefined)
+  //     return (nodeData.relations.length !== 0 || nodeData.fields.length !== 0);
 
-    return false;
-  }
+  //   return false;
+  // }
+  
+  hasNestedChild = (_: number, node: DynamicEntityNode) => !!node.fields || node.isExpandable;
 
   getEntityTreeNode(entity: string, resetSelectField?: boolean) {
 
     if (entity === null || entity === undefined) {
 
       this.nestedEntityDataSource.data = [];
+      this.dynamicTreeDB.initialData.next([]);
       this.selectedFieldChanged(null);
       return;
     }
@@ -103,41 +113,79 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
       
     console.log("Getting Entity fields for :" + this.chosenEntity);
 
-    const dbSchemaSubscription: Subscription =
-    this.dbSchemaService.getEntityFields(this.chosenEntity, this.profileMappingService.activeProfile)
-    .pipe(distinctUntilChanged(this.compareEntityNodes),first()).subscribe(
-      (value: EntityNode) => {
-          if(value === null || value === undefined)
-            return;
+    this.dynamicTreeDB.initCache(this.chosenEntity);
 
-          console.log("EntityNode", value);
+    // Expand the first tree node and reset the field if it is needed
+    this.dynamicTreeDB.initialData
+    .subscribe((initData : DynamicEntityNode[]) => {
+      
+      if(initData.length > 0)
+        this.nestedEntityTreeControl.expand(initData[0]);
+
+      console.log("DataSource",this.nestedEntityDataSource.data);
+      console.log("InitData",initData);
+
+      if (resetSelectField)
+        this.selectedFieldChanged(null);
+    });
+
+    // const dbSchemaSubscription: Subscription =
+    // this.dbSchemaService.getEntityFields(this.chosenEntity, this.profileMappingService.activeProfile)
+    // .pipe(distinctUntilChanged(this.compareEntityNodes),first()).subscribe(
+    //   (value: EntityNode) => {
+    //       if(value === null || value === undefined)
+    //         return;
+
+    //       console.log("EntityNode", value);
           
-          const rootTreeNode: EntityTreeNode = this.dbSchemaService.getEntityTree(value);
+    //       const rootTreeNode: EntityTreeNode = this.dbSchemaService.getEntityTree(value);
 
-          if (rootTreeNode === null)
-            return;
+    //       if (rootTreeNode === null)
+    //         return;
 
-          // console.log("EntityTreeNode", rootTreeNode);
+    //       // console.log("EntityTreeNode", rootTreeNode);
           
-          const initArray = new Array<EntityTreeNode>();
-          initArray.push(rootTreeNode);
-          this.nestedEntityDataSource.data = initArray;
+    //       const initArray = new Array<EntityTreeNode>();
+    //       initArray.push(rootTreeNode);
+    //       this.nestedEntityDataSource.data = initArray;
 
-          // console.log("NestedEntityDataSource", this.nestedEntityDataSource);
-          // Expand root node
-          this.nestedEntityTreeControl.expand(rootTreeNode);
+    //       // console.log("NestedEntityDataSource", this.nestedEntityDataSource);
+    //       // Expand root node
+    //       this.nestedEntityTreeControl.expand(rootTreeNode);
 
-          if (resetSelectField)
-            this.selectedFieldChanged(null);
-        }
-    );
+    //       if (resetSelectField)
+    //         this.selectedFieldChanged(null);
+    //     }
+    // );
   }
 
-  nodeSelected(field: FieldNode, node: EntityTreeNode, pathOnly?: boolean) {
+  // nodeSelected(field: FieldNode, node: EntityTreeNode, pathOnly?: boolean) {
+
+  //   // Set the field to full path
+  //   const selectedFieldNode = new FieldNode();
+  //   selectedFieldNode.name = this.traverseParentPath(node) + '.' + field.name;
+  //   selectedFieldNode.type = field.type;
+
+  //   // Change the control into the updated value
+  //   this.formControl.setValue(selectedFieldNode);
+  //   console.log(this.formControl);
+
+  //   // Emit the event that the field value has changed
+  //   this.fieldChanged.emit(selectedFieldNode);
+  // }
+  nodeSelected(field: FieldNode, node: DynamicEntityNode, pathOnly?: boolean) {
 
     // Set the field to full path
     const selectedFieldNode = new FieldNode();
-    selectedFieldNode.name = this.traverseParentPath(node) + '.' + field.name;
+    var parentPath = '';
+    node.path.map((nodeName: string) => {
+      if(parentPath.length > 0)
+        parentPath = parentPath + '.' + nodeName;
+      else
+        parentPath = nodeName;
+    });
+    selectedFieldNode.name = parentPath + '.' + field.name;
+    // selectedFieldNode.name = this.traverseParentPath(node) + '.' + field.name;
     selectedFieldNode.type = field.type;
 
     // Change the control into the updated value

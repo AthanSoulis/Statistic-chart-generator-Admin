@@ -1,9 +1,9 @@
-import { Component, OnInit, AfterContentInit, OnDestroy, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterContentInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
 import { SupportedFilterTypesService, FilterType, FieldType } from '../../services/supported-filter-types-service/supported-filter-types.service';
-import { FieldNode } from '../../services/db-schema-service/db-schema.service';
 import { Subscription, Observable } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { FieldNode } from '../../form-components/select-attribute/dynamic-entity-tree/entity-tree-nodes.types';
 
 @Component({
   selector: 'operator-selection-widget',

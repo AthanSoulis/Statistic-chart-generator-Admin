@@ -1,9 +1,7 @@
-import { Component, OnInit, OnDestroy, AfterContentInit, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
-import { ControlWidget, ObjectLayoutWidget } from 'ngx-schema-form';
-import { Observable, Subscription, Subject } from 'rxjs';
-import { ObjectProperty } from 'ngx-schema-form/lib/model/objectproperty';
+import { Component, OnDestroy, AfterContentInit, AfterViewInit } from '@angular/core';
+import { ControlWidget } from 'ngx-schema-form';
+import { Subscription } from 'rxjs';
 import { PropertyGroup } from 'ngx-schema-form/lib/model/formproperty';
-import { FieldNode } from '../../services/db-schema-service/db-schema.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({

@@ -7,6 +7,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { AppComponent } from './app.component';
 import { ChartFrameComponent } from './data-frames/chart-frame/chart-frame.component';
@@ -117,6 +118,7 @@ import { ClearFormModalComponent } from './modals/clear-form-modal/clear-form-mo
     MatTreeModule,
     MatIconModule,
     MatAutocompleteModule,
+    MatProgressBarModule,
     ColorPickerModule,
     NgbPopoverModule,
     NgbModalModule,

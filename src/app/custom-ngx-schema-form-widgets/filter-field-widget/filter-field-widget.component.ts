@@ -2,8 +2,8 @@ import { Subscription } from 'rxjs';
 import { Component, OnDestroy, AfterContentInit } from '@angular/core';
 import { ControlWidget } from 'ngx-schema-form';
 import { FieldType} from '../../services/supported-filter-types-service/supported-filter-types.service';
-import { FieldNode } from '../../services/db-schema-service/db-schema.service';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { FieldNode } from '../../form-components/select-attribute/dynamic-entity-tree/entity-tree-nodes.types';
 
 @Component({
   selector: 'filter-field-widget',
