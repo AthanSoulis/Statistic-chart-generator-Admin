@@ -1,16 +1,13 @@
+import { UrlProviderService } from './../../services/url-provider-service/url-provider.service';
 import { DynamicDataSource, DynamicTreeDatabase } from './dynamic-entity-tree/dynamic-entity-tree';
 import { EntityTreeNode, FieldNode, EntityNode, DynamicEntityNode } from './dynamic-entity-tree/entity-tree-nodes.types';
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, Output, EventEmitter, forwardRef, OnChanges, SimpleChanges, AfterViewInit, ChangeDetectorRef, OnDestroy, OnInit, ViewRef, Injectable } from '@angular/core';
-import { FormGroup, ControlContainer, FormGroupDirective, FormBuilder, FormGroupName, ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, forwardRef, OnChanges, SimpleChanges, AfterViewInit, ChangeDetectorRef, ViewRef } from '@angular/core';
+import { ControlContainer, FormGroupDirective, ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { MatTreeNestedDataSource, MatTreeNodeOutlet } from '@angular/material/tree';
-import { FieldType } from '../../services/supported-filter-types-service/supported-filter-types.service';
-import { DbSchemaService } from '../../services/db-schema-service/db-schema.service';
-import { BehaviorSubject, of as observableOf, Observable, Subscription} from 'rxjs';
-import { map, distinctUntilChanged, first } from 'rxjs/operators';
-import { ErrorHandlerService } from '../../services/error-handler-service/error-handler.service';
-import { MappingProfilesService, Profile } from '../../services/mapping-profiles-service/mapping-profiles.service';
+import { of as observableOf} from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
+import { MappingProfilesService} from '../../services/mapping-profiles-service/mapping-profiles.service';
 import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
 
 @Component({
@@ -33,22 +30,23 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
   @Input() formControl: FormControl;
   @Input() chosenEntity: string = null;
   @Output() fieldChanged = new EventEmitter<FieldNode>();
-
+ 
   selectedNode: FieldNode = null;
+  private dynamicTreeDB: DynamicTreeDatabase
 
-  constructor(private dbSchemaService: DbSchemaService,
-    private dynamicTreeDB: DynamicTreeDatabase,
-    private errorHandlerService: ErrorHandlerService,
-    private profileMappingService: MappingProfilesService,
+  constructor(private profileMappingService: MappingProfilesService,
     private chartLoadingService: ChartLoadingService,
-    private cdr: ChangeDetectorRef) {
+    private cdr: ChangeDetectorRef,
+    // These services are just for the DynamicTreeDatabase
+    private httpClient: HttpClient,
+    private urlProvider: UrlProviderService
+    ) {
+      this.dynamicTreeDB = new DynamicTreeDatabase(httpClient, urlProvider, profileMappingService);
 
       // this.nestedEntityTreeControl = new NestedTreeControl<EntityTreeNode>(this.getChildren);
       // this.nestedEntityDataSource = new MatTreeNestedDataSource<EntityTreeNode>();
       this.nestedEntityTreeControl = new NestedTreeControl<DynamicEntityNode>(node => node.relations);
-      this.nestedEntityDataSource = new DynamicDataSource(this.nestedEntityTreeControl, this.dynamicTreeDB);
-
-      dynamicTreeDB.initialData.subscribe(data => (this.nestedEntityDataSource.data = data));
+      this.nestedEntityDataSource = new DynamicDataSource(this.nestedEntityTreeControl, this.dynamicTreeDB);      
   }
 /**
  * Angular callbacks
@@ -113,20 +111,22 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
       
     console.log("Getting Entity fields for :" + this.chosenEntity);
 
+    // Cache the EntityTree
     this.dynamicTreeDB.initCache(this.chosenEntity);
 
     // Expand the first tree node and reset the field if it is needed
-    this.dynamicTreeDB.initialData
+    this.dynamicTreeDB.initialData.pipe(takeWhile(() => this.chosenEntity == entity))
     .subscribe((initData : DynamicEntityNode[]) => {
+      
+      // Initialise the NestedTree's data
+      this.nestedEntityDataSource.data = initData;
       
       if(initData.length > 0)
         this.nestedEntityTreeControl.expand(initData[0]);
 
-      console.log("DataSource",this.nestedEntityDataSource.data);
-      console.log("InitData",initData);
-
       if (resetSelectField)
         this.selectedFieldChanged(null);
+
     });
 
     // const dbSchemaSubscription: Subscription =
@@ -175,16 +175,10 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
   // }
   nodeSelected(field: FieldNode, node: DynamicEntityNode, pathOnly?: boolean) {
 
-    // Set the field to full path
     const selectedFieldNode = new FieldNode();
-    var parentPath = '';
-    node.path.map((nodeName: string) => {
-      if(parentPath.length > 0)
-        parentPath = parentPath + '.' + nodeName;
-      else
-        parentPath = nodeName;
-    });
-    selectedFieldNode.name = parentPath + '.' + field.name;
+
+    // Set the field to full path
+    selectedFieldNode.name = this.takeFieldName(field, node);
     // selectedFieldNode.name = this.traverseParentPath(node) + '.' + field.name;
     selectedFieldNode.type = field.type;
 
@@ -199,7 +193,17 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
 /**
  * Utility calls
  */
-  
+  takeFieldName(field: FieldNode, node: DynamicEntityNode) : string
+  {
+    var parentPath = '';
+    node.path.map((nodeName: string) => {
+      if(parentPath.length > 0)
+        parentPath = parentPath + '.' + nodeName;
+      else
+        parentPath = nodeName;
+    });
+    return parentPath + '.' + field.name;;
+  }
   trackByFieldName(index: number, item: FieldNode) { return item.name; }
 
   public checkValidFieldNode(e: FieldNode) {

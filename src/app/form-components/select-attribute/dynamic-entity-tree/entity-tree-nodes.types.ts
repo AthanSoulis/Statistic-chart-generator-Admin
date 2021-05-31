@@ -9,27 +9,29 @@ export class DynamicEntityNode {
     parent?: DynamicEntityNode;
     loading: boolean;
   
-    constructor(
-      fields: FieldNode[],
-      name: string,
-      expendable: boolean,
-      path: string[],
-      relations?: BehaviorSubject<DynamicEntityNode[]>,
-      parent?: DynamicEntityNode,
-      loading = false
-    ) {
+    constructor(fields: FieldNode[], name: string, path: string[],
+      relations?: BehaviorSubject<DynamicEntityNode[]>, parent?: DynamicEntityNode, loading = false) {
+    
       this.fields = fields;
       this.name = name;
-      this.isExpandable = expendable;
   
       this.path = path;
       this.path.push(name);
-      if (relations != null) this.relations = relations;
-      else this.relations = new BehaviorSubject<DynamicEntityNode[]>([]);
+      
+      if (relations != null)
+        this.relations = relations;
+      else
+       this.relations = new BehaviorSubject<DynamicEntityNode[]>([]);
   
       this.parent = parent;
       this.loading = loading;
     }
+
+    
+    public get isExpendable() : boolean {
+      return (this.relations != null && this.relations.value != null && this.relations.value.length > 0)
+    }
+    
   }
   
   export class EntityTreeNode {

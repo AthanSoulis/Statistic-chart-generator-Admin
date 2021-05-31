@@ -57,20 +57,20 @@
     background: white ;
 }
 
-#attributeDropdownMenu .default.text {
+#attributeDropdownField .default.text {
     display: inline-block;
 }
 
-#attributeDropdownMenu .dropdown-menu {
+#attributeDropdownField .dropdown-menu {
     min-width: calc(100% + 1px);
     will-change: transform, opacity !important;
 }
 
-#attributeDropdownMenu .dropdown-toggle div {
+#attributeDropdownField .dropdown-toggle div {
     display: inline-block;
 }
 
-#attributeDropdownMenu .ui.breadcrumb {
+#attributeDropdownField .ui.breadcrumb {
     padding: 2px;
     background-color: #fff;
 }

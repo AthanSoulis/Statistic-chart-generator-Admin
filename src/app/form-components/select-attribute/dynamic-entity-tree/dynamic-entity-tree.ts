@@ -5,9 +5,7 @@ import { MappingProfilesService } from './../../../services/mapping-profiles-ser
 import { HttpClient } from '@angular/common/http';
 import { UrlProviderService } from './../../../services/url-provider-service/url-provider.service';
 import { EntityNode, DynamicEntityNode } from './entity-tree-nodes.types';
-import { Injectable } from '@angular/core';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
-
 
 export class DynamicDataSource implements DataSource<DynamicEntityNode> {
     dataChange = new BehaviorSubject<DynamicEntityNode[]>([]);
@@ -59,7 +57,7 @@ export class DynamicDataSource implements DataSource<DynamicEntityNode> {
           var children = this._database.getChildren(node);
 
           if (children != null)
-            children.subscribe(data => { if (node.relations != null) node.relations.next(data); });
+            children.pipe(first()).subscribe(data => { if (node.relations != null) node.relations.next(data); });
 
           node.loading = false;
         }, 1000);
@@ -79,7 +77,6 @@ export class DynamicDataSource implements DataSource<DynamicEntityNode> {
  * Database for dynamic data. When expanding a node in the tree, the data source will need to fetch
  * the descendants data from the database.
  */
- @Injectable({ providedIn: 'root' })
  export class DynamicTreeDatabase {
    
   public loading = false;
@@ -105,7 +102,7 @@ export class DynamicDataSource implements DataSource<DynamicEntityNode> {
       
       // Populate the head of the Dynamic Tree
       this.initialData.next(
-        this.dbdata.map(node => new DynamicEntityNode(node.fields, node.name, (node.relations != null && node.relations.length > 0), []))
+        this.dbdata.map(node => new DynamicEntityNode(node.fields, node.name, []))
       );
       console.log("InitialData: ",this.initialData.value);
     });
@@ -132,7 +129,7 @@ export class DynamicDataSource implements DataSource<DynamicEntityNode> {
       var path = new Array<string>();
       entityNode.path.map(node => path.push(node));
 
-      return new DynamicEntityNode( node.fields, node.name, (node.relations != null && node.relations.length > 0), path, undefined, entityNode);
+      return new DynamicEntityNode( node.fields, node.name, path, undefined, entityNode);
     });
     
     // console.log("Children: ", newNodes);
