@@ -34,6 +34,10 @@ export class DiagramCategoryPickerComponent extends ControlWidget implements Car
       (<BehaviorSubject<string>> this.formProperty.valueChanges)
       .subscribe(diagram => {
         this.diagramCategoryService.changeDiagramCategory(diagram);
+
+        // Change the requirement of XAxis in order to accomodate the Numbers "chart"
+        this.dynamicFormHandlingService.changeRequirementOfXAxis(diagram !== 'numbers');
+         
         this.cdr.markForCheck();
     }));
   }
@@ -49,24 +53,11 @@ export class DiagramCategoryPickerComponent extends ControlWidget implements Car
     // Changes active tab to the next
     this.tabActivationStatusService.activeId = this.tabActivationStatusService.tabIds[2];
 
-    if ( this.formProperty.value !== diagram ) {
+    if ( this.formProperty.value !== diagram ) 
       this.formProperty.setValue(diagram, false);
-    }
-
-    if (diagram === 'numbers') {
-      this.dynamicFormHandlingService.changeRequirementOfXAxis(false);
-    } else {
-      this.dynamicFormHandlingService.changeRequirementOfXAxis(true);
-    }
-
   }
 
-  isDiagramSelected(diagram: string): boolean {
-    if (diagram === this.formProperty.value) {
-      return true;
-    }
-    return false;
-  }
+  isDiagramSelected(diagram: string): boolean { return diagram === this.formProperty.value; }
 
   setSelectedCardStyle(isSelected: boolean) {
     if (isSelected) {
