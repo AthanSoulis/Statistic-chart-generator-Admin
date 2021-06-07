@@ -27,7 +27,7 @@ export class DynamicFormHandlingService {
   private _formSchema: FormSchema;
 
   // fixme when find another solution
-  private _xAxisRequired: boolean;
+  private _xAxisRequired: boolean = false;
 
   constructor(private diagramcategoryService: DiagramCategoryService,
     private chartExportingService: ChartExportingService,
@@ -167,8 +167,10 @@ export class DynamicFormHandlingService {
   }
 
   changeRequirementOfXAxis(required: boolean) {
-    if (required) {
-      this._xAxisRequired = true;
+    
+    this._xAxisRequired = required;
+    
+    if (this._xAxisRequired) {
       this._formSchema.dataseriesFormSchema.items.properties.data.fieldsets[0].fields = ['yaxisData', 'xaxisData'];
       this._formSchema.dataseriesFormSchema.items.properties.data.required = ['yAxisData', 'xAxisData', 'filters'];
       this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.items.required = ['xaxisEntityField'];
@@ -176,7 +178,6 @@ export class DynamicFormHandlingService {
       this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData
       .items.properties.xaxisEntityField.requiredField = true;
     } else {
-      this._xAxisRequired = false;
       // this._formSchema.dataseriesFormSchema.items.properties.data.properties.xaxisData.widget = 'hidden';
       this._formSchema.dataseriesFormSchema.items.properties.data.fieldsets[0].fields = ['yaxisData'];
       this._formSchema.dataseriesFormSchema.items.properties.data.required = ['yAxisData', 'filters'];
