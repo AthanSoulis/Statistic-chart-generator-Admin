@@ -68,7 +68,6 @@ export interface HighchartsOptionsFormSchema {
     hcCredits ?: HCCreditsOptionsFormSchema;
     hcLegend ?: HCLegendOptionsFormSchema;
     hcMiscOptions ?: HCMiscOptionsFormSchema;
-    stackedChart ?: undefined | "normal" | "percent" | "stream" | "overlap";
 }
 export interface EchartsOptionsFormSchema {
     titles ?: TitlesOptionsFormSchema;
@@ -145,7 +144,7 @@ export interface ECMiscOptionsFormSchema {
 export interface HCMiscOptionsFormSchema {
     exporting ?: boolean;
     hcEnableDataLabels ?: boolean;
-    stackedChart ?: string;
+    stackedChart ?: undefined | "normal" | "percent" | "stream" | "overlap";
 }
 export interface GooglechartsOptionsFormSchema {
 

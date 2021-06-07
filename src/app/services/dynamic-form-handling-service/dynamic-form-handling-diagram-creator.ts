@@ -194,11 +194,16 @@ export class DiagramCreator {
 
         if (appearanceOptions.chartAppearance.highchartsAppearanceOptions !== undefined
             && appearanceOptions.chartAppearance.highchartsAppearanceOptions !== null) {
-            // Exporting
-            chartObj.chartDescription.exporting.enabled =
-                appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.exporting;
-
-            chartObj.chartDescription.plotOptions.series.stacking = appearanceOptions.chartAppearance.highchartsAppearanceOptions.stackedChart;
+            
+            if( appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions != null )
+            {
+                // Exporting
+                chartObj.chartDescription.exporting.enabled =
+                    appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.exporting;
+                
+                // Stacked Chart
+                chartObj.chartDescription.plotOptions.series.stacking = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.stackedChart;
+            }   
 
             // Legend Options
             chartObj.chartDescription.legend.enabled =
