@@ -1,0 +1,24 @@
+.nav {
+  border-bottom: 2px solid rgba(34,36,38,.15);
+}
+
+.nav-pills .nav-link {
+  border-radius: 0;
+  align-self: flex-end;
+  margin: 0 0 -2px;
+  padding: .85714286em 1.14285714em;
+  -webkit-transition: color .1s;
+  transition: color .1s;
+  border-bottom: 2px solid transparent;
+  color: rgba(0,0,0,.87);
+  font-weight: 400;
+  font-size: 1.25em;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  background-color: transparent;
+  box-shadow: none;
+  border-color: #1b1c1d;
+  font-weight: 700;
+  color: rgba(0,0,0,.95);
+}

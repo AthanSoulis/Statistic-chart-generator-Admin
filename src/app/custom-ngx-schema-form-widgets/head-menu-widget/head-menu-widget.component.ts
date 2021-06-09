@@ -39,7 +39,7 @@ export class HeadMenuWidgetComponent extends ObjectLayoutWidget {
 
   applyChanges() {
     this.dynamicFormHandlingService.submitForm();
-    const modalRef = this.modalService.open(ChartTableModalComponent, { centered: true, size: 'lg' });
+    const modalRef = this.modalService.open(ChartTableModalComponent, { centered: true, size: 'xl' });
 
     (modalRef.componentInstance as ChartTableModalComponent).modalContext = 
       new ChartTableModalContext(this.dynamicFormHandlingService.ChartObject,this.dynamicFormHandlingService.TableObject,

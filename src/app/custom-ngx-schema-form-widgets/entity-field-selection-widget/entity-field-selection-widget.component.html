@@ -1,6 +1,7 @@
 <div [ngClass]="!schema.requiredField ? 
 'widget form-group fluid field' : 
-(control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required fluid field error' : 'widget form-group required fluid field'">
+(control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required fluid field error' : 'widget form-group required fluid field'"
+	class="entity-field-selection">
 	<label [attr.for]="id" class="horizontal control-label">
 		{{ schema.title }}
 	</label>

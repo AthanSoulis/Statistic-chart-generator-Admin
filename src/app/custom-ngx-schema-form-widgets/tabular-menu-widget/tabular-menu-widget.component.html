@@ -1,4 +1,4 @@
-<nav ngbNav #nav="ngbNav" class="nav nav-pills nav-justified" [destroyOnHide]="false">
+<nav ngbNav #nav="ngbNav" class="nav nav-pills mt-5 mb-5" [destroyOnHide]="false">
     <ng-container ngbNavItem [ngbNavItem]="i" *ngFor="let fieldset of this.schema.fieldsets; let i = index; trackBy:trackByIndex">
         <a class="nav-link" ngbNavLink>{{ fieldset.tabTitle }}</a>
         <ng-template ngbNavContent>
