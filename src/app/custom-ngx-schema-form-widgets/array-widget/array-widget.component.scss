@@ -8,7 +8,8 @@
 a, a:visited {
   text-decoration: none;
   position: relative;
-  color: rgb(8, 131, 192);
+  //color: rgb(8, 131, 192);
+  color: #4687e6;
   cursor: pointer;
   font-size: 1.1rem;
 }
@@ -20,7 +21,8 @@ a, a:visited {
   bottom: 0;
   left: 0;
   width: 0%;
-  background: rgb(8, 131, 192);
+  //background: rgb(8, 131, 192);
+  background: #4687e6;
   transition: 0.2s ease;
   -webkit-transition: 0.2s ease;
 }

@@ -15,12 +15,14 @@ input:read-only{
 } */
 
 .blue.text {
-    color: rgb(8, 131, 192);
+    //color: rgb(8, 131, 192);
+    color: #222080;
     font-size: 1.1rem;
 }
 
 .ui.centered.grid.link.item.active {
-    border-color: rgb(8, 131, 192) !important;
+    //border-color: rgb(8, 131, 192) !important;
+    border-color: #222080 !important;
 }
 
 .nav {
@@ -36,7 +38,8 @@ input:read-only{
 }
 
 .nav .nav-link.active {
-    border-right: 2px solid #0883c0 !important;
+    //border-right: 2px solid #0883c0 !important;
+    border-right: 2px solid #222080 !important;
     margin-right: -2px;
 }
 

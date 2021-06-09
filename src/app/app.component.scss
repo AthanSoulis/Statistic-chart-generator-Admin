@@ -2,6 +2,11 @@
 @import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/variables";
 
+.action-buttons {
+    display: flex;
+}
+
+
 .btn-group.btn-group-lg
 {
     height: 100%;
@@ -20,9 +25,10 @@ a.btn
 {
     display: flex;
     align-items: center;
-    flex-flow: column;
+    flex-flow: row;
     justify-content: space-around;
-    align-items: center;
+    border-radius: 2em;
+    padding: .5em 2em;
 }
 
 .url-holder {

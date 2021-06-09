@@ -2,24 +2,24 @@
     
     <div class="row no-gutters justify-content-between">
         <!-- Logo -->
-        <div class="col-4 mr-auto">
+        <div class="col-4">
             <img class="header-stats-img img-fluid" src="https://www.openaire.eu/images/OpenAIRE_branding/Logo_Horizontal.png" alt="OpenAIRE">
         </div>
         <!-- Right Header Menu Buttons -->
         <div class="col-auto row no-gutters align-items-center">
-            <div class="btn-group btn-group-lg" role="group" aria-label="data-actions">
+            <div class="action-buttons" role="group" aria-label="data-actions">
             <!--TODO Animate Buttons -->
-                <a href="#" role="button" class="col-4 btn btn-outline-secondary" [ngbPopover]="sharePopUp" triggers="manual"
+                <a href="#" role="button" class="col-4 btn btn-outline-primary mr-3" [ngbPopover]="sharePopUp" triggers="manual"
                 [autoClose]="'outside'" #p1="ngbPopover" (click)="toggleSharePopover(p1)" placement="bottom-left">
                     <div><b>Share</b></div>
                     <div><i class="bi bi-share-fill"></i></div>
                 </a>
-                <a href="#" role="button" class="col-4 btn btn-outline-secondary" [ngbPopover]="loadPopUp" triggers="manual"
+                <a href="#" role="button" class="col-4 btn btn-outline-primary mr-3" [ngbPopover]="loadPopUp" triggers="manual"
                 [autoClose]="'outside'" #p2="ngbPopover" (click)="openLoadChartPopover(p2)" (hidden)="resetLoadChartPopover()" placement="bottom">
                     <div><b>Load</b></div>
                     <div><i class="bi bi-upload"></i></div>
                 </a>
-                <a href="#" role="button" class="col-4 btn btn-outline-secondary" [ngbPopover]="savePopUp" triggers="manual"
+                <a href="#" role="button" class="col-4 btn btn-outline-primary mr-3" [ngbPopover]="savePopUp" triggers="manual"
                 [autoClose]="'outside'" #p3="ngbPopover" (click)="saveChartPopover(p3)" placement="bottom-right"> 
                     <div><b>Save</b></div>
                     <div><i class="bi bi-save"></i></div>

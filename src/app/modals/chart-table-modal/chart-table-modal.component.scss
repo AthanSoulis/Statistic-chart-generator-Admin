@@ -7,3 +7,45 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.nav {
+    border-bottom: 2px solid rgba(34,36,38,.15);
+}
+
+.nav-tabs .nav-link {
+    border-radius: 0;
+    align-self: flex-end;
+    margin: 0 0 -2px;
+    padding: .85714286em 1.14285714em;
+    -webkit-transition: color .1s;
+    transition: color .1s;
+    border-bottom: 2px solid transparent;
+    color: rgba(0,0,0,.87);
+    font-weight: 400;
+    //font-size: 1.25em;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .show > .nav-link {
+    background-color: transparent;
+    box-shadow: none;
+    border-color: transparent;
+    border-bottom: 1px solid #1b1c1d;
+    font-weight: 700;
+    color: rgba(0,0,0,.95);
+}
+
+//.content {
+//    display: block;
+//    width: 100%;
+//    font-size: 1em;
+//    line-height: 1.4;
+//    padding: 1.5rem;
+//    background: #fff;
+//}
+
+.actions {
+    background: #f9fafb;
+    padding: 1rem;
+    border-top: 1px solid rgba(34,36,38,.15);
+    text-align: right;
+}

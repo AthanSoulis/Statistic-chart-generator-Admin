@@ -15,10 +15,10 @@
             <div>{{this.formProperty.schema.fieldsets[0].description}}</div>
           </div>
         </div>
-        <div class="row text-center">
-          <div class="col" *ngIf="(mappingProfileService.selectedProfile$ | async) !== null && (mappingProfileService.selectedProfile$ | async) !== undefined">
-              <b>{{(mappingProfileService.selectedProfile$ | async).name}} </b>
-              <span *ngFor="let shareholder of (mappingProfileService.selectedProfile$ | async).shareholders">{{shareholder}}</span>
+        <div class="row text-center mt-3">
+          <div class="col card" *ngIf="(mappingProfileService.selectedProfile$ | async) !== null && (mappingProfileService.selectedProfile$ | async) !== undefined">
+              <b class="mr-3">{{(mappingProfileService.selectedProfile$ | async).name}} </b>
+              <span *ngFor="let shareholder of (mappingProfileService.selectedProfile$ | async).shareholders" class="">{{shareholder}}</span>
           </div>
         </div>
       </a>
@@ -41,8 +41,8 @@
             <div>{{this.formProperty.schema.fieldsets[1].description}}</div>
           </div>
         </div>
-        <div class="row text-center">
-          <div class="col" *ngIf="(this.diagramCategoryService.selectedDiagramCategory$ | async) !== null && (this.diagramCategoryService.selectedDiagramCategory$ | async) !== undefined">
+        <div class="row text-center mt-3">
+          <div class="col card" *ngIf="(this.diagramCategoryService.selectedDiagramCategory$ | async) !== null && (this.diagramCategoryService.selectedDiagramCategory$ | async) !== undefined">
             <b>{{(this.diagramCategoryService.selectedDiagramCategory$ | async) | titlecase}} Diagram</b>
           </div>
         </div>

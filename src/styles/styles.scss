@@ -114,3 +114,81 @@ ul.nav.nav-tabs {
 .pointer-events-auto {
   pointer-events: auto;
 }
+
+
+
+
+
+.fields {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  flex-direction: row;
+  margin: 0 -.5em 1em;
+}
+
+.fields .field {
+  clear: both;
+  margin: 0;
+}
+
+.fields > .field {
+  -webkit-box-flex: 0;
+  flex: 0 1 auto;
+  padding-left: .5em;
+  padding-right: .5em;
+}
+
+.fields > .field:first-child {
+  border-left: none;
+  box-shadow: none;
+}
+
+[class*="equal width"].fields > .field, .ui[class*="equal width"].form .fields > .field {
+  width: 100%;
+  -webkit-box-flex: 1;
+  flex: 1 1 auto;
+}
+
+/* ========================
+          Buttons
+ ========================== */
+
+.btn-outline-primary {
+  color: #222080;
+  border-color: #222080;
+}
+
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: #222080;
+  border-color: #222080;
+}
+
+.btn-primary {
+  background-color: #222080;
+  border-color: #222080;
+}
+
+.btn-primary:disabled, .btn-primary:hover:disabled{
+  background-color: #3c3a9a;
+  border-color: #3c3a9a;
+}
+
+.btn-primary:hover {
+  background-color: #4687e6;
+  border-color: #4687e6;
+}
+
+.btn-secondary {
+  background-color: #4687e6;
+  color: #fff;
+  border: 1px solid transparent;
+}
+
+.btn-secondary:hover {
+  background-color: transparent;
+  color: #4687e6;
+  border: 1px solid #4687e6;
+}
