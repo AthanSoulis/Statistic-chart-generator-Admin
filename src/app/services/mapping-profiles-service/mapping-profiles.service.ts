@@ -44,7 +44,7 @@ export class MappingProfilesService {
     if(selectedProfile !== undefined)
       this.selectedProfile$.next(selectedProfile);
     else
-    this.selectedProfile$.next(null);
+      this.selectedProfile$.next(null);
   }
 
   private getProfileMappings(): Observable<Array<Profile>> {

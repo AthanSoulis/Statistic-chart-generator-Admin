@@ -53,6 +53,11 @@ export class DynamicEntityNode {
     relations: EntityNode[];
     name: string;
   }
+  export class CachedEntityNode {
+    fields: FieldNode[];
+    relations: string[];
+    name: string;
+  }
   export class FieldNode {
     name: string;
     type: string;

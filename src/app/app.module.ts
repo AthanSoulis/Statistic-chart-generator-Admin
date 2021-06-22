@@ -27,6 +27,7 @@ import { MappingProfilesService } from './services/mapping-profiles-service/mapp
 import { ChartExportingService } from './services/chart-exporting-service/chart-exporting.service';
 import { ErrorHandlerService } from './services/error-handler-service/error-handler.service';
 import { ChartLoadingService } from './services/chart-loading-service/chart-loading.service';
+import { DynamicTreeDatabase } from './services/dynamic-tree-database/dynamic-tree-database.service';
 
 import { ColorPickerModule } from 'ngx-color-picker';
 
@@ -141,6 +142,7 @@ import { ClearFormModalComponent } from './modals/clear-form-modal/clear-form-mo
     ErrorHandlerService,
     ChartLoadingService,
     {provide: WidgetRegistry, useClass: CustomWidgetRegistry},
+    DynamicTreeDatabase
   ],
   bootstrap: [AppComponent]
 })

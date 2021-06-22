@@ -2,18 +2,15 @@ import { EntityNode, EntityTreeNode, DynamicEntityNode } from '../../form-compon
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { BehaviorSubject, merge, Observable, of } from 'rxjs';
-import { catchError, finalize, map, retry } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 import { UrlProviderService } from '../url-provider-service/url-provider.service';
-import { Profile, MappingProfilesService } from '../mapping-profiles-service/mapping-profiles.service';
+import { Profile } from '../mapping-profiles-service/mapping-profiles.service';
 import { ErrorHandlerService } from '../error-handler-service/error-handler.service';
-import { CollectionViewer, DataSource, SelectionChange } from '@angular/cdk/collections';
-import { NestedTreeControl } from '@angular/cdk/tree';
 @Injectable()
 export class DbSchemaService {
 
-  constructor(private http: HttpClient, private urlProvider: UrlProviderService,
-    private profileMappingService: MappingProfilesService, private errorHandler: ErrorHandlerService) {}
+  constructor(private http: HttpClient, private urlProvider: UrlProviderService, private errorHandler: ErrorHandlerService) {}
 
   getAvailableEntities(profile: Profile|null|undefined): Observable<Array<string>> {
 

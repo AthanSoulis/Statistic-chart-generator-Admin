@@ -1,14 +1,13 @@
-import { UrlProviderService } from './../../services/url-provider-service/url-provider.service';
-import { DynamicDataSource, DynamicTreeDatabase } from './dynamic-entity-tree/dynamic-entity-tree';
+import { DynamicDataSource } from './dynamic-entity-tree/dynamic-entity-tree';
 import { EntityTreeNode, FieldNode, EntityNode, DynamicEntityNode } from './dynamic-entity-tree/entity-tree-nodes.types';
-import { HttpClient } from '@angular/common/http';
 import { Component, Input, Output, EventEmitter, forwardRef, OnChanges, SimpleChanges, AfterViewInit, ChangeDetectorRef, ViewRef } from '@angular/core';
 import { ControlContainer, FormGroupDirective, ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { of as observableOf} from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
+import { BehaviorSubject, of as observableOf} from 'rxjs';
+import { filter, first, takeWhile } from 'rxjs/operators';
 import { MappingProfilesService} from '../../services/mapping-profiles-service/mapping-profiles.service';
 import { ChartLoadingService } from '../../services/chart-loading-service/chart-loading.service';
+import { DynamicTreeDatabase } from '../../services/dynamic-tree-database/dynamic-tree-database.service';
 
 @Component({
   selector: 'select-attribute',
@@ -21,8 +20,6 @@ import { ChartLoadingService } from '../../services/chart-loading-service/chart-
 })
 export class SelectAttributeComponent implements ControlValueAccessor, OnChanges, AfterViewInit {
 
-  // nestedEntityTreeControl: NestedTreeControl<EntityTreeNode>;
-  // nestedEntityDataSource: MatTreeNestedDataSource<EntityTreeNode>;
   nestedEntityTreeControl: NestedTreeControl<DynamicEntityNode>;
   nestedEntityDataSource: DynamicDataSource;
 
@@ -32,19 +29,13 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
   @Output() fieldChanged = new EventEmitter<FieldNode>();
  
   selectedNode: FieldNode = null;
-  private dynamicTreeDB: DynamicTreeDatabase
 
   constructor(private profileMappingService: MappingProfilesService,
     private chartLoadingService: ChartLoadingService,
     private cdr: ChangeDetectorRef,
-    // These services are just for the DynamicTreeDatabase
-    private httpClient: HttpClient,
-    private urlProvider: UrlProviderService
+    private dynamicTreeDB: DynamicTreeDatabase
     ) {
-      this.dynamicTreeDB = new DynamicTreeDatabase(httpClient, urlProvider, profileMappingService);
 
-      // this.nestedEntityTreeControl = new NestedTreeControl<EntityTreeNode>(this.getChildren);
-      // this.nestedEntityDataSource = new MatTreeNestedDataSource<EntityTreeNode>();
       this.nestedEntityTreeControl = new NestedTreeControl<DynamicEntityNode>(node => node.relations);
       this.nestedEntityDataSource = new DynamicDataSource(this.nestedEntityTreeControl, this.dynamicTreeDB);      
   }
@@ -79,20 +70,6 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
 /**
  * Mat Nested Tree related calls
  */
-
-  private getChildren = (node: EntityTreeNode) =>
-  {
-    if (node.relations !== undefined )
-      return observableOf(node.relations);
-    return observableOf(null);
-  }
-
-  // hasNestedChild = (_number: number, nodeData: EntityTreeNode) => {
-  //   if (nodeData.relations !== undefined && nodeData.fields !== undefined)
-  //     return (nodeData.relations.length !== 0 || nodeData.fields.length !== 0);
-
-  //   return false;
-  // }
   
   hasNestedChild = (_: number, node: DynamicEntityNode) => !!node.fields || node.isExpandable;
 
@@ -101,78 +78,40 @@ export class SelectAttributeComponent implements ControlValueAccessor, OnChanges
     if (entity === null || entity === undefined) {
 
       this.nestedEntityDataSource.data = [];
-      this.dynamicTreeDB.initialData.next([]);
       this.selectedFieldChanged(null);
       return;
     }
 
     if ( entity !== this.chosenEntity)
-      return;
+      return; 
       
-    console.log("Getting Entity fields for :" + this.chosenEntity);
-
-    // Cache the EntityTree
-    this.dynamicTreeDB.initCache(this.chosenEntity);
-
-    // Expand the first tree node and reset the field if it is needed
-    this.dynamicTreeDB.initialData.pipe(takeWhile(() => this.chosenEntity == entity))
-    .subscribe((initData : DynamicEntityNode[]) => {
-      
-      // Initialise the NestedTree's data
-      this.nestedEntityDataSource.data = initData;
-      
-      if(initData.length > 0)
-        this.nestedEntityTreeControl.expand(initData[0]);
-
-      if (resetSelectField)
-        this.selectedFieldChanged(null);
-
-    });
-
-    // const dbSchemaSubscription: Subscription =
-    // this.dbSchemaService.getEntityFields(this.chosenEntity, this.profileMappingService.activeProfile)
-    // .pipe(distinctUntilChanged(this.compareEntityNodes),first()).subscribe(
-    //   (value: EntityNode) => {
-    //       if(value === null || value === undefined)
-    //         return;
-
-    //       console.log("EntityNode", value);
-          
-    //       const rootTreeNode: EntityTreeNode = this.dbSchemaService.getEntityTree(value);
-
-    //       if (rootTreeNode === null)
-    //         return;
-
-    //       // console.log("EntityTreeNode", rootTreeNode);
-          
-    //       const initArray = new Array<EntityTreeNode>();
-    //       initArray.push(rootTreeNode);
-    //       this.nestedEntityDataSource.data = initArray;
-
-    //       // console.log("NestedEntityDataSource", this.nestedEntityDataSource);
-    //       // Expand root node
-    //       this.nestedEntityTreeControl.expand(rootTreeNode);
-
-    //       if (resetSelectField)
-    //         this.selectedFieldChanged(null);
-    //     }
-    // );
+    // Check if the Data Source is connected and if it is, populate the Tree Root node
+    this.nestedEntityDataSource.connected$.subscribe( 
+      connected => { if(connected) this.populateRootNode(entity, resetSelectField) }
+    );
+    
+    // Set the field untouched
+    if (resetSelectField)
+      this.selectedFieldChanged(null);
   }
 
-  // nodeSelected(field: FieldNode, node: EntityTreeNode, pathOnly?: boolean) {
+  private populateRootNode(entity: string, resetSelectField: boolean)
+  {
 
-  //   // Set the field to full path
-  //   const selectedFieldNode = new FieldNode();
-  //   selectedFieldNode.name = this.traverseParentPath(node) + '.' + field.name;
-  //   selectedFieldNode.type = field.type;
+    this.dynamicTreeDB.getRootNode(entity).pipe(takeWhile(() => this.chosenEntity == entity))
+    .subscribe((rootNode: DynamicEntityNode) => {
+      
+      if(rootNode != null)
+      {   
+        // Initialise the NestedTree's data
+        this.nestedEntityDataSource.data = [rootNode];
+        // Expand the first tree node
+        if(this.nestedEntityDataSource.data.length > 0)
+          this.nestedEntityTreeControl.expand(this.nestedEntityDataSource.data[0]);
+      }
+    });
+  }
 
-  //   // Change the control into the updated value
-  //   this.formControl.setValue(selectedFieldNode);
-  //   console.log(this.formControl);
-
-  //   // Emit the event that the field value has changed
-  //   this.fieldChanged.emit(selectedFieldNode);
-  // }
   nodeSelected(field: FieldNode, node: DynamicEntityNode, pathOnly?: boolean) {
 
     const selectedFieldNode = new FieldNode();

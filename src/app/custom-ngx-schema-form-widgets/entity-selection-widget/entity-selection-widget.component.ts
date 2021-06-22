@@ -101,6 +101,9 @@ export class EntitySelectionWidgetComponent extends ControlWidget implements OnI
     .subscribe(
       // success path
       (data: Array<string>) => {
+
+        console.log("Entity Selection");
+        
         
         // We want to avoid certain functionality when a chart is Loading so notify that this Dataseries stopped loading
         // When its not loading a chart and a profile change Reset the entity when a profile changes and its not loading a chart
