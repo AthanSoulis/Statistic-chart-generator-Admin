@@ -37,42 +37,42 @@ export class DbSchemaService {
     );
   }
 
-  getEntityFields(entity: string, profile?: Profile) {
+  // getEntityFields(entity: string, profile?: Profile) {
 
-    if (profile === undefined || profile === null) { return this.getEntityFieldsNoMapping(entity); }
+  //   if (profile === undefined || profile === null) { return this.getEntityFieldsNoMapping(entity); }
 
-    const entityFieldsUrl = this.urlProvider.serviceURL + '/schema/' + profile.name + '/entities/' + entity;
-    return this.http.get<EntityNode>(entityFieldsUrl)
-      .pipe(
-        retry(3), // retry a failed request up to 3 times
-        catchError(this.errorHandler.handleError) // then handle the error
-    );
-  }
+  //   const entityFieldsUrl = this.urlProvider.serviceURL + '/schema/' + profile.name + '/entities/' + entity;
+  //   return this.http.get<EntityNode>(entityFieldsUrl)
+  //     .pipe(
+  //       retry(3), // retry a failed request up to 3 times
+  //       catchError(this.errorHandler.handleError) // then handle the error
+  //   );
+  // }
 
-  getEntityFieldsNoMapping(entity: string): Observable<EntityNode> {
+  // getEntityFieldsNoMapping(entity: string): Observable<EntityNode> {
 
-    const entityFieldsUrl = this.urlProvider.serviceURL + '/schema/entities/' + entity;
-    return this.http.get<EntityNode>(entityFieldsUrl)
-      .pipe(
-        retry(3), // retry a failed request up to 3 times
-        catchError(this.errorHandler.handleError) // then handle the error
-    );
-  }
+  //   const entityFieldsUrl = this.urlProvider.serviceURL + '/schema/entities/' + entity;
+  //   return this.http.get<EntityNode>(entityFieldsUrl)
+  //     .pipe(
+  //       retry(3), // retry a failed request up to 3 times
+  //       catchError(this.errorHandler.handleError) // then handle the error
+  //   );
+  // }
 
-  getEntityTree(rootNode: EntityNode): EntityTreeNode {
-    return this.createEntityLinkedTree(null, rootNode);
-  }
+  // getEntityTree(rootNode: EntityNode): EntityTreeNode {
+  //   return this.createEntityLinkedTree(null, rootNode);
+  // }
 
-  private createEntityLinkedTree(parentNode: EntityTreeNode, recreatedNode: EntityNode): EntityTreeNode {
+  // private createEntityLinkedTree(parentNode: EntityTreeNode, recreatedNode: EntityNode): EntityTreeNode {
 
-    const newEntityTreeNode = new EntityTreeNode(recreatedNode.fields, new Array<EntityTreeNode>(), recreatedNode.name, parentNode);
+  //   const newEntityTreeNode = new EntityTreeNode(recreatedNode.fields, new Array<EntityTreeNode>(), recreatedNode.name, parentNode);
 
-    if (recreatedNode.relations) {
-      recreatedNode.relations.forEach(element => {
-        newEntityTreeNode.relations.push(this.createEntityLinkedTree(newEntityTreeNode, element));
-      });
-      return newEntityTreeNode;
-    }
-    return null;
-  }
+  //   if (recreatedNode.relations) {
+  //     recreatedNode.relations.forEach(element => {
+  //       newEntityTreeNode.relations.push(this.createEntityLinkedTree(newEntityTreeNode, element));
+  //     });
+  //     return newEntityTreeNode;
+  //   }
+  //   return null;
+  // }
 }

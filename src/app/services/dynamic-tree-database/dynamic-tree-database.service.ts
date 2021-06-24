@@ -27,7 +27,8 @@ import { Injectable, OnDestroy } from '@angular/core';
     }
   
     private getEntityRelations( profile: Profile, entity: string ): Observable<CachedEntityNode> {
-      const entityRelationsUrl = 'http://stats.madgik.di.uoa.gr:8180/schema/' + profile.name +'/entities/' + entity;
+      // const entityRelationsUrl = 'http://stats.madgik.di.uoa.gr:8180/schema/' + profile.name +'/entities/' + entity;
+      const entityRelationsUrl = this.urlProvider.serviceURL + '/schema/' + profile.name +'/entities/' + entity;
   
       return this.http.get<CachedEntityNode>(entityRelationsUrl);
     }
