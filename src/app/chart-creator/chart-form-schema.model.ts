@@ -336,7 +336,11 @@ export class FormSchema {
                         }
                     },
                     'fieldsets':
-                        [{
+                        [
+                        // {
+                        //     'fields': [ 'dataseriesColor']
+                        // },
+                        {
                             'fields': [ 'dataseriesName']
                         },
                         {
@@ -466,13 +470,13 @@ export class FormSchema {
                                 'type': 'array',
                                 'title': 'Data Series Color',
                                 'itemName': 'Series Color',
-                                'minItems': 1,
+                                // 'minItems': 1,
                                 'deleteButtonPosition' : 'out',
                                 'widget' : { 'id' : 'csui-array' },
                                 'items': {
                                     'type' : 'string',
                                     'pattern': '^#[0-9a-fA-F]{8}$',
-                                    'default': '#00000000',
+                                    'default': '#000000FF',
                                     'widget': {'id': 'csui-color-picker'}
                                 }
                             },
@@ -817,13 +821,13 @@ export class FormSchema {
                                 'type': 'array',
                                 'title': 'Data Series Color',
                                 'itemName': 'Series Color',
-                                'minItems': 1,
+                                // 'minItems': 1,
                                 'deleteButtonPosition' : 'out',
                                 'widget' : { 'id' : 'csui-array' },
                                 'items': {
                                     'type' : 'string',
                                     'pattern': '^#[0-9a-fA-F]{8}$',
-                                    'default': '#00000000',
+                                    'default': '#000000FF',
                                     'widget': {'id': 'csui-color-picker'}
                                 }
                             },
