@@ -574,7 +574,7 @@ export class FormSchema {
                                     'hcEnableCredits' : {
                                         'type': 'boolean',
                                         'widget' : {'id' : 'csui-boolean'},
-                                        'default': true,
+                                        'default': false,
                                         'tooltip': 'Whether to show the credits text.',
                                         'description': 'Enable Credits'
                                     },
@@ -701,7 +701,7 @@ export class FormSchema {
                                     'exporting': {
                                         'type': 'boolean',
                                         'widget' : {'id' : 'csui-boolean'},
-                                        'default': false,
+                                        'default': true,
                                         // tslint:disable-next-line:max-line-length
                                         'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
                                         'description': 'Enable Exporting'
@@ -953,12 +953,12 @@ export class FormSchema {
                                     'exporting': {
                                         'type': 'boolean',
                                         'widget' : {'id' : 'csui-boolean'},
-                                        'default': false,
+                                        'default': true,
                                         // tslint:disable-next-line:max-line-length
                                         'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
                                         'description': 'Enable Exporting'
                                     },
-                                    'hcEnableDataLabels' : {
+                                    'ecEnableDataLabels' : {
                                         'type': 'boolean',
                                         'widget' : {'id' : 'csui-boolean'},
                                         'default': false,
@@ -976,7 +976,7 @@ export class FormSchema {
                                 'fieldsets':
                                     [{
                                         'title': 'Misc Options',
-                                        'fields': ['exporting', 'hcEnableDataLabels', 'stackedChart']
+                                        'fields': ['exporting', 'ecEnableDataLabels', 'stackedChart']
                                     }]
                             }
                         },
@@ -1128,7 +1128,7 @@ export class FormSchema {
                             'exporting' : {
                                 'type': 'boolean',
                                 'widget' : {'id' : 'csui-boolean'},
-                                'default': false,
+                                'default': true,
                                 // tslint:disable-next-line:max-line-length
                                 'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
                                 'title': 'Enable Exporting'
@@ -1208,7 +1208,7 @@ export class FormSchema {
                                     'hmEnableCredits' : {
                                         'type': 'boolean',
                                         'widget' : {'id' : 'csui-boolean'},
-                                        'default': true,
+                                        'default': false,
                                         'tooltip': 'Whether to show the credits text.',
                                         'description': 'Enable Credits'
                                     },
@@ -1236,7 +1236,7 @@ export class FormSchema {
                                     'exporting': {
                                         'type': 'boolean',
                                         'widget' : {'id' : 'csui-boolean'},
-                                        'default': false,
+                                        'default': true,
                                         // tslint:disable-next-line:max-line-length
                                         'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
                                         'description': 'Enable Exporting'

@@ -138,7 +138,7 @@ export interface ECChartAreaOptionsFormSchema {
 }
 export interface ECMiscOptionsFormSchema {
     exporting ?: boolean;
-    hcEnableDataLabels ?: boolean;
+    ecEnableDataLabels ?: boolean;
     stackedChart ?: boolean;
 }
 export interface HCMiscOptionsFormSchema {

@@ -306,7 +306,7 @@ export class DiagramCreator {
                 chartObj.chartDescription.title.subtext = appearanceOptions.chartAppearance.echartsAppearanceOptions.titles.subtitle;
             }
             // tslint:disable-next-line:max-line-length
-            chartObj.chartDescription.plotOptions.series.dataLabels.enabled = appearanceOptions.chartAppearance.echartsAppearanceOptions.ecMiscOptions.hcEnableDataLabels;
+            chartObj.chartDescription.plotOptions.series.dataLabels.enabled = appearanceOptions.chartAppearance.echartsAppearanceOptions.ecMiscOptions.ecEnableDataLabels;
 
             // Chart Area Options
             // tslint:disable-next-line:max-line-length
@@ -332,7 +332,7 @@ export class DiagramCreator {
             queries.push(new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
                 category.categoryType !== 'combo' ? category.categoryType :
                     (dataElement.chartProperties.chartType == null) ? 'line' : dataElement.chartProperties.chartType));
-            // if (appearanceOptions.chartAppearance.echartsAppearanceOptions.hcMiscOptions.hcEnableDataLabels) {
+            // if (appearanceOptions.chartAppearance.echartsAppearanceOptions.hcMiscOptions.ecEnableDataLabels) {
             //     queries.push(new ECChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
             //         category.categoryType !== 'combo' ? category.categoryType :
             //             (isNullOrUndefined(dataElement.chartProperties.chartType) ? 'line' : dataElement.chartProperties.chartType ),
