@@ -7,6 +7,13 @@ import { ChartExportingService } from '../chart-exporting-service/chart-exportin
 import { ChartLoadingService } from '../chart-loading-service/chart-loading.service';
 import { DiagramCategoryService } from '../diagram-category-service/diagram-category.service';
 import {FormSchema} from '../../chart-creator/chart-form-schema.model';
+import { first } from 'rxjs/operators';
+import { HighChartsChart } from '../supported-libraries-service/chart-description-HighCharts.model';
+import { GoogleChartsChart, GoogleChartsTable } from '../supported-libraries-service/chart-description-GoogleCharts.model';
+import { HighMapsMap } from '../supported-libraries-service/chart-description-HighMaps.model';
+import { EChartsChart } from '../supported-libraries-service/chart-description-eCharts.model';
+import { RawChartDataModel } from '../supported-libraries-service/chart-description-rawChartData.model';
+import { RawDataModel } from '../supported-libraries-service/description-rawData.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -67,11 +74,19 @@ export class DynamicFormHandlingService {
   resetForm(root: FormProperty) {
     // Reset through the root property of the dynamic form
     root.reset(this._resetFormValue, false);
+    
     // Reset table and chart objects
-    this._tableObject = undefined;
     this._chartObject = undefined;
+    this.chartExportingService.changeChartUrl(this._chartObject);
+
+    this._tableObject = undefined;
+    this.chartExportingService.changeTableUrl(this._tableObject);
+
     this._rawChartDataObject = undefined;
+    this.chartExportingService.changeRawChartDataUrl(this._rawChartDataObject);
+    
     this._rawDataObject = undefined;
+    this.chartExportingService.changeRawDataUrl(this._rawDataObject);
   }
 
   loadForm(event: any) {
@@ -81,13 +96,9 @@ export class DynamicFormHandlingService {
     if (!(event === null || event === undefined) ) {
       const fr: FileReader = new FileReader();
 
-      fr.onload = () => {
-        this._loadFormObject = JSON.parse(<string>fr.result);
-      };
-      fr.onloadstart = () => { this.chartLoadingService.chartLoadingStatus = true;  };
-      fr.onloadend = () => {
-        this._loadFormObjectFile = event.target.files[0];
-      };
+      fr.onload = () => this._loadFormObject = JSON.parse(<string>fr.result)
+      fr.onloadstart = () => this.chartLoadingService.chartLoadingStatus = true
+      fr.onloadend = () => this._loadFormObjectFile = event.target.files[0]
 
       fr.readAsText(event.target.files[0]);
     }
@@ -101,58 +112,35 @@ export class DynamicFormHandlingService {
   submitForm() {
     console.log('Submitted this form', this.formSchemaObject);
     const value = this.formSchemaObject;
+
     if (this.formSchemaObject !== null && this.isFormValid) {
 
-      const forkSub = forkJoin(
-          [this._diagramCreator.createChart(value),
-          this._diagramCreator.createTable(value),
-          this._diagramCreator.createRawChartData(value),
-          this._diagramCreator.createRawData(value)]).subscribe(
-          ([chartObject, tableObject, rawChartDataObject, rawDataObject]: [Object, Object, Object, Object]) => {
-            this._chartObject = chartObject;
-            this.chartExportingService.changeChartUrl(chartObject);
-
-            this._tableObject = tableObject;
-            this.chartExportingService.changeTableUrl(tableObject);
-
-            this._rawChartDataObject = rawChartDataObject;
-            this.chartExportingService.changeRawChartDataUrl(rawChartDataObject);
-
-            this._rawDataObject = rawDataObject;
-            this.chartExportingService.changeRawDataUrl(rawDataObject);
-          },
-          () => {
-            forkSub.unsubscribe(); }
-        );
+      forkJoin([this._diagramCreator.createChart(value), this._diagramCreator.createTable(value),
+        this._diagramCreator.createRawChartData(value), this._diagramCreator.createRawData(value)])
+        .pipe(first())
+        .subscribe(([chartObject, tableObject, rawChartDataObject, rawDataObject]) => 
+        this.changeDataObjects(chartObject, tableObject, rawChartDataObject, rawDataObject));
     }
   }
   publishURLS() {
     console.log('Publish this form', this.formSchemaObject);
     const value = this.formSchemaObject;
+
+    if(!this.isFormValid)
+      this.changeDataObjects(null, null, null, null);
+
     if (this.formSchemaObject !== null && this.isFormValid) {
 
-      const forkSub = forkJoin(
-          [this._diagramCreator.createChart(value),
-          this._diagramCreator.createTable(value),
-          this._diagramCreator.createRawChartData(value),
-          this._diagramCreator.createRawData(value)]).subscribe(
-          ([chartObject, tableObject, rawChartDataObject, rawDataObject]: [Object, Object, Object, Object]) => {
-              this.chartExportingService.changeChartUrl(chartObject);
-
-              this.chartExportingService.changeTableUrl(tableObject);
-
-              this.chartExportingService.changeRawChartDataUrl(rawChartDataObject);
-
-              this.chartExportingService.changeRawDataUrl(rawDataObject);
-            },
-            () => {
-              forkSub.unsubscribe(); }
-          );
+      forkJoin([this._diagramCreator.createChart(value), this._diagramCreator.createTable(value),
+        this._diagramCreator.createRawChartData(value), this._diagramCreator.createRawData(value)])
+        .pipe(first())
+        .subscribe(([chartObject, tableObject, rawChartDataObject, rawDataObject]) => 
+        this.changeDataObjects(chartObject, tableObject, rawChartDataObject, rawDataObject));
     }
   }
-  exportForm() {
-    this.createAndDownloadJSON(this.formSchemaObject, 'chart.json');
-  }
+
+  exportForm() { this.createAndDownloadJSON(this.formSchemaObject, 'chart.json'); }
+
   createAndDownloadJSON(jsonObj: Object, filename: string) {
 
     const element = document.createElement('a');
@@ -195,11 +183,26 @@ export class DynamicFormHandlingService {
 
   isOnlyxAxisRequirementError() {
 
-    for (const value of this._formErrorObject.getValue()) {
-      if (value.code !== 'ARRAY_LENGTH_SHORT' || !value.path.endsWith('/data/xaxisData')) {
+    for (const value of this._formErrorObject.getValue())
+      if (value.code !== 'ARRAY_LENGTH_SHORT' || !value.path.endsWith('/data/xaxisData'))
         return false;
-      }
-    }
+      
     return true;
+  }
+
+  private changeDataObjects(chartObject: HighChartsChart | GoogleChartsChart | HighMapsMap | EChartsChart,
+    tableObject: GoogleChartsTable, rawChartDataObject: RawChartDataModel, rawDataObject: RawDataModel)
+  {
+    this._chartObject = chartObject;
+    this.chartExportingService.changeChartUrl(chartObject);
+
+    this._tableObject = tableObject;
+    this.chartExportingService.changeTableUrl(tableObject);
+
+    this._rawChartDataObject = rawChartDataObject;
+    this.chartExportingService.changeRawChartDataUrl(rawChartDataObject);
+
+    this._rawDataObject = rawDataObject;
+    this.chartExportingService.changeRawDataUrl(rawDataObject);
   }
 }

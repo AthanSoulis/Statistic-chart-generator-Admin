@@ -28,7 +28,7 @@ export class DiagramCreator {
     constructor(private diagramCategoryService: DiagramCategoryService) {
     }
 
-    public createChart(formObj: SCGAFormSchema): Observable<Object|null> {
+    public createChart(formObj: SCGAFormSchema): Observable<HighChartsChart|GoogleChartsChart|HighMapsMap|EChartsChart|null> {
 
         const view: ViewFormSchema = formObj.view;
         const category: CategoryFormSchema = formObj.category;
@@ -75,7 +75,7 @@ export class DiagramCreator {
         // }});
     }
 
-    public createTable(formObj: SCGAFormSchema): Observable<Object> {
+    public createTable(formObj: SCGAFormSchema): Observable<GoogleChartsTable> {
 
         const view: ViewFormSchema = formObj.view;
         const category: CategoryFormSchema = formObj.category;
@@ -96,7 +96,7 @@ export class DiagramCreator {
         return of(tableObj);
     }
 
-    public createRawChartData(formObj: SCGAFormSchema): Observable<Object> {
+    public createRawChartData(formObj: SCGAFormSchema): Observable<RawChartDataModel> {
 
         const view: ViewFormSchema = formObj.view;
         const category: CategoryFormSchema = formObj.category;
@@ -119,7 +119,7 @@ export class DiagramCreator {
         return of(rawChartDataModel);
     }
 
-    public createRawData(formObj: SCGAFormSchema): Observable<Object> {
+    public createRawData(formObj: SCGAFormSchema): Observable<RawDataModel> {
 
         const view: ViewFormSchema = formObj.view;
         // const category: CategoryFormSchema = formObj.category;
