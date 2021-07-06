@@ -60,7 +60,7 @@ import { Injectable, OnDestroy } from '@angular/core';
       var root = new BehaviorSubject<DynamicEntityNode>(null);
 
       // We only care for the first map that has entries, in order to get the root node.
-      this._entityMap$.pipe(filter(map => map.size > 0), first()).subscribe(map =>{
+      this._entityMap$.pipe(filter(map => map?.size > 0), first()).subscribe(map =>{
         
         if( map == null)
           return;
