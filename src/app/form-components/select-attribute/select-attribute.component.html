@@ -18,7 +18,7 @@
   </div>
 
   <ng-template #activeDropdown>
-    <div class="ui fluid selection" id="attributeDropdownField"  ngbDropdown ngbDropdownToggle (openChange)="this._onTouched($event)" autoClose="'inside'">
+    <div class="ui fluid selection" id="attributeDropdownField"  ngbDropdown ngbDropdownToggle (openChange)="this._onTouched($event)" display="'static'" autoClose="'inside'">
       <!-- This is the input field that appears when the dropdown is closed -->  
       <div *ngIf="this.checkValidFieldNode(selectedNode) !== null; else nullSelectedField">
           <!-- Showing the breadcrump of entities -->  
