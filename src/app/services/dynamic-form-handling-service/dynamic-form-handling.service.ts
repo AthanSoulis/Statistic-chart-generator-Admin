@@ -111,32 +111,35 @@ export class DynamicFormHandlingService {
 
   submitForm() {
     console.log('Submitted this form', this.formSchemaObject);
-    const value = this.formSchemaObject;
 
-    if (this.formSchemaObject !== null && this.isFormValid) {
-
-      forkJoin([this._diagramCreator.createChart(value), this._diagramCreator.createTable(value),
-        this._diagramCreator.createRawChartData(value), this._diagramCreator.createRawData(value)])
-        .pipe(first())
-        .subscribe(([chartObject, tableObject, rawChartDataObject, rawDataObject]) => 
-        this.changeDataObjects(chartObject, tableObject, rawChartDataObject, rawDataObject));
-    }
+    if (this.formSchemaObject !== null && this.isFormValid)
+      this.createDataObjectsFromSchemaObject(this.formSchemaObject);
   }
+
   publishURLS() {
     console.log('Publish this form', this.formSchemaObject);
-    const value = this.formSchemaObject;
 
     if(!this.isFormValid)
       this.changeDataObjects(null, null, null, null);
 
-    if (this.formSchemaObject !== null && this.isFormValid) {
+    if (this.formSchemaObject !== null && this.isFormValid)
+      this.createDataObjectsFromSchemaObject(this.formSchemaObject);
+  }
 
-      forkJoin([this._diagramCreator.createChart(value), this._diagramCreator.createTable(value),
-        this._diagramCreator.createRawChartData(value), this._diagramCreator.createRawData(value)])
-        .pipe(first())
-        .subscribe(([chartObject, tableObject, rawChartDataObject, rawDataObject]) => 
-        this.changeDataObjects(chartObject, tableObject, rawChartDataObject, rawDataObject));
+
+  private createDataObjectsFromSchemaObject(value: SCGAFormSchema) {
+    
+    if(this.diagramcategoryService.selectedDiagramCategory$.value === "numbers")
+    {
+      this._diagramCreator.createRawData(value).pipe(first()).subscribe(rawDataObject => this.changeDataObjects(null,null,null,rawDataObject))
+      return;
     }
+
+    forkJoin([this._diagramCreator.createChart(value), this._diagramCreator.createTable(value),
+      this._diagramCreator.createRawChartData(value), this._diagramCreator.createRawData(value)])
+      .pipe(first())
+      .subscribe(([chartObject, tableObject, rawChartDataObject, rawDataObject]) => 
+      this.changeDataObjects(chartObject, tableObject, rawChartDataObject, rawDataObject));
   }
 
   exportForm() { this.createAndDownloadJSON(this.formSchemaObject, 'chart.json'); }
