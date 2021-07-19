@@ -37,6 +37,14 @@
             ]
           },
           "configurations": {
+            "back-end-vm": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.back-end-vm.ts"
+                }
+              ]
+            },
             "production": {
               "optimization": true,
               "outputHashing": "all",
@@ -95,6 +103,9 @@
           "configurations": {
             "production": {
               "browserTarget": "stats-tool:build:production"
+            },
+            "back-end-vm": {
+              "browserTarget": "stats-tool:build:back-end-vm"
             }
           }
         },
