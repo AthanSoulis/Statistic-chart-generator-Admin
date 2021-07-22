@@ -1,5 +1,5 @@
 import { Component, OnDestroy, AfterContentInit, ChangeDetectorRef } from '@angular/core';
-import { ControlWidget } from 'ngx-schema-form';
+import { ControlWidget, FormProperty } from 'ngx-schema-form';
 import { DiagramCategoryService } from '../../services/diagram-category-service/diagram-category.service';
 import { Subscription, BehaviorSubject } from 'rxjs';
 import { TabActivationStatusService } from '../../services/tab-activation-status-service/tab-activation-status.service';
@@ -22,6 +22,7 @@ export class DiagramCategoryPickerComponent extends ControlWidget implements Car
   }
 
   subscriptions: Array<Subscription> = [];
+  isPolarFormProperty: FormProperty;
 
   constructor(public diagramCategoryService: DiagramCategoryService,
               private cdr: ChangeDetectorRef, private tabActivationStatusService: TabActivationStatusService,
@@ -30,6 +31,9 @@ export class DiagramCategoryPickerComponent extends ControlWidget implements Car
   }
 
   ngAfterContentInit() {
+    // Get a reference to if the selected diagram is polar
+    this.isPolarFormProperty = this.formProperty.parent.properties['isPolarDiagram'];
+
     this.subscriptions.push(
       (<BehaviorSubject<string>> this.formProperty.valueChanges)
       .subscribe(diagram => {
@@ -48,16 +52,19 @@ export class DiagramCategoryPickerComponent extends ControlWidget implements Car
     });
   }
 
-  diagramSelectionAction(diagram: string) {
+  diagramSelectionAction(diagram: string, isPolar = false) {
 
     // Changes active tab to the next
     this.tabActivationStatusService.activeId = this.tabActivationStatusService.tabIds[2];
 
-    if ( this.formProperty.value !== diagram ) 
+    if ( this.formProperty.value !== diagram || (this.isPolarFormProperty.value as boolean) !== isPolar) 
+    {
       this.formProperty.setValue(diagram, false);
+      this.isPolarFormProperty.setValue(isPolar, false);
+    }
   }
 
-  isDiagramSelected(diagram: string): boolean { return diagram === this.formProperty.value; }
+  isDiagramSelected(diagram: string, isPolar = false): boolean { return diagram === this.formProperty.value && isPolar === this.isPolarFormProperty.value; }
 
   setSelectedCardStyle(isSelected: boolean) {
     if (isSelected) {

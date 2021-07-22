@@ -3,7 +3,7 @@
       <p class="m-0"><i class="exclamation icon"></i>Choosing a new Category will reset all your <b>Data</b> changes!</p>
   </ngb-alert>
 </div>
-
+<!-- Basic Charts -->
 <div class="row" *ngIf="this.diagramCategoryService.supportedChartTypes.length > 0">
   <div class="ui basic container">
   <h3 class="ui dividing header">Basic Diagrams</h3>
@@ -21,6 +21,25 @@
   </div>
   </div>
 </div>
+<!-- Polar Charts -->
+<div class="row" *ngIf="this.diagramCategoryService.supportedPolarTypes.length > 0">
+  <div class="ui basic container">
+  <h3 class="ui dividing header">Polar Diagrams</h3>
+  <div class="ui stackable centered cards">
+    <a class="card text-decoration-none" *ngFor="let polarDiagram of this.diagramCategoryService.supportedPolarTypes"
+    [ngStyle]="(this.setSelectedCardStyle(this.isDiagramSelected(polarDiagram.type, true)))"
+    (click)="this.diagramSelectionAction(polarDiagram.type, true)">
+        <div class="image">
+          <img src="assets/images/imagePlaceholder.svg" alt="Diagram Image">
+        </div>
+        <div class="content">
+          <a class="center aligned header">{{polarDiagram.type | titlecase}}</a>
+        </div>
+      </a>
+  </div>
+  </div>
+</div>
+<!-- Maps -->
 <div class="row" *ngIf="this.diagramCategoryService.supportedMaps.length > 0">
   <div class="ui basic container">
   <h3 class="ui dividing header">Map Diagrams</h3>
@@ -38,6 +57,7 @@
   </div>
   </div>
 </div>
+<!-- Specialised Diagrams -->
 <div class="row" *ngIf="this.diagramCategoryService.supportedSpecialisedDiagrams.length > 0">
   <div class="ui basic container">
   <h3 class="ui dividing header">Specialised Diagrams</h3>
@@ -55,6 +75,7 @@
   </div>
   </div>
 </div>
+<!-- Miscellaneous Types -->
 <div class="row" *ngIf="this.diagramCategoryService.supportedMiscTypes?.length > 0">
     <div class="ui basic container">
         <h3 class="ui dividing header">Miscellaneous</h3>

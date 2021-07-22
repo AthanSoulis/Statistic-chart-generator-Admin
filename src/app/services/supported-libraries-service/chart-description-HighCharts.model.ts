@@ -44,6 +44,8 @@ class HCchart {
     /* In TypeScript this option has no effect in sense of typing and instead the type option must always be set in the series. 
      https://api.highcharts.com/highcharts/chart.type */
     type: string = 'line';
+    polar: boolean = false;
+    
     backgroundColor: string = '#ffffff';
     borderColor: string = '#335cad';
     borderRadius: number = 0;

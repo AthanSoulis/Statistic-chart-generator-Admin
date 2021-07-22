@@ -47,13 +47,18 @@ export class FormSchema {
         'description' : 'Choose the type of diagram you want to make',
         'widget' : { 'id' : 'csui-category-properties-object' },
         'properties' : {
+            'isPolarDiagram' : {
+                'type' : 'boolean',
+                'default': false,
+                'widget': 'hidden',
+            },
             'categoryType' : {
                 'type' : 'string',
                 'requiredField' : true,
                 'widget': { 'id': 'csui-diagram-category-component' }
             }
         },
-        'fieldsets': [{ 'fields': ['categoryType'] }],
+        'fieldsets': [{ 'fields': ['categoryType','isPolarDiagram'] }],
         'required': ['categoryType']
     };
 

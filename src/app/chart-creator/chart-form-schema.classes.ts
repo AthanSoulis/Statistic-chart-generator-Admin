@@ -10,6 +10,7 @@ export interface ViewFormSchema {
     profile: string;
 }
 export interface CategoryFormSchema {
+    isPolarDiagram: boolean;
     categoryType: string;
 }
 export interface DataseriesFormSchema {

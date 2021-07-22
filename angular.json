@@ -45,6 +45,14 @@
                 }
               ]
             },
+            "localhost": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.localhost.ts"
+                }
+              ]
+            },
             "production": {
               "optimization": true,
               "outputHashing": "all",
@@ -106,6 +114,9 @@
             },
             "back-end-vm": {
               "browserTarget": "stats-tool:build:back-end-vm"
+            },
+            "localhost": {
+              "browserTarget": "stats-tool:build:localhost"
             }
           }
         },

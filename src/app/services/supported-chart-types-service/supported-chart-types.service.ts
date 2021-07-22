@@ -20,6 +20,16 @@ constructor(private http: HttpClient, private urlProvider: UrlProviderService, p
     );
   }
 
+  getSupportedPolarTypes(): Observable<Array<ISupportedPolar>> {
+
+    const supportedPolarTypesUrl = this.urlProvider.serviceURL + '/chart/polar/types';
+    return this.http.get<Array<ISupportedPolar>>(supportedPolarTypesUrl)
+    .pipe(
+      retry(3), // retry a failed request up to 3 times
+      catchError(this.errorHandler.handleError) // then handle the error
+    );
+  }
+
   getSupportedMaps(): Observable<Array<ISupportedMap>> {
 
     const supportedMapsUrl = this.urlProvider.serviceURL + '/chart/maps';
@@ -55,22 +65,9 @@ export interface ISupportedCategory {
   type: string;
   supportedLibraries: Array<string>;
 }
-
-export interface ISupportedChart extends ISupportedCategory {
-  type: string;
-  supportedLibraries: Array<string>;
-}
-export interface ISupportedMap extends ISupportedCategory {
-  type: string;
-  name: string;
-  supportedLibraries: Array<string>;
-}
-export interface ISupportedSpecialChartType extends ISupportedCategory {
-  type: string;
-  supportedLibraries: Array<string>;
-}
-export interface ISupportedMiscType extends ISupportedCategory {
-  type: string;
-  supportedLibraries: Array<string>;
-}
+export interface ISupportedChart extends ISupportedCategory {}
+export interface ISupportedPolar extends ISupportedCategory { isPolar: boolean;}
+export interface ISupportedMap extends ISupportedCategory { name: string; }
+export interface ISupportedSpecialChartType extends ISupportedCategory {}
+export interface ISupportedMiscType extends ISupportedCategory {}
 

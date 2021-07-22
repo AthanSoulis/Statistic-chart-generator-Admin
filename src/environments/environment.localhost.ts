@@ -1,6 +1,6 @@
 export const environment = {
 production: false,
-apiUrl: 'http://88.197.53.71:8180',
-apiFolder: '',
+apiUrl: 'http://localhost',
+apiFolder: ':8180',
 showSchemaObject: false
 };

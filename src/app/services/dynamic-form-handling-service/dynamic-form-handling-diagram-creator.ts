@@ -87,8 +87,7 @@ export class DiagramCreator {
         dataseries.forEach(dataElement => {
             tableObj.tableDescription.queriesInfo.push(
                 new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
-                    category.categoryType !== 'combo' ? category.categoryType :
-                        (dataElement.chartProperties.chartType == null) ? 'line' : dataElement.chartProperties.chartType));
+                    this.figureCategoryType(dataElement, category)));
         });
         console.log('Creating a table!', tableObj);
         tableObj.tableDescription.options.pageSize = formObj.appearance.tableAppearance.paginationSize;
@@ -112,8 +111,7 @@ export class DiagramCreator {
         dataseries.forEach(dataElement => {
             rawChartDataModel.chartsInfo.push(
                 new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
-                    category.categoryType !== 'combo' ? category.categoryType :
-                        (dataElement.chartProperties.chartType == null) ? 'line' : dataElement.chartProperties.chartType));
+                    this.figureCategoryType(dataElement, category)));
         });
         console.log('Creating a rawChartData model!', rawChartDataModel);
         return of(rawChartDataModel);
@@ -175,8 +173,7 @@ export class DiagramCreator {
         dataseries.forEach(dataElement => {
             chartDescription.queriesInfo.push(
                 new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
-                    category.categoryType !== 'combo' ? category.categoryType :
-                        (dataElement.chartProperties.chartType == null) ? 'line' : dataElement.chartProperties.chartType));
+                    this.figureCategoryType(dataElement, category)));         
         });
 
         return chartObj;
@@ -187,13 +184,13 @@ export class DiagramCreator {
 
         const chartObj = new HighChartsChart();
 
-        if (appearanceOptions.chartAppearance.generalOptions !== undefined
-            && appearanceOptions.chartAppearance.generalOptions.orderByAxis !== null) {
+        if (appearanceOptions.chartAppearance.generalOptions != null) 
             chartObj.orderBy = appearanceOptions.chartAppearance.generalOptions.orderByAxis;
-        }
+        
+        // Is this a polar diagram ?
+        chartObj.chartDescription.chart.polar = category.isPolarDiagram;
 
-        if (appearanceOptions.chartAppearance.highchartsAppearanceOptions !== undefined
-            && appearanceOptions.chartAppearance.highchartsAppearanceOptions !== null) {
+        if (appearanceOptions.chartAppearance.highchartsAppearanceOptions != null) {
             
             if( appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions != null )
             {
@@ -256,10 +253,10 @@ export class DiagramCreator {
         const queries = new Array<ChartInfo>();
 
         dataseries.forEach(dataElement => {
-            queries.push(new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
-                category.categoryType !== 'combo' ? category.categoryType :
-                    ((dataElement.chartProperties.chartType === null || dataElement.chartProperties.chartType === undefined) ? 
-                    'line' : dataElement.chartProperties.chartType)));
+            queries.push( new ChartInfo(dataElement, view.profile, 
+                                appearanceOptions.chartAppearance.generalOptions.resultsLimit,
+                                this.figureCategoryType(dataElement, category)));
+                
             // Set color for each data series. Works only for bars and columns.
             // if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.length > 1
             //     || appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray[0] !== '#00000000') {
@@ -269,6 +266,23 @@ export class DiagramCreator {
 
         chartObj.chartDescription.queries = queries;
         return chartObj;
+    }
+
+    private figureCategoryType(dataElement: DataseriesFormSchema, category: CategoryFormSchema) : string
+    {
+        if(category.categoryType === 'combo')
+        {
+            if(dataElement.chartProperties.chartType == null)
+                return 'line';
+            return dataElement.chartProperties.chartType;
+        }
+
+        if(category.isPolarDiagram && category.categoryType.includes('polar-'))
+        {
+            return category.categoryType.split('polar-')[1];
+        }
+        
+        return category.categoryType;
     }
 
     createDynamicEChartsChart(view: ViewFormSchema, category: CategoryFormSchema,
@@ -330,8 +344,7 @@ export class DiagramCreator {
 
         dataseries.forEach(dataElement => {
             queries.push(new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
-                category.categoryType !== 'combo' ? category.categoryType :
-                    (dataElement.chartProperties.chartType == null) ? 'line' : dataElement.chartProperties.chartType));
+                this.figureCategoryType(dataElement, category)));
             // if (appearanceOptions.chartAppearance.echartsAppearanceOptions.hcMiscOptions.ecEnableDataLabels) {
             //     queries.push(new ECChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
             //         category.categoryType !== 'combo' ? category.categoryType :
