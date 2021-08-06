@@ -4,11 +4,11 @@
   <label [attr.for]="id" class="horizontal control-label">
       {{ schema.title }}
   </label>
-  <div *ngIf="schema.type!='array'">
-    <label>
-      <input type="checkbox" [formControl]="control" [id]="id" [name]="name" value>
-      {{schema.description}}
-      <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" placement="right" ngbTooltip="{{this.schema.tooltip}}"></i>
-    </label>
+  <div class="custom-control custom-switch" *ngIf="schema.type!='array'">
+      <input class="custom-control-input" type="checkbox" [formControl]="control" [id]="id" [name]="name" value>
+      <label class="custom-control-label" [for]="id">
+        {{schema.description}}
+        <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" placement="right" ngbTooltip="{{this.schema.tooltip}}"></i>
+      </label>
   </div>
 </div>
