@@ -1,4 +1,5 @@
 import { Query, ChartInfo } from '../../chart-creator/chart-query.model';
+import * as Highcharts from "highcharts";
 
 export class HighChartsChart {
     library: string;
@@ -103,9 +104,14 @@ class HCPlotOptionsSeries {
     }
 }
 
-export class HCDataLabels {
+export class HCDataLabels implements Highcharts.DataLabelsOptions {
     enabled: boolean = false;
     format: string | undefined = undefined;
+    style: Highcharts.CSSObject = 
+    {
+        'textOutline': '2px contrast',
+        'stroke-width': 0
+    };
 }
 
 export class HCCredits {

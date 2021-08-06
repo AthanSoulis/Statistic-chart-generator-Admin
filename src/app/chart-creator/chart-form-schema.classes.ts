@@ -1,3 +1,4 @@
+import {HCDataLabels} from "../services/supported-libraries-service/chart-description-HighCharts.model"
 // Classes derived from the chart-form-schema.model
 
 export interface SCGAFormSchema {
@@ -69,6 +70,7 @@ export interface HighchartsOptionsFormSchema {
     hcCredits ?: HCCreditsOptionsFormSchema;
     hcLegend ?: HCLegendOptionsFormSchema;
     hcMiscOptions ?: HCMiscOptionsFormSchema;
+    hcDataLabels ?: HCDataLabels;
 }
 export interface EchartsOptionsFormSchema {
     titles ?: TitlesOptionsFormSchema;

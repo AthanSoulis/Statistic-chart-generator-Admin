@@ -1,15 +1,6 @@
 import {Observable, of} from 'rxjs';
-import {
-    SCGAFormSchema,
-    ViewFormSchema,
-    CategoryFormSchema,
-    DataseriesFormSchema,
-    AppearanceFormSchema
-} from '../../chart-creator/chart-form-schema.classes';
-import {
-    GoogleChartsTable,
-    GoogleChartsChart
-} from '../supported-libraries-service/chart-description-GoogleCharts.model';
+import {SCGAFormSchema, ViewFormSchema, CategoryFormSchema, DataseriesFormSchema, AppearanceFormSchema } from '../../chart-creator/chart-form-schema.classes';
+import {GoogleChartsTable, GoogleChartsChart } from '../supported-libraries-service/chart-description-GoogleCharts.model';
 import {ChartInfo, Query} from '../../chart-creator/chart-query.model';
 import {HighChartsChart} from '../supported-libraries-service/chart-description-HighCharts.model';
 import {HighMapsMap, HMSeriesInfo} from '../supported-libraries-service/chart-description-HighMaps.model';
@@ -221,8 +212,12 @@ export class DiagramCreator {
                 chartObj.chartDescription.subtitle.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.titles.subtitle;
             }
 
+            // Chart Data Labels
             chartObj.chartDescription.plotOptions.series.dataLabels.enabled =
-            appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.hcEnableDataLabels;
+            appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcDataLabels.enabled;
+
+            chartObj.chartDescription.plotOptions.series.dataLabels.style.color = 
+            appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcDataLabels.style?.color;
 
             // Chart Area Options
             chartObj.chartDescription.chart.backgroundColor = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcChartArea.hcCABackGroundColor;

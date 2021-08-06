@@ -715,13 +715,6 @@ export class FormSchema {
                                         'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
                                         'description': 'Enable Exporting'
                                     },
-                                    'hcEnableDataLabels' : {
-                                        'type': 'boolean',
-                                        'widget' : {'id' : 'csui-boolean'},
-                                        'default': false,
-                                        'tooltip': 'Show small labels next to each data value.',
-                                        'description': 'Enable data labels for all series'
-                                    },
                                     'stackedChart' : {
                                         'type' : 'string',
                                         'widget' : { 'id': 'csui-select'},
@@ -750,14 +743,52 @@ export class FormSchema {
                                 'fieldsets':
                                 [{
                                     'title': 'Misc Options',
-                                    'fields': ['exporting', 'hcEnableDataLabels', 'stackedChart']
+                                    'fields': ['exporting', 'stackedChart']
+                                }]
+                            },
+                            'hcDataLabels': {
+                                'type': 'object',
+                                'widget': { 'id' : 'csui-property-object'},
+                                'properties': {
+                                    'enabled' : {
+                                        'type': 'boolean',
+                                        'widget' : {'id' : 'csui-boolean'},
+                                        'default': false,
+                                        'tooltip': 'Show small labels next to each data value.',
+                                        'description': 'Enable data labels for all series'
+                                    },
+                                    'style':{
+                                        'type' : 'object',
+                                        'widget': { 'id' : 'csui-property-object'},
+                                        'visibleIf': {'enabled': true},
+                                        'properties': {
+                                            'color': {
+                                                'type' : 'string',
+                                                'pattern': '^#[0-9a-fA-F]{8}$',
+                                                'default': '#000000ff',
+                                                'title' : 'Data Label Color',
+                                                'tooltip': 'The text color for the data labels.',
+                                                'widget': {'id': 'csui-color-picker'},
+                                                
+                                            }
+                                        },
+                                        'fieldsets':
+                                        [{
+                                            'fields': ['color']
+                                        }]
+                                    }                                    
+                                },
+                                'fieldsets':
+                                [{
+                                    'title': 'Data Labels',
+                                    'fields': ['enabled', 'style']
                                 }]
                             }
                         },
                         'fieldsets': [
                             {
                                 'fieldsetColumnWidth' : 'eight wide column',
-                                'fields': ['titles', 'axisNames', 'hcCredits', 'hcMiscOptions']
+                                'fields': ['titles', 'axisNames', 'hcDataLabels', 'hcCredits', 'hcMiscOptions']
                             },
                             {
                                 'fieldsetColumnWidth' : 'eight wide column',
