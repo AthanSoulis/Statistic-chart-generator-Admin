@@ -6,9 +6,9 @@
   </label>
   <div class="custom-control custom-switch" *ngIf="schema.type!='array'">
       <input class="custom-control-input" type="checkbox" [formControl]="control" [id]="id" [name]="name" value>
-      <label class="custom-control-label" [for]="id">
-        {{schema.description}}
-        <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" placement="right" ngbTooltip="{{this.schema.tooltip}}"></i>
+      <label class="horizontal custom-control-label" [for]="id">{{schema.description}}
+        <i *ngIf="this.schema.tooltip" class="tiny circular info icon right floated" style="vertical-align: inherit; margin: 0 0 0 .25rem;"
+         placement="right" ngbTooltip="{{this.schema.tooltip}}"></i>
       </label>
   </div>
 </div>
