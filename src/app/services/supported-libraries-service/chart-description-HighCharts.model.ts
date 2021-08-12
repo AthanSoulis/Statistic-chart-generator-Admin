@@ -23,9 +23,10 @@ class HighChartsDescription {
     lang: HCLang;
     exporting: HCExporting;
     plotOptions: HCPlotOptions;
+    tooltip: Highcharts.TooltipOptions;
     legend: HCLegend;
     credits: HCCredits;
-    colors: string[] = ['#7cb5ec'];
+    colors: string[] = [];
 
     constructor() {
         this.chart = new HCchart();
@@ -38,6 +39,7 @@ class HighChartsDescription {
         this.plotOptions = new HCPlotOptions();
         this.legend = new HCLegend();
         this.credits = new HCCredits();
+        this.tooltip = {} as Highcharts.TooltipOptions;
     }
 }
 

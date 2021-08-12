@@ -203,6 +203,13 @@ export class DiagramCreator {
             appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcLegend.hcLegendVerticalAlignment;
             chartObj.chartDescription.legend.layout = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcLegend.hcLegendLayout;
 
+            // Tooltip Options
+            if(chartObj.chartDescription.plotOptions.series.stacking === 'percent')
+            {
+                chartObj.chartDescription.tooltip.pointFormat = "<b>{point.percentage:.1f}%</b> ({point.y})";
+            }
+                
+
             // Credits Options
             chartObj.chartDescription.credits.enabled = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcCredits.hcEnableCredits;
             chartObj.chartDescription.credits.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcCredits.hcCreditsText;
