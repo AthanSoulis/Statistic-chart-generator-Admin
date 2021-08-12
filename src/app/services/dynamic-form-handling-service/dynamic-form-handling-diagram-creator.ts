@@ -16,8 +16,7 @@ export class DiagramCreator {
     private ecColorTheme = ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074',
         '#546570', '#c4ccd3'];
 
-    constructor(private diagramCategoryService: DiagramCategoryService) {
-    }
+    constructor(private diagramCategoryService: DiagramCategoryService) {}
 
     public createChart(formObj: SCGAFormSchema): Observable<HighChartsChart|GoogleChartsChart|HighMapsMap|EChartsChart|null> {
 
@@ -222,9 +221,13 @@ export class DiagramCreator {
             // Chart Data Labels
             chartObj.chartDescription.plotOptions.series.dataLabels.enabled =
             appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcDataLabels.enabled;
+            
+            if(chartObj.chartDescription.plotOptions.series.dataLabels.enabled)
+            {
+                chartObj.chartDescription.plotOptions.series.dataLabels.style.color = 
+                appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcDataLabels.style?.color;
+            }
 
-            chartObj.chartDescription.plotOptions.series.dataLabels.style.color = 
-            appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcDataLabels.style?.color;
 
             // Chart Area Options
             chartObj.chartDescription.chart.backgroundColor = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcChartArea.hcCABackGroundColor;
@@ -251,6 +254,8 @@ export class DiagramCreator {
         if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.length > 1 || appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray[0] !== '#00000000') {
             chartObj.chartDescription.colors = appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.concat(this.hcColorTheme);
         }
+        else
+            chartObj.chartDescription.colors = this.hcColorTheme;
 
         const queries = new Array<ChartInfo>();
 
@@ -337,8 +342,10 @@ export class DiagramCreator {
         if (appearanceOptions.chartAppearance.echartsAppearanceOptions.dataSeriesColorArray.length > 1
             || appearanceOptions.chartAppearance.echartsAppearanceOptions.dataSeriesColorArray[0] !== '#00000000') {
             // tslint:disable-next-line:max-line-length
-            chartObj.chartDescription.color = appearanceOptions.chartAppearance.echartsAppearanceOptions.dataSeriesColorArray.concat(this.ecColorTheme);
+            chartObj.chartDescription.colors = appearanceOptions.chartAppearance.echartsAppearanceOptions.dataSeriesColorArray.concat(this.ecColorTheme);
         }
+        else
+            chartObj.chartDescription.colors = this.ecColorTheme;
 
         console.log('chartObj.chartDescription', chartObj.chartDescription);
 

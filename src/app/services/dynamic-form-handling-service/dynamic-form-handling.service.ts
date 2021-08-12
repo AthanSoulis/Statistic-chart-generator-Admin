@@ -109,23 +109,12 @@ export class DynamicFormHandlingService {
     this.chartLoadingService.isChartLoaded = false;
   }
 
-  submitForm() {
+  public submitForm() {
     console.log('Submitted this form', this.formSchemaObject);
 
     if (this.formSchemaObject !== null && this.isFormValid)
       this.createDataObjectsFromSchemaObject(this.formSchemaObject);
   }
-
-  publishURLS() {
-    console.log('Publish this form', this.formSchemaObject);
-
-    if(!this.isFormValid)
-      this.changeDataObjects(null, null, null, null);
-
-    if (this.formSchemaObject !== null && this.isFormValid)
-      this.createDataObjectsFromSchemaObject(this.formSchemaObject);
-  }
-
 
   private createDataObjectsFromSchemaObject(value: SCGAFormSchema) {
     
@@ -142,9 +131,19 @@ export class DynamicFormHandlingService {
       this.changeDataObjects(chartObject, tableObject, rawChartDataObject, rawDataObject));
   }
 
-  exportForm() { this.createAndDownloadJSON(this.formSchemaObject, 'chart.json'); }
+  public publishURLS() {
+    console.log('Publish this form', this.formSchemaObject);
 
-  createAndDownloadJSON(jsonObj: Object, filename: string) {
+    if(!this.isFormValid)
+      this.changeDataObjects(null, null, null, null);
+
+    if (this.formSchemaObject !== null && this.isFormValid)
+      this.createDataObjectsFromSchemaObject(this.formSchemaObject);
+  }
+
+  public exportForm() { this.createAndDownloadJSON(this.formSchemaObject, 'chart.json'); }
+
+  public createAndDownloadJSON(jsonObj: Object, filename: string) {
 
     const element = document.createElement('a');
     element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(jsonObj)));

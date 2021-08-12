@@ -24,7 +24,7 @@ class EChartsDescription {
     toolbox: ECExporting;
     plotOptions: ECPlotOptions;
     legend: ECLegend;
-    color: string[] = ['#7cb5ec'];
+    colors: string[] = ['#7cb5ec'];
 
     constructor() {
         this.chart = new ECchart();
