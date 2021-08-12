@@ -140,8 +140,7 @@ export class ChartExportingService {
       return;
     }
 
-    const stringObj = JSON.stringify(chartObject);
-    this._chartUrl.next(this.urlProvider.serviceURL + '/chart?json=' + encodeURIComponent(stringObj));
+    this._chartUrl.next(this.urlProvider.createChartURL(chartObject));
   }
 
   public changeTableUrl(tableObject: Object) {
@@ -152,8 +151,7 @@ export class ChartExportingService {
       return;
     }
 
-    const stringObj = JSON.stringify(tableObject);
-    this._tableUrl.next(this.urlProvider.serviceURL + '/table?json=' + encodeURIComponent(stringObj));
+    this._tableUrl.next(this.urlProvider.createTableURL(tableObject));
   }
 
   public changeRawChartDataUrl(rawChartDataObject: Object) {
@@ -164,8 +162,7 @@ export class ChartExportingService {
       return;
     }
 
-    const stringObj = JSON.stringify(rawChartDataObject);
-    this._rawChartDataUrl.next(this.urlProvider.serviceURL + '/chart/json?json=' + encodeURIComponent(stringObj));
+    this._rawChartDataUrl.next(this.urlProvider.createRawChartDataUrl(rawChartDataObject));
   }
 
   public changeRawDataUrl(rawDataObject: Object) {
@@ -176,8 +173,7 @@ export class ChartExportingService {
       return;
     }
 
-    const stringObj = JSON.stringify(rawDataObject);
-    this._rawDataUrl.next(this.urlProvider.serviceURL + '/raw?json=' + encodeURIComponent(stringObj));
+    this._rawDataUrl.next(this.urlProvider.createRawDataUrl(rawDataObject));
   }
 }
 

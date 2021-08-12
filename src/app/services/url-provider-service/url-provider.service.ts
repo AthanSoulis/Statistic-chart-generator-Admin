@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 
 @Injectable({
@@ -15,5 +12,37 @@ export class UrlProviderService {
 
   get serviceURL(): string {
     return environment.apiUrl + environment.apiFolder;
+  }
+
+  public createChartURL(chartObject: Object): string
+  {
+    var stringObj = JSON.stringify(chartObject);
+    stringObj = stringObj.replaceAll('%', '%25');
+    
+    return this.serviceURL + '/chart?json=' + encodeURIComponent(stringObj);
+  }
+
+  public createTableURL(tableObject: Object): string
+  {
+    var stringObj = JSON.stringify(tableObject);
+    stringObj = stringObj.replaceAll('%', '%25');
+
+    return this.serviceURL + '/table?json=' + encodeURIComponent(stringObj);
+  }
+
+  public createRawChartDataUrl(rawChartDataObject: Object) : string
+  {
+    var stringObj = JSON.stringify(rawChartDataObject);
+    stringObj = stringObj.replaceAll('%', '%25');
+
+    return this.serviceURL + '/chart/json?json=' + encodeURIComponent(stringObj);
+  }
+
+  public createRawDataUrl(rawDataObject: Object): string
+  {
+    var stringObj = JSON.stringify(rawDataObject);
+    stringObj = stringObj.replaceAll('%', '%25');
+
+    return this.serviceURL + '/raw?json=' + encodeURIComponent(stringObj);
   }
 }

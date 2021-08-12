@@ -31,7 +31,7 @@ export class ChartFrameComponent implements OnInit, OnChanges {
     console.log('[chart-frame.component] On changes: ' + stringObj);
 
     if (changes.chart.currentValue) {
-      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/chart?json=' + encodeURIComponent(stringObj));
+      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.createChartURL(changes.chart.currentValue));
       console.log(this.frameUrl);
     } else {
       this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/chart');

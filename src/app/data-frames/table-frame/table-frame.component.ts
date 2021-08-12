@@ -45,7 +45,7 @@ export class TableFrameComponent implements OnInit, OnChanges {
     console.log('[table-frame.component] On changes: ' + stringObj);
 
     if (changes.table.currentValue) {
-      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/table?json=' + encodeURIComponent(stringObj));
+      this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.createTableURL(changes.table.currentValue));
       console.log(this.frameUrl);
     } else {
       this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/table');

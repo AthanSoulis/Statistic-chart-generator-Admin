@@ -44,7 +44,7 @@ export class RawChartDataFrameComponent implements OnInit, OnChanges {
         console.log('[raw-chart-data-frame.component] On changes: ' + stringObj);
 
         if (changes.rawChartData.currentValue) {
-            this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/chart/json?json=' + encodeURIComponent(stringObj));
+            this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.createRawChartDataUrl(changes.rawChartData.currentValue));
             console.log(this.frameUrl);
         } else {
             this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/chart/json');

@@ -44,7 +44,7 @@ export class RawDataFrameComponent implements OnInit, OnChanges {
         console.log('[raw-data-frame.component] On changes: ' + stringObj);
 
         if (changes.rawData.currentValue) {
-            this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/raw?json=' + encodeURIComponent(stringObj));
+            this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.createRawDataUrl(changes.rawData.currentValue));
             console.log(this.frameUrl);
         } else {
             this.frameUrl = this.getSanitizedFrameUrl(this.urlProvider.serviceURL + '/raw?json');
