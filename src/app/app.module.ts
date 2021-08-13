@@ -33,7 +33,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 
 /* ng-bootstrap https://ng-bootstrap.github.io/ components */
 import { NgbPopoverModule, NgbModalModule, NgbAlertModule,
-  NgbTooltipModule,NgbCheckBox,NgbButtonsModule,NgbDropdownModule,NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+  NgbTooltipModule,NgbCheckBox,NgbButtonsModule,NgbDropdownModule,NgbNavModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SchemaFormModule, WidgetRegistry, DefaultWidgetRegistry } from 'ngx-schema-form';
 import { GeneralPropertiesWidgetComponent } from './custom-ngx-schema-form-widgets/general-properties-widget/general-properties-widget.component';
@@ -68,6 +68,8 @@ import { RawChartDataFrameComponent } from './data-frames/raw-chart-data-frame/r
 import { RawDataFrameComponent } from './data-frames/raw-data-frame/raw-data-frame.component';
 import { GeneratedShortUrlFieldComponent } from './generated-short-url-field/generated-short-url-field.component';
 import { ClearFormModalComponent } from './modals/clear-form-modal/clear-form-modal.component';
+import { ToastService } from './services/toast-service/toast.service';
+import { ToastsContainer } from './services/toast-service/toasts-container.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +109,8 @@ import { ClearFormModalComponent } from './modals/clear-form-modal/clear-form-mo
     TabularMenuWidgetComponent,
     ChartTableModalComponent,
     GeneratedShortUrlFieldComponent,
-    ClearFormModalComponent
+    ClearFormModalComponent,
+    ToastsContainer
   ],
   imports: [
     SchemaFormModule.forRoot(),
@@ -127,7 +130,8 @@ import { ClearFormModalComponent } from './modals/clear-form-modal/clear-form-mo
     NgbAlertModule,
     NgbTooltipModule,
     NgbButtonsModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    NgbToastModule
   ],
   providers: [
     SupportedLibrariesService,
@@ -142,7 +146,8 @@ import { ClearFormModalComponent } from './modals/clear-form-modal/clear-form-mo
     ErrorHandlerService,
     ChartLoadingService,
     {provide: WidgetRegistry, useClass: CustomWidgetRegistry},
-    DynamicTreeDatabase
+    DynamicTreeDatabase,
+    ToastService
   ],
   bootstrap: [AppComponent]
 })
