@@ -9,21 +9,23 @@
         <div class="col-auto row no-gutters align-items-center">
             <div class="action-buttons" role="group" aria-label="data-actions">
             <!--TODO Animate Buttons -->
-                <a href="#" role="button" class="col-4 btn btn-outline-primary mr-3" [ngbPopover]="sharePopUp" triggers="manual"
+                <button type="button" [disabled]="!this.dfhs.isFormValid" 
+                [ngClass]="[this.dfhs.isFormValid ? 'col-4 btn btn-outline-primary mr-3' : 'col-4 btn btn-outline-primary mr-3 disabled']"
+                [ngbPopover]="sharePopUp" triggers="manual"
                 [autoClose]="'outside'" #p1="ngbPopover" (click)="toggleSharePopover(p1)" placement="bottom-left">
                     <div><b>Share</b></div>
                     <div><i class="bi bi-share-fill"></i></div>
-                </a>
-                <a href="#" role="button" class="col-4 btn btn-outline-primary mr-3" [ngbPopover]="loadPopUp" triggers="manual"
+                </button>
+                <button type="button" class="col-4 btn btn-outline-primary mr-3" [ngbPopover]="loadPopUp" triggers="manual"
                 [autoClose]="'outside'" #p2="ngbPopover" (click)="openLoadChartPopover(p2)" (hidden)="resetLoadChartPopover()" placement="bottom">
                     <div><b>Load</b></div>
                     <div><i class="bi bi-upload"></i></div>
-                </a>
-                <a href="#" role="button" class="col-4 btn btn-outline-primary mr-3" [ngbPopover]="savePopUp" triggers="manual"
+                </button>
+                <button type="button" class="col-4 btn btn-outline-primary mr-3" [ngbPopover]="savePopUp" triggers="manual"
                 [autoClose]="'outside'" #p3="ngbPopover" (click)="saveChartPopover(p3)" placement="bottom-right"> 
                     <div><b>Save</b></div>
                     <div><i class="bi bi-save"></i></div>
-                </a>
+                </button>
             </div>
         </div>
     </div>
@@ -61,25 +63,25 @@
 
     <!-- Share popup -->
     <ng-template let-popup #sharePopUp >
-        <div>
+        <ng-container *ngIf="dfhs.isxAxisRequired">
+            <generated-short-url-field dataName="Chart" [shortUrl]="chartExportingService.chartTinyUrl$"
+            [isUrlLoading]="chartExportingService.loadingChartTinyUrl$" [isPopoverOpen]="p1.isOpen()"></generated-short-url-field>
+            <hr/>
             
-            <ng-container *ngIf="dfhs.isxAxisRequired">
-                <generated-short-url-field dataName="Chart" [shortUrl]="chartExportingService.chartTinyUrl$"
-                [isUrlLoading]="chartExportingService.loadingChartTinyUrl$" [isPopoverOpen]="p1.isOpen()"></generated-short-url-field>
+            <generated-short-url-field dataName="Table" [shortUrl]="chartExportingService.tableTinyUrl$"
+            [isUrlLoading]="chartExportingService.loadingTableTinyUrl$" [isPopoverOpen]="p1.isOpen()"></generated-short-url-field>
+            <hr/>
+            
+            <generated-short-url-field dataName="Raw Chart Data" [shortUrl]="chartExportingService.rawChartDataTinyUrl$"
+            [isUrlLoading]="chartExportingService.loadingRawChartDataTinyUrl$" [isPopoverOpen]="p1.isOpen()"></generated-short-url-field>
+            <hr/>
+        </ng-container>
 
-                <generated-short-url-field dataName="Table" [shortUrl]="chartExportingService.tableTinyUrl$"
-                [isUrlLoading]="chartExportingService.loadingTableTinyUrl$" [isPopoverOpen]="p1.isOpen()"></generated-short-url-field>
-
-                <generated-short-url-field dataName="Raw Chart Data" [shortUrl]="chartExportingService.rawChartDataTinyUrl$"
-                [isUrlLoading]="chartExportingService.loadingRawChartDataTinyUrl$" [isPopoverOpen]="p1.isOpen()"></generated-short-url-field>
-            </ng-container>
-
-            <generated-short-url-field dataName="Raw Data" [shortUrl]="chartExportingService.rawDataTinyUrl$"
-            [isUrlLoading]="chartExportingService.loadingRawDataTinyUrl$" ></generated-short-url-field>
-        </div>
+        <generated-short-url-field dataName="Raw Data" [shortUrl]="chartExportingService.rawDataTinyUrl$"
+        [isUrlLoading]="chartExportingService.loadingRawDataTinyUrl$" ></generated-short-url-field>
     </ng-template>
 
-    <!-- Web app toasts -->
+    <!-- Web app toasts (Not Used)-->
     <toast-container aria-live="polite" aria-atomic="true" ></toast-container>
 
 </header>

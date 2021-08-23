@@ -1,18 +1,26 @@
 @import "../../node_modules/bootstrap/scss/mixins";
 @import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/variables";
+// @import "../../node_modules/bootstrap/scss/buttons";
+// @import "../../node_modules/bootstrap/scss/utilities/spacing";
+// @import "../../node_modules/bootstrap/scss/grid";
 
+
+// .action-button {
+//     @extend .btn;
+//     @extend .btn-outline-primary;
+//     @extend .mr-3;
+//     @extend .col-4;
+// }
 .action-buttons {
     display: flex;
 }
-
-
 .btn-group.btn-group-lg
 {
     height: 100%;
     width: fit-content;
 }
-.btn-group.btn-group-lg > a.btn
+.btn-group.btn-group-lg > button.btn
 {
     padding: 0.9em 1.53em;
 
@@ -21,7 +29,7 @@
     @include media-breakpoint-down(sm)
     { padding: 0.4em 0.68em }
 }
-a.btn
+button.btn
 {
     display: flex;
     align-items: center;
