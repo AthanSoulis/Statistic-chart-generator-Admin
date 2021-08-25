@@ -25,7 +25,6 @@ export class ChartTableModalComponent {
   {
     this.activeModal.close(NgbModalResolutions.Cancel);
   }
-
 }
 
 export class ChartTableModalContext {

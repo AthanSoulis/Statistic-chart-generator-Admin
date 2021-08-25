@@ -2,64 +2,56 @@
   <nav ngbNav #nav="ngbNav" class="nav nav-tabs" [destroyOnHide]="false">
     <!-- Diagram -->
     <ng-container ngbNavItem *ngIf="dynamicFormHandlingService.isxAxisRequired">
-        <a class="nav-link" ngbNavLink><span style="font-size: 1.25em;">Diagram</span></a>
+        <a class="nav-link" ngbNavLink><span class="nav-header-text">Diagram</span></a>
         <ng-template ngbNavContent>
-          <div class="ui basic segment">
+          <div class="container my-3 p-3">
             <chart-frame [chart]="this.modalContext.chartObj"></chart-frame>
           </div>
           <div class="actions">
-            <i class="big linkify icon" style="vertical-align: inherit;"></i>
-            <div class="ui basic big label" style="max-width: 20em">  
-              <a class="url-holder" style="cursor: pointer; color: #1e70bf" target="_blank" rel="noopener noreferrer" 
-              href="{{chartExportingService.chartTinyUrl$ | async}}">{{chartExportingService.chartTinyUrl$ | async}}</a>
+            <div class="label">
+              <generated-short-url-field [shortUrl]="chartExportingService.chartTinyUrl$"></generated-short-url-field>
             </div>
           </div>
         </ng-template>
     </ng-container>
     <!-- Table -->
     <ng-container ngbNavItem *ngIf="dynamicFormHandlingService.isxAxisRequired">
-      <a class="nav-link" ngbNavLink><span style="font-size: 1.25em;">Table</span></a>
+      <a class="nav-link" ngbNavLink><span class="nav-header-text">Table</span></a>
       <ng-template ngbNavContent>
-        <div class="ui basic segment">
+        <div class="container my-3 p-3">
           <table-frame [table]="this.modalContext.tableObj"></table-frame>
         </div>
         <div class="actions">
-          <i class="big linkify icon" style="vertical-align: inherit;"></i>
-          <div class="ui basic big label" style="max-width: 20em">  
-            <a class="url-holder" style="cursor: pointer; color: #1e70bf" target="_blank" rel="noopener noreferrer" 
-            href="{{chartExportingService.tableTinyUrl$ | async}}">{{chartExportingService.tableTinyUrl$ | async}}</a>
+          <div class="label">
+            <generated-short-url-field [shortUrl]="chartExportingService.tableTinyUrl$"></generated-short-url-field>
           </div>
         </div>
       </ng-template>
     </ng-container>
     <!-- Raw Chart Data -->
     <ng-container ngbNavItem *ngIf="dynamicFormHandlingService.isxAxisRequired">
-      <a class="nav-link" ngbNavLink><span style="font-size: 1.25em;">Raw Chart Data</span></a>
+      <a class="nav-link" ngbNavLink><span class="nav-header-text">Raw Chart Data</span></a>
       <ng-template ngbNavContent>
-        <div class="ui basic segment">
+        <div class="container my-3 p-3">
           <raw-chart-data-frame [rawChartData]="this.modalContext.rawChartDataObj"></raw-chart-data-frame>
         </div>
         <div class="actions">
-          <i class="big linkify icon" style="vertical-align: inherit;"></i>
-          <div class="ui basic big label" style="max-width: 20em">  
-            <a class="url-holder" style="cursor: pointer; color: #1e70bf" target="_blank" rel="noopener noreferrer" 
-            href="{{chartExportingService.rawChartDataTinyUrl$ | async}}">{{chartExportingService.rawChartDataTinyUrl$ | async}}</a>
+          <div class="label">
+            <generated-short-url-field [shortUrl]="chartExportingService.rawChartDataTinyUrl$"></generated-short-url-field>
           </div>
         </div>
       </ng-template>
     </ng-container>
     <!-- Raw Data -->
     <ng-container ngbNavItem>
-      <a class="nav-link" ngbNavLink><span style="font-size: 1.25em;">Raw Data</span></a>
+      <a class="nav-link" ngbNavLink><span class="nav-header-text">Raw Data</span></a>
       <ng-template ngbNavContent>
-        <div class="ui basic segment">
+        <div class="container my-3 p-3">
           <raw-data-frame [rawData]="this.modalContext.rawDataObj"></raw-data-frame>
         </div>
         <div class="actions">
-          <i class="big linkify icon" style="vertical-align: inherit;"></i>
-          <div class="ui basic big label" style="max-width: 20em">  
-            <a class="url-holder" style="cursor: pointer; color: #1e70bf" target="_blank" rel="noopener noreferrer" 
-            href="{{chartExportingService.rawDataTinyUrl$ | async}}">{{chartExportingService.rawDataTinyUrl$ | async}}</a>
+          <div class="label">
+            <generated-short-url-field [shortUrl]="chartExportingService.rawDataTinyUrl$"></generated-short-url-field>
           </div>
         </div>
       </ng-template>
