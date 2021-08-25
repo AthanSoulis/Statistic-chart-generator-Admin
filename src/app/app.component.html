@@ -65,20 +65,20 @@
     <ng-template let-popup #sharePopUp >
         <ng-container *ngIf="dfhs.isxAxisRequired">
             <generated-short-url-field dataName="Chart" [shortUrl]="chartExportingService.chartTinyUrl$"
-            [isUrlLoading]="chartExportingService.loadingChartTinyUrl$" [isPopoverOpen]="p1.isOpen()"></generated-short-url-field>
+            [isUrlLoading]="chartExportingService.loadingChartTinyUrl$" [isViewOpen]="p1.isOpen()"></generated-short-url-field>
             <hr/>
             
             <generated-short-url-field dataName="Table" [shortUrl]="chartExportingService.tableTinyUrl$"
-            [isUrlLoading]="chartExportingService.loadingTableTinyUrl$" [isPopoverOpen]="p1.isOpen()"></generated-short-url-field>
+            [isUrlLoading]="chartExportingService.loadingTableTinyUrl$" [isViewOpen]="p1.isOpen()"></generated-short-url-field>
             <hr/>
             
             <generated-short-url-field dataName="Raw Chart Data" [shortUrl]="chartExportingService.rawChartDataTinyUrl$"
-            [isUrlLoading]="chartExportingService.loadingRawChartDataTinyUrl$" [isPopoverOpen]="p1.isOpen()"></generated-short-url-field>
+            [isUrlLoading]="chartExportingService.loadingRawChartDataTinyUrl$" [isViewOpen]="p1.isOpen()"></generated-short-url-field>
             <hr/>
         </ng-container>
 
         <generated-short-url-field dataName="Raw Data" [shortUrl]="chartExportingService.rawDataTinyUrl$"
-        [isUrlLoading]="chartExportingService.loadingRawDataTinyUrl$" ></generated-short-url-field>
+        [isUrlLoading]="chartExportingService.loadingRawDataTinyUrl$" [isViewOpen]="p1.isOpen()"></generated-short-url-field>
     </ng-template>
 
     <!-- Web app toasts (Not Used)-->

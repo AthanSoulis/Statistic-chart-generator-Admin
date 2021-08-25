@@ -13,10 +13,10 @@ export class GeneratedShortUrlFieldComponent implements OnChanges {
 
   @ViewChild('clipboardAlert',{static: false}) clipboardAlert: NgbAlert;
 
-  @Input('dataName') field_name: string;
+  @Input('dataName') field_name: string | undefined;
   @Input('shortUrl') url$: Observable<string>;
   @Input('isUrlLoading') isUrlLoading$: Observable<boolean>;
-  @Input('isPopoverOpen') isPopoverOpen: boolean;
+  @Input('isViewOpen') isViewOpen: boolean;
   
   public clipboardCopyMessage = "Copied to clipboard !";
   public copiedUrl = false;
@@ -25,7 +25,7 @@ export class GeneratedShortUrlFieldComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) 
   {
-    if(changes.isPopoverOpen)
+    if(changes.isViewOpen)
       this.copiedUrl = false;
   }
 
@@ -57,7 +57,7 @@ export class GeneratedShortUrlFieldComponent implements OnChanges {
     });
   }
 
-  public closeAlert()
+  public closedAlert()
   {
     console.log("Close");
     
