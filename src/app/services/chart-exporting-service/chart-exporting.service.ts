@@ -1,7 +1,7 @@
 import { Injectable} from '@angular/core';
-import { Observable, throwError, BehaviorSubject, of, } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { retry, catchError, distinctUntilChanged, first } from 'rxjs/operators';
+import { BehaviorSubject, of } from 'rxjs';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { catchError, distinctUntilChanged, first } from 'rxjs/operators';
 import { ErrorHandlerService } from '../error-handler-service/error-handler.service';
 import { UrlProviderService } from '../url-provider-service/url-provider.service';
 
@@ -17,79 +17,59 @@ export class ShortenUrlResponse {
 })
 export class ChartExportingService {
 
-  private _chartUrl: BehaviorSubject<string>;
-  chartTinyUrl$: Observable<string>;
-  private _chartTinyUrl: BehaviorSubject<string>;
-  loadingChartTinyUrl$: Observable<boolean>;
-  private _loadingChartTinyUrl: BehaviorSubject<boolean>;
+  // Chart Url
+  private _chartUrl = new BehaviorSubject<string>(null);
+  private _chartTinyUrl = new BehaviorSubject<string>(null);
+  get chartTinyUrl$() { return this._chartTinyUrl.asObservable();}
+  // Chart Load Url
+  private _loadingChartTinyUrl= new BehaviorSubject<boolean>(false);
+  get loadingChartTinyUrl$() { return this._loadingChartTinyUrl.asObservable();}
 
-  private _tableUrl: BehaviorSubject<string>;
-  tableTinyUrl$: Observable<string>;
-  private _tableTinyUrl: BehaviorSubject<string>;
-  loadingTableTinyUrl$: Observable<boolean>;
-  private _loadingTableTinyUrl: BehaviorSubject<boolean>;
+  // Table Url
+  private _tableUrl = new BehaviorSubject<string>(null);
+  private _tableTinyUrl = new BehaviorSubject<string>(null);
+  get tableTinyUrl$() { return this._tableTinyUrl.asObservable();}
+  // Table Load Url
+  private _loadingTableTinyUrl = new BehaviorSubject<boolean>(false);
+  get loadingTableTinyUrl$() { return this._loadingTableTinyUrl.asObservable();}
 
-  private _rawChartDataUrl: BehaviorSubject<string>;
-  rawChartDataTinyUrl$: Observable<string>;
-  private _rawChartDataTinyUrl: BehaviorSubject<string>;
-  loadingRawChartDataTinyUrl$: Observable<boolean>;
-  private _loadingRawChartDataTinyUrl: BehaviorSubject<boolean>;
+  // Raw Chart Data Url
+  private _rawChartDataUrl = new BehaviorSubject<string>(null);
+  private _rawChartDataTinyUrl = new BehaviorSubject<string>(null);
+  get rawChartDataTinyUrl$() { return this._rawChartDataTinyUrl.asObservable();}
+  // Raw Chart Data Load Url
+  private _loadingRawChartDataTinyUrl = new BehaviorSubject<boolean>(false);
+  get loadingRawChartDataTinyUrl$() { return this._loadingRawChartDataTinyUrl.asObservable();}
 
-  private _rawDataUrl: BehaviorSubject<string>;
-  rawDataTinyUrl$: Observable<string>;
-  private _rawDataTinyUrl: BehaviorSubject<string>;
-  loadingRawDataTinyUrl$: Observable<boolean>;
-  private _loadingRawDataTinyUrl: BehaviorSubject<boolean>;
+  // Raw Data Url
+  private _rawDataUrl= new BehaviorSubject<string>(null);
+  private _rawDataTinyUrl = new BehaviorSubject<string>(null);
+  get rawDataTinyUrl$() { return this._rawDataTinyUrl.asObservable();}
+  // Raw Data Load Url
+  private _loadingRawDataTinyUrl = new BehaviorSubject<boolean>(false);
+  get loadingRawDataTinyUrl$() { return this._loadingRawDataTinyUrl.asObservable();}
 
   constructor(private http: HttpClient, private errorHandler: ErrorHandlerService, private urlProvider: UrlProviderService) {
 
       // Chart Url Loader
-      this._loadingChartTinyUrl = new BehaviorSubject<boolean>(false);
-      this.loadingChartTinyUrl$ = this._loadingChartTinyUrl.asObservable();
-
-      this._chartUrl = new BehaviorSubject<string>(null);
-      this._chartTinyUrl = new BehaviorSubject<string>(null);
-      this.chartTinyUrl$ = this._chartTinyUrl.asObservable();
-
       this._chartUrl.pipe(distinctUntilChanged()).subscribe(
         (chartUrl: string) => this.handleStringURL(chartUrl, this._loadingChartTinyUrl, this._chartTinyUrl), // success path
         error => this.errorHandler.handleError(error) // error path
       );
 
       // Table Url Loader
-      this._tableTinyUrl = new BehaviorSubject<string>(null);
-      this.tableTinyUrl$ = this._tableTinyUrl.asObservable();
-
-      this._loadingTableTinyUrl = new BehaviorSubject<boolean>(false);
-      this.loadingTableTinyUrl$ = this._loadingTableTinyUrl.asObservable();
-
-      this._tableUrl = new BehaviorSubject<string>(null);
       this._tableUrl.pipe(distinctUntilChanged()).subscribe(
         (tableUrl: string) => this.handleStringURL(tableUrl, this._loadingTableTinyUrl, this._tableTinyUrl), // success path 
           error => this.errorHandler.handleError(error) // error path
       );
 
       // Raw Chart Data Url Loader
-      this._rawChartDataTinyUrl = new BehaviorSubject<string>(null);
-      this.rawChartDataTinyUrl$ = this._rawChartDataTinyUrl.asObservable();
-
-      this._loadingRawChartDataTinyUrl = new BehaviorSubject<boolean>(false);
-      this.loadingRawChartDataTinyUrl$ = this._loadingRawChartDataTinyUrl.asObservable();
-
-      this._rawChartDataUrl = new BehaviorSubject<string>(null);
       this._rawChartDataUrl.pipe(distinctUntilChanged()).subscribe(
           (rawChartDataUrl: string) => this.handleStringURL(rawChartDataUrl, this._loadingRawChartDataTinyUrl, this._rawChartDataTinyUrl), // success path  
           error => this.errorHandler.handleError(error) // error path
       );
 
       // Raw Data Url Loader
-      this._rawDataTinyUrl = new BehaviorSubject<string>(null);
-      this.rawDataTinyUrl$ = this._rawDataTinyUrl.asObservable();
-
-      this._loadingRawDataTinyUrl = new BehaviorSubject<boolean>(false);
-      this.loadingRawDataTinyUrl$ = this._loadingRawDataTinyUrl.asObservable();
-
-      this._rawDataUrl = new BehaviorSubject<string>(null);
       this._rawDataUrl.pipe(distinctUntilChanged()).subscribe(
           (rawDataUrl: string) => this.handleStringURL(rawDataUrl, this._loadingRawDataTinyUrl, this._rawDataTinyUrl), // success path  
           error => this.errorHandler.handleError(error) // error path
@@ -176,4 +156,3 @@ export class ChartExportingService {
     this._rawDataUrl.next(this.urlProvider.createRawDataUrl(rawDataObject));
   }
 }
-
