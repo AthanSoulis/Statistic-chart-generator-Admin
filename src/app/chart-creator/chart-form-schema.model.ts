@@ -72,8 +72,6 @@ export class FormSchema {
             'properties' : {
                 'data' : {
                     'type' : 'object',
-                    // 'title' : 'Data Selection',
-                    // 'description' : 'Describe the data you want to appear on your chart',
                     'grouping' : 'ui fluid two column stackable basic grid',
                     'widget' : { 'id' : 'csui-property-object' },
                     'properties' : {
@@ -305,15 +303,15 @@ export class FormSchema {
                     // 'grouping' : 'ui field basic segment',
                     'widget' : { 'id' : 'csui-property-object' },
                     'properties' : {
-                        // 'dataseriesColor' : {
-                        //     'type' : 'string',
-                        //     'pattern': '^#[0-9a-fA-F]{8}$',
-                        //     'title' : 'Dataseries Color',
-                        //     'widget': { 'id': 'csui-color-picker' },
-                        //     // 'visibleIf': {
-                        //     //     'chartType': ['area', 'column', 'bar', 'line']
-                        //     // }
-                        // },
+                        'dataseriesColor' : {
+                            'type' : 'string',
+                            'pattern': '^#[0-9a-fA-F]{8}$',
+                            'title' : 'Dataseries Color',
+                            'widget': { 'id': 'csui-color-picker' },
+                            // 'visibleIf': {
+                            //     'chartType': ['area', 'column', 'bar', 'line']
+                            // }
+                        },
                         'dataseriesName' : {
                             'type' : 'string',
                             'placeholder' : 'Dataseries',
@@ -322,10 +320,6 @@ export class FormSchema {
                             'widget': 'hidden'
                             // Widget is hidden because the dataseriesName
                             // is getting handled in dataseries-menu-widget
-                            //
-                            // 'widget': {
-                            //     'id': 'string'
-                            // }
                         },
                         'chartType' : {
                             'type' : 'string',
@@ -338,32 +332,61 @@ export class FormSchema {
                             'showOnlyWhen': {
                                 '/category/categoryType': ['combo']
                             }
-                        }
+                        },
+                        // 'stacking' : {
+                        //     'type' : 'string',
+                        //     'widget' : { 'id': 'csui-select'},
+                        //     // 'visibleIf': {
+                        //     //     '/appearance/chartAppearance/generalOptions/library': 'HighCharts'
+                        //     // },
+                        //     'tooltip': 'Choose between a Regular or Stacked data in your chart.',
+                        //     'title': 'Stacked Data',
+                        //     'default': 'null',
+                        //     'oneOf': [
+                        //         {
+                        //           'description': 'Disabled',
+                        //           'value' : 'null',
+                        //           'enum': ['null']
+                        //         },
+                        //         {
+                        //           'description': 'Stacked by Value',
+                        //           'value': 'normal',
+                        //           'enum': ['normal']
+                        //         },
+                        //         {
+                        //           'description': 'Stacked by Percentage',
+                        //           'value': 'percent',
+                        //           'enum': ['percent']
+                        //         }
+                        //       ]
+                        // }
                     },
                     'fieldsets':
-                        [
-                        // {
-                        //     'fields': [ 'dataseriesColor']
-                        // },
-                        {
+                        [{
                             'fields': [ 'dataseriesName']
                         },
                         {
                             'width': ['four wide'],
-                            'fields': ['chartType']
+                            'fields': ['chartType', 'dataseriesColor']
+                            // 'fields': ['chartType', 'stacking', 'dataseriesColor']
                         }]
                 }
             },
-            'fieldsets':
-                [{
-                    'fields': ['chartProperties', 'data']
-                }],
+            'fieldsets':[
+                {
+                    'title': 'Data Selection',
+                    'fields': ['data']
+                },
+                {
+                    'title': 'Options',
+                    'fields': ['chartProperties']
+                }
+            ],
             'required': ['data', 'chartProperties']
         }
     };
 
     private _appearanceFormSchema = {
-
         'type' : 'object',
         'widget' : { 'id' : 'csui-tabular-menu' },
         'properties' : {
@@ -473,8 +496,9 @@ export class FormSchema {
                             },
                             'dataSeriesColorArray' : {
                                 'type': 'array',
-                                'title': 'Data Series Color',
+                                'title': 'Data Series Color Palette',
                                 'itemName': 'Series Color',
+                                'description': 'Select a custom color palette for your diagram',
                                 // 'minItems': 1,
                                 'deleteButtonPosition' : 'out',
                                 'widget' : { 'id' : 'csui-array' },
@@ -720,12 +744,12 @@ export class FormSchema {
                                         'widget' : { 'id': 'csui-select'},
                                         'tooltip': 'Choose between a Regular or Stacked chart.',
                                         'title': 'Stacked Graph',
-                                        'default': 'undefined',
+                                        'default': 'null',
                                         'oneOf': [
                                             {
                                               'description': 'Disabled',
-                                              'value' : 'undefined',
-                                              'enum': ['undefined']
+                                              'value' : 'null',
+                                              'enum': ['null']
                                             },
                                             {
                                               'description': 'Stacked by Value',
@@ -1490,7 +1514,7 @@ export class FormSchema {
                 'fields': ['category']
             },
             {
-                'title': 'Select Data',
+                'title': 'Configure Dataseries',
                 'description' : 'Describe the data you want to see',
                 'fields': ['dataseries']
             },

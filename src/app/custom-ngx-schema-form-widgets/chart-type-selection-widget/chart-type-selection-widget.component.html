@@ -12,8 +12,8 @@
   <ng-template #chartTypeSelection>
     <select class="custom-select" [formControl]="control"  [attr.name]="name"
     [attr.disabled]="schema.readOnly" [id]="id">
-      <option *ngIf="schema.placeholder" [label]="schema.placeholder" disabled></option>
-      <option *ngIf="!schema.placeholder" label="Select one" disabled></option>
+      <option *ngIf="schema.placeholder" [label]="schema.placeholder" [value]="null" disabled></option>
+      <option *ngIf="!schema.placeholder" label="Select one" [value]="null" disabled></option>
       <option *ngFor="let option of supportedChartTypes" [value]="option">{{option | titlecase}}</option>
     </select>
   </ng-template>
