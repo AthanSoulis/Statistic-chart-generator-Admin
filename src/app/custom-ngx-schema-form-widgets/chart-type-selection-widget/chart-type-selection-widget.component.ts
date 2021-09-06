@@ -29,7 +29,7 @@ export class ChartTypeSelectionWidgetComponent extends ControlWidget implements 
       (category: string) => 
       {
         this.isVisible.next(category === Object.values(this.schema.showOnlyWhen)[0][0]);
-        this.formProperty.setValue('null', false);
+        this.formProperty.setValue('', false);
         this.cdr.markForCheck();
       }
     );
