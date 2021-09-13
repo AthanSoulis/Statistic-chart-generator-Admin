@@ -333,33 +333,33 @@ export class FormSchema {
                                 '/category/categoryType': ['combo']
                             }
                         },
-                        // 'stacking' : {
-                        //     'type' : 'string',
-                        //     'widget' : { 'id': 'csui-select'},
-                        //     // 'visibleIf': {
-                        //     //     '/appearance/chartAppearance/generalOptions/library': 'HighCharts'
-                        //     // },
-                        //     'tooltip': 'Choose between a Regular or Stacked data in your chart.',
-                        //     'title': 'Stacked Data',
-                        //     'default': 'null',
-                        //     'oneOf': [
-                        //         {
-                        //           'description': 'Disabled',
-                        //           'value' : 'null',
-                        //           'enum': ['null']
-                        //         },
-                        //         {
-                        //           'description': 'Stacked by Value',
-                        //           'value': 'normal',
-                        //           'enum': ['normal']
-                        //         },
-                        //         {
-                        //           'description': 'Stacked by Percentage',
-                        //           'value': 'percent',
-                        //           'enum': ['percent']
-                        //         }
-                        //       ]
-                        // }
+                        'stacking' : {
+                            'type' : 'string',
+                            'widget' : { 'id': 'csui-select'},
+                            'visibleIf': {
+                                '/appearance/chartAppearance/generalOptions/library': ["HighCharts"]
+                            },
+                            'tooltip': 'Highcharts only - Choose between a Regular or Stacked data series in your chart.',
+                            'title': 'Stacked Data',
+                            'default': 'null',
+                            'oneOf': [
+                                {
+                                  'description': 'Disabled',
+                                  'value' : 'null',
+                                  'enum': ['null']
+                                },
+                                {
+                                  'description': 'Stacked by Value',
+                                  'value': 'normal',
+                                  'enum': ['normal']
+                                },
+                                {
+                                  'description': 'Stacked by Percentage',
+                                  'value': 'percent',
+                                  'enum': ['percent']
+                                }
+                              ]
+                        }
                     },
                     'fieldsets':
                         [{
@@ -367,8 +367,7 @@ export class FormSchema {
                         },
                         {
                             'width': ['four wide'],
-                            'fields': ['chartType', 'dataseriesColor']
-                            // 'fields': ['chartType', 'stacking', 'dataseriesColor']
+                            'fields': ['chartType', 'stacking', 'dataseriesColor']
                         }]
                 }
             },

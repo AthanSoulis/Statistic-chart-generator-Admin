@@ -189,7 +189,9 @@ export class DiagramCreator {
                     appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.exporting;
                 
                 // Stacked Chart
-                chartObj.chartDescription.plotOptions.series.stacking = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.stackedChart;
+                chartObj.chartDescription.plotOptions.series.stacking = 
+                    appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.stackedChart == 'null' ? 
+                    undefined : appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.stackedChart;
             }   
 
             // Legend Options
@@ -264,6 +266,8 @@ export class DiagramCreator {
                                 appearanceOptions.chartAppearance.generalOptions.resultsLimit,
                                 this.figureCategoryType(dataElement, category)));
                 
+            chartObj.chartDescription.series.push({ stacking: dataElement.chartProperties.stacking == 'null' ? undefined : dataElement.chartProperties.stacking });
+            
             // Set color for each data series. Works only for bars and columns.
             // if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.length > 1
             //     || appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray[0] !== '#00000000') {

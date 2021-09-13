@@ -48,6 +48,7 @@ export interface ChartPropertiesFormSchema {
     chartType?: string;
     dataseriesColor?: string;
     dataseriesName?: string;
+    stacking?: 'null' | 'normal' | 'percent' | 'stream' | 'overlap';
 }
 export interface TitlesOptionsFormSchema {
     title ?: string;
@@ -147,7 +148,7 @@ export interface ECMiscOptionsFormSchema {
 export interface HCMiscOptionsFormSchema {
     exporting ?: boolean;
     hcEnableDataLabels ?: boolean;
-    stackedChart ?: undefined | "normal" | "percent" | "stream" | "overlap";
+    stackedChart ?: "null" | "normal" | "percent" | "stream" | "overlap";
 }
 export interface GooglechartsOptionsFormSchema {
 

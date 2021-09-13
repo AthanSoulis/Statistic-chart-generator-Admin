@@ -27,6 +27,7 @@ class HighChartsDescription {
     legend: HCLegend;
     credits: HCCredits;
     colors: string[] = [];
+    series: Array<{stacking?: undefined | 'normal' | 'percent' | 'stream' | 'overlap'}> = [];
 
     constructor() {
         this.chart = new HCchart();
