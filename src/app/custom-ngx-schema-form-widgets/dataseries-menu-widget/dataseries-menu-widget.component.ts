@@ -151,10 +151,18 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
     return item;
   }
 
-  public changeOnEnter(event: Event)
-  {
-    event.target.dispatchEvent(new Event("blur"));
-    return true;
+  public changeOnEnter(event: Event, index: number)
+  {   
+    if (event.defaultPrevented) // Do nothing if the event was already processed
+      return; 
+    
+    if(this.editableName.id === index)
+    {
+      event.target.dispatchEvent(new Event("change"));
+      event.target.dispatchEvent(new Event("blur"));
+    }
+
+    event.preventDefault(); // Mark that it has already been processed
   }
 
   get menuArrayLength(): number {
