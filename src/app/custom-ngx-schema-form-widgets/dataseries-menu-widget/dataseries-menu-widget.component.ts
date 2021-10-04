@@ -147,6 +147,19 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
     this.dataseriesMenu.select(newActiveId);
   }
 
+  moveItem(from: number, to: number, $event: Event) {
+    this.formProperty.properties[from];
+
+    var dataseriesToMove = (this.formProperty.properties as FormProperty[]).splice(from, 1);
+    (this.formProperty.properties as FormProperty[]).splice(to, 0, dataseriesToMove[0]);
+
+    $event.preventDefault();
+    $event.stopImmediatePropagation();
+
+    this.cdr.markForCheck();
+    this.dataseriesMenu.select(to);
+  }
+
   trackByIndex(index: number, item: any) {
     return item;
   }

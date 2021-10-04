@@ -16,8 +16,16 @@
                             </ng-template>
                             
                             <div class="btn-group" role="group" aria-label="Dataseries action buttons">
-                                <button class="btn btn-outline-dark" (click)="enableEditable(i)">
+                                <button class="btn btn-outline-primary" (click)="enableEditable(i)">
                                     <i class="bi bi-pencil"></i>
+                                </button>
+
+                                <button *ngIf="menuArrayLength > 1 && i < formProperty.properties.length-1" class="btn btn-outline-dark" (click)="moveItem(i, i+1, $event)">
+                                    <i class="bi bi-arrow-down"></i>
+                                </button>
+
+                                <button *ngIf="menuArrayLength > 1 && i > 0" class="btn btn-outline-dark" (click)="moveItem(i, i-1, $event)">
+                                    <i class="bi bi-arrow-up"></i>
                                 </button>
                             
                                 <button *ngIf="menuArrayLength > 1" class="btn btn-outline-danger" type="button"
