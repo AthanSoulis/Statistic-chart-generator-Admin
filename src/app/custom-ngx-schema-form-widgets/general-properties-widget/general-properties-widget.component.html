@@ -1,19 +1,19 @@
 <div *ngIf="formProperty.schema.title || formProperty.schema.description" class="introduction">
-    <h2 class="ui header border-bottom mb-3">{{formProperty.schema.title}}
-        <div class="sub header">{{formProperty.schema.description}}</div>
+    <h2 class="border-bottom mb-3">{{formProperty.schema.title}}
+      <p *ngIf="formProperty.schema.description"><small class="text-muted">{{formProperty.schema.description}}</small></p>
     </h2>
     <div class="border-bottom my-3" style="border-color:transparent !important; "></div>
 </div>
-<div class="ui field basic segment">
+<div class="container-fluid">
   <div *ngFor="let fieldset of formProperty.schema.fieldsets">
-    <h2 class="ui header border-bottom mb-3" *ngIf="fieldset.title">{{fieldset.title}}
-      <div class="sub header" *ngIf="fieldset.description">{{fieldset.description}}</div>
+    <h2 class="border-bottom mb-3" *ngIf="fieldset.title">{{fieldset.title}}
+      <p *ngIf="fieldset.description"><small  class="text-muted">{{fieldset.description}}</small></p>
     </h2>
 
     <div class="border-bottom my-3" style="border-color:transparent !important; "></div>
     
     <div class="{{fieldset.grouping}}">
-      <div class="ui field basic segment" *ngFor="let fieldId of fieldset.fields">
+      <div class="container-fluid" *ngFor="let fieldId of fieldset.fields">
         <sf-form-element [formProperty]="formProperty.getProperty(fieldId)"></sf-form-element>
       </div>
     </div>
