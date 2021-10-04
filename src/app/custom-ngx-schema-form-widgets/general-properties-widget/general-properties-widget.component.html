@@ -1,19 +1,22 @@
-<div class="introduction">
-    <h2 class="ui header">{{formProperty.schema.title}}
+<div *ngIf="formProperty.schema.title || formProperty.schema.description" class="introduction">
+    <h2 class="ui header border-bottom mb-3">{{formProperty.schema.title}}
         <div class="sub header">{{formProperty.schema.description}}</div>
     </h2>
-    <div *ngIf="formProperty.schema.title || formProperty.schema.description" class="ui hidden divider"></div>
+    <div class="border-bottom my-3" style="border-color:transparent !important; "></div>
 </div>
 <div class="ui field basic segment">
   <div *ngFor="let fieldset of formProperty.schema.fieldsets">
-    <h3 class="ui dividing header" *ngIf="fieldset.title">{{fieldset.title}}
+    <h2 class="ui header border-bottom mb-3" *ngIf="fieldset.title">{{fieldset.title}}
       <div class="sub header" *ngIf="fieldset.description">{{fieldset.description}}</div>
-    </h3>
+    </h2>
+
+    <div class="border-bottom my-3" style="border-color:transparent !important; "></div>
+    
     <div class="{{fieldset.grouping}}">
       <div class="ui field basic segment" *ngFor="let fieldId of fieldset.fields">
         <sf-form-element [formProperty]="formProperty.getProperty(fieldId)"></sf-form-element>
       </div>
     </div>
-    <div class="ui hidden divider"></div>
+    <div class="border-bottom my-3" style="border-color:transparent !important; "></div>
   </div>
 </div>
