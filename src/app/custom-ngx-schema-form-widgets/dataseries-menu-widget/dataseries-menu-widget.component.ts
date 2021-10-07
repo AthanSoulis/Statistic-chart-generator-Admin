@@ -123,10 +123,11 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
       }
       
       addedItemDataseriesNameProperty.setValue(newItemName, false);
+
+      this.formProperty.updateValueAndValidity();
       console.log("Added an Item!");
       
       this.dataseriesMenu.select(addedItemId);
-      this.cdr.markForCheck();
     }
   }
 
@@ -138,12 +139,13 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
     var newActiveId = this.dataseriesMenu.activeId-1 < 0 ? 0 : this.dataseriesMenu.activeId-1 ;
       
     this.formProperty.removeItem(this.formProperty.properties[index]);
+
+    this.formProperty.updateValueAndValidity();
     // The $event.preventDefault() is a workaround to stop web-app reloading
     // https://github.com/ng-bootstrap/ng-bootstrap/issues/1909 
     $event.preventDefault();
     $event.stopImmediatePropagation();
 
-    this.cdr.markForCheck();
     this.dataseriesMenu.select(newActiveId);
   }
 
@@ -153,10 +155,11 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
     var dataseriesToMove = (this.formProperty.properties as FormProperty[]).splice(from, 1);
     (this.formProperty.properties as FormProperty[]).splice(to, 0, dataseriesToMove[0]);
 
+    this.formProperty.updateValueAndValidity();
+
     $event.preventDefault();
     $event.stopImmediatePropagation();
 
-    this.cdr.markForCheck();
     this.dataseriesMenu.select(to);
   }
 

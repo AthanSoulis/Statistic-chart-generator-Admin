@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col">
             <ul ngbNav #nav="ngbNav"  class="nav" orientation="vertical" [destroyOnHide]="false" [keyboard]="false" >
-                <li [ngbNavItem]="i" *ngFor="let itemProperty of formProperty.properties; index as i; trackBy:trackByIndex" [attr.id]="getDataSeriesName(i) | async">
+                <li *ngFor="let itemProperty of formProperty.properties; index as i; trackBy:trackByIndex" [ngbNavItem]="i" [attr.id]="getDataSeriesName(i) | async">
                     <a ngbNavLink>
                         <div class="d-flex flex-column">
                             <div *ngIf="this.isEditableName(i) ; else notEditable" #editDataseriesName tabindex="0">
