@@ -23,201 +23,201 @@
 export class FormSchema {
 
     private _viewFormSchema = {
-        'type' : 'object',
-        'widget' : { 'id' : 'csui-view-properties-object' },
-        'properties' : {
-            'profile' : {
-                'type' : 'string',
-                'requiredField' : true,
-                'minLength' : 1,
-                'widget': {'id': 'csui-profile-picker'}
+        type : 'object',
+        widget : { id : 'csui-view-properties-object' },
+        properties : {
+            profile : {
+                type : 'string',
+                requiredField : true,
+                minLength : 1,
+                widget: {id: 'csui-profile-picker'}
             }
         },
-        'fieldsets': [
+        fieldsets: [
             {
-                'fields': ['profile']
+                fields: ['profile']
             }
         ],
-        'required': [ 'profile' ]
+        required: [ 'profile' ]
     };
 
     private _categoryFormSchema = {
-        'type' : 'object',
-        'title' : 'Select Category',
-        'description' : 'Choose the type of diagram you want to make',
-        'widget' : { 'id' : 'csui-category-properties-object' },
-        'properties' : {
-            'isPolarDiagram' : {
-                'type' : 'boolean',
-                'default': false,
-                'widget': 'hidden',
+        type : 'object',
+        title : 'Select Category',
+        description : 'Choose the type of diagram you want to make',
+        widget : { id : 'csui-category-properties-object' },
+        properties : {
+            isPolarDiagram : {
+                type : 'boolean',
+                default: false,
+                widget: 'hidden',
             },
-            'categoryType' : {
-                'type' : 'string',
-                'requiredField' : true,
-                'widget': { 'id': 'csui-diagram-category-component' }
+            categoryType : {
+                type : 'string',
+                requiredField : true,
+                widget: { id: 'csui-diagram-category-component' }
             }
         },
-        'fieldsets': [{ 'fields': ['categoryType','isPolarDiagram'] }],
-        'required': ['categoryType']
+        fieldsets: [{ fields: ['categoryType','isPolarDiagram'] }],
+        required: ['categoryType']
     };
 
     private _dataseriesFormSchema = {
-        'type': 'array',
-        'description': 'Dataseries',
-        'widget' : { 'id' : 'csui-dataseries-menu' },
-        'items': {
-            'type' : 'object',
-            'widget' : { 'id' : 'csui-general-properties-object' },
-            'properties' : {
-                'data' : {
-                    'type' : 'object',
-                    'grouping' : 'ui fluid two column stackable basic grid',
-                    'widget' : { 'id' : 'csui-property-object' },
-                    'properties' : {
-                        'yaxisData' : {
-                            'type' : 'object',
-                            'widget' : { 'id' : 'csui-property-object' },
-                            'relaxed': true,
-                            'properties' : {
-                                'entity' : {
-                                    'type' : 'string',
-                                    'requiredField' : true,
-                                    'minLength' : 1,
-                                    'placeholder' : 'Select Entity',
-                                    'title' : 'Entity',
-                                    'widget': { 'id': 'csui-entity-select'},
+        type: 'array',
+        description: 'Dataseries',
+        widget : { id : 'csui-dataseries-menu' },
+        items: {
+            type : 'object',
+            widget : { id : 'csui-general-properties-object' },
+            properties : {
+                data : {
+                    type : 'object',
+                    grouping : 'ui fluid two column stackable basic grid',
+                    widget : { id : 'csui-property-object' },
+                    properties : {
+                        yaxisData : {
+                            type : 'object',
+                            widget : { id : 'csui-property-object' },
+                            relaxed: true,
+                            properties : {
+                                entity : {
+                                    type : 'string',
+                                    requiredField : true,
+                                    minLength : 1,
+                                    placeholder : 'Select Entity',
+                                    title : 'Entity',
+                                    widget: { id: 'csui-entity-select'},
                                 },
-                                'yaxisAggregate' : {
-                                    'type' : 'string',
-                                    'requiredField' : true,
-                                    'minLength' : 1,
-                                    'placeholder' : 'Select Aggregate',
-                                    'title' : 'Y axis Aggregate',
-                                    'widget': { 'id': 'csui-aggregate-select'},
+                                yaxisAggregate : {
+                                    type : 'string',
+                                    requiredField : true,
+                                    minLength : 1,
+                                    placeholder : 'Select Aggregate',
+                                    title : 'Y axis Aggregate',
+                                    widget: { id: 'csui-aggregate-select'},
                                 },
-                                'yaxisEntityField': {
-                                    'type' : 'object',
+                                yaxisEntityField: {
+                                    type : 'object',
                                     // 'requiredField' : true,
-                                    'placeholder' : 'Select Entity Field',
-                                    'title' : 'Entity Field',
-                                    'widget': { 'id': 'csui-entity-field-select'},
-                                    'properties' : {
-                                        'name': {
-                                            'type' : 'string',
-                                            'minLength': 1,
+                                    placeholder : 'Select Entity Field',
+                                    title : 'Entity Field',
+                                    widget: { id: 'csui-entity-field-select'},
+                                    properties : {
+                                        name: {
+                                            type : 'string',
+                                            minLength: 1,
                                         },
-                                        'type': {
-                                            'type' : 'string',
-                                            'minLength': 1,
+                                        type: {
+                                            type : 'string',
+                                            minLength: 1,
                                         }
                                     },
-                                    'required': ['name'],
-                                    'visibleIf': {
+                                    required: ['name'],
+                                    visibleIf: {
                                         'yaxisAggregate': ['count', 'min', 'max', 'avg', 'null']
                                     }
                                 },
                             },
-                            'fieldsets':
+                            fieldsets:
                                 [{
-                                    'title' : 'Y Axis',
-                                    'grouping': 'equal width fields',
-                                    'fields': ['entity', 'yaxisAggregate']
+                                    title : 'Y Axis',
+                                    grouping: 'equal width fields',
+                                    fields: ['entity', 'yaxisAggregate']
                                 },
                                 {
-                                    'fields': ['yaxisEntityField']
+                                    fields: ['yaxisEntityField']
                                 }],
-                            'required': [ 'entity', 'yaxisAggregate']
+                            required: [ 'entity', 'yaxisAggregate']
                         },
-                        'xaxisData' : {
-                            'type': 'array',
-                            'title': 'X axis',
-                            'relaxed': true,
-                            'itemName': 'Group By',
-                            'minItems': 1,
-                            'maxItems': 2,
-                            'widget' : { 'id' : 'csui-array' },
-                            // 'visibleIf': {
+                        xaxisData : {
+                            type: 'array',
+                            title: 'X axis',
+                            relaxed: true,
+                            itemName: 'Group By',
+                            minItems: 1,
+                            maxItems: 2,
+                            widget : { id : 'csui-array' },
+                            // visibleIf: {
                             //     '/category/categoryType': ['area', 'pie', 'column', 'bar', 'line', 'world', 'combo']
                             // },
-                            'items': {
-                                'type' : 'object',
-                                'widget' : { 'id' : 'csui-property-object' },
-                                'properties' : {
-                                    'xaxisEntityField' : {
-                                        'type' : 'object',
-                                        'requiredField' : true,
-                                        'placeholder' : 'Select Entity Field',
-                                        'title' : 'Entity Field',
-                                        'widget': { 'id': 'csui-entity-field-select'},
-                                        'properties' : {
-                                            'name': {
-                                                'type' : 'string',
-                                                'minLength': 1,
+                            items: {
+                                type : 'object',
+                                widget : { id : 'csui-property-object' },
+                                properties : {
+                                    xaxisEntityField : {
+                                        type : 'object',
+                                        requiredField : true,
+                                        placeholder : 'Select Entity Field',
+                                        title : 'Entity Field',
+                                        widget: { id: 'csui-entity-field-select'},
+                                        properties : {
+                                            name: {
+                                                type : 'string',
+                                                minLength: 1,
                                             },
-                                            'type': {
-                                                'type' : 'string',
-                                                'minLength': 1,
+                                            type: {
+                                                type : 'string',
+                                                minLength: 1,
                                             }
                                         },
-                                        'required': ['name', 'type']
+                                        required: ['name', 'type']
                                     }
                                 },
-                                'required': ['xaxisEntityField'],
-                                'fieldsets': [
+                                required: ['xaxisEntityField'],
+                                fieldsets: [
                                     {
-                                        'fields': [
+                                        fields: [
                                             'xaxisEntityField'
                                         ]
                                     }
                                 ]
                             }
                         },
-                        'filters' : {
-                            'type': 'array',
-                            'title': 'Filters',
-                            'itemName': 'Filter',
-                            'relaxed': true,
-                            'widget' : { 'id' : 'csui-array' },
-                            'items': {
-                                'type' : 'object',
-                                'widget': { 'id': 'csui-property-object'},
-                                'properties' : {
-                                    'groupFilters' : {
-                                        'type': 'array',
-                                        'itemName': 'Filter Rule',
-                                        'deleteButtonPosition' : 'in',
-                                        'minItems': 1,
-                                        'widget' : { 'id' : 'csui-filter-array' },
-                                        'items': {
-                                            'type' : 'object',
-                                            'widget': { 'id': 'csui-filter-property-object'},
-                                            'properties' : {
-                                                'field': {
-                                                    'type' : 'object',
-                                                    'requiredField' : true,
-                                                    'placeholder' : 'Select Entity Field',
-                                                    'title' : 'Entity Field',
-                                                    'widget': { 'id': 'csui-entity-field-select'},
-                                                    'properties' : {
-                                                        'name': {
-                                                            'type' : 'string',
-                                                            'minLength': 1,
+                        filters : {
+                            type: 'array',
+                            title: 'Filters',
+                            itemName: 'Filter',
+                            relaxed: true,
+                            widget : { id : 'csui-array' },
+                            items: {
+                                type : 'object',
+                                widget: { id: 'csui-property-object'},
+                                properties : {
+                                    groupFilters : {
+                                        type: 'array',
+                                        itemName: 'Filter Rule',
+                                        deleteButtonPosition : 'in',
+                                        minItems: 1,
+                                        widget : { id : 'csui-filter-array' },
+                                        items: {
+                                            type : 'object',
+                                            widget: { id: 'csui-filter-property-object'},
+                                            properties : {
+                                                field: {
+                                                    type : 'object',
+                                                    requiredField : true,
+                                                    placeholder : 'Select Entity Field',
+                                                    title : 'Entity Field',
+                                                    widget: { id: 'csui-entity-field-select'},
+                                                    properties : {
+                                                        name: {
+                                                            type : 'string',
+                                                            minLength: 1,
                                                         },
-                                                        'type': {
-                                                            'type' : 'string',
-                                                            'minLength': 1,
+                                                        type: {
+                                                            type : 'string',
+                                                            minLength: 1,
                                                         }
                                                     },
-                                                    'required': ['name', 'type']
+                                                    required: ['name', 'type']
                                                 },
-                                                'type': {
-                                                    'type' : 'string',
-                                                    'requiredField' : true,
-                                                    'minLength': 1,
-                                                    'placeholder' : 'Select Operator',
-                                                    'title' : 'Filter Operator',
-                                                    'widget': { 'id': 'csui-operator-select'}
+                                                type: {
+                                                    type : 'string',
+                                                    requiredField : true,
+                                                    minLength: 1,
+                                                    placeholder : 'Select Operator',
+                                                    title : 'Filter Operator',
+                                                    widget: { id: 'csui-operator-select'}
                                                     // Ideally I would have inserted this:
                                                     //
                                                     // 'invisibleIf': {
@@ -227,13 +227,13 @@ export class FormSchema {
                                                     // But 'field' returns an object and ngx-schema-form
                                                     // does not support this for object values
                                                 },
-                                                'values': {
-                                                    'type': 'array',
-                                                    'minItems': 1,
-                                                    'maxItems': 2,
-                                                    'requiredField' : true,
-                                                    'widget' : { 'id' : 'csui-filter-field-array' },
-                                                    'items': {
+                                                values: {
+                                                    type: 'array',
+                                                    minItems: 1,
+                                                    maxItems: 2,
+                                                    requiredField : true,
+                                                    widget : { id : 'csui-filter-field-array' },
+                                                    items: {
                                                         // Cannot support multiple type items
                                                         //
                                                         // 'anyOf': [
@@ -244,1286 +244,1286 @@ export class FormSchema {
                                                         //         'type' : 'number',
                                                         //     }
                                                         //   ],
-                                                        'type' : 'string',
-                                                        'placeholder' : 'Value',
-                                                        'widget': {'id': 'csui-filter-field'}
+                                                        type : 'string',
+                                                        placeholder : 'Value',
+                                                        widget: {id: 'csui-filter-field'}
                                                     }
                                                 }
                                             },
-                                            'fieldsets': [
-                                                { 'fields': ['field', 'type', 'values']}
+                                            fieldsets: [
+                                                { fields: ['field', 'type', 'values']}
                                             ],
-                                            'required': ['field', 'type', 'values']
+                                            required: ['field', 'type', 'values']
                                         },
                                     },
-                                    'op' : {
-                                        'type': 'string',
-                                        'inline': true,
-                                        'widget' : {'id' : 'csui-radio-selection'},
-                                        // 'description': 'Item Layout',
-                                        'oneOf': [
+                                    op : {
+                                        type: 'string',
+                                        inline: true,
+                                        widget : {id : 'csui-radio-selection'},
+                                        // description: 'Item Layout',
+                                        oneOf: [
                                             {
-                                                'enum': ['AND'],
-                                                'value' : 'AND',
-                                                'description': 'Match all of the values'
+                                                enum: ['AND'],
+                                                value : 'AND',
+                                                description: 'Match all of the values'
                                             },
                                             {
-                                                'enum': ['OR'],
-                                                'value' : 'OR',
-                                                'description': 'Match any of the values'
+                                                enum: ['OR'],
+                                                value : 'OR',
+                                                description: 'Match any of the values'
                                             }
                                         ],
-                                        'default': 'AND'
+                                        default: 'AND'
                                     }
                                 },
-                                'fieldsets': [
+                                fieldsets: [
                                     {
-                                        'fields': [ 'op', 'groupFilters']
+                                        fields: [ 'op', 'groupFilters']
                                     }]
                             }
                         }
                     },
-                    'fieldsets': [
+                    fieldsets: [
                         {
-                            'fieldsetColumnWidth' : 'six wide column',
-                            'fields' : ['yaxisData', 'xaxisData']
-                            // 'fields' : ['yaxisData']
+                            fieldsetColumnWidth : 'six wide column',
+                            fields : ['yaxisData', 'xaxisData']
+                            // fields : ['yaxisData']
                         },
                         {
-                            'fieldsetColumnWidth' : 'ten wide column',
-                            'fields' : ['filters']
+                            fieldsetColumnWidth : 'ten wide column',
+                            fields : ['filters']
                         }],
-                    'required': ['yaxisData', 'xaxisData', 'filters']
-                    // 'required': ['yaxisData', 'filters']
+                    required: ['yaxisData', 'xaxisData', 'filters']
+                    // required: ['yaxisData', 'filters']
                 },
-                'chartProperties' : {
-                    'type' : 'object',
-                    // 'title' : 'Chart Properties',
-                    // 'description' : 'Customize the way data appear on your chart',
-                    // 'grouping' : 'ui field basic segment',
-                    'widget' : { 'id' : 'csui-property-object' },
-                    'properties' : {
-                        'dataseriesColor' : {
-                            'type' : 'string',
-                            'pattern': '^#[0-9a-fA-F]{8}$',
-                            'title' : 'Dataseries Color',
-                            'widget': { 'id': 'csui-color-picker' },
-                            // 'visibleIf': {
+                chartProperties : {
+                    type : 'object',
+                    // title : 'Chart Properties',
+                    // description : 'Customize the way data appear on your chart',
+                    // grouping : 'ui field basic segment',
+                    widget : { id : 'csui-property-object' },
+                    properties : {
+                        dataseriesColor : {
+                            type : 'string',
+                            pattern: '^#[0-9a-fA-F]{8}$',
+                            title : 'Dataseries Color',
+                            widget: { id: 'csui-color-picker' },
+                            // visibleIf: {
                             //     'chartType': ['area', 'column', 'bar', 'line']
                             // }
                         },
-                        'dataseriesName' : {
-                            'type' : 'string',
-                            'placeholder' : 'Dataseries',
-                            'default' : 'Data',
-                            'title' : 'Dataseries Name',
-                            'widget': 'hidden'
+                        dataseriesName : {
+                            type : 'string',
+                            placeholder : 'Dataseries',
+                            default : 'Data',
+                            title : 'Dataseries Name',
+                            widget: 'hidden'
                             // Widget is hidden because the dataseriesName
                             // is getting handled in dataseries-menu-widget
                         },
-                        'chartType' : {
-                            'type' : 'string',
-                            'minLength': 1,
-                            'placeholder' : 'Select Chart Type',
-                            'title' : 'Chart Type',
-                            'widget': { 'id': 'csui-chart-type-select' },
+                        chartType : {
+                            type : 'string',
+                            minLength: 1,
+                            placeholder : 'Select Chart Type',
+                            title : 'Chart Type',
+                            widget: { id: 'csui-chart-type-select' },
                             // This is different from the visibleIf because I want to know
                             // the value of an ancestor property
-                            'showOnlyWhen': {
+                            showOnlyWhen: {
                                 '/category/categoryType': ['combo']
                             }
                         },
-                        'stacking' : {
-                            'type' : 'string',
-                            'widget' : { 'id': 'csui-select'},
-                            'visibleIf': {
+                        stacking : {
+                            type : 'string',
+                            widget : { id: 'csui-select'},
+                            visibleIf: {
                                 '/appearance/chartAppearance/generalOptions/library': ["HighCharts"]
                             },
-                            'tooltip': 'Highcharts only - Choose between a Regular or Stacked data series in your chart.',
-                            'title': 'Stacked Data',
-                            'default': 'null',
-                            'oneOf': [
+                            tooltip: 'Highcharts only - Choose between a Regular or Stacked data series in your chart.',
+                            title: 'Stacked Data',
+                            default: 'null',
+                            oneOf: [
                                 {
-                                  'description': 'Disabled',
-                                  'value' : 'null',
-                                  'enum': ['null']
+                                  description: 'Disabled',
+                                  value : 'null',
+                                  enum: ['null']
                                 },
                                 {
-                                  'description': 'Stacked by Value',
-                                  'value': 'normal',
-                                  'enum': ['normal']
+                                  description: 'Stacked by Value',
+                                  value: 'normal',
+                                  enum: ['normal']
                                 },
                                 {
-                                  'description': 'Stacked by Percentage',
-                                  'value': 'percent',
-                                  'enum': ['percent']
+                                  description: 'Stacked by Percentage',
+                                  value: 'percent',
+                                  enum: ['percent']
                                 }
                               ]
                         }
                     },
-                    'fieldsets':
+                    fieldsets:
                         [{
-                            'fields': [ 'dataseriesName']
+                            fields: [ 'dataseriesName']
                         },
                         {
-                            'width': ['four wide'],
-                            'fields': ['chartType', 'stacking', 'dataseriesColor']
+                            width: ['four wide'],
+                            fields: ['chartType', 'stacking', 'dataseriesColor']
                         }]
                 }
             },
-            'fieldsets':[
+            fieldsets:[
                 {
-                    'title': 'Data Selection',
-                    'fields': ['data']
+                    title: 'Data Selection',
+                    fields: ['data']
                 },
                 {
-                    'title': 'Options',
-                    'fields': ['chartProperties']
+                    title: 'Options',
+                    fields: ['chartProperties']
                 }
             ],
-            'required': ['data', 'chartProperties']
+            required: ['data', 'chartProperties']
         }
     };
 
     private _appearanceFormSchema = {
-        'type' : 'object',
-        'widget' : { 'id' : 'csui-tabular-menu' },
-        'properties' : {
-            'chartAppearance' : {
-                'type' : 'object',
-                // 'title' : 'Chart Appearance',
-                // 'description' : 'Customise the way your chart looks',
-                'widget' : { 'id' : 'csui-general-properties-object' },
-                'properties' : {
-                    'generalOptions': {
-                        'type' : 'object',
-                        'widget' : { 'id' : 'csui-property-object' },
-                        'properties' : {
-                            'library' : {
-                                'type' : 'string',
-                                'placeholder' : 'Select Library',
-                                'title' : 'Visualisation Library',
-                                'requiredField' : true,
-                                'minLength' : 1,
-                                'widget': {'id': 'csui-library-select'}
+        type : 'object',
+        widget : { id : 'csui-tabular-menu' },
+        properties : {
+            chartAppearance : {
+                type : 'object',
+                // title : 'Chart Appearance',
+                // description : 'Customise the way your chart looks',
+                widget : { id : 'csui-general-properties-object' },
+                properties : {
+                    generalOptions: {
+                        type : 'object',
+                        widget : { id : 'csui-property-object' },
+                        properties : {
+                            library : {
+                                type : 'string',
+                                placeholder : 'Select Library',
+                                title : 'Visualisation Library',
+                                requiredField : true,
+                                minLength : 1,
+                                widget: {id: 'csui-library-select'}
                             },
-                            'resultsLimit' : {
-                                'type' : 'number',
-                                'title' : 'Results Limit',
-                                'default' : 30,
+                            resultsLimit : {
+                                type : 'number',
+                                title : 'Results Limit',
+                                default : 30,
                                 // tslint:disable-next-line:max-line-length
-                                'tooltip' : `To get all available results set Results Limit to 0.`,
-                                'widget' : {'id' : 'csui-number'}
+                                tooltip : `To get all available results set Results Limit to 0.`,
+                                widget : {id : 'csui-number'}
                             },
-                            'orderByAxis' : {
-                                'type' : 'string',
-                                'title' : 'Order By',
-                                'widget' : {'id' : 'csui-select'},
-                                'oneOf': [
+                            orderByAxis : {
+                                type : 'string',
+                                title : 'Order By',
+                                widget : {id : 'csui-select'},
+                                oneOf: [
                                     {
-                                        'description': 'X Axis',
-                                        'value' : 'xaxis',
-                                        'enum': ['xaxis']
+                                        description: 'X Axis',
+                                        value : 'xaxis',
+                                        enum: ['xaxis']
                                     },
                                     {
-                                        'description': 'Y Axis',
-                                        'value' : 'yaxis',
-                                        'enum': ['yaxis']
+                                        description: 'Y Axis',
+                                        value : 'yaxis',
+                                        enum: ['yaxis']
                                     }]
                             }
                         },
-                        'fieldsets':
+                        fieldsets:
                         [{
-                            'grouping': 'equal width fields',
-                            'fields': ['library', 'resultsLimit', 'orderByAxis']
+                            grouping: 'equal width fields',
+                            fields: ['library', 'resultsLimit', 'orderByAxis']
                         }],
-                        'required': [ 'library', 'resultsLimit' ]
+                        required: [ 'library', 'resultsLimit' ]
                     },
-                    'highchartsAppearanceOptions': {
-                        'type' : 'object',
-                        'grouping' : 'ui fluid two column stackable basic grid',
-                        'widget' : { 'id' : 'csui-property-object' },
-                        // 'title': 'Highcharts Appearance Options',
-                        'properties' : {
-                            'titles' : {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'properties': {
-                                    'title' : {
-                                        'type' : 'string',
-                                        'placeholder' : 'Title',
-                                        'title' : 'Title',
-                                        'widget': { 'id': 'csui-string' }
+                    highchartsAppearanceOptions: {
+                        type : 'object',
+                        grouping : 'ui fluid two column stackable basic grid',
+                        widget : { id : 'csui-property-object' },
+                        // title: 'Highcharts Appearance Options',
+                        properties : {
+                            titles : {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    title : {
+                                        type : 'string',
+                                        placeholder : 'Title',
+                                        title : 'Title',
+                                        widget: { id: 'csui-string' }
                                     },
-                                    'subtitle' : {
-                                        'type' : 'string',
-                                        'placeholder' : 'Subtitle',
-                                        'title' : 'Subtitle',
-                                        'widget': { 'id': 'csui-string' }
+                                    subtitle : {
+                                        type : 'string',
+                                        placeholder : 'Subtitle',
+                                        title : 'Subtitle',
+                                        widget: { id: 'csui-string' }
                                     }
                                 },
-                                'fieldsets':
+                                fieldsets:
                                     [{
-                                        'title': 'Diagram Title',
-                                        'grouping': 'equal width fields',
-                                        'fields': ['title', 'subtitle']
+                                        title: 'Diagram Title',
+                                        grouping: 'equal width fields',
+                                        fields: ['title', 'subtitle']
                                     }]
                             },
-                            'axisNames' : {
-                                'type' : 'object',
-                                'widget' : { 'id' : 'csui-property-object' },
-                                'properties' : {
-                                    'yaxisName' : {
-                                        'type' : 'string',
-                                        'placeholder' : 'Yaxis',
-                                        'title' : 'Yaxis',
-                                        'widget': { 'id': 'csui-string' }
+                            axisNames : {
+                                type : 'object',
+                                widget : { id : 'csui-property-object' },
+                                properties : {
+                                    yaxisName : {
+                                        type : 'string',
+                                        placeholder : 'Yaxis',
+                                        title : 'Yaxis',
+                                        widget: { id: 'csui-string' }
                                     },
-                                    'xaxisName' : {
-                                        'type' : 'string',
-                                        'placeholder' : 'Xaxis',
-                                        'title' : 'Xaxis',
-                                        'widget': { 'id': 'csui-string' }
+                                    xaxisName : {
+                                        type : 'string',
+                                        placeholder : 'Xaxis',
+                                        title : 'Xaxis',
+                                        widget: { id: 'csui-string' }
                                     }
                                 },
-                                'fieldsets':
+                                fieldsets:
                                     [{
-                                        'title': 'Axis Names',
-                                        'grouping': 'equal width fields',
-                                        'fields': ['yaxisName', 'xaxisName']
+                                        title: 'Axis Names',
+                                        grouping: 'equal width fields',
+                                        fields: ['yaxisName', 'xaxisName']
                                     }]
                             },
-                            'dataSeriesColorArray' : {
-                                'type': 'array',
-                                'title': 'Data Series Color Palette',
-                                'itemName': 'Series Color',
-                                'description': 'Select a custom color palette for your diagram',
+                            dataSeriesColorArray : {
+                                type: 'array',
+                                title: 'Data Series Color Palette',
+                                itemName: 'Series Color',
+                                description: 'Select a custom color palette for your diagram',
                                 // 'minItems': 1,
-                                'deleteButtonPosition' : 'out',
-                                'widget' : { 'id' : 'csui-array' },
-                                'items': {
-                                    'type' : 'string',
-                                    'pattern': '^#[0-9a-fA-F]{8}$',
-                                    'default': '#000000FF',
-                                    'widget': {'id': 'csui-color-picker'}
+                                deleteButtonPosition : 'out',
+                                widget : { id : 'csui-array' },
+                                items: {
+                                    type : 'string',
+                                    pattern: '^#[0-9a-fA-F]{8}$',
+                                    default: '#000000FF',
+                                    widget: {id: 'csui-color-picker'}
                                 }
                             },
-                            'hcChartArea': {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'properties': {
-                                    'hcCABackGroundColor': {
-                                        'type' : 'string',
-                                        'pattern': '^#[0-9a-fA-F]{8}$',
-                                        'default': '#FFFFFFFF',
-                                        'title' : 'Background Color',
-                                        'tooltip': 'Background color for the full chart area.',
-                                        'widget': {'id': 'csui-color-picker'}
+                            hcChartArea: {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    hcCABackGroundColor: {
+                                        type : 'string',
+                                        pattern: '^#[0-9a-fA-F]{8}$',
+                                        default: '#FFFFFFFF',
+                                        title : 'Background Color',
+                                        tooltip: 'Background color for the full chart area.',
+                                        widget: {id: 'csui-color-picker'}
                                     },
-                                    'hcCABorderWidth': {
-                                        'type' : 'number',
-                                        'default': 0,
-                                        'title' : 'Border Width',
-                                        'tooltip': 'The pixel width of the outer chart border.',
-                                        'widget': {'id': 'csui-number'}
+                                    hcCABorderWidth: {
+                                        type : 'number',
+                                        default: 0,
+                                        title : 'Border Width',
+                                        tooltip: 'The pixel width of the outer chart border.',
+                                        widget: {id: 'csui-number'}
                                     },
-                                    'hcCABorderCornerRadius': {
-                                        'type' : 'number',
-                                        'default': 0,
-                                        'title' : 'Border Corner Radius',
-                                        'tooltip': 'The corner radius of the outer chart border.',
-                                        'widget': {'id': 'csui-number'}
+                                    hcCABorderCornerRadius: {
+                                        type : 'number',
+                                        default: 0,
+                                        title : 'Border Corner Radius',
+                                        tooltip: 'The corner radius of the outer chart border.',
+                                        widget: {id: 'csui-number'}
                                     },
-                                    'hcCABorderColor': {
-                                        'type' : 'string',
-                                        'pattern': '^#[0-9a-fA-F]{8}$',
-                                        'default': '#335cadff',
-                                        'title' : 'Border Color',
-                                        'tooltip': 'The color of the outer chart border.',
-                                        'widget': {'id': 'csui-color-picker'}
-                                    },
-                                },
-                                'fieldsets':
-                                    [{
-                                        'title': 'Chart Area',
-                                        'grouping': 'equal width fields',
-                                        'fields': ['hcCABackGroundColor', 'hcCABorderColor']
-                                    },
-                                    {
-                                        'grouping': 'equal width fields',
-                                        'fields': ['hcCABorderCornerRadius', 'hcCABorderWidth']
-                                    }]
-                            },
-                            'hcPlotArea': {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'properties': {
-                                    'hcPABackgroundColor': {
-                                        'type' : 'string',
-                                        'pattern': '^#[0-9a-fA-F]{8}$',
-                                        'title' : 'Background Color',
-                                        'tooltip': 'Background color for the plot area, the area inside the axes.',
-                                        'widget': {'id': 'csui-color-picker'}
-                                    },
-                                    'hcPABorderWidth': {
-                                        'type' : 'number',
-                                        'default': 0,
-                                        'title' : 'Border Width',
-                                        'tooltip': 'The pixel width of the plot area border.',
-                                        'widget': {'id': 'csui-number'}
-                                    },
-                                    'hcPABackgroundImageURL': {
-                                        'type' : 'string',
-                                        'title' : 'Background Image URL',
-                                        'placeholder': 'https://domain.com/picture.png',
-                                        'tooltip': 'The online URL for an image to use as the plot area background.',
-                                        'widget': {'id': 'csui-string'}
-                                    },
-                                    'hcPABorderColor': {
-                                        'type' : 'string',
-                                        'pattern': '^#[0-9a-fA-F]{8}$',
-                                        'default': '#ccccccff',
-                                        'title' : 'Border Color',
-                                        'tooltip': 'The color of the inner chart or plot area border.',
-                                        'widget': {'id': 'csui-color-picker'}
+                                    hcCABorderColor: {
+                                        type : 'string',
+                                        pattern: '^#[0-9a-fA-F]{8}$',
+                                        default: '#335cadff',
+                                        title : 'Border Color',
+                                        tooltip: 'The color of the outer chart border.',
+                                        widget: {id: 'csui-color-picker'}
                                     },
                                 },
-                                'fieldsets':
+                                fieldsets:
                                     [{
-                                        'title': 'Plot Area',
-                                        'grouping': 'equal width fields',
-                                        'fields': ['hcPABackgroundColor', 'hcPABorderColor']
+                                        title: 'Chart Area',
+                                        grouping: 'equal width fields',
+                                        fields: ['hcCABackGroundColor', 'hcCABorderColor']
                                     },
                                     {
-                                        'grouping': 'equal width fields',
-                                        'fields': ['hcPABackgroundImageURL', 'hcPABorderWidth']
+                                        grouping: 'equal width fields',
+                                        fields: ['hcCABorderCornerRadius', 'hcCABorderWidth']
                                     }]
                             },
-                            'hcCredits': {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'properties': {
-                                    'hcEnableCredits' : {
-                                        'type': 'boolean',
-                                        'widget' : {'id' : 'csui-boolean'},
-                                        'default': false,
-                                        'tooltip': 'Whether to show the credits text.',
-                                        'description': 'Enable Credits'
+                            hcPlotArea: {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    hcPABackgroundColor: {
+                                        type : 'string',
+                                        pattern: '^#[0-9a-fA-F]{8}$',
+                                        title : 'Background Color',
+                                        tooltip: 'Background color for the plot area, the area inside the axes.',
+                                        widget: {id: 'csui-color-picker'}
                                     },
-                                    'hcCreditsText' : {
-                                        'type': 'string',
-                                        'default': 'Created by OpenAIRE via HighCharts',
-                                        'title' : 'Credits Text',
-                                        'tooltip': 'The text for the credits label',
-                                        'widget' : {'id': 'csui-string'},
-                                        'visibleIf': {
+                                    hcPABorderWidth: {
+                                        type : 'number',
+                                        default: 0,
+                                        title : 'Border Width',
+                                        tooltip: 'The pixel width of the plot area border.',
+                                        widget: {id: 'csui-number'}
+                                    },
+                                    hcPABackgroundImageURL: {
+                                        type : 'string',
+                                        title : 'Background Image URL',
+                                        placeholder: 'https://domain.com/picture.png',
+                                        tooltip: 'The online URL for an image to use as the plot area background.',
+                                        widget: {id: 'csui-string'}
+                                    },
+                                    hcPABorderColor: {
+                                        type : 'string',
+                                        pattern: '^#[0-9a-fA-F]{8}$',
+                                        default: '#ccccccff',
+                                        title : 'Border Color',
+                                        tooltip: 'The color of the inner chart or plot area border.',
+                                        widget: {id: 'csui-color-picker'}
+                                    },
+                                },
+                                fieldsets:
+                                    [{
+                                        title: 'Plot Area',
+                                        grouping: 'equal width fields',
+                                        fields: ['hcPABackgroundColor', 'hcPABorderColor']
+                                    },
+                                    {
+                                        grouping: 'equal width fields',
+                                        fields: ['hcPABackgroundImageURL', 'hcPABorderWidth']
+                                    }]
+                            },
+                            hcCredits: {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    hcEnableCredits : {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: false,
+                                        tooltip: 'Whether to show the credits text.',
+                                        description: 'Enable Credits'
+                                    },
+                                    hcCreditsText : {
+                                        type: 'string',
+                                        default: 'Created by OpenAIRE via HighCharts',
+                                        title : 'Credits Text',
+                                        tooltip: 'The text for the credits label',
+                                        widget : {id: 'csui-string'},
+                                        visibleIf: {
                                             'hcEnableCredits': [true]
                                         }
                                     }
                                 },
-                                'fieldsets':
+                                fieldsets:
                                     [{
-                                        'title': 'Credits',
-                                        'fields': ['hcEnableCredits', 'hcCreditsText']
+                                        title: 'Credits',
+                                        fields: ['hcEnableCredits', 'hcCreditsText']
                                     }]
                             },
-                            'hcLegend': {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'relaxed': true,
-                                'properties': {
-                                    'hcEnableLegend' : {
-                                        'type': 'boolean',
-                                        'widget' : {'id' : 'csui-boolean'},
-                                        'default': true,
-                                        'tooltip': 'Enable or disable the legend.',
-                                        'description': 'Enable Legend'
+                            hcLegend: {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                relaxed: true,
+                                properties: {
+                                    hcEnableLegend : {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: true,
+                                        tooltip: 'Enable or disable the legend.',
+                                        description: 'Enable Legend'
                                     },
-                                    'hcLegendLayout' : {
-                                        'type': 'string',
-                                        'widget' : {'id' : 'csui-select'},
-                                        'title': 'Item Layout',
-                                        'tooltip': 'The layout of the legend items. Can be one of "Horizontal" or "Vertical".',
-                                        'oneOf': [
+                                    hcLegendLayout : {
+                                        type: 'string',
+                                        widget : {id : 'csui-select'},
+                                        title: 'Item Layout',
+                                        tooltip: 'The layout of the legend items. Can be one of "Horizontal" or "Vertical".',
+                                        oneOf: [
                                             {
-                                                'enum': ['horizontal'],
-                                                'value' : 'horizontal',
-                                                'description': 'Horizontal'
+                                                enum: ['horizontal'],
+                                                value : 'horizontal',
+                                                description: 'Horizontal'
                                             },
                                             {
-                                                'enum': ['vertical'],
-                                                'value' : 'vertical',
-                                                'description': 'Vertical'
+                                                enum: ['vertical'],
+                                                value : 'vertical',
+                                                description: 'Vertical'
                                             }
                                         ],
-                                        'default': 'horizontal',
-                                        'visibleIf': {
+                                        default: 'horizontal',
+                                        visibleIf: {
                                             'hcEnableLegend': [true]
                                         }
                                     },
-                                    'hcLegendHorizontalAlignment' : {
-                                        'type': 'string',
-                                        'widget' : {'id' : 'csui-select'},
-                                        'title': 'Horizontal Alignment',
-                                        'tooltip': 'The horizontal alignment of the legend box within the chart area.',
-                                        'oneOf': [
+                                    hcLegendHorizontalAlignment : {
+                                        type: 'string',
+                                        widget : {id : 'csui-select'},
+                                        title: 'Horizontal Alignment',
+                                        tooltip: 'The horizontal alignment of the legend box within the chart area.',
+                                        oneOf: [
                                             {
-                                                'enum': ['left'],
-                                                'value' : 'left',
-                                                'description': 'Left'
+                                                enum: ['left'],
+                                                value : 'left',
+                                                description: 'Left'
                                             },
                                             {
-                                                'enum': ['center'],
-                                                'value' : 'center',
-                                                'description': 'Center'
+                                                enum: ['center'],
+                                                value : 'center',
+                                                description: 'Center'
                                             },
                                             {
-                                                'enum': ['right'],
-                                                'value' : 'right',
-                                                'description': 'Right'
+                                                enum: ['right'],
+                                                value : 'right',
+                                                description: 'Right'
                                             }
                                         ],
-                                        'default': 'center',
-                                        'visibleIf': {
+                                        default: 'center',
+                                        visibleIf: {
                                             'hcEnableLegend': [true]
                                         }
                                     },
-                                    'hcLegendVerticalAlignment' : {
-                                        'type': 'string',
-                                        'widget' : {'id' : 'csui-select'},
-                                        'title': 'Vertical Alignment',
-                                        'tooltip': 'The vertical alignment of the legend box.',
-                                        'oneOf': [
+                                    hcLegendVerticalAlignment : {
+                                        type: 'string',
+                                        widget : {id : 'csui-select'},
+                                        title: 'Vertical Alignment',
+                                        tooltip: 'The vertical alignment of the legend box.',
+                                        oneOf: [
                                             {
-                                                'enum': ['top'],
-                                                'value' : 'top',
-                                                'description': 'Top'
+                                                enum: ['top'],
+                                                value : 'top',
+                                                description: 'Top'
                                             },
                                             {
-                                                'enum': ['middle'],
-                                                'value' : 'middle',
-                                                'description': 'Middle'
+                                                enum: ['middle'],
+                                                value : 'middle',
+                                                description: 'Middle'
                                             },
                                             {
-                                                'enum': ['bottom'],
-                                                'value' : 'bottom',
-                                                'description': 'Bottom'
+                                                enum: ['bottom'],
+                                                value : 'bottom',
+                                                description: 'Bottom'
                                             }
                                         ],
-                                        'default': 'bottom',
-                                        'visibleIf': {
+                                        default: 'bottom',
+                                        visibleIf: {
                                             'hcEnableLegend': [true]
                                         }
                                     },
                                 },
-                                'fieldsets':
+                                fieldsets:
                                     [{
-                                        'title': 'Legend',
-                                        'fields': ['hcEnableLegend']
+                                        title: 'Legend',
+                                        fields: ['hcEnableLegend']
                                     },
                                     {
-                                        'grouping': 'equal width stackable fields',
-                                        'fields': ['hcLegendLayout', 'hcLegendHorizontalAlignment', 'hcLegendVerticalAlignment']
+                                        grouping: 'equal width stackable fields',
+                                        fields: ['hcLegendLayout', 'hcLegendHorizontalAlignment', 'hcLegendVerticalAlignment']
                                     }]
                             },
-                            'hcMiscOptions': {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'properties': {
-                                    'exporting': {
-                                        'type': 'boolean',
-                                        'widget' : {'id' : 'csui-boolean'},
-                                        'default': true,
+                            hcMiscOptions: {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    exporting: {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: true,
                                         // tslint:disable-next-line:max-line-length
-                                        'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
-                                        'description': 'Enable Exporting'
+                                        tooltip: 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
+                                        description: 'Enable Exporting'
                                     },
-                                    'stackedChart' : {
-                                        'type' : 'string',
-                                        'widget' : { 'id': 'csui-select'},
-                                        'tooltip': 'Choose between a Regular or Stacked chart.',
-                                        'title': 'Stacked Graph',
-                                        'default': 'null',
-                                        'oneOf': [
+                                    stackedChart : {
+                                        type : 'string',
+                                        widget : { id: 'csui-select'},
+                                        tooltip: 'Choose between a Regular or Stacked chart.',
+                                        title: 'Stacked Graph',
+                                        default: 'null',
+                                        oneOf: [
                                             {
-                                              'description': 'Disabled',
-                                              'value' : 'null',
-                                              'enum': ['null']
+                                              description: 'Disabled',
+                                              value : 'null',
+                                              enum: ['null']
                                             },
                                             {
-                                              'description': 'Stacked by Value',
-                                              'value': 'normal',
-                                              'enum': ['normal']
+                                              description: 'Stacked by Value',
+                                              value: 'normal',
+                                              enum: ['normal']
                                             },
                                             {
-                                              'description': 'Stacked by Percentage',
-                                              'value': 'percent',
-                                              'enum': ['percent']
+                                              description: 'Stacked by Percentage',
+                                              value: 'percent',
+                                              enum: ['percent']
                                             }
                                           ]
                                     }
                                 },
-                                'fieldsets':
+                                fieldsets:
                                 [{
-                                    'title': 'Misc Options',
-                                    'fields': ['exporting', 'stackedChart']
+                                    title: 'Misc Options',
+                                    fields: ['exporting', 'stackedChart']
                                 }]
                             },
-                            'hcDataLabels': {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'properties': {
-                                    'enabled' : {
-                                        'type': 'boolean',
-                                        'widget' : {'id' : 'csui-boolean'},
-                                        'default': false,
-                                        'tooltip': 'Show small labels next to each data value.',
-                                        'description': 'Enable data labels for all series'
+                            hcDataLabels: {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    enabled : {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: false,
+                                        tooltip: 'Show small labels next to each data value.',
+                                        description: 'Enable data labels for all series'
                                     },
-                                    'style':{
-                                        'type' : 'object',
-                                        'widget': { 'id' : 'csui-property-object'},
-                                        'visibleIf': {'enabled': true},
-                                        'properties': {
-                                            'color': {
-                                                'type' : 'string',
-                                                'pattern': '^#[0-9a-fA-F]{8}$',
-                                                'default': '#000000ff',
-                                                'title' : 'Data Label Color',
-                                                'tooltip': 'The text color for the data labels.',
-                                                'widget': {'id': 'csui-color-picker'},
+                                    style:{
+                                        type : 'object',
+                                        widget: { id : 'csui-property-object'},
+                                        visibleIf: {'enabled': true},
+                                        properties: {
+                                            color: {
+                                                type : 'string',
+                                                pattern: '^#[0-9a-fA-F]{8}$',
+                                                default: '#000000ff',
+                                                title : 'Data Label Color',
+                                                tooltip: 'The text color for the data labels.',
+                                                widget: {id: 'csui-color-picker'},
                                                 
                                             }
                                         },
-                                        'fieldsets':
+                                        fieldsets:
                                         [{
-                                            'fields': ['color']
+                                            fields: ['color']
                                         }]
                                     }                                    
                                 },
-                                'fieldsets':
+                                fieldsets:
                                 [{
-                                    'title': 'Data Labels',
-                                    'fields': ['enabled', 'style']
+                                    title: 'Data Labels',
+                                    fields: ['enabled', 'style']
                                 }]
                             }
                         },
-                        'fieldsets': [
+                        fieldsets: [
                             {
-                                'fieldsetColumnWidth' : 'eight wide column',
-                                'fields': ['titles', 'axisNames', 'hcDataLabels', 'hcCredits', 'hcMiscOptions']
+                                fieldsetColumnWidth : 'eight wide column',
+                                fields: ['titles', 'axisNames', 'hcDataLabels', 'hcCredits', 'hcMiscOptions']
                             },
                             {
-                                'fieldsetColumnWidth' : 'eight wide column',
-                                'fields': ['hcLegend', 'hcChartArea', 'hcPlotArea', 'dataSeriesColorArray' ]
+                                fieldsetColumnWidth : 'eight wide column',
+                                fields: ['hcLegend', 'hcChartArea', 'hcPlotArea', 'dataSeriesColorArray' ]
                             }
                         ],
-                        'visibleIf': {
+                        visibleIf: {
                             'generalOptions/library': ['HighCharts']
                         }
                     },
-                    'echartsAppearanceOptions': {
-                        'type' : 'object',
-                        'grouping' : 'ui fluid two column stackable basic grid',
-                        'widget' : { 'id' : 'csui-property-object' },
-                        // 'title': 'eCharts Appearance Options',
-                        'properties' : {
-                            'titles' : {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'properties': {
-                                    'title' : {
-                                        'type' : 'string',
-                                        'placeholder' : 'Title',
-                                        'title' : 'Title',
-                                        'widget': { 'id': 'csui-string' }
+                    echartsAppearanceOptions: {
+                        type : 'object',
+                        grouping : 'ui fluid two column stackable basic grid',
+                        widget : { id : 'csui-property-object' },
+                        // title: 'eCharts Appearance Options',
+                        properties : {
+                            titles : {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    title : {
+                                        type : 'string',
+                                        placeholder : 'Title',
+                                        title : 'Title',
+                                        widget: { id: 'csui-string' }
                                     },
-                                    'subtitle' : {
-                                        'type' : 'string',
-                                        'placeholder' : 'Subtitle',
-                                        'title' : 'Subtitle',
-                                        'widget': { 'id': 'csui-string' }
+                                    subtitle : {
+                                        type : 'string',
+                                        placeholder : 'Subtitle',
+                                        title : 'Subtitle',
+                                        widget: { id: 'csui-string' }
                                     }
                                 },
-                                'fieldsets':
+                                fieldsets:
                                     [{
-                                        'title': 'Diagram Title',
-                                        'grouping': 'equal width fields',
-                                        'fields': ['title', 'subtitle']
+                                        title: 'Diagram Title',
+                                        grouping: 'equal width fields',
+                                        fields: ['title', 'subtitle']
                                     }]
                             },
-                            'axisNames' : {
-                                'type' : 'object',
-                                'widget' : { 'id' : 'csui-property-object' },
-                                'properties' : {
-                                    'yaxisName' : {
-                                        'type' : 'string',
-                                        'placeholder' : 'Yaxis',
-                                        'title' : 'Yaxis',
-                                        'widget': { 'id': 'csui-string' }
+                            axisNames : {
+                                type : 'object',
+                                widget : { id : 'csui-property-object' },
+                                properties : {
+                                    yaxisName : {
+                                        type : 'string',
+                                        placeholder : 'Yaxis',
+                                        title : 'Yaxis',
+                                        widget: { id: 'csui-string' }
                                     },
-                                    'xaxisName' : {
-                                        'type' : 'string',
-                                        'placeholder' : 'Xaxis',
-                                        'title' : 'Xaxis',
-                                        'widget': { 'id': 'csui-string' }
+                                    xaxisName : {
+                                        type : 'string',
+                                        placeholder : 'Xaxis',
+                                        title : 'Xaxis',
+                                        widget: { id: 'csui-string' }
                                     }
                                 },
-                                'fieldsets':
+                                fieldsets:
                                     [{
-                                        'title': 'Axis Names',
-                                        'grouping': 'equal width fields',
-                                        'fields': ['yaxisName', 'xaxisName']
+                                        title: 'Axis Names',
+                                        grouping: 'equal width fields',
+                                        fields: ['yaxisName', 'xaxisName']
                                     }]
                             },
-                            'dataSeriesColorArray' : {
-                                'type': 'array',
-                                'title': 'Data Series Color',
-                                'itemName': 'Series Color',
+                            dataSeriesColorArray : {
+                                type: 'array',
+                                title: 'Data Series Color',
+                                itemName: 'Series Color',
                                 // 'minItems': 1,
-                                'deleteButtonPosition' : 'out',
-                                'widget' : { 'id' : 'csui-array' },
-                                'items': {
-                                    'type' : 'string',
-                                    'pattern': '^#[0-9a-fA-F]{8}$',
-                                    'default': '#000000FF',
-                                    'widget': {'id': 'csui-color-picker'}
+                                deleteButtonPosition : 'out',
+                                widget : { id : 'csui-array' },
+                                items: {
+                                    type : 'string',
+                                    pattern: '^#[0-9a-fA-F]{8}$',
+                                    default: '#000000FF',
+                                    widget: {id: 'csui-color-picker'}
                                 }
                             },
-                            'ecChartArea': {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'properties': {
-                                    'ecCABackGroundColor': {
-                                        'type' : 'string',
-                                        'pattern': '^#[0-9a-fA-F]{8}$',
-                                        'default': '#FFFFFFFF',
-                                        'title' : 'Background Color',
-                                        'tooltip': 'Background color for the full chart area.',
-                                        'widget': {'id': 'csui-color-picker'}
+                            ecChartArea: {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    ecCABackGroundColor: {
+                                        type : 'string',
+                                        pattern: '^#[0-9a-fA-F]{8}$',
+                                        default: '#FFFFFFFF',
+                                        title : 'Background Color',
+                                        tooltip: 'Background color for the full chart area.',
+                                        widget: {id: 'csui-color-picker'}
                                     },
                                 },
-                                'fieldsets':
+                                fieldsets:
                                     [{
-                                        'title': 'Chart Area',
-                                        'grouping': 'equal width fields',
-                                        'fields': ['ecCABackGroundColor']
+                                        title: 'Chart Area',
+                                        grouping: 'equal width fields',
+                                        fields: ['ecCABackGroundColor']
                                     }]
                             },
-                            'ecLegend': {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'relaxed': true,
-                                'properties': {
-                                    'ecEnableLegend' : {
-                                        'type': 'boolean',
-                                        'widget' : {'id' : 'csui-boolean'},
-                                        'default': true,
-                                        'tooltip': 'Enable or disable the legend.',
-                                        'description': 'Enable Legend'
+                            ecLegend: {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                relaxed: true,
+                                properties: {
+                                    ecEnableLegend : {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: true,
+                                        tooltip: 'Enable or disable the legend.',
+                                        description: 'Enable Legend'
                                     },
-                                    'ecLegendLayout' : {
-                                        'type': 'string',
-                                        'widget' : {'id' : 'csui-select'},
-                                        'title': 'Item Layout',
-                                        'tooltip': 'The layout of the legend items. Can be one of "Horizontal" or "Vertical".',
-                                        'oneOf': [
+                                    ecLegendLayout : {
+                                        type: 'string',
+                                        widget : {id : 'csui-select'},
+                                        title: 'Item Layout',
+                                        tooltip: 'The layout of the legend items. Can be one of "Horizontal" or "Vertical".',
+                                        oneOf: [
                                             {
-                                                'enum': ['horizontal'],
-                                                'value' : 'horizontal',
-                                                'description': 'Horizontal'
+                                                enum: ['horizontal'],
+                                                value : 'horizontal',
+                                                description: 'Horizontal'
                                             },
                                             {
-                                                'enum': ['vertical'],
-                                                'value' : 'vertical',
-                                                'description': 'Vertical'
+                                                enum: ['vertical'],
+                                                value : 'vertical',
+                                                description: 'Vertical'
                                             }
                                         ],
-                                        'default': 'horizontal',
-                                        'visibleIf': {
+                                        default: 'horizontal',
+                                        visibleIf: {
                                             'ecEnableLegend': [true]
                                         }
                                     },
-                                    'ecLegendHorizontalAlignment' : {
-                                        'type': 'string',
-                                        'widget' : {'id' : 'csui-select'},
-                                        'title': 'Horizontal Alignment',
-                                        'tooltip': 'The horizontal alignment of the legend box within the chart area.',
-                                        'oneOf': [
+                                    ecLegendHorizontalAlignment : {
+                                        type: 'string',
+                                        widget : {id : 'csui-select'},
+                                        title: 'Horizontal Alignment',
+                                        tooltip: 'The horizontal alignment of the legend box within the chart area.',
+                                        oneOf: [
                                             {
-                                                'enum': ['left'],
-                                                'value' : 'left',
-                                                'description': 'Left'
+                                                enum: ['left'],
+                                                value : 'left',
+                                                description: 'Left'
                                             },
                                             {
-                                                'enum': ['center'],
-                                                'value' : 'center',
-                                                'description': 'Center'
+                                                enum: ['center'],
+                                                value : 'center',
+                                                description: 'Center'
                                             },
                                             {
-                                                'enum': ['right'],
-                                                'value' : 'right',
-                                                'description': 'Right'
+                                                enum: ['right'],
+                                                value : 'right',
+                                                description: 'Right'
                                             }
                                         ],
-                                        'default': 'center',
-                                        'visibleIf': {
+                                        default: 'center',
+                                        visibleIf: {
                                             'ecEnableLegend': [true]
                                         }
                                     },
-                                    'ecLegendVerticalAlignment' : {
-                                        'type': 'string',
-                                        'widget' : {'id' : 'csui-select'},
-                                        'title': 'Vertical Alignment',
-                                        'tooltip': 'The vertical alignment of the legend box.',
-                                        'oneOf': [
+                                    ecLegendVerticalAlignment : {
+                                        type: 'string',
+                                        widget : {id : 'csui-select'},
+                                        title: 'Vertical Alignment',
+                                        tooltip: 'The vertical alignment of the legend box.',
+                                        oneOf: [
                                             {
-                                                'enum': ['top'],
-                                                'value' : 'top',
-                                                'description': 'Top'
+                                                enum: ['top'],
+                                                value : 'top',
+                                                description: 'Top'
                                             },
                                             {
-                                                'enum': ['middle'],
-                                                'value' : 'middle',
-                                                'description': 'Middle'
+                                                enum: ['middle'],
+                                                value : 'middle',
+                                                description: 'Middle'
                                             },
                                             {
-                                                'enum': ['bottom'],
-                                                'value' : 'bottom',
-                                                'description': 'Bottom'
+                                                enum: ['bottom'],
+                                                value : 'bottom',
+                                                description: 'Bottom'
                                             }
                                         ],
-                                        'default': 'bottom',
-                                        'visibleIf': {
+                                        default: 'bottom',
+                                        visibleIf: {
                                             'ecEnableLegend': [true]
                                         }
                                     },
                                 },
-                                'fieldsets':
+                                fieldsets:
                                     [{
-                                        'title': 'Legend',
-                                        'fields': ['ecEnableLegend']
+                                        title: 'Legend',
+                                        fields: ['ecEnableLegend']
                                     },
                                         {
-                                            'grouping': 'equal width stackable fields',
-                                            'fields': ['ecLegendLayout', 'ecLegendHorizontalAlignment', 'ecLegendVerticalAlignment']
+                                            grouping: 'equal width stackable fields',
+                                            fields: ['ecLegendLayout', 'ecLegendHorizontalAlignment', 'ecLegendVerticalAlignment']
                                         }]
                             },
-                            'ecMiscOptions': {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'properties': {
-                                    'exporting': {
-                                        'type': 'boolean',
-                                        'widget' : {'id' : 'csui-boolean'},
-                                        'default': true,
+                            ecMiscOptions: {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    exporting: {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: true,
                                         // tslint:disable-next-line:max-line-length
-                                        'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
-                                        'description': 'Enable Exporting'
+                                        tooltip: 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
+                                        description: 'Enable Exporting'
                                     },
-                                    'ecEnableDataLabels' : {
-                                        'type': 'boolean',
-                                        'widget' : {'id' : 'csui-boolean'},
-                                        'default': false,
-                                        'tooltip': 'Show small labels next to each data value.',
-                                        'description': 'Enable data labels for all series'
+                                    ecEnableDataLabels : {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: false,
+                                        tooltip: 'Show small labels next to each data value.',
+                                        description: 'Enable data labels for all series'
                                     },
-                                    'stackedChart' : {
-                                        'type': 'boolean',
-                                        'widget' : {'id' : 'csui-boolean'},
-                                        'default': false,
-                                        'tooltip': 'Choose between a Regular or Stacked chart.',
-                                        'description': 'Stacked graph',
+                                    stackedChart : {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: false,
+                                        tooltip: 'Choose between a Regular or Stacked chart.',
+                                        description: 'Stacked graph',
                                     }
                                 },
-                                'fieldsets':
+                                fieldsets:
                                     [{
-                                        'title': 'Misc Options',
-                                        'fields': ['exporting', 'ecEnableDataLabels', 'stackedChart']
+                                        title: 'Misc Options',
+                                        fields: ['exporting', 'ecEnableDataLabels', 'stackedChart']
                                     }]
                             }
                         },
-                        'fieldsets': [
+                        fieldsets: [
                             {
-                                'fieldsetColumnWidth' : 'eight wide column',
-                                'fields': ['titles', 'axisNames', 'ecMiscOptions']
+                                fieldsetColumnWidth : 'eight wide column',
+                                fields: ['titles', 'axisNames', 'ecMiscOptions']
                             },
                             {
-                                'fieldsetColumnWidth' : 'eight wide column',
-                                'fields': ['ecLegend', 'ecChartArea', 'dataSeriesColorArray' ]
+                                fieldsetColumnWidth : 'eight wide column',
+                                fields: ['ecLegend', 'ecChartArea', 'dataSeriesColorArray' ]
                             }
                         ],
-                        'visibleIf': {
+                        visibleIf: {
                             'generalOptions/library': ['eCharts']
                         }
                     },
-                    'googlechartsAppearanceOptions': {
-                        'type' : 'object',
-                        'grouping' : 'ui fluid two column stackable basic grid',
-                        'widget' : { 'id' : 'csui-property-object' },
-                        // 'title': 'Googlecharts Appearance Options',
-                        'properties' : {
-                            'titles' : {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'properties': {
-                                    'title' : {
-                                        'type' : 'string',
-                                        'placeholder' : 'Title',
-                                        'title' : 'Title',
-                                        'widget': { 'id': 'csui-string' }
+                    googlechartsAppearanceOptions: {
+                        type : 'object',
+                        grouping : 'ui fluid two column stackable basic grid',
+                        widget : { id : 'csui-property-object' },
+                        // title: 'Googlecharts Appearance Options',
+                        properties : {
+                            titles : {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    title : {
+                                        type : 'string',
+                                        placeholder : 'Title',
+                                        title : 'Title',
+                                        widget: { id: 'csui-string' }
                                     }
                                     // GoogleCharts does not support subtitle
                                     // 'subtitle' : {
                                     //     'type' : 'string',
-                                    //     'placeholder' : 'Subtitle',
-                                    //     'title' : 'Subtitle',
-                                    //     'widget': { 'id': 'csui-string' }
+                                    //     placeholder : 'Subtitle',
+                                    //     title : 'Subtitle',
+                                    //     widget: { id: 'csui-string' }
                                     // }
                                 },
-                                'fieldsets':
+                                fieldsets:
                                     [{
-                                        'title': 'Diagram Title',
-                                        'grouping': 'equal width fields',
-                                        'fields': ['title']
+                                        title: 'Diagram Title',
+                                        grouping: 'equal width fields',
+                                        fields: ['title']
                                     }]
                             },
-                            'axisNames' : {
-                                'type' : 'object',
-                                'widget' : { 'id' : 'csui-property-object' },
-                                'properties' : {
-                                    'yaxisName' : {
-                                        'type' : 'string',
-                                        'placeholder' : 'Yaxis',
-                                        'title' : 'Yaxis',
-                                        'widget': { 'id': 'csui-string' }
+                            axisNames : {
+                                type : 'object',
+                                widget : { id : 'csui-property-object' },
+                                properties : {
+                                    yaxisName : {
+                                        type : 'string',
+                                        placeholder : 'Yaxis',
+                                        title : 'Yaxis',
+                                        widget: { id: 'csui-string' }
                                     },
-                                    'xaxisName' : {
-                                        'type' : 'string',
-                                        'placeholder' : 'Xaxis',
-                                        'title' : 'Xaxis',
-                                        'widget': { 'id': 'csui-string' }
+                                    xaxisName : {
+                                        type : 'string',
+                                        placeholder : 'Xaxis',
+                                        title : 'Xaxis',
+                                        widget: { id: 'csui-string' }
                                     }
                                 },
-                                'fieldsets':
+                                fieldsets:
                                     [{
-                                        'title': 'Axis Names',
-                                        'grouping': 'equal width fields',
-                                        'fields': ['yaxisName', 'xaxisName']
+                                        title: 'Axis Names',
+                                        grouping: 'equal width fields',
+                                        fields: ['yaxisName', 'xaxisName']
                                     }]
                             },
-                            'results' : {
-                                'type' : 'object',
-                                'widget' : { 'id' : 'csui-property-object' },
-                                'properties' : {
-                                    'resultsLimit' : {
-                                        'type' : 'number',
-                                        'title' : 'Results Limit',
-                                        'default' : 30,
+                            results : {
+                                type : 'object',
+                                widget : { id : 'csui-property-object' },
+                                properties : {
+                                    resultsLimit : {
+                                        type : 'number',
+                                        title : 'Results Limit',
+                                        default : 30,
                                         // tslint:disable-next-line:max-line-length
-                                        'tooltip' : `To get all available results set Results Limit to 0.`,
-                                        'widget' : {'id' : 'csui-number'}
+                                        tooltip : `To get all available results set Results Limit to 0.`,
+                                        widget : {id : 'csui-number'}
                                     },
-                                    'orderByAxis' : {
-                                        'type' : 'string',
-                                        'title' : 'Order By',
-                                        'widget' : {'id' : 'csui-select'},
-                                        'oneOf': [
+                                    orderByAxis : {
+                                        type : 'string',
+                                        title : 'Order By',
+                                        widget : {id : 'csui-select'},
+                                        oneOf: [
                                             {
-                                                'description': 'X Axis',
-                                                'value' : 'xaxis',
-                                                'enum': ['xaxis']
+                                                description: 'X Axis',
+                                                value : 'xaxis',
+                                                enum: ['xaxis']
                                             },
                                             {
-                                                'description': 'Y Axis',
-                                                'value' : 'yaxis',
-                                                'enum': ['yaxis']
+                                                description: 'Y Axis',
+                                                value : 'yaxis',
+                                                enum: ['yaxis']
                                             }
                                         ]
                                     }
                                 },
-                                'fieldsets':
+                                fieldsets:
                                 [{
-                                    'title': 'Results',
-                                    'grouping': 'equal width fields',
-                                    'fields': ['resultsLimit', 'orderByAxis']
+                                    title: 'Results',
+                                    grouping: 'equal width fields',
+                                    fields: ['resultsLimit', 'orderByAxis']
                                 }]
                             },
-                            'stackedChart' : {
-                                'type' : 'string',
-                                'widget' : { 'id': 'csui-select'},
-                                'tooltip': 'Choose between a Regular or Stacked chart.',
-                                'title': 'Stacked Graph',
-                                'default': 'false',
-                                'oneOf': [
+                            stackedChart : {
+                                type : 'string',
+                                widget : { id: 'csui-select'},
+                                tooltip: 'Choose between a Regular or Stacked chart.',
+                                title: 'Stacked Graph',
+                                default: 'false',
+                                oneOf: [
                                     {
-                                      'description': 'Disabled',
-                                      'value' : 'false',
-                                      'enum' : ['false']
+                                      description: 'Disabled',
+                                      value : 'false',
+                                      enum : ['false']
                                     },
                                     {
-                                      'description': 'Stacked by Value',
-                                      'value': 'absolute',
-                                      'enum': ['absolute']
+                                      description: 'Stacked by Value',
+                                      value: 'absolute',
+                                      enum: ['absolute']
                                     },
                                     {
-                                      'description': 'Stacked by Percentage',
-                                      'value': 'percent',
-                                      'enum': ['percent']
+                                      description: 'Stacked by Percentage',
+                                      value: 'percent',
+                                      enum: ['percent']
                                     }
                                   ]
                             },
-                            'gcCABackGroundColor': {
-                                'type' : 'string',
-                                'pattern': '^#[0-9a-fA-F]{8}$',
-                                'default': '#FFFFFFFF',
-                                'title' : 'Background Color',
-                                'tooltip': 'Background color for the full chart area.',
-                                'widget': {'id': 'csui-color-picker'}
+                            gcCABackGroundColor: {
+                                type : 'string',
+                                pattern: '^#[0-9a-fA-F]{8}$',
+                                default: '#FFFFFFFF',
+                                title : 'Background Color',
+                                tooltip: 'Background color for the full chart area.',
+                                widget: {id: 'csui-color-picker'}
                             },
-                            'gcPABackgroundColor': {
-                                'type' : 'string',
-                                'pattern': '^#[0-9a-fA-F]{8}$',
-                                'title' : 'Background Color',
-                                'tooltip': 'Background color for the plot area, the area inside the axes.',
-                                'widget': {'id': 'csui-color-picker'}
+                            gcPABackgroundColor: {
+                                type : 'string',
+                                pattern: '^#[0-9a-fA-F]{8}$',
+                                title : 'Background Color',
+                                tooltip: 'Background color for the plot area, the area inside the axes.',
+                                widget: {id: 'csui-color-picker'}
                             },
-                            'exporting' : {
-                                'type': 'boolean',
-                                'widget' : {'id' : 'csui-boolean'},
-                                'default': true,
+                            exporting : {
+                                type: 'boolean',
+                                widget : {id : 'csui-boolean'},
+                                default: true,
                                 // tslint:disable-next-line:max-line-length
-                                'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
-                                'title': 'Enable Exporting'
+                                tooltip: 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
+                                title: 'Enable Exporting'
                             }
                         },
-                        'fieldsets': [
+                        fieldsets: [
                             {
-                                'fieldsetColumnWidth' : 'eight wide column',
-                                'fields': ['titles']
+                                fieldsetColumnWidth : 'eight wide column',
+                                fields: ['titles']
                             },
                             {
-                                'title' : 'Plot Options',
-                                'fieldsetColumnWidth' : 'four wide column',
-                                'fields': ['stackedChart']
+                                title : 'Plot Options',
+                                fieldsetColumnWidth : 'four wide column',
+                                fields: ['stackedChart']
                             },
                             {
-                                'title' : 'Exporting',
-                                'fieldsetColumnWidth' : 'four wide column',
-                                'fields': ['exporting']
+                                title : 'Exporting',
+                                fieldsetColumnWidth : 'four wide column',
+                                fields: ['exporting']
                             },
                             {
-                                'fieldsetColumnWidth' : 'eight wide column',
-                                'fields': ['axisNames']
+                                fieldsetColumnWidth : 'eight wide column',
+                                fields: ['axisNames']
                             },
                             {
-                                'title' : 'Chart Area',
-                                'fieldsetColumnWidth' : 'four wide column',
-                                'fields': ['gcCABackGroundColor']
+                                title : 'Chart Area',
+                                fieldsetColumnWidth : 'four wide column',
+                                fields: ['gcCABackGroundColor']
                             },
                             {
-                                'title' : 'Plot Area',
-                                'fieldsetColumnWidth' : 'four wide column',
-                                'fields': ['gcPABackgroundColor']
+                                title : 'Plot Area',
+                                fieldsetColumnWidth : 'four wide column',
+                                fields: ['gcPABackgroundColor']
                             },
                             {
-                                'fieldsetColumnWidth' : 'eight wide column',
-                                'fields': ['results']
+                                fieldsetColumnWidth : 'eight wide column',
+                                fields: ['results']
                             }
                         ],
-                        'visibleIf': {
+                        visibleIf: {
                             'generalOptions/library': ['GoogleCharts']
                         }
                     },
-                    'highmapsAppearanceOptions': {
-                        'type' : 'object',
-                        'grouping' : 'ui fluid two column stackable basic grid',
-                        'widget' : { 'id' : 'csui-property-object' },
-                        'properties' : {
-                            'titles' : {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'properties': {
-                                    'title' : {
-                                        'type' : 'string',
-                                        'placeholder' : 'Title',
-                                        'title' : 'Title',
-                                        'widget': { 'id': 'csui-string' }
+                    highmapsAppearanceOptions: {
+                        type : 'object',
+                        grouping : 'ui fluid two column stackable basic grid',
+                        widget : { id : 'csui-property-object' },
+                        properties : {
+                            titles : {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    title : {
+                                        type : 'string',
+                                        placeholder : 'Title',
+                                        title : 'Title',
+                                        widget: { id: 'csui-string' }
                                     },
-                                    'subtitle' : {
-                                        'type' : 'string',
-                                        'placeholder' : 'Subtitle',
-                                        'title' : 'Subtitle',
-                                        'widget': { 'id': 'csui-string' }
+                                    subtitle : {
+                                        type : 'string',
+                                        placeholder : 'Subtitle',
+                                        title : 'Subtitle',
+                                        widget: { id: 'csui-string' }
                                     }
                                 },
-                                'fieldsets':
+                                fieldsets:
                                     [{
-                                        'title': 'Diagram Title',
-                                        'grouping': 'equal width fields',
-                                        'fields': ['title', 'subtitle']
+                                        title: 'Diagram Title',
+                                        grouping: 'equal width fields',
+                                        fields: ['title', 'subtitle']
                                     }]
                             },
-                            'hmCredits': {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'properties': {
-                                    'hmEnableCredits' : {
-                                        'type': 'boolean',
-                                        'widget' : {'id' : 'csui-boolean'},
-                                        'default': false,
-                                        'tooltip': 'Whether to show the credits text.',
-                                        'description': 'Enable Credits'
+                            hmCredits: {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    hmEnableCredits : {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: false,
+                                        tooltip: 'Whether to show the credits text.',
+                                        description: 'Enable Credits'
                                     },
-                                    'hmCreditsText' : {
-                                        'type': 'string',
-                                        'default': 'Created by OpenAIRE via HighCharts',
-                                        'title' : 'Credits Text',
-                                        'tooltip': 'The text for the credits label',
-                                        'widget' : {'id': 'csui-string'},
-                                        'visibleIf': {
+                                    hmCreditsText : {
+                                        type: 'string',
+                                        default: 'Created by OpenAIRE via HighCharts',
+                                        title : 'Credits Text',
+                                        tooltip: 'The text for the credits label',
+                                        widget : {id: 'csui-string'},
+                                        visibleIf: {
                                             'hmEnableCredits': [true]
                                         }
                                     }
                                 },
-                                'fieldsets':
+                                fieldsets:
                                     [{
-                                        'title': 'Credits',
-                                        'fields': ['hmEnableCredits', 'hmCreditsText']
+                                        title: 'Credits',
+                                        fields: ['hmEnableCredits', 'hmCreditsText']
                                     }]
                             },
-                            'hmMiscOptions': {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'properties': {
-                                    'exporting': {
-                                        'type': 'boolean',
-                                        'widget' : {'id' : 'csui-boolean'},
-                                        'default': true,
+                            hmMiscOptions: {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    exporting: {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: true,
                                         // tslint:disable-next-line:max-line-length
-                                        'tooltip': 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
-                                        'description': 'Enable Exporting'
+                                        tooltip: 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
+                                        description: 'Enable Exporting'
                                     },
-                                    'hmEnableDataLabels' : {
-                                        'type': 'boolean',
-                                        'widget' : {'id' : 'csui-boolean'},
-                                        'default': false,
-                                        'tooltip': 'Show small labels next to each data value.',
-                                        'description': 'Enable data labels for all series'
+                                    hmEnableDataLabels : {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: false,
+                                        tooltip: 'Show small labels next to each data value.',
+                                        description: 'Enable data labels for all series'
                                     },
-                                    'hmEnableMapNavigation' : {
-                                        'type': 'boolean',
-                                        'widget' : {'id' : 'csui-boolean'},
-                                        'default': false,
-                                        'tooltip': 'Whether to enable navigation of the map.',
-                                        'description': 'Enable map navigation'
+                                    hmEnableMapNavigation : {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: false,
+                                        tooltip: 'Whether to enable navigation of the map.',
+                                        description: 'Enable map navigation'
                                     },
                                 },
-                                'fieldsets':
+                                fieldsets:
                                 [{
-                                    'title': 'Misc Options',
-                                    'fields': ['exporting', 'hmEnableDataLabels', 'hmEnableMapNavigation']
+                                    title: 'Misc Options',
+                                    fields: ['exporting', 'hmEnableDataLabels', 'hmEnableMapNavigation']
                                 }]
                             },
-                            'hmLegend' : {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'properties': {
-                                    'hmEnableLegend' : {
-                                        'type': 'boolean',
-                                        'widget' : {'id' : 'csui-boolean'},
-                                        'default': true,
-                                        'tooltip': 'Enable or disable the legend.',
-                                        'description': 'Enable Legend'
+                            hmLegend : {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    hmEnableLegend : {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: true,
+                                        tooltip: 'Enable or disable the legend.',
+                                        description: 'Enable Legend'
                                     },
-                                    'hmLegendTitle' : {
-                                        'type': 'string',
-                                        'placeholder': 'Legend Title',
-                                        'title': 'Legend Title',
-                                        'tooltip': 'The title to be added on top of the legend.',
-                                        'widget' : {'id' : 'csui-string'},
-                                        'visibleIf': {
+                                    hmLegendTitle : {
+                                        type: 'string',
+                                        placeholder: 'Legend Title',
+                                        title: 'Legend Title',
+                                        tooltip: 'The title to be added on top of the legend.',
+                                        widget : {id : 'csui-string'},
+                                        visibleIf: {
                                             'hmEnableLegend': [true]
                                         }
                                     }
                                 },
-                                'fieldsets':
+                                fieldsets:
                                 [{
-                                    'title': 'Legend Options',
-                                    'fields': ['hmEnableLegend', 'hmLegendTitle']
+                                    title: 'Legend Options',
+                                    fields: ['hmEnableLegend', 'hmLegendTitle']
                                 }]
                             },
-                            'hmColorAxis' : {
-                                'type': 'object',
-                                'widget': { 'id' : 'csui-property-object'},
-                                'properties': {
-                                    'hmColorAxisMin' : {
-                                        'type' : 'number',
-                                        'title' : 'Color Axis Min',
-                                        'tooltip': 'The minimum value of the color axis in terms of map point values.',
-                                        'widget': {'id': 'csui-number'}
+                            hmColorAxis : {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    hmColorAxisMin : {
+                                        type : 'number',
+                                        title : 'Color Axis Min',
+                                        tooltip: 'The minimum value of the color axis in terms of map point values.',
+                                        widget: {id: 'csui-number'}
                                     },
-                                    'hmColorAxisMax' : {
-                                        'type' : 'number',
-                                        'title' : 'Color Axis Max',
-                                        'tooltip': 'The maximum value of the color axis in terms of map point values.',
-                                        'widget': {'id': 'csui-number'}
+                                    hmColorAxisMax : {
+                                        type : 'number',
+                                        title : 'Color Axis Max',
+                                        tooltip: 'The maximum value of the color axis in terms of map point values.',
+                                        widget: {id: 'csui-number'}
                                     },
-                                    'hmColorAxisType' : {
-                                        'type': 'string',
-                                        'placeholder': 'Legend Title',
-                                        'title': 'Color Axis Interpolation',
-                                        'tooltip': 'The type of interpolation to use for the color axis.',
-                                        'widget' : { 'id': 'csui-select'},
-                                        'default': 'linear',
-                                        'oneOf': [
+                                    hmColorAxisType : {
+                                        type: 'string',
+                                        placeholder: 'Legend Title',
+                                        title: 'Color Axis Interpolation',
+                                        tooltip: 'The type of interpolation to use for the color axis.',
+                                        widget : { id: 'csui-select'},
+                                        default: 'linear',
+                                        oneOf: [
                                             {
-                                              'description': 'Linear',
-                                              'value' : 'linear',
-                                              'enum': ['linear']
+                                              description: 'Linear',
+                                              value : 'linear',
+                                              enum: ['linear']
                                             },
                                             {
-                                              'description': 'Logarithmic',
-                                              'value': 'logarithmic',
-                                              'enum': ['logarithmic']
+                                              description: 'Logarithmic',
+                                              value: 'logarithmic',
+                                              enum: ['logarithmic']
                                             }
                                           ]
                                     },
-                                    'hmColorAxisMinColor' : {
-                                        'type' : 'string',
-                                        'pattern': '^#[0-9a-fA-F]{6}$',
-                                        'default': '#E6EBF5',
-                                        'title' : 'Minimum Color',
-                                        'tooltip': 'Representation of the minimum on the color axis.',
-                                        'widget': {'id': 'csui-color-picker'}
+                                    hmColorAxisMinColor : {
+                                        type : 'string',
+                                        pattern: '^#[0-9a-fA-F]{6}$',
+                                        default: '#E6EBF5',
+                                        title : 'Minimum Color',
+                                        tooltip: 'Representation of the minimum on the color axis.',
+                                        widget: {id: 'csui-color-picker'}
                                     },
-                                    'hmColorAxisMaxColor' : {
-                                        'type' : 'string',
-                                        'pattern': '^#[0-9a-fA-F]{6}$',
-                                        'default': '#003399',
-                                        'title' : 'Maximum Color',
-                                        'tooltip': 'Representation of the maximum on the color axis.',
-                                        'widget': {'id': 'csui-color-picker'}
+                                    hmColorAxisMaxColor : {
+                                        type : 'string',
+                                        pattern: '^#[0-9a-fA-F]{6}$',
+                                        default: '#003399',
+                                        title : 'Maximum Color',
+                                        tooltip: 'Representation of the maximum on the color axis.',
+                                        widget: {id: 'csui-color-picker'}
                                     }
                                 },
-                                'fieldsets':
+                                fieldsets:
                                 [{
-                                    'title': 'Color Axis Options',
-                                    'grouping': 'equal width fields',
-                                    'fields': [ 'hmColorAxisType']
+                                    title: 'Color Axis Options',
+                                    grouping: 'equal width fields',
+                                    fields: [ 'hmColorAxisType']
                                 },
-                                {   'grouping': 'equal width fields',
-                                    'fields': ['hmColorAxisMin', 'hmColorAxisMax']
+                                {   grouping: 'equal width fields',
+                                    fields: ['hmColorAxisMin', 'hmColorAxisMax']
                                 },
                                 {
-                                    'grouping': 'equal width fields',
-                                    'fields': ['hmColorAxisMinColor', 'hmColorAxisMaxColor']
+                                    grouping: 'equal width fields',
+                                    fields: ['hmColorAxisMinColor', 'hmColorAxisMaxColor']
                                 }]
                             }
                         },
-                        'fieldsets': [
+                        fieldsets: [
                             {
-                                'fieldsetColumnWidth' : 'eight wide column',
-                                'fields': ['titles', 'hmCredits', 'hmLegend' ]
+                                fieldsetColumnWidth : 'eight wide column',
+                                fields: ['titles', 'hmCredits', 'hmLegend' ]
                             },
                             {
-                                'fieldsetColumnWidth' : 'eight wide column',
-                                'fields': ['hmColorAxis', 'hmMiscOptions']
+                                fieldsetColumnWidth : 'eight wide column',
+                                fields: ['hmColorAxis', 'hmMiscOptions']
                             }
                         ],
-                        'visibleIf': {
+                        visibleIf: {
                             'generalOptions/library': ['HighMaps']
                         }
                     }
                 },
-                'fieldsets': [
+                fieldsets: [
                     {
-                        'title': 'General Options',
-                        'description' : 'Select a chart Visualisation Library, the upper limit of your results and how they are grouped',
-                        'fields': ['generalOptions']
+                        title: 'General Options',
+                        description : 'Select a chart Visualisation Library, the upper limit of your results and how they are grouped',
+                        fields: ['generalOptions']
                     },
                     {
-                        'title': 'Visualisation Options',
-                        'description' : 'Available options based on the selected Visualisation Library',
-                        'fields': ['highchartsAppearanceOptions', 'googlechartsAppearanceOptions', 'highmapsAppearanceOptions',
+                        title: 'Visualisation Options',
+                        description : 'Available options based on the selected Visualisation Library',
+                        fields: ['highchartsAppearanceOptions', 'googlechartsAppearanceOptions', 'highmapsAppearanceOptions',
                             'echartsAppearanceOptions' ]
                     }
                 ],
-                'required': ['generalOptions']
+                required: ['generalOptions']
             },
-            'tableAppearance' : {
-                'type' : 'object',
-                // 'title': 'Table Appearance',
-                // 'description' : 'Customise the way your table looks',
-                'widget' : { 'id' : 'csui-general-properties-object' },
-                'properties' : {
-                    'paginationSize' : {
-                        'type' : 'number',
-                        'title' : 'Table Page Size',
-                        'default' : 30,
-                        'minLength' : 10,
-                        'tooltip' : 'The number of rows in each page of the Data Table',
-                        'widget': {'id': 'csui-number'},
+            tableAppearance : {
+                type : 'object',
+                // title: 'Table Appearance',
+                // description : 'Customise the way your table looks',
+                widget : { id : 'csui-general-properties-object' },
+                properties : {
+                    paginationSize : {
+                        type : 'number',
+                        title : 'Table Page Size',
+                        default : 30,
+                        minLength : 10,
+                        tooltip : 'The number of rows in each page of the Data Table',
+                        widget: {id: 'csui-number'},
                     },
                 },
-                'fieldsets': [
+                fieldsets: [
                     {
-                        'title': 'Visualisation Options',
-                        'description' : 'Available options based on the selected Visualisation Library',
-                        'grouping': 'three wide field',
-                        'fields': ['paginationSize']
+                        title: 'Visualisation Options',
+                        description : 'Available options based on the selected Visualisation Library',
+                        grouping: 'three wide field',
+                        fields: ['paginationSize']
                     }
                 ]
             }
         },
-        'fieldsets': [
+        fieldsets: [
             {
-                'tabTitle' : 'Chart Appearance',
-                // 'description' : 'Customise the way your chart looks',
-                'fields': ['chartAppearance']
+                tabTitle : 'Chart Appearance',
+                // description : 'Customise the way your chart looks',
+                fields: ['chartAppearance']
             },
             {
-                'tabTitle' : 'Table Appearance',
-                // 'description' : 'Customise the way your chart looks',
-                'fields': ['tableAppearance']
+                tabTitle : 'Table Appearance',
+                // description : 'Customise the way your chart looks',
+                fields: ['tableAppearance']
             }
         ],
-        'required': ['chartAppearance', 'tableAppearance']
+        required: ['chartAppearance', 'tableAppearance']
     };
 
     private _SCGAFormSchema = {
-        '$schema': 'http://json-schema.org/draft-04/hyper-schema#',
-        'type' : 'object',
-        'widget' : { 'id' : 'csui-head-menu' },
-        'properties' : {
-            'view' : this._viewFormSchema ,
-            'category' : this._categoryFormSchema,
-            'dataseries' : this._dataseriesFormSchema,
-            'appearance' : this._appearanceFormSchema
+        $schema: 'http://json-schema.org/draft-04/hyper-schema#',
+        type : 'object',
+        widget : { id : 'csui-head-menu' },
+        properties : {
+            view : this._viewFormSchema ,
+            category : this._categoryFormSchema,
+            dataseries : this._dataseriesFormSchema,
+            appearance : this._appearanceFormSchema
         },
-        'fieldsets': [
+        fieldsets: [
             {
-                'title' : 'Select View',
-                'description' : 'Choose what type of data interests you',
-                'fields': ['view']
+                title : 'Select View',
+                description : 'Choose what type of data interests you',
+                fields: ['view']
             },
             {
-                'title' : 'Select Category',
-                'description' : 'Choose the type of diagram you want to make',
-                'fields': ['category']
+                title : 'Select Category',
+                description : 'Choose the type of diagram you want to make',
+                fields: ['category']
             },
             {
-                'title': 'Configure Dataseries',
-                'description' : 'Describe the data you want to see',
-                'fields': ['dataseries']
+                title: 'Configure Dataseries',
+                description : 'Describe the data you want to see',
+                fields: ['dataseries']
             },
             {
-                'title': 'Customise Appearance',
-                'description' : 'Change the way your diagram looks',
-                'fields': ['appearance']
+                title: 'Customise Appearance',
+                description : 'Change the way your diagram looks',
+                fields: ['appearance']
             }
         ],
-        'required': ['view', 'category', 'dataseries', 'appearance']
+        required: ['view', 'category', 'dataseries', 'appearance']
     };
 
     get formSchema() { return this._SCGAFormSchema; }
