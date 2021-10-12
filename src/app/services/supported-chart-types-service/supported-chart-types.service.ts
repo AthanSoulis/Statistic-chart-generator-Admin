@@ -64,6 +64,11 @@ constructor(private http: HttpClient, private urlProvider: UrlProviderService, p
 export interface ISupportedCategory {
   type: string;
   supportedLibraries: Array<string>;
+  name?: string;
+  diagramId?: number;
+  description?: string;
+  imageURL?: string;
+  isPolar?: boolean; 
 }
 export interface ISupportedChart extends ISupportedCategory {}
 export interface ISupportedPolar extends ISupportedCategory { isPolar: boolean;}
