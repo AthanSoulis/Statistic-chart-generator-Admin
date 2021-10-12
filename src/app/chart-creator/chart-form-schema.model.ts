@@ -445,53 +445,215 @@ export class FormSchema {
                         widget : { id : 'csui-property-object' },
                         // title: 'Highcharts Appearance Options',
                         properties : {
-                            titles : {
+                            title : {
                                 type: 'object',
                                 widget: { id : 'csui-property-object'},
                                 properties: {
-                                    title : {
+                                    titleText : {
                                         type : 'string',
                                         placeholder : 'Title',
-                                        title : 'Title',
+                                        title : 'Title Text',
                                         widget: { id: 'csui-string' }
                                     },
-                                    subtitle : {
+                                    color : {
                                         type : 'string',
-                                        placeholder : 'Subtitle',
-                                        title : 'Subtitle',
-                                        widget: { id: 'csui-string' }
+                                        pattern: '^#[0-9a-fA-F]{8}$',
+                                        default: '#000000FF',
+                                        title : 'Title Color',
+                                        widget: {id: 'csui-color-picker'}
+                                    },
+                                    align : {
+                                        type: 'string',
+                                        widget : {id : 'csui-select'},
+                                        title: 'Horizontal Alignment',
+                                        tooltip: 'The horizontal alignment of the title.',
+                                        oneOf: [
+                                            {
+                                                enum: ['left'],
+                                                value : 'left',
+                                                description: 'Left'
+                                            },
+                                            {
+                                                enum: ['center'],
+                                                value : 'center',
+                                                description: 'Center'
+                                            },
+                                            {
+                                                enum: ['right'],
+                                                value : 'right',
+                                                description: 'Right'
+                                            }
+                                        ],
+                                        default: 'center',
+                                    },
+                                    margin : {
+                                        type : 'number',
+                                        default : 15,
+                                        title : 'Margin',
+                                        tooltip: 'The margin between the title and the plot area, or if a subtitle is present, the margin between the subtitle and the plot area. In pixels.',
+                                        widget: {id: 'csui-number'}
+                                    },
+                                    fontSize : {
+                                        type : 'number',
+                                        default : 18,
+                                        title : 'Font Size',
+                                        tooltip: 'Font Size in px.',
+                                        widget: {id: 'csui-number'}
                                     }
                                 },
                                 fieldsets:
-                                    [{
-                                        title: 'Diagram Title',
-                                        grouping: 'equal width fields',
-                                        fields: ['title', 'subtitle']
-                                    }]
+                                [{
+                                    title: 'Title',
+                                    grouping: 'equal width fields',
+                                    fields: ['titleText', 'color']
+                                },
+                                {
+                                    grouping: 'equal width fields',
+                                    fields: ['align', 'margin', 'fontSize']
+                                }]
                             },
-                            axisNames : {
+                            subtitle : {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    subtitleText : {
+                                        type : 'string',
+                                        placeholder : 'Subtitle',
+                                        title : 'Subtitle Text',
+                                        widget: { id: 'csui-string' }
+                                    },
+                                    color : {
+                                        type : 'string',
+                                        pattern: '^#[0-9a-fA-F]{8}$',
+                                        default: '#000000FF',
+                                        title : 'Subtitle Color',
+                                        widget: {id: 'csui-color-picker'}
+                                    },
+                                    align : {
+                                        type: 'string',
+                                        widget : {id : 'csui-select'},
+                                        title: 'Horizontal Alignment',
+                                        tooltip: 'The horizontal alignment of the subtitle.',
+                                        oneOf: [
+                                            {
+                                                enum: ['left'],
+                                                value : 'left',
+                                                description: 'Left'
+                                            },
+                                            {
+                                                enum: ['center'],
+                                                value : 'center',
+                                                description: 'Center'
+                                            },
+                                            {
+                                                enum: ['right'],
+                                                value : 'right',
+                                                description: 'Right'
+                                            }
+                                        ],
+                                        default: 'center',
+                                    },
+                                    fontSize : {
+                                        type : 'number',
+                                        default : 12,
+                                        title : 'Font Size',
+                                        tooltip: 'Font Size in px.',
+                                        widget: {id: 'csui-number'}
+                                    }
+                                },
+                                fieldsets:
+                                [{
+                                    title: 'Subtitle',
+                                    grouping: 'equal width fields',
+                                    fields: ['subtitleText', 'color']
+                                },
+                                {
+                                    grouping: 'equal width fields',
+                                    fields: ['align', 'fontSize']
+                                }]
+                            },
+                            xAxis : {
                                 type : 'object',
                                 widget : { id : 'csui-property-object' },
                                 properties : {
-                                    yaxisName : {
+                                    xAxisText : {
                                         type : 'string',
-                                        placeholder : 'Yaxis',
-                                        title : 'Yaxis',
+                                        placeholder : 'X Axis name',
+                                        title : 'Name',
                                         widget: { id: 'csui-string' }
                                     },
-                                    xaxisName : {
+                                    color : {
                                         type : 'string',
-                                        placeholder : 'Xaxis',
-                                        title : 'Xaxis',
-                                        widget: { id: 'csui-string' }
+                                        pattern: '^#[0-9a-fA-F]{8}$',
+                                        default: '#000000FF',
+                                        title : 'X Axis Color',
+                                        widget: {id: 'csui-color-picker'}
+                                    },
+                                    fontSize : {
+                                        type : 'number',
+                                        default : 11,
+                                        title : 'Font Size',
+                                        tooltip: 'Font Size in px.',
+                                        widget: {id: 'csui-number'}
                                     }
                                 },
                                 fieldsets:
-                                    [{
-                                        title: 'Axis Names',
-                                        grouping: 'equal width fields',
-                                        fields: ['yaxisName', 'xaxisName']
-                                    }]
+                                [{
+                                    title: 'X Axis',
+                                    grouping: 'equal width fields',
+                                    fields: ['xAxisText']
+                                },
+                                {
+                                    grouping: 'equal width fields',
+                                    fields: ['fontSize', 'color']
+                                }]
+                            },
+                            yAxis : {
+                                type : 'object',
+                                widget : { id : 'csui-property-object' },
+                                properties : {
+                                    yAxisText : {
+                                        type : 'string',
+                                        placeholder : 'Y Axis name',
+                                        title : 'Name',
+                                        widget: { id: 'csui-string' }
+                                    },
+                                    color : {
+                                        type : 'string',
+                                        pattern: '^#[0-9a-fA-F]{8}$',
+                                        default: '#000000FF',
+                                        title : 'Y Axis Color',
+                                        widget: {id: 'csui-color-picker'}
+                                    },
+                                    fontSize : {
+                                        type : 'number',
+                                        default : 11,
+                                        title : 'Font Size',
+                                        tooltip: 'Font Size in px.',
+                                        widget: {id: 'csui-number'}
+                                    },
+                                    reversedStacks : {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: false,
+                                        tooltip: 'If true, the first series in a stack will be drawn on top in a positive, non-reversed Y axis. If false, the first series is in the base of the stack.',
+                                        description: 'Reverse Y Axis Stacks'
+                                    }
+                                },
+                                fieldsets:
+                                [{
+                                    title: 'Y Axis',
+                                    grouping: 'equal width fields',
+                                    fields: ['yAxisText']
+                                },
+                                {
+                                    grouping: 'equal width fields',
+                                    fields: ['fontSize', 'color']
+                                },
+                                {
+                                    grouping: 'equal width fields',
+                                    fields:['reversedStacks']
+                                }]
                             },
                             dataSeriesColorArray : {
                                 type: 'array',
@@ -811,11 +973,11 @@ export class FormSchema {
                         fieldsets: [
                             {
                                 fieldsetColumnWidth : 'eight wide column',
-                                fields: ['titles', 'axisNames', 'hcDataLabels', 'hcCredits', 'hcMiscOptions']
+                                fields: ['title', 'subtitle', 'xAxis', 'yAxis', 'hcMiscOptions']
                             },
                             {
                                 fieldsetColumnWidth : 'eight wide column',
-                                fields: ['hcLegend', 'hcChartArea', 'hcPlotArea', 'dataSeriesColorArray' ]
+                                fields: [ 'hcDataLabels', 'hcCredits', 'hcLegend', 'hcChartArea', 'hcPlotArea', 'dataSeriesColorArray' ]
                             }
                         ],
                         visibleIf: {
@@ -1240,29 +1402,132 @@ export class FormSchema {
                         grouping : 'ui fluid two column stackable basic grid',
                         widget : { id : 'csui-property-object' },
                         properties : {
-                            titles : {
+                            title : {
                                 type: 'object',
                                 widget: { id : 'csui-property-object'},
                                 properties: {
-                                    title : {
+                                    titleText : {
                                         type : 'string',
                                         placeholder : 'Title',
-                                        title : 'Title',
+                                        title : 'Title Text',
                                         widget: { id: 'csui-string' }
                                     },
-                                    subtitle : {
+                                    color : {
                                         type : 'string',
-                                        placeholder : 'Subtitle',
-                                        title : 'Subtitle',
-                                        widget: { id: 'csui-string' }
+                                        pattern: '^#[0-9a-fA-F]{8}$',
+                                        default: '#000000FF',
+                                        title : 'Title Color',
+                                        widget: {id: 'csui-color-picker'}
+                                    },
+                                    align : {
+                                        type: 'string',
+                                        widget : {id : 'csui-select'},
+                                        title: 'Horizontal Alignment',
+                                        tooltip: 'The horizontal alignment of the title.',
+                                        oneOf: [
+                                            {
+                                                enum: ['left'],
+                                                value : 'left',
+                                                description: 'Left'
+                                            },
+                                            {
+                                                enum: ['center'],
+                                                value : 'center',
+                                                description: 'Center'
+                                            },
+                                            {
+                                                enum: ['right'],
+                                                value : 'right',
+                                                description: 'Right'
+                                            }
+                                        ],
+                                        default: 'center',
+                                    },
+                                    margin : {
+                                        type : 'number',
+                                        default : 15,
+                                        title : 'Margin',
+                                        tooltip: 'The margin between the title and the plot area, or if a subtitle is present, the margin between the subtitle and the plot area. In pixels.',
+                                        widget: {id: 'csui-number'}
+                                    },
+                                    fontSize : {
+                                        type : 'number',
+                                        default : 18,
+                                        title : 'Font Size',
+                                        tooltip: 'Font Size in px.',
+                                        widget: {id: 'csui-number'}
                                     }
                                 },
                                 fieldsets:
-                                    [{
-                                        title: 'Diagram Title',
-                                        grouping: 'equal width fields',
-                                        fields: ['title', 'subtitle']
-                                    }]
+                                [{
+                                    title: 'Title',
+                                    grouping: 'equal width fields',
+                                    fields: ['titleText', 'color']
+                                },
+                                {
+                                    grouping: 'equal width fields',
+                                    fields: ['align', 'margin', 'fontSize']
+                                }]
+                            },
+                            subtitle : {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    subtitleText : {
+                                        type : 'string',
+                                        placeholder : 'Subtitle',
+                                        title : 'Subtitle Text',
+                                        widget: { id: 'csui-string' }
+                                    },
+                                    color : {
+                                        type : 'string',
+                                        pattern: '^#[0-9a-fA-F]{8}$',
+                                        default: '#000000FF',
+                                        title : 'Subtitle Color',
+                                        widget: {id: 'csui-color-picker'}
+                                    },
+                                    align : {
+                                        type: 'string',
+                                        widget : {id : 'csui-select'},
+                                        title: 'Horizontal Alignment',
+                                        tooltip: 'The horizontal alignment of the subtitle.',
+                                        oneOf: [
+                                            {
+                                                enum: ['left'],
+                                                value : 'left',
+                                                description: 'Left'
+                                            },
+                                            {
+                                                enum: ['center'],
+                                                value : 'center',
+                                                description: 'Center'
+                                            },
+                                            {
+                                                enum: ['right'],
+                                                value : 'right',
+                                                description: 'Right'
+                                            }
+                                        ],
+                                        default: 'center',
+                                    },
+                                    fontSize : {
+                                        type : 'number',
+                                        default : 12,
+                                        title : 'Font Size',
+                                        tooltip: 'Font Size in px.',
+                                        widget: {id: 'csui-number'}
+                                    }
+                                },
+                                fieldsets:
+                                [{
+                                    title: 'Subtitle',
+                                    grouping: 'equal width fields',
+                                    fields: ['subtitleText', 'color']
+                                },
+                                {
+                                    grouping: 'equal width fields',
+                                    fields: ['align', 'fontSize']
+                                }]
                             },
                             hmCredits: {
                                 type: 'object',
@@ -1424,7 +1689,7 @@ export class FormSchema {
                         fieldsets: [
                             {
                                 fieldsetColumnWidth : 'eight wide column',
-                                fields: ['titles', 'hmCredits', 'hmLegend' ]
+                                fields: ['title', 'subtitle', 'hmCredits', 'hmLegend' ]
                             },
                             {
                                 fieldsetColumnWidth : 'eight wide column',
