@@ -214,10 +214,22 @@ export class DiagramCreator {
             // Credits Options
             chartObj.chartDescription.credits.enabled = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcCredits.hcEnableCredits;
             chartObj.chartDescription.credits.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcCredits.hcCreditsText;
+            
+            // Title Options
+            if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.title) {
+                chartObj.chartDescription.title.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.title.titleText;
+                chartObj.chartDescription.title.margin = appearanceOptions.chartAppearance.highchartsAppearanceOptions.title.margin;
+                chartObj.chartDescription.title.align = appearanceOptions.chartAppearance.highchartsAppearanceOptions.title.align;
+                chartObj.chartDescription.title.style.color = appearanceOptions.chartAppearance.highchartsAppearanceOptions.title.color;
+                chartObj.chartDescription.title.style.fontSize = appearanceOptions.chartAppearance.highchartsAppearanceOptions.title.fontSize.toString();
+            }
 
-            if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.titles) {
-                chartObj.chartDescription.title.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.titles.title;
-                chartObj.chartDescription.subtitle.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.titles.subtitle;
+            // Subtitle Options
+            if(appearanceOptions.chartAppearance.highchartsAppearanceOptions.subtitle) {
+                chartObj.chartDescription.subtitle.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.subtitle.subtitleText;
+                chartObj.chartDescription.subtitle.align = appearanceOptions.chartAppearance.highchartsAppearanceOptions.subtitle.align;
+                chartObj.chartDescription.subtitle.style.color = appearanceOptions.chartAppearance.highchartsAppearanceOptions.subtitle.color;
+                chartObj.chartDescription.subtitle.style.fontSize = appearanceOptions.chartAppearance.highchartsAppearanceOptions.subtitle.fontSize.toString();
             }
 
             // Chart Data Labels
@@ -247,9 +259,17 @@ export class DiagramCreator {
             chartObj.chartDescription.chart.plotBorderColor = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcPlotArea.hcPABorderColor;
             chartObj.chartDescription.chart.plotBorderWidth = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcPlotArea.hcPABorderWidth;
 
-            if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.axisNames) {
-                chartObj.chartDescription.xAxis.title.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.axisNames.xaxisName;
-                chartObj.chartDescription.yAxis.title.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.axisNames.yaxisName;
+            if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.xAxis) {
+                chartObj.chartDescription.xAxis.title.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.xAxis.xAxisText;
+                chartObj.chartDescription.xAxis.title.style.color = appearanceOptions.chartAppearance.highchartsAppearanceOptions.xAxis.color;
+                chartObj.chartDescription.xAxis.title.style.fontSize = appearanceOptions.chartAppearance.highchartsAppearanceOptions.xAxis.fontSize.toString();
+            }
+
+            if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.yAxis) {
+                chartObj.chartDescription.yAxis.title.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.yAxis.yAxisText;
+                chartObj.chartDescription.yAxis.title.style.color = appearanceOptions.chartAppearance.highchartsAppearanceOptions.yAxis.color;
+                chartObj.chartDescription.yAxis.title.style.fontSize = appearanceOptions.chartAppearance.highchartsAppearanceOptions.yAxis.fontSize.toString();
+                chartObj.chartDescription.yAxis.reversedStacks = appearanceOptions.chartAppearance.highchartsAppearanceOptions.yAxis.reversedStacks;
             }
         }
         // Set Color Theme. More universal approach
@@ -393,11 +413,21 @@ export class DiagramCreator {
             mapObj.mapDescription.colorAxis.type = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmColorAxis.hmColorAxisType;
             // Exporting
             mapObj.mapDescription.exporting.enabled = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmMiscOptions.exporting;
-            if (appearanceOptions.chartAppearance.highmapsAppearanceOptions.titles != null) {
-                // Title
-                mapObj.mapDescription.title.text = appearanceOptions.chartAppearance.highmapsAppearanceOptions.titles.title;
-                // Subtitle
-                mapObj.mapDescription.subtitle.text = appearanceOptions.chartAppearance.highmapsAppearanceOptions.titles.subtitle;
+            // Title
+            if (appearanceOptions.chartAppearance.highmapsAppearanceOptions.title != null) {
+                mapObj.mapDescription.title.text = appearanceOptions.chartAppearance.highmapsAppearanceOptions.title.titleText;
+                mapObj.mapDescription.title.align = appearanceOptions.chartAppearance.highmapsAppearanceOptions.title.align;
+                mapObj.mapDescription.title.margin = appearanceOptions.chartAppearance.highmapsAppearanceOptions.title.margin;
+                mapObj.mapDescription.title.style.color = appearanceOptions.chartAppearance.highmapsAppearanceOptions.title.color;
+                mapObj.mapDescription.title.style.fontSize = appearanceOptions.chartAppearance.highmapsAppearanceOptions.title.fontSize.toString();
+            }
+            // Subtitle
+            if (appearanceOptions.chartAppearance.highmapsAppearanceOptions.subtitle != null) {
+                mapObj.mapDescription.subtitle.text = appearanceOptions.chartAppearance.highmapsAppearanceOptions.subtitle.subtitleText;
+                mapObj.mapDescription.subtitle.align = appearanceOptions.chartAppearance.highmapsAppearanceOptions.subtitle.align;
+                mapObj.mapDescription.subtitle.style.color = 
+                appearanceOptions.chartAppearance.highmapsAppearanceOptions.subtitle.color;
+                mapObj.mapDescription.subtitle.style.fontSize = appearanceOptions.chartAppearance.highmapsAppearanceOptions.subtitle.fontSize.toString();
             }
             // MapNavigation
             mapObj.mapDescription.mapNavigation.enabled = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmMiscOptions.hmEnableMapNavigation;

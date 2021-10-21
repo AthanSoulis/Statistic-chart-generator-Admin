@@ -21,8 +21,8 @@ class HighMapsDescription {
     mapNavigation: HMNavigation;
     queries: Array<ChartInfo>;
     series: Array<HMSeriesInfo>;
-    subtitle: HCsubtitle;
-    title: HCtitle;
+    subtitle: Highcharts.SubtitleOptions;
+    title: Highcharts.TitleOptions;
 
     constructor() {
         this.chart = new HMChart();
@@ -34,8 +34,8 @@ class HighMapsDescription {
         this.mapNavigation = new HMNavigation();
         this.queries = [];
         this.series = [];
-        this.subtitle = new HCsubtitle();
-        this.title = new HCtitle();
+        this.subtitle = {style: {}} as Highcharts.SubtitleOptions;
+        this.title = {style: {}} as Highcharts.TitleOptions;
     }
 }
 

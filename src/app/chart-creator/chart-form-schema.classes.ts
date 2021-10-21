@@ -63,8 +63,10 @@ export interface AppearanceFormSchema {
     chartAppearance: ChartAppearanceFormSchema;
 }
 export interface HighchartsOptionsFormSchema {
-    titles ?: TitlesOptionsFormSchema;
-    axisNames ?: AxisNamesFormSchema;
+    title ?: TitleOptionsFormSchema;
+    subtitle ?: SubtitleOptionsFormSchema;
+    xAxis ?: XAxisOptionsFormSchema;
+    yAxis ?: YAxisOptionsFormSchema;
     dataSeriesColorArray ?: Array<string>;
     hcChartArea ?: HCChartAreaOptionsFormSchema;
     hcPlotArea ?: HCPlotAreaOptionsFormSchema;
@@ -83,11 +85,36 @@ export interface EchartsOptionsFormSchema {
     // stackedChart ?: boolean;
 }
 export interface HighmapsOptionsFormSchema {
-    titles ?: TitlesOptionsFormSchema;
+    title ?: TitleOptionsFormSchema;
+    subtitle ?: SubtitleOptionsFormSchema;
     hmCredits ?: HMCreditsOptionsFormSchema;
     hmLegend ?: HMLegendOptionsFormSchema;
     hmMiscOptions ?: HMMiscOptionsFormSchema;
     hmColorAxis ?: HMColorAxisOptionsFormSchema;
+}
+export interface TitleOptionsFormSchema {
+    titleText ?: string;
+    color ?: string;
+    align ?: "left" | "center" | "right";
+    margin ?: number;
+    fontSize ?: number;
+}
+export interface SubtitleOptionsFormSchema {
+    subtitleText ?: string;
+    color ?: string;
+    align ?: "left" | "center" | "right";
+    fontSize ?: number;
+}
+export interface XAxisOptionsFormSchema {
+    xAxisText ?: string;
+    color ?: string;
+    fontSize ?: number;
+}
+export interface YAxisOptionsFormSchema {
+    yAxisText ?: string;
+    color ?: string;
+    fontSize ?: number;
+    reversedStacks ?: boolean;
 }
 export interface HMColorAxisOptionsFormSchema {
     hmColorAxisMin ?: number;

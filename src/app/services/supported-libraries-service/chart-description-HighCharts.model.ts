@@ -15,10 +15,10 @@ export class HighChartsChart {
 
 class HighChartsDescription {
     chart: HCchart;
-    title: HCtitle;
-    subtitle: HCsubtitle;
-    yAxis: HCaxis;
-    xAxis: HCaxis;
+    title: Highcharts.TitleOptions;
+    subtitle: Highcharts.SubtitleOptions;
+    yAxis: Highcharts.YAxisOptions;
+    xAxis: Highcharts.XAxisOptions;
     queries: Array<ChartInfo> = [];
     lang: HCLang;
     exporting: HCExporting;
@@ -31,16 +31,16 @@ class HighChartsDescription {
 
     constructor() {
         this.chart = new HCchart();
-        this.title = new HCtitle();
-        this.subtitle = new HCsubtitle();
-        this.yAxis = new HCaxis();
-        this.xAxis = new HCaxis();
+        this.title = {style: {}} as Highcharts.TitleOptions;
+        this.subtitle = {style: {}} as Highcharts.SubtitleOptions;
+        this.yAxis = {title:{style: {}}} as Highcharts.YAxisOptions;
+        this.xAxis = {title:{style: {}}} as Highcharts.XAxisOptions;
         this.lang = new HCLang();
         this.exporting = new HCExporting();
         this.plotOptions = new HCPlotOptions();
         this.legend = new HCLegend();
         this.credits = new HCCredits();
-        this.tooltip = {} as Highcharts.TooltipOptions;
+        this.tooltip = {style: {}} as Highcharts.TooltipOptions;
     }
 }
 
