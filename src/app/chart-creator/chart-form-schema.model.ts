@@ -467,7 +467,7 @@ export class FormSchema {
                                     color : {
                                         type : 'string',
                                         pattern: '^#[0-9a-fA-F]{8}$',
-                                        default: '#000000FF',
+                                        default: '#333333FF',
                                         title : 'Title Color',
                                         widget: {id: 'csui-color-picker'}
                                     },
@@ -534,7 +534,7 @@ export class FormSchema {
                                     color : {
                                         type : 'string',
                                         pattern: '^#[0-9a-fA-F]{8}$',
-                                        default: '#000000FF',
+                                        default: '#666666FF',
                                         title : 'Subtitle Color',
                                         widget: {id: 'csui-color-picker'}
                                     },
@@ -594,7 +594,7 @@ export class FormSchema {
                                     color : {
                                         type : 'string',
                                         pattern: '^#[0-9a-fA-F]{8}$',
-                                        default: '#000000FF',
+                                        default: '#666666FF',
                                         title : 'X Axis Color',
                                         widget: {id: 'csui-color-picker'}
                                     },
@@ -630,7 +630,7 @@ export class FormSchema {
                                     color : {
                                         type : 'string',
                                         pattern: '^#[0-9a-fA-F]{8}$',
-                                        default: '#000000FF',
+                                        default: '#666666FF',
                                         title : 'Y Axis Color',
                                         widget: {id: 'csui-color-picker'}
                                     },
@@ -1424,7 +1424,7 @@ export class FormSchema {
                                     color : {
                                         type : 'string',
                                         pattern: '^#[0-9a-fA-F]{8}$',
-                                        default: '#000000FF',
+                                        default: '#333333FF',
                                         title : 'Title Color',
                                         widget: {id: 'csui-color-picker'}
                                     },
@@ -1491,7 +1491,7 @@ export class FormSchema {
                                     color : {
                                         type : 'string',
                                         pattern: '^#[0-9a-fA-F]{8}$',
-                                        default: '#000000FF',
+                                        default: '#666666FF',
                                         title : 'Subtitle Color',
                                         widget: {id: 'csui-color-picker'}
                                     },
