@@ -16,7 +16,7 @@ import { first } from 'rxjs/operators';
 })
 export class DiagramCategoryService {
 
-  public selectedDiagramCategory$: BehaviorSubject<string>;
+  public selectedDiagramCategory$: BehaviorSubject<ISupportedCategory>;
 
   supportedChartTypes: Array<ISupportedChart> = [];
   supportedPolarTypes: Array<ISupportedPolar> = [];
@@ -41,7 +41,7 @@ export class DiagramCategoryService {
       error => {}, // error path
       () => {
         this.supportedPolarTypes
-        .map((elem: ISupportedPolar) => { elem.type = "polar-".concat(elem.type); this.availableDiagrams.push(elem)});
+        .map((elem: ISupportedPolar) => this.availableDiagrams.push(elem));
       }
     );
     this.chartTypesService.getSupportedMaps().subscribe(
@@ -78,15 +78,17 @@ export class DiagramCategoryService {
     this.selectedDiagramCategory$ = new BehaviorSubject(null);
   }
 
-  public changeDiagramCategory(diagramCategory: string) {
-      const found = this.availableDiagrams.find(
-        (availableDiagram: ISupportedCategory) => availableDiagram.type === diagramCategory);
-      this.selectedDiagramCategory$.next((found === null || found === undefined) ? null : found.type);
+  public changeDiagramCategory(diagramCategory: ISupportedCategory) {
+      
+    const found = this.availableDiagrams.find(
+        (availableDiagram: ISupportedCategory) => availableDiagram.type === diagramCategory.type);
+      
+      this.selectedDiagramCategory$.next((found === null || found === undefined) ? null : found);
 
       if (found) {
-        console.log('Changed to:', diagramCategory);
+        console.log('Changed to:', diagramCategory.type);
       } else {
-        console.log(diagramCategory + 'diagram not found among:', this.availableDiagrams );
+        console.log(diagramCategory.type + 'diagram not found among:', this.availableDiagrams );
       }
   }
 }

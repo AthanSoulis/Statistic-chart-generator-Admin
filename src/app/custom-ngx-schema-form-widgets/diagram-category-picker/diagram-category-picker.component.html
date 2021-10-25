@@ -10,9 +10,9 @@
   <div class="ui stackable centered cards">
       <a class="card text-decoration-none" *ngFor="let basicDiagram of this.diagramCategoryService.supportedChartTypes"
       [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(basicDiagram.type)))
-      (click)="this.diagramSelectionAction(basicDiagram.type)">
+      (click)="this.diagramSelectionAction(basicDiagram)">
         <div class="image">
-          <img src="assets/images/imagePlaceholder.svg" alt="Diagram Image">
+          <img src="{{this.backEndUrlProvider.serviceURL}}/{{basicDiagram.imageURL}}" alt="Diagram Image">
         </div>
         <div class="content">
           <a class="center aligned header">{{basicDiagram.type | titlecase}}</a>
@@ -28,9 +28,9 @@
   <div class="ui stackable centered cards">
     <a class="card text-decoration-none" *ngFor="let polarDiagram of this.diagramCategoryService.supportedPolarTypes"
     [ngStyle]="(this.setSelectedCardStyle(this.isDiagramSelected(polarDiagram.type, true)))"
-    (click)="this.diagramSelectionAction(polarDiagram.type, true)">
+    (click)="this.diagramSelectionAction(polarDiagram)">
         <div class="image">
-          <img src="assets/images/imagePlaceholder.svg" alt="Diagram Image">
+          <img src="{{this.backEndUrlProvider.serviceURL}}/{{polarDiagram.imageURL}}" alt="Diagram Image">
         </div>
         <div class="content">
           <a class="center aligned header">{{polarDiagram.type | titlecase}}</a>
@@ -46,9 +46,9 @@
   <div class="ui stackable centered cards">
     <a class="card text-decoration-none" *ngFor="let mapDiagram of this.diagramCategoryService.supportedMaps"
     [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(mapDiagram.type)))
-    (click)="this.diagramSelectionAction(mapDiagram.type)">
+    (click)="this.diagramSelectionAction(mapDiagram)">
         <div class="image">
-          <img src="assets/images/imagePlaceholder.svg" alt="Diagram Image">
+          <img src="{{this.backEndUrlProvider.serviceURL}}/{{mapDiagram.imageURL}}" alt="Diagram Image">
         </div>
         <div class="content">
           <a class="center aligned header">{{mapDiagram.type | titlecase}}</a>
@@ -64,9 +64,9 @@
   <div class="ui stackable centered cards">
       <a class="card text-decoration-none" *ngFor="let specialisedDiagram of this.diagramCategoryService.supportedSpecialisedDiagrams"
       [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(specialisedDiagram.type)))
-      (click)="this.diagramSelectionAction(specialisedDiagram.type)">
+      (click)="this.diagramSelectionAction(specialisedDiagram)">
           <div class="image">
-            <img src="assets/images/imagePlaceholder.svg" alt="Diagram Image">
+            <img src="{{this.backEndUrlProvider.serviceURL}}/{{specialisedDiagram.imageURL}}" alt="Diagram Image">
           </div>
           <div class="content">
             <a class="center aligned header">{{specialisedDiagram.type | titlecase}}</a>
@@ -82,9 +82,9 @@
         <div class="ui stackable centered cards">
             <a class="card text-decoration-none" *ngFor="let miscType of this.diagramCategoryService.supportedMiscTypes"
                [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(miscType.type)))
-               (click)="this.diagramSelectionAction(miscType.type)">
+               (click)="this.diagramSelectionAction(miscType)">
                 <div class="image">
-                    <img src="assets/images/numberPlaceholder.png" alt="Diagram Image" style="max-width: 150px">
+                    <img src="{{this.backEndUrlProvider.serviceURL}}/{{miscType.imageURL}}" alt="Diagram Image" style="max-width: 150px">
                 </div>
                 <div class="content">
                     <a class="center aligned header">{{miscType.type | titlecase}}</a>

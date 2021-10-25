@@ -133,7 +133,7 @@ export class DiagramCreator {
         const chartObj = new GoogleChartsChart();
         const chartDescription = chartObj.chartDescription;
 
-        chartDescription.GoogleChartType = category.categoryType;
+        chartDescription.GoogleChartType = category.diagram.type;
 
         if (appearanceOptions.chartAppearance.generalOptions !== undefined
             && appearanceOptions.chartAppearance.generalOptions.orderByAxis !== null) {
@@ -178,7 +178,7 @@ export class DiagramCreator {
             chartObj.orderBy = appearanceOptions.chartAppearance.generalOptions.orderByAxis;
         
         // Is this a polar diagram ?
-        chartObj.chartDescription.chart.polar = category.isPolarDiagram;
+        chartObj.chartDescription.chart.polar = category.diagram.isPolar;
 
         if (appearanceOptions.chartAppearance.highchartsAppearanceOptions != null) {
             
@@ -301,19 +301,14 @@ export class DiagramCreator {
 
     private figureCategoryType(dataElement: DataseriesFormSchema, category: CategoryFormSchema) : string
     {
-        if(category.categoryType === 'combo')
+        if(category.diagram.type === 'combo')
         {
             if(dataElement.chartProperties.chartType == null)
                 return 'line';
             return dataElement.chartProperties.chartType;
         }
-
-        if(category.isPolarDiagram && category.categoryType.includes('polar-'))
-        {
-            return category.categoryType.split('polar-')[1];
-        }
         
-        return category.categoryType;
+        return category.diagram.type;
     }
 
     createDynamicEChartsChart(view: ViewFormSchema, category: CategoryFormSchema,
@@ -446,13 +441,13 @@ export class DiagramCreator {
                     appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmMiscOptions.hmEnableDataLabels)
             );
             mapObj.mapDescription.queries.push(
-                new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit, category.categoryType)
+                new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit, category.diagram.type)
             );
         });
 
         mapObj.mapDescription.chart.map = this.diagramCategoryService
             .supportedMaps
-            .find((map: ISupportedMap) => map.type === category.categoryType).name;
+            .find((map: ISupportedMap) => map.type === category.diagram.type).name;
 
         return mapObj;
     }

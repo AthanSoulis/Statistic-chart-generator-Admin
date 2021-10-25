@@ -1,3 +1,4 @@
+import { ISupportedCategory } from './../services/supported-chart-types-service/supported-chart-types.service';
 import {HCDataLabels} from "../services/supported-libraries-service/chart-description-HighCharts.model"
 // Classes derived from the chart-form-schema.model
 
@@ -11,8 +12,7 @@ export interface ViewFormSchema {
     profile: string;
 }
 export interface CategoryFormSchema {
-    isPolarDiagram: boolean;
-    categoryType: string;
+    diagram: ISupportedCategory;
 }
 export interface DataseriesFormSchema {
     data: DataFormSchema;

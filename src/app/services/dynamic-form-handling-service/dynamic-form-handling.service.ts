@@ -118,7 +118,7 @@ export class DynamicFormHandlingService {
 
   private createDataObjectsFromSchemaObject(value: SCGAFormSchema) {
     
-    if(this.diagramcategoryService.selectedDiagramCategory$.value === "numbers")
+    if(this.diagramcategoryService.selectedDiagramCategory$.value?.type === "numbers")
     {
       this._diagramCreator.createRawData(value).pipe(first()).subscribe(rawDataObject => this.changeDataObjects(null,null,null,rawDataObject))
       return;

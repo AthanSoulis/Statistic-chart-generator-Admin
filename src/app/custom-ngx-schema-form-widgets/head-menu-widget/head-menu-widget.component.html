@@ -43,7 +43,7 @@
         </div>
         <div class="row text-center mt-3">
           <div class="col card" *ngIf="(this.diagramCategoryService.selectedDiagramCategory$ | async) !== null && (this.diagramCategoryService.selectedDiagramCategory$ | async) !== undefined">
-            <b>{{(this.diagramCategoryService.selectedDiagramCategory$ | async) | titlecase}} Diagram</b>
+            <b>{{(this.diagramCategoryService.selectedDiagramCategory$ | async).type | titlecase}} Diagram</b>
           </div>
         </div>
       </a>

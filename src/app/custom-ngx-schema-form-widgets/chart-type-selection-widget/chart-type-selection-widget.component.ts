@@ -17,25 +17,25 @@ export class ChartTypeSelectionWidgetComponent extends ControlWidget implements 
 
   constructor(private chartTypesService: SupportedChartTypesService, private cdr: ChangeDetectorRef) {
     super();
+
     chartTypesService.getSupportedChartTypes().subscribe(
-      (data: Array<ISupportedChart>) => this.supportedChartTypes = data.map((category: ISupportedChart) => category.type) // success path
-      // error => this.error = error // error path
-    );
+      (data: Array<ISupportedChart>) => this.supportedChartTypes = data.map((category: ISupportedChart) => category.type));
+
+    // Make sure this widget is shown only when the "combo" type is chosen
     this.isVisible = new BehaviorSubject<boolean>(false);
    }
 
   ngAfterContentInit() {
     this.sub = this.formProperty.root.searchProperty(Object.keys(this.schema.showOnlyWhen)[0]).valueChanges.subscribe(
-      (category: string) => 
-      {
-        this.isVisible.next(category === Object.values(this.schema.showOnlyWhen)[0][0]);
+      (category: ISupportedChart) => {
+        
+        // Make sure this widget is shown only when the "combo" type is chosen
+        this.isVisible.next(category.type === Object.values(this.schema.showOnlyWhen)[0][0]);
         this.formProperty.setValue('', false);
         this.cdr.markForCheck();
       }
     );
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
+  ngOnDestroy() { this.sub.unsubscribe(); }
 }

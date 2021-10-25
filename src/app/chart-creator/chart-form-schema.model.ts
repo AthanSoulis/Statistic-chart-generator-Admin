@@ -47,19 +47,28 @@ export class FormSchema {
         description : 'Choose the type of diagram you want to make',
         widget : { id : 'csui-category-properties-object' },
         properties : {
-            isPolarDiagram : {
-                type : 'boolean',
-                default: false,
-                widget: 'hidden',
-            },
-            categoryType : {
-                type : 'string',
+            diagram : {
+                type : 'object',
                 requiredField : true,
-                widget: { id: 'csui-diagram-category-component' }
+                widget: { id: 'csui-diagram-category-component' },
+                properties : {
+                    name : { type: 'string', widget: 'hidden' },
+                    type : { type: 'string', widget: 'hidden' },
+                    diagramId : { type: 'number', widget: 'hidden' },
+                    description : { type: 'string', widget: 'hidden' },
+                    imageURL : { type: 'string', widget: 'hidden' },
+                    isPolar : { type: 'boolean', widget: 'hidden' },
+                    supportedLibraries : { 
+                        type: 'array',
+                        widget: 'hidden',
+                        items: { type : 'string', widget : 'hidden' }
+                    }
+                },
+                fieldsets: [{ fields: ['name','type','diagramId','description','imageURL','isPolar','supportedLibraries'] }]
             }
         },
-        fieldsets: [{ fields: ['categoryType','isPolarDiagram'] }],
-        required: ['categoryType']
+        fieldsets: [{ fields: ['diagram'] }],
+        required: ['diagram']
     };
 
     private _dataseriesFormSchema = {
@@ -330,7 +339,7 @@ export class FormSchema {
                             // This is different from the visibleIf because I want to know
                             // the value of an ancestor property
                             showOnlyWhen: {
-                                '/category/categoryType': ['combo']
+                                '/category/diagram': ['combo']
                             }
                         },
                         stacking : {
