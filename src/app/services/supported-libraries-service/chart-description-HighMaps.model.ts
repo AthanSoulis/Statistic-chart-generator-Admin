@@ -23,6 +23,7 @@ class HighMapsDescription {
     series: Array<HMSeriesInfo>;
     subtitle: Highcharts.SubtitleOptions;
     title: Highcharts.TitleOptions;
+    zoomTo: {destination: string, zoomValue: number};
 
     constructor() {
         this.chart = new HMChart();
@@ -36,6 +37,7 @@ class HighMapsDescription {
         this.series = [];
         this.subtitle = {style: {}} as Highcharts.SubtitleOptions;
         this.title = {style: {}} as Highcharts.TitleOptions;
+        this.zoomTo = {destination: "GR", zoomValue: 5};
     }
 }
 
