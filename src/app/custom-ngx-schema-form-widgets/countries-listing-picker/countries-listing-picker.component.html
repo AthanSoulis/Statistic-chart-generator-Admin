@@ -1,0 +1,16 @@
+<div [ngClass]="!schema.requiredField ? 'widget form-group field' : 
+(control.touched || control.dirty) && (!this.control.valid)  ? 'widget form-group required field error' : 'widget form-group required field'">
+  <label [attr.for]="id" class="horizontal control-label">
+    {{schema.title}}
+  </label>
+  <span *ngIf="schema.description" class="formHelp">
+    {{schema.description}}
+  </span>
+  <input *ngIf="schema.readOnly; else librarySelection" [id]="id" [attr.name]="name" type="hidden" [formControl]="control">
+  <ng-template #librarySelection>
+    <select class="custom-select" [id]="id" [formControl]="control" [attr.name]="name" [attr.disabled]="schema.readOnly">
+      <option *ngIf="schema.placeholder" [label]="schema.placeholder" disabled></option>
+      <option *ngFor="let country of (countries | async)" [value]='country.code'>{{country.name}}</option>
+    </select>
+  </ng-template>
+</div>

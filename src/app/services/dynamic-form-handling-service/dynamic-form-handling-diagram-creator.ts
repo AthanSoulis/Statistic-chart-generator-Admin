@@ -431,6 +431,8 @@ export class DiagramCreator {
             mapObj.mapDescription.credits.text = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmCredits.hmCreditsText;
             // Legend
             mapObj.mapDescription.legend.enabled = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmLegend.hmEnableLegend;
+            //Country Zoom
+            mapObj.mapDescription.zoomTo = appearanceOptions.chartAppearance.highmapsAppearanceOptions.hmZoomTo;
 
         }
 

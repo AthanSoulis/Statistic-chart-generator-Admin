@@ -37,7 +37,7 @@ class HighMapsDescription {
         this.series = [];
         this.subtitle = {style: {}} as Highcharts.SubtitleOptions;
         this.title = {style: {}} as Highcharts.TitleOptions;
-        this.zoomTo = {destination: "GR", zoomValue: 5};
+        this.zoomTo = {destination: undefined, zoomValue: 5};
     }
 }
 

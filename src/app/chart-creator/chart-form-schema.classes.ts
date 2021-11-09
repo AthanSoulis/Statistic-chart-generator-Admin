@@ -91,6 +91,7 @@ export interface HighmapsOptionsFormSchema {
     hmLegend ?: HMLegendOptionsFormSchema;
     hmMiscOptions ?: HMMiscOptionsFormSchema;
     hmColorAxis ?: HMColorAxisOptionsFormSchema;
+    hmZoomTo ?: {destination: string, zoomValue: number};
 }
 export interface TitleOptionsFormSchema {
     titleText ?: string;

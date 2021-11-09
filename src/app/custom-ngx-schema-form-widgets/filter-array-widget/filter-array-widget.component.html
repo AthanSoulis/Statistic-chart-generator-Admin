@@ -28,7 +28,8 @@
   </div>
 
   <a *ngIf="(this.schema.maxItems !== undefined && this.schema.maxItems !== null) ? this.arrayItems < this.schema.maxItems : true"
-   class="link button" (click)="addItem()"><i class="plus icon"></i>Add {{schema.itemName}}</a> 
+    href='javascript:void(0);' role="button" class="border-0 p-0 btn underline-button" (click)="addItem()"><i class="bi bi-plus-lg mr-1"></i>Add {{schema.itemName}}
+  </a>
 
   <div *ngIf="schema.relaxed" class="ui hidden divider"></div>
 </div>

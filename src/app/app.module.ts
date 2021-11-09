@@ -28,6 +28,7 @@ import { ChartExportingService } from './services/chart-exporting-service/chart-
 import { ErrorHandlerService } from './services/error-handler-service/error-handler.service';
 import { ChartLoadingService } from './services/chart-loading-service/chart-loading.service';
 import { DynamicTreeDatabase } from './services/dynamic-tree-database/dynamic-tree-database.service';
+import { CountriesListingService } from './services/countries-listing-service/countries-listing.service';
 
 import { ColorPickerModule } from 'ngx-color-picker';
 
@@ -70,6 +71,7 @@ import { GeneratedShortUrlFieldComponent } from './generated-short-url-field/gen
 import { ClearFormModalComponent } from './modals/clear-form-modal/clear-form-modal.component';
 import { ToastService } from './services/toast-service/toast.service';
 import { ToastsContainer } from './services/toast-service/toasts-container.component';
+import { CountriesListingPickerComponent } from './custom-ngx-schema-form-widgets/countries-listing-picker/countries-listing-picker.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +112,8 @@ import { ToastsContainer } from './services/toast-service/toasts-container.compo
     ChartTableModalComponent,
     GeneratedShortUrlFieldComponent,
     ClearFormModalComponent,
-    ToastsContainer
+    ToastsContainer,
+    CountriesListingPickerComponent
   ],
   imports: [
     SchemaFormModule.forRoot(),
@@ -147,7 +150,8 @@ import { ToastsContainer } from './services/toast-service/toasts-container.compo
     ChartLoadingService,
     {provide: WidgetRegistry, useClass: CustomWidgetRegistry},
     DynamicTreeDatabase,
-    ToastService
+    ToastService,
+    CountriesListingService
   ],
   bootstrap: [AppComponent]
 })

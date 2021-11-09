@@ -26,6 +26,7 @@ import { DiagramCategoryPickerComponent } from './diagram-category-picker/diagra
 import { FilterArrayWidgetComponent } from './filter-array-widget/filter-array-widget.component';
 import { TabularMenuWidgetComponent } from './tabular-menu-widget/tabular-menu-widget.component';
 import { Injectable } from '@angular/core';
+import { CountriesListingPickerComponent } from './countries-listing-picker/countries-listing-picker.component';
 
 @Injectable()
 export class CustomWidgetRegistry extends DefaultWidgetRegistry {
@@ -58,5 +59,6 @@ export class CustomWidgetRegistry extends DefaultWidgetRegistry {
     this.register('csui-category-properties-object', CategoryPropertiesWidgetComponent);
     this.register('csui-diagram-category-component', DiagramCategoryPickerComponent);
     this.register('csui-tabular-menu', TabularMenuWidgetComponent);
+    this.register('countries-listing-picker', CountriesListingPickerComponent);
   }
 }

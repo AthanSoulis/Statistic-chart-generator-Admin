@@ -1693,7 +1693,32 @@ export class FormSchema {
                                     grouping: 'equal width fields',
                                     fields: ['hmColorAxisMinColor', 'hmColorAxisMaxColor']
                                 }]
+                            },
+                            hmZoomTo : {
+                                type: 'object',
+                                widget: { id: 'csui-property-object'},
+                                properties:{
+                                    destination : {
+                                        type : 'string',
+                                        title: 'Country',
+                                        tooltip: 'Select the country to zoom to.',
+                                        widget: {id: 'countries-listing-picker'}
+                                    },
+                                    zoomValue : {
+                                        type : 'number',
+                                        title : 'Zoom Value',
+                                        default: 5,
+                                        tooltip: 'The amount of zoom to apply.  Value of 1 is zoomed directly to the country.',
+                                        widget: {id: 'csui-number'}
+                                    },
+                                },
+                                fieldsets:[{
+                                    title: 'Zoom Options',
+                                    grouping: 'equal width fields',
+                                    fields: [ 'destination', 'zoomValue']
+                                }]
                             }
+                            
                         },
                         fieldsets: [
                             {
@@ -1702,7 +1727,7 @@ export class FormSchema {
                             },
                             {
                                 fieldsetColumnWidth : 'eight wide column',
-                                fields: ['hmColorAxis', 'hmMiscOptions']
+                                fields: ['hmColorAxis', 'hmMiscOptions', 'hmZoomTo']
                             }
                         ],
                         visibleIf: {
