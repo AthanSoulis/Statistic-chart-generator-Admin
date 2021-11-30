@@ -93,12 +93,12 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
       .searchProperty(index + '/chartProperties/dataseriesName').setValue(value, false);
   }
 
-  addItem() {
+  addItem(value ?: any) : number {
     if ( this.schema.maxItems === undefined || (<FormProperty[]>this.formProperty.properties).length < this.schema.maxItems) {
       
       let addedItemId: number = this.menuArrayLength;
       
-      const addedItem: FormProperty = this.formProperty.addItem();
+      const addedItem: FormProperty = this.formProperty.addItem(value);
       let addedItemDataseriesNameProperty: FormProperty = addedItem.searchProperty(addedItemId+'/chartProperties/dataseriesName');
       
       const addedItemDataseriesName: string = addedItemDataseriesNameProperty.value;
@@ -128,10 +128,40 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
       console.log("Added an Item!");
       
       this.dataseriesMenu.select(addedItemId);
+
+      return addedItemId;
     }
   }
 
-  removeItem(index: number, $event: Event) {
+  duplicateItem(index: number, $event?: Event) {
+    
+    // Do nothing with an invalid index
+    if (index < 0 || index >= this.menuArrayLength)
+      return;
+
+    // When an entity field is reset, the entity field selection is also reset. 
+    // This disables temporarily the reset functionality of the above fields. 
+    this.loadingService.chartLoadingStatus = true;
+
+    const formPropertyToDup = new Object((<FormProperty[]>this.formProperty.properties)[index]._value);
+    var newItemIndex = this.addItem(formPropertyToDup);
+
+    if( newItemIndex != index + 1 )
+    {
+      this.moveItem(newItemIndex, index + 1, $event);
+      console.log("Moved to "+ (index+1));
+      newItemIndex = index + 1;
+    }
+
+    this.formProperty.updateValueAndValidity();
+    if ( $event != null ) 
+    {
+      $event.preventDefault();
+      $event.stopImmediatePropagation();
+    }
+  }
+
+  removeItem(index: number, $event?: Event) {
 
     if ( this.menuArrayLength <= 1 || index < 0)
       return;
@@ -142,14 +172,17 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
 
     this.formProperty.updateValueAndValidity();
     // The $event.preventDefault() is a workaround to stop web-app reloading
-    // https://github.com/ng-bootstrap/ng-bootstrap/issues/1909 
-    $event.preventDefault();
-    $event.stopImmediatePropagation();
+    // https://github.com/ng-bootstrap/ng-bootstrap/issues/1909
+    if ( $event != null ) 
+    {
+      $event.preventDefault();
+      $event.stopImmediatePropagation();
+    }
 
     this.dataseriesMenu.select(newActiveId);
   }
 
-  moveItem(from: number, to: number, $event: Event) {
+  moveItem(from: number, to: number, $event?: Event) {
     this.formProperty.properties[from];
 
     var dataseriesToMove = (this.formProperty.properties as FormProperty[]).splice(from, 1);
@@ -157,8 +190,11 @@ export class DataseriesMenuWidgetComponent extends ArrayLayoutWidget implements 
 
     this.formProperty.updateValueAndValidity();
 
-    $event.preventDefault();
-    $event.stopImmediatePropagation();
+    if($event != null)
+    {
+      $event.preventDefault();
+      $event.stopImmediatePropagation();
+    }
 
     this.dataseriesMenu.select(to);
   }
