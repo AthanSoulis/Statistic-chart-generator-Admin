@@ -1701,14 +1701,15 @@ export class FormSchema {
                                     destination : {
                                         type : 'string',
                                         title: 'Country',
+                                        placeholder : 'Select Country',
                                         tooltip: 'Select the country to zoom to.',
                                         widget: {id: 'countries-listing-picker'}
                                     },
                                     zoomValue : {
                                         type : 'number',
                                         title : 'Zoom Value',
-                                        default: 5,
-                                        tooltip: 'The amount of zoom to apply.  Value of 1 is zoomed directly to the country.',
+                                        default: 1,
+                                        tooltip: 'The amount of zoom to apply. Value of 1 is zoomed directly to the country, while higher values zoom out.',
                                         widget: {id: 'csui-number'}
                                     },
                                 },
