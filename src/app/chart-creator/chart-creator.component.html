@@ -1,5 +1,15 @@
 <div class="container-fluid p-0" id="formContainer">
 
+    <!-- Error Messages -->
+    <div *ngIf="showErrors" class="d-flex m-1 flex-column flex-wrap align-items-stretch">
+        <div *ngIf="!isFormValid" class="alert alert-danger" role="alert">
+            <ul style="list-style: inside !important;" >
+                <div class="error-list-column" *ngFor="let error of (this.dynamicFormHandlingService.$formErrorObject.value)">
+                    <li>{{error.path}} : {{error.message}}</li></div>
+            </ul>
+        </div>    
+    </div>
+
     <div class="row no-gutters justify-content-center">
         <div class="col order first">
             <sf-form #form [schema]="fs.formSchema" [model]="loadedChart" [validators]="fs.customValidators" 
@@ -10,15 +20,4 @@
             <pre> {{this.dynamicFormHandlingService.formSchemaObject | json}} </pre>
         </div>
     </div>
-
-    <!-- Error Messages -->
-    <!-- <div class="ui basic compact segment container" style="padding: 0">
-        <div *ngIf="!isFormValid" class="ui negative message">
-            <ul style="list-style: inside !important;" class="ui center aligned equal width compact stretched four column grid" >
-                <div class="column" *ngFor="let error of (this.dynamicFormHandlingService.$formErrorObject.value)">
-                    <li>{{error.message}}</li></div>
-            </ul>
-        </div>    
-    </div> -->
-
 </div>

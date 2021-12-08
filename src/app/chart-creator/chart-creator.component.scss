@@ -2,10 +2,6 @@
   cursor: not-allowed !important; 
 }
 
-.ui.basic.primary.not-allowed.button {
-  background-color: white !important;
-}
-
 .large.text {
   font-size: 1.3rem;
 }
@@ -13,9 +9,6 @@
   padding: 0.2em !important;
 }
 
-.ui.sticky {
-   margin-top: 60px;
-   margin-right: 1rem;
-   margin-bottom: 15px;
-   position: fixed;
+.error-list-column {
+  // display: inline-block;
 }

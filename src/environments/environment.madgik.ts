@@ -2,5 +2,6 @@ export const environment = {
 production: true,
 apiUrl: 'https://stats.madgik.di.uoa.gr',
 apiFolder: '/stats-api',
-showSchemaObject: false
+showSchemaObject: false,
+showErrors: false
 };

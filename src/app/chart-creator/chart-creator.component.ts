@@ -20,6 +20,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
   formErrors: BehaviorSubject<Array<any>>;
 
   showSchemaObject: boolean;
+  showErrors: boolean;
 
   constructor( public errorHandlerService: ErrorHandlerService,
     public dynamicFormHandlingService: DynamicFormHandlingService,
@@ -29,6 +30,7 @@ export class ChartCreatorComponent implements OnInit, AfterViewInit, AfterConten
       this.formErrors = new BehaviorSubject<Array<any>>([]);
 
       this.showSchemaObject = environment.showSchemaObject;
+      this.showErrors = environment.showErrors;
   }
 
   ngOnInit() {}
