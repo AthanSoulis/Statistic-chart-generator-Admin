@@ -35,7 +35,7 @@ class GoogleChartsTableDescription {
 }
 
 class GoogleChartsDescription {
-    chartType: 'AreaChart'|'BarChart'|'ColumnChart'|'LineChart'|'PieChart'|'ComboChart' = 'ComboChart';
+    chartType: 'AreaChart'|'BarChart'|'ColumnChart'|'LineChart'|'PieChart'|'ComboChart'|'TreeMap' = 'ComboChart';
     columns: string[];
     queriesInfo: ChartInfo[];
     options: GoogleChartsOptions;
@@ -62,6 +62,9 @@ class GoogleChartsDescription {
                 break;
             case 'pie':
                 this.chartType = 'PieChart';
+                break;
+            case 'treemap':
+                this.chartType = 'TreeMap';
                 break;
             default :
                 this.chartType = 'ComboChart';
