@@ -9,7 +9,7 @@
   <h3 class="ui dividing header">Basic Diagrams</h3>
   <div class="ui stackable centered cards">
       <a class="card text-decoration-none" *ngFor="let basicDiagram of this.diagramCategoryService.supportedChartTypes"
-      [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(basicDiagram.type)))
+      [ngStyle]=(setSelectedCardStyle(this.isDiagramSelected(basicDiagram)))
       (click)="this.diagramSelectionAction(basicDiagram)">
         <div class="image">
           <img src="{{this.backEndUrlProvider.serviceURL}}/{{basicDiagram.imageURL}}" alt="Diagram Image">
@@ -27,7 +27,7 @@
   <h3 class="ui dividing header">Polar Diagrams</h3>
   <div class="ui stackable centered cards">
     <a class="card text-decoration-none" *ngFor="let polarDiagram of this.diagramCategoryService.supportedPolarTypes"
-    [ngStyle]="(this.setSelectedCardStyle(this.isDiagramSelected(polarDiagram.type, true)))"
+    [ngStyle]="(this.setSelectedCardStyle(this.isDiagramSelected(polarDiagram)))"
     (click)="this.diagramSelectionAction(polarDiagram)">
         <div class="image">
           <img src="{{this.backEndUrlProvider.serviceURL}}/{{polarDiagram.imageURL}}" alt="Diagram Image">
@@ -45,7 +45,7 @@
   <h3 class="ui dividing header">Map Diagrams</h3>
   <div class="ui stackable centered cards">
     <a class="card text-decoration-none" *ngFor="let mapDiagram of this.diagramCategoryService.supportedMaps"
-    [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(mapDiagram.type)))
+    [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(mapDiagram)))
     (click)="this.diagramSelectionAction(mapDiagram)">
         <div class="image">
           <img src="{{this.backEndUrlProvider.serviceURL}}/{{mapDiagram.imageURL}}" alt="Diagram Image">
@@ -63,7 +63,7 @@
   <h3 class="ui dividing header">Specialised Diagrams</h3>
   <div class="ui stackable centered cards">
       <a class="card text-decoration-none" *ngFor="let specialisedDiagram of this.diagramCategoryService.supportedSpecialisedDiagrams"
-      [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(specialisedDiagram.type)))
+      [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(specialisedDiagram)))
       (click)="this.diagramSelectionAction(specialisedDiagram)">
           <div class="image">
             <img src="{{this.backEndUrlProvider.serviceURL}}/{{specialisedDiagram.imageURL}}" alt="Diagram Image">
@@ -81,7 +81,7 @@
         <h3 class="ui dividing header">Miscellaneous</h3>
         <div class="ui stackable centered cards">
             <a class="card text-decoration-none" *ngFor="let miscType of this.diagramCategoryService.supportedMiscTypes"
-               [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(miscType.type)))
+               [ngStyle]=(this.setSelectedCardStyle(this.isDiagramSelected(miscType)))
                (click)="this.diagramSelectionAction(miscType)">
                 <div class="image">
                     <img src="{{this.backEndUrlProvider.serviceURL}}/{{miscType.imageURL}}" alt="Diagram Image" style="max-width: 150px">

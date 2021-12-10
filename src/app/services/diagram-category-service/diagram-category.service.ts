@@ -51,7 +51,7 @@ export class DiagramCategoryService {
       error => {}, // error path
       () => {
         this.supportedMaps
-        .map((elem: ISupportedChart) => this.availableDiagrams.push(elem));
+        .map((elem: ISupportedMap) => this.availableDiagrams.push(elem));
       }
     );
     this.chartTypesService.getSupportedSpecialChartTypes().subscribe(
@@ -61,7 +61,7 @@ export class DiagramCategoryService {
       error => {}, // error path
       () => {
         this.supportedSpecialisedDiagrams
-        .map((elem: ISupportedChart) => this.availableDiagrams.push(elem) );
+        .map((elem: ISupportedSpecialChartType) => this.availableDiagrams.push(elem) );
       }
     );
     this.chartTypesService.getSupportedMiscTypes().subscribe(
@@ -71,10 +71,10 @@ export class DiagramCategoryService {
           error => {}, // error path
           () => {
               this.supportedMiscTypes
-              .map((elem: ISupportedChart) => this.availableDiagrams.push(elem) );
+              .map((elem: ISupportedMiscType) => this.availableDiagrams.push(elem) );
         }
     );
-
+    
     this.selectedDiagramCategory$ = new BehaviorSubject(null);
   }
 

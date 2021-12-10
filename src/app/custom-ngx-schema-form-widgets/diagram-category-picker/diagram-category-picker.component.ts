@@ -56,11 +56,20 @@ export class DiagramCategoryPickerComponent extends ObjectLayoutWidget implement
     // Changes active tab to the next
     this.tabActivationStatusService.activeId = this.tabActivationStatusService.tabIds[2];
 
-    if ( this.formProperty.value !== diagram ) 
+    if ( this.formProperty.value.type != diagram.type || this.formProperty.value.isPolar != diagram.isPolar ) 
       this.formProperty.setValue(diagram, false);
   }
 
-  isDiagramSelected(diagram: ISupportedCategory): boolean { return diagram === this.formProperty.value }
+  isDiagramSelected(diagram: ISupportedCategory): boolean 
+  {
+    if(this.formProperty.value == null)
+      return false;
+
+    if(this.formProperty.value.type == diagram.type && this.formProperty.value.isPolar == diagram.isPolar)
+      return true;
+
+    return false;
+  }
 
   setSelectedCardStyle(isSelected: boolean) {
     if (isSelected) {
