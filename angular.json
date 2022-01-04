@@ -18,8 +18,7 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
-              "src/ARC.ico",
-              "src/stats-api.js"
+              "src/ARC.ico"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -117,6 +116,12 @@
             },
             "localhost": {
               "browserTarget": "stats-tool:build:localhost"
+            },
+            "beta":{
+              "browserTarget": "stats-tool:build:beta"
+            },
+            "madgik": {
+              "browserTarget": "stats-tool:build:madgik"
             }
           }
         },
