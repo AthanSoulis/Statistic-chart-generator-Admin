@@ -214,7 +214,6 @@ export class DiagramCreator {
             // Credits Options
             chartObj.chartDescription.credits.enabled = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcCredits.hcEnableCredits;
             chartObj.chartDescription.credits.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcCredits.hcCreditsText;
-            
             // Title Options
             if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.title) {
                 chartObj.chartDescription.title.text = appearanceOptions.chartAppearance.highchartsAppearanceOptions.title.titleText;
@@ -279,13 +278,24 @@ export class DiagramCreator {
         else
             chartObj.chartDescription.colors = this.hcColorTheme;
 
+        // TREEMAP ONLY : Set Color Gradient min and max color. Takes only the first of the colors array.
+        // Trim the alpha values, if the color has alpha.
+        // Hard coded logic bleehh
+        if(category.diagram.type == "treemap")
+        {
+            var gradientMapMaxColor = this.ignoreAlphaColor(chartObj.chartDescription.colors[0] as string);
+
+            chartObj.chartDescription.colorAxis = { minColor: '#FFFFFF', maxColor: gradientMapMaxColor };
+        }
+            
         const queries = new Array<ChartInfo>();
 
         dataseries.forEach(dataElement => {
-            queries.push( new ChartInfo(dataElement, view.profile, 
-                                appearanceOptions.chartAppearance.generalOptions.resultsLimit,
-                                this.figureCategoryType(dataElement, category)));
-                
+            
+            var chartInfo = new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit, this.figureCategoryType(dataElement, category));
+            queries.push( chartInfo );
+            
+            // Make sure that Highcharts gets a valid stacking value
             chartObj.chartDescription.series.push({ stacking: dataElement.chartProperties.stacking == 'null' ? undefined : dataElement.chartProperties.stacking });
             
             // Set color for each data series. Works only for bars and columns.
@@ -452,5 +462,14 @@ export class DiagramCreator {
             .find((map: ISupportedMap) => map.type === category.diagram.type).name;
 
         return mapObj;
+    }
+
+    private ignoreAlphaColor(color: string) : string
+    {
+        var finalColor = null;
+        if(color.length > 7)
+            finalColor = color.slice(0,7)
+        
+        return finalColor != null ? finalColor : color;
     }
 }
