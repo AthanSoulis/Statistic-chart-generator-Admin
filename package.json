@@ -45,6 +45,7 @@
     "@angular/cli": "^11.2.9",
     "@angular/compiler-cli": "^11.2.10",
     "@angular/language-service": "^11.2.10",
+    "@types/echarts": "^4.9.12",
     "@types/jest": "^26.0.22",
     "@types/mocha": "^8.2.2",
     "@types/node": "^10.10.1",
