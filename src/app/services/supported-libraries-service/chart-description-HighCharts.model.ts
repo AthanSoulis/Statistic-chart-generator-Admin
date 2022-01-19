@@ -26,7 +26,8 @@ class HighChartsDescription {
     tooltip: Highcharts.TooltipOptions;
     legend: HCLegend;
     credits: HCCredits;
-    colors: string[] = [];
+    colors: Highcharts.ColorType[] = [];
+    colorAxis: { minColor: Highcharts.ColorType, maxColor: Highcharts.ColorType };
     series: Array<{stacking?: undefined | 'normal' | 'percent' | 'stream' | 'overlap'}> = [];
 
     constructor() {
