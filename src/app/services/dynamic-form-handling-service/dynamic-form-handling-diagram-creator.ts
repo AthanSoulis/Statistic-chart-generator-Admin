@@ -340,9 +340,6 @@ export class DiagramCreator {
                 chartObj.chartDescription.toolbox.right = '10';
                 chartObj.chartDescription.toolbox.feature = new ECToolboxFeature();
             }
-            // tslint:disable-next-line:max-line-length
-            chartObj.chartDescription.plotOptions.series.stacking = appearanceOptions.chartAppearance.echartsAppearanceOptions.ecMiscOptions.stackedChart;
-
             // Legend Options
             chartObj.chartDescription.legend.show = appearanceOptions.chartAppearance.echartsAppearanceOptions.ecLegend.ecEnableLegend;
             chartObj.chartDescription.legend.orient = appearanceOptions.chartAppearance.echartsAppearanceOptions.ecLegend.ecLegendLayout;
@@ -355,8 +352,6 @@ export class DiagramCreator {
                 chartObj.chartDescription.title.text = appearanceOptions.chartAppearance.echartsAppearanceOptions.titles.title;
                 chartObj.chartDescription.title.subtext = appearanceOptions.chartAppearance.echartsAppearanceOptions.titles.subtitle;
             }
-            // tslint:disable-next-line:max-line-length
-            chartObj.chartDescription.plotOptions.series.dataLabels.enabled = appearanceOptions.chartAppearance.echartsAppearanceOptions.ecMiscOptions.ecEnableDataLabels;
 
             // Chart Area Options
             // tslint:disable-next-line:max-line-length
@@ -371,34 +366,57 @@ export class DiagramCreator {
         if (appearanceOptions.chartAppearance.echartsAppearanceOptions.dataSeriesColorArray.length > 1
             || appearanceOptions.chartAppearance.echartsAppearanceOptions.dataSeriesColorArray[0] !== '#00000000') {
             // tslint:disable-next-line:max-line-length
-            chartObj.chartDescription.colors = appearanceOptions.chartAppearance.echartsAppearanceOptions.dataSeriesColorArray.concat(this.ecColorTheme);
+            chartObj.chartDescription.color = appearanceOptions.chartAppearance.echartsAppearanceOptions.dataSeriesColorArray.concat(this.ecColorTheme);
         }
         else
-            chartObj.chartDescription.colors = this.ecColorTheme;
-
-        console.log('chartObj.chartDescription', chartObj.chartDescription);
-
+            chartObj.chartDescription.color = this.ecColorTheme;
+        
+        // Push queries to JSON for CDF
         const queries = new Array<ChartInfo>();
 
         dataseries.forEach(dataElement => {
             queries.push(new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
                 this.figureCategoryType(dataElement, category)));
-            // if (appearanceOptions.chartAppearance.echartsAppearanceOptions.hcMiscOptions.ecEnableDataLabels) {
-            //     queries.push(new ECChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
-            //         category.categoryType !== 'combo' ? category.categoryType :
-            //             (isNullOrUndefined(dataElement.chartProperties.chartType) ? 'line' : dataElement.chartProperties.chartType ),
-            //         new ECSeriesDataLabel()));
-            // } else {
-            //     queries.push(new ECChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
-            //         category.categoryType !== 'combo' ? category.categoryType :
-            //             (isNullOrUndefined(dataElement.chartProperties.chartType) ? 'line' : dataElement.chartProperties.chartType ),
-            //         null));
-            // }
+        });
+        chartObj.chartDescription.queries = queries;
+
+        // Initialize the echarts series
+        dataseries.forEach(dataElement => {
+            chartObj.chartDescription.series.push({
+                type: category.diagram.type === 'area'? 'line' : category.diagram.type,
+                areaStyle: category.diagram.type === 'area' ? {} : null,
+                
+                // Stack options
+                // NOTE: To enable a stack chart in echarts, the stack property needs to be a truthy value.
+                // Since the property type is (wrongly) just string a truthy value would be literally any string
+                stack: appearanceOptions.chartAppearance.echartsAppearanceOptions.ecMiscOptions.stackedChart ? 'true' : null,
+                // Label options
+                label: {show: appearanceOptions.chartAppearance.echartsAppearanceOptions.ecMiscOptions.ecEnableDataLabels,
+                        position: this.figureLabelPosition (appearanceOptions.chartAppearance.echartsAppearanceOptions.ecMiscOptions.ecEnableDataLabels),
+                        formatter: (a:any)=>a.value.toLocaleString()}
+            });
         });
 
-        chartObj.chartDescription.queries = queries;
+        // TREEMAP ONLY : Set Color Gradient min and max color. Takes only the first of the colors array.
+        // Trim the alpha values, if the color has alpha.
+        // NOTE: We support treemap with only one depth (one dataseries)
+        //
+        // NOTE: At this time @types/echarts supports version 4.9.2 where the levels property are not an array. 
+        // Update dev dependency when fixed https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/58276
+        if(category.diagram.type == "treemap")
+        {
+            var gradientMapMaxColor = this.ignoreAlphaColor(chartObj.chartDescription.color[0] as string);
+
+            (chartObj.chartDescription.series[0] as {levels:[{color: string[], colorMappingBy: string}]}).levels =
+             [{ color: ['#F0F0F0', gradientMapMaxColor], colorMappingBy: 'value' }];
+
+        }
+        
+        console.log('chartObj.chartDescription', chartObj.chartDescription);
+
         return chartObj;
     }
+    figureLabelPosition(isStacked: boolean) : 'inside' | 'right' { return isStacked ? 'inside' : 'right' }
 
     createDynamicHighMapsMap(view: ViewFormSchema, category: CategoryFormSchema,
                              dataseries: DataseriesFormSchema[], appearanceOptions: AppearanceFormSchema): HighMapsMap {

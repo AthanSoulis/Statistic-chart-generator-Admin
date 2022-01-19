@@ -1,4 +1,7 @@
 import {Query, ChartInfo} from '../../chart-creator/chart-query.model';
+import type { EChartOption, ECharts, EChartTitleOption } from 'echarts';
+import { EChartsSeriesType } from 'echarts/lib/echarts';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 export class EChartsChart {
     library: string;
@@ -13,55 +16,32 @@ export class EChartsChart {
 }
 
 class EChartsDescription {
-    chart: ECchart;
-    title: ECtitle;
-    yAxis: ECaxis;
-    xAxis: ECaxis;
-    backgroundColor: string | undefined;
-    tooltip: ECTooltip;
-    queries: Array<ChartInfo> = [];
-    lang: ECLang;
+    
+    title?: EChartTitleOption;
+    xAxis?: EChartOption.XAxis;
+    yAxis?: EChartOption.YAxis;
+    series: EChartOption.Series[];
+    backgroundColor?: EChartOption.Color;
+    tooltip?: EChartOption.Tooltip ;    
+    color: string[];
+
+    // not Echarts fields
     toolbox: ECExporting;
-    plotOptions: ECPlotOptions;
     legend: ECLegend;
-    colors: string[] = ['#7cb5ec'];
+    
+
+    queries: Array<ChartInfo> = [];
 
     constructor() {
-        this.chart = new ECchart();
-        this.title = new ECtitle();
-        this.yAxis = new ECaxis();
-        this.xAxis = new ECaxis();
-        this.lang = new ECLang();
+
+        this.yAxis = {} as EChartOption.YAxis;
+        this.xAxis = {} as EChartOption.XAxis
         this.toolbox = new ECExporting();
-        this.plotOptions = new ECPlotOptions();
         this.legend = new ECLegend();
-        this.tooltip = new ECTooltip();
+        this.tooltip = {} as EChartOption.Tooltip;
+        this.series = [];
     }
 }
-
-class ECchart {
-    type: string = 'line';
-    backgroundColor: string = '#7cb5ec';
-    borderColor: string;
-    borderRadius: number;
-    borderWidth: number;
-
-    plotBackgroundImage: string;
-    plotBackgroundColor: string;
-    plotBorderColor: string;
-    plotBorderWidth: number;
-}
-export class ECtitle {
-    text: string = '';
-    subtext: string = '';
-}
-class ECaxis {
-    name: string | undefined;
-}
-class ECLang {
-    noData = 'No Data available for the Query';
-}
-
 export class ECExporting {
     show: boolean;
     right: string | number = 'auto';
@@ -100,30 +80,3 @@ export class ECLegend {
     bottom: string | number = 'auto';
 }
 
-class ECPlotOptions {
-    series: ECPlotOptionsSeries;
-    constructor() {
-        this.series = new ECPlotOptionsSeries();
-    }
-}
-
-class ECPlotOptionsSeries {
-    dataLabels: ECDataLabels;
-    stacking: boolean;
-    constructor() {
-        this.dataLabels = new ECDataLabels();
-        this.stacking = false;
-    }
-}
-
-export class ECDataLabels {
-    enabled: boolean = false;
-    format: string | undefined = undefined;
-}
-
-export class ECTooltip {
-    show: boolean;
-    constructor() {
-        this.show = true;
-    }
-}

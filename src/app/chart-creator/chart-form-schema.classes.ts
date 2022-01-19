@@ -82,7 +82,7 @@ export interface EchartsOptionsFormSchema {
     ecChartArea ?: ECChartAreaOptionsFormSchema;
     ecLegend ?: ECLegendOptionsFormSchema;
     ecMiscOptions ?: ECMiscOptionsFormSchema;
-    // stackedChart ?: boolean;
+    
 }
 export interface HighmapsOptionsFormSchema {
     title ?: TitleOptionsFormSchema;
