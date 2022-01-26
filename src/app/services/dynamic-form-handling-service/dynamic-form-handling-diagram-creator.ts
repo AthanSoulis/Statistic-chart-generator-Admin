@@ -9,6 +9,7 @@ import {ISupportedMap} from '../supported-chart-types-service/supported-chart-ty
 import {EChartsChart, ECToolboxFeature} from '../supported-libraries-service/chart-description-eCharts.model';
 import {RawChartDataModel} from '../supported-libraries-service/chart-description-rawChartData.model';
 import {QueryInfo, RawDataModel} from '../supported-libraries-service/description-rawData.model';
+import type { EChartOption } from 'echarts';
 
 export class DiagramCreator {
 
@@ -400,14 +401,11 @@ export class DiagramCreator {
         // TREEMAP ONLY : Set Color Gradient min and max color. Takes only the first of the colors array.
         // Trim the alpha values, if the color has alpha.
         // NOTE: We support treemap with only one depth (one dataseries)
-        //
-        // NOTE: At this time @types/echarts supports version 4.9.2 where the levels property are not an array. 
-        // Update dev dependency when fixed https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/58276
         if(category.diagram.type == "treemap")
         {
             var gradientMapMaxColor = this.ignoreAlphaColor(chartObj.chartDescription.color[0] as string);
 
-            (chartObj.chartDescription.series[0] as {levels:[{color: string[], colorMappingBy: string}]}).levels =
+            (chartObj.chartDescription.series[0] as EChartOption.SeriesTreemap).levels  =
              [{ color: ['#F0F0F0', gradientMapMaxColor], colorMappingBy: 'value' }];
 
         }
