@@ -1,3 +1,4 @@
+import { HCZoomOptionsFormSchema } from './../services/supported-libraries-service/chart-description-HighCharts.model';
 import { ISupportedCategory } from './../services/supported-chart-types-service/supported-chart-types.service';
 import {HCDataLabels} from "../services/supported-libraries-service/chart-description-HighCharts.model"
 // Classes derived from the chart-form-schema.model
@@ -74,6 +75,7 @@ export interface HighchartsOptionsFormSchema {
     hcLegend ?: HCLegendOptionsFormSchema;
     hcMiscOptions ?: HCMiscOptionsFormSchema;
     hcDataLabels ?: HCDataLabels;
+    hcZoomOptions ?: HCZoomOptionsFormSchema;
 }
 export interface EchartsOptionsFormSchema {
     titles ?: TitlesOptionsFormSchema;
@@ -82,7 +84,7 @@ export interface EchartsOptionsFormSchema {
     ecChartArea ?: ECChartAreaOptionsFormSchema;
     ecLegend ?: ECLegendOptionsFormSchema;
     ecMiscOptions ?: ECMiscOptionsFormSchema;
-    
+    ecZoomOptions ?: ECZoomOptionsFormSchema;
 }
 export interface HighmapsOptionsFormSchema {
     title ?: TitleOptionsFormSchema;
@@ -173,6 +175,12 @@ export interface ECMiscOptionsFormSchema {
     ecEnableDataLabels ?: boolean;
     stackedChart ?: boolean;
 }
+
+export interface ECZoomOptionsFormSchema {
+    enableXaxisZoom ?: boolean;
+    enableYaxisZoom ?: boolean;
+}
+
 export interface HCMiscOptionsFormSchema {
     exporting ?: boolean;
     hcEnableDataLabels ?: boolean;

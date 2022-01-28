@@ -22,11 +22,12 @@ class EChartsDescription {
     yAxis?: EChartOption.YAxis;
     series: EChartOption.Series[];
     backgroundColor?: EChartOption.Color;
-    tooltip?: EChartOption.Tooltip ;    
+    tooltip?: EChartOption.Tooltip;
+    dataZoom?: EChartOption.DataZoom[];
     color: string[];
 
     // not Echarts fields
-    toolbox: ECExporting;
+    toolbox: ECToolbox;
     legend: ECLegend;
     
 
@@ -36,13 +37,19 @@ class EChartsDescription {
 
         this.yAxis = {} as EChartOption.YAxis;
         this.xAxis = {} as EChartOption.XAxis
-        this.toolbox = new ECExporting();
+        this.toolbox = new ECToolbox();
         this.legend = new ECLegend();
         this.tooltip = {} as EChartOption.Tooltip;
+        this.dataZoom = [
+            // Xaxis Zoom options
+            { show: false },
+            // Yaxis Zoom options
+            { show:false, yAxisIndex:0}
+        ];
         this.series = [];
     }
 }
-export class ECExporting {
+export class ECToolbox {
     show: boolean;
     right: string | number = 'auto';
     left: string | number = 'auto';

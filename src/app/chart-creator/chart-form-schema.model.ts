@@ -977,6 +977,34 @@ export class FormSchema {
                                     title: 'Data Labels',
                                     fields: ['enabled', 'style']
                                 }]
+                            },
+                            hcZoomOptions: {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    enableXaxisZoom: {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: false,
+                                        tooltip: 'Look closer on the values based on the X Axis.',
+                                        description: 'Enable X axis Zoom'
+                                    },
+                                    enableYaxisZoom : {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: false,
+                                        tooltip: 'Look closer on the values based on the Y Axis.',
+                                        description: 'Enable Y axis Zoom'
+                                    }
+                                },
+                                fieldsets:
+                                [{
+                                    title: 'Zoom Options',
+                                    fields: ['enableXaxisZoom']
+                                },
+                                {
+                                    fields: ['enableYaxisZoom']
+                                }]
                             }
                         },
                         fieldsets: [
@@ -986,7 +1014,7 @@ export class FormSchema {
                             },
                             {
                                 fieldsetColumnWidth : 'eight wide column',
-                                fields: [ 'hcDataLabels', 'hcCredits', 'hcLegend', 'hcChartArea', 'hcPlotArea', 'dataSeriesColorArray' ]
+                                fields: [ 'hcChartArea', 'hcPlotArea', 'hcDataLabels', 'hcCredits', 'hcLegend','hcZoomOptions', 'dataSeriesColorArray' ]
                             }
                         ],
                         visibleIf: {
@@ -1212,6 +1240,31 @@ export class FormSchema {
                                         title: 'Misc Options',
                                         fields: ['exporting', 'ecEnableDataLabels', 'stackedChart']
                                     }]
+                            },
+                            ecZoomOptions: {
+                                type: 'object',
+                                widget: { id : 'csui-property-object'},
+                                properties: {
+                                    enableXaxisZoom: {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: false,
+                                        tooltip: 'Look closer on the values based on the X Axis.',
+                                        description: 'Enable X axis Zoom'
+                                    },
+                                    enableYaxisZoom : {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: false,
+                                        tooltip: 'Look closer on the values based on the Y Axis.',
+                                        description: 'Enable Y axis Zoom'
+                                    }
+                                },
+                                fieldsets:
+                                [{
+                                    title: 'Zoom Options',
+                                    fields: ['enableXaxisZoom', 'enableYaxisZoom']
+                                }]
                             }
                         },
                         fieldsets: [
@@ -1221,7 +1274,7 @@ export class FormSchema {
                             },
                             {
                                 fieldsetColumnWidth : 'eight wide column',
-                                fields: ['ecLegend', 'ecChartArea', 'dataSeriesColorArray' ]
+                                fields: ['ecLegend', 'ecZoomOptions', 'ecChartArea', 'dataSeriesColorArray' ]
                             }
                         ],
                         visibleIf: {

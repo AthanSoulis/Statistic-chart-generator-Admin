@@ -272,6 +272,12 @@ export class DiagramCreator {
                 chartObj.chartDescription.yAxis.reversedStacks = appearanceOptions.chartAppearance.highchartsAppearanceOptions.yAxis.reversedStacks;
             }
         }
+
+        // Axis Zoom options
+
+        chartObj.chartDescription.xAxis.zoomEnabled = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcZoomOptions.enableXaxisZoom;
+        chartObj.chartDescription.yAxis.zoomEnabled = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcZoomOptions.enableYaxisZoom;
+
         // Set Color Theme. More universal approach
         if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.length > 1 || appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray[0] !== '#00000000') {
             chartObj.chartDescription.colors = appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.concat(this.hcColorTheme);
@@ -363,6 +369,15 @@ export class DiagramCreator {
                 chartObj.chartDescription.yAxis.name = appearanceOptions.chartAppearance.echartsAppearanceOptions.axisNames.yaxisName;
             }
         }
+
+        // Axis Zoom options
+        chartObj.chartDescription.dataZoom = [
+            // Xaxis Zoom options
+            { show: appearanceOptions.chartAppearance.echartsAppearanceOptions.ecZoomOptions.enableXaxisZoom },
+            // Yaxis Zoom options
+            { show:appearanceOptions.chartAppearance.echartsAppearanceOptions.ecZoomOptions.enableYaxisZoom, yAxisIndex:0}
+        ];
+
         // Set Color Theme. More universal approach
         if (appearanceOptions.chartAppearance.echartsAppearanceOptions.dataSeriesColorArray.length > 1
             || appearanceOptions.chartAppearance.echartsAppearanceOptions.dataSeriesColorArray[0] !== '#00000000') {

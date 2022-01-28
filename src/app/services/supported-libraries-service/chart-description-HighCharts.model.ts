@@ -14,7 +14,7 @@ export class HighChartsChart {
 }
 
 class HighChartsDescription {
-    chart: HCchart;
+    chart: Highcharts.ChartOptions
     title: Highcharts.TitleOptions;
     subtitle: Highcharts.SubtitleOptions;
     yAxis: Highcharts.YAxisOptions;
@@ -31,11 +31,27 @@ class HighChartsDescription {
     series: Array<{stacking?: undefined | 'normal' | 'percent' | 'stream' | 'overlap'}> = [];
 
     constructor() {
-        this.chart = new HCchart();
+        this.chart =  {
+            type : 'line',
+            polar : false,            
+            backgroundColor : '#ffffff',
+            borderColor : '#335cad',
+            borderRadius : 0,
+            borderWidth : 0,
+            plotBorderColor : '#cccccc',
+            plotBorderWidth : 0,
+            zoomType :'xy'
+        }
         this.title = {style: {}} as Highcharts.TitleOptions;
         this.subtitle = {style: {}} as Highcharts.SubtitleOptions;
-        this.yAxis = {title:{style: {}}} as Highcharts.YAxisOptions;
-        this.xAxis = {title:{style: {}}} as Highcharts.XAxisOptions;
+        this.yAxis = {
+            title:{style: {}},
+            zoomEnabled: false
+        } as Highcharts.YAxisOptions;
+        this.xAxis = {
+            title:{style: {}},
+            zoomEnabled : false
+        } as Highcharts.XAxisOptions;
         this.lang = new HCLang();
         this.exporting = new HCExporting();
         this.plotOptions = new HCPlotOptions();
@@ -116,6 +132,11 @@ export class HCDataLabels implements Highcharts.DataLabelsOptions {
         'textOutline': '2px contrast',
         'stroke-width': 0
     };
+}
+
+export class HCZoomOptionsFormSchema {
+    enableXaxisZoom ?: boolean;
+    enableYaxisZoom ?: boolean;
 }
 
 export class HCCredits {
