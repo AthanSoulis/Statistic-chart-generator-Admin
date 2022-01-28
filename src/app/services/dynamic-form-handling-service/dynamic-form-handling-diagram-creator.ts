@@ -10,6 +10,7 @@ import {EChartsChart, ECToolboxFeature} from '../supported-libraries-service/cha
 import {RawChartDataModel} from '../supported-libraries-service/chart-description-rawChartData.model';
 import {QueryInfo, RawDataModel} from '../supported-libraries-service/description-rawData.model';
 import type { EChartOption } from 'echarts';
+import { ColorType } from 'highcharts';
 
 export class DiagramCreator {
 
@@ -285,17 +286,8 @@ export class DiagramCreator {
         else
             chartObj.chartDescription.colors = this.hcColorTheme;
 
-        // TREEMAP ONLY : Set Color Gradient min and max color. Takes only the first of the colors array.
-        // Trim the alpha values, if the color has alpha.
-        // Hard coded logic bleehh
-        if(category.diagram.type == "treemap")
-        {
-            var gradientMapMaxColor = this.ignoreAlphaColor(chartObj.chartDescription.colors[0] as string);
-
-            chartObj.chartDescription.colorAxis = { minColor: '#FFFFFF', maxColor: gradientMapMaxColor };
-        }
-            
         const queries = new Array<ChartInfo>();
+        var dataseriesColors : ColorType[] = [];
 
         dataseries.forEach(dataElement => {
             
@@ -305,12 +297,23 @@ export class DiagramCreator {
             // Make sure that Highcharts gets a valid stacking value
             chartObj.chartDescription.series.push({ stacking: dataElement.chartProperties.stacking == 'null' ? undefined : dataElement.chartProperties.stacking });
             
-            // Set color for each data series. Works only for bars and columns.
-            // if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray.length > 1
-            //     || appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray[0] !== '#00000000') {
-            //   queries[queries.length - 1].color = appearanceOptions.chartAppearance.highchartsAppearanceOptions.dataSeriesColorArray[queries.length - 1];
-            // }
+            // Push Dataseries colors to the color scheme
+            if(dataElement.chartProperties.dataseriesColor != null)
+                dataseriesColors.push(dataElement.chartProperties.dataseriesColor);
         });
+
+        if(dataseriesColors.length > 0)
+            chartObj.chartDescription.colors = dataseriesColors.concat(chartObj.chartDescription.colors);
+
+        // TREEMAP ONLY : Set Color Gradient min and max color. Takes only the first of the colors array.
+        // Trim the alpha values, if the color has alpha.
+        // Hard coded logic bleehh
+        if(category.diagram.type == "treemap")
+        {
+            var gradientMapMaxColor = this.ignoreAlphaColor(chartObj.chartDescription.colors[0] as string);
+
+            chartObj.chartDescription.colorAxis = { minColor: '#FFFFFF', maxColor: gradientMapMaxColor };
+        }
 
         chartObj.chartDescription.queries = queries;
         return chartObj;
@@ -387,13 +390,23 @@ export class DiagramCreator {
         else
             chartObj.chartDescription.color = this.ecColorTheme;
         
-        // Push queries to JSON for CDF
+        
         const queries = new Array<ChartInfo>();
+        var dataseriesColors : string[] = [];
 
         dataseries.forEach(dataElement => {
+            // Push queries to JSON for CDF
             queries.push(new ChartInfo(dataElement, view.profile, appearanceOptions.chartAppearance.generalOptions.resultsLimit,
                 this.figureCategoryType(dataElement, category)));
+            
+            // Push Dataseries colors to the color scheme
+            if(dataElement.chartProperties.dataseriesColor != null)
+                dataseriesColors.push(dataElement.chartProperties.dataseriesColor);
         });
+
+        if(dataseriesColors.length > 0)
+            chartObj.chartDescription.color = dataseriesColors.concat(chartObj.chartDescription.color);
+        
         chartObj.chartDescription.queries = queries;
 
         // Initialize the echarts series
