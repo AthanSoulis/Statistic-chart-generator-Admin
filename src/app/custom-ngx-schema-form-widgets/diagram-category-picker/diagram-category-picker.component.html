@@ -9,14 +9,13 @@
   <h3 class="ui dividing header">Basic Diagrams</h3>
   <div class="ui stackable centered cards">
       <a class="card text-decoration-none" *ngFor="let basicDiagram of this.diagramCategoryService.supportedChartTypes"
-      [ngStyle]=(setSelectedCardStyle(this.isDiagramSelected(basicDiagram)))
-      (click)="this.diagramSelectionAction(basicDiagram)">
-        <div class="image">
-          <img src="{{this.backEndUrlProvider.serviceURL}}/{{basicDiagram.imageURL}}" alt="Diagram Image">
-        </div>
-        <div class="content">
-          <a class="center aligned header">{{basicDiagram.type | titlecase}}</a>
-        </div>
+      [ngStyle]=(setSelectedCardStyle(this.isDiagramSelected(basicDiagram))) (click)="this.diagramSelectionAction(basicDiagram)">
+          <div class="image">
+            <img src="{{this.backEndUrlProvider.serviceURL}}/{{basicDiagram.imageURL}}" alt="Diagram Image">
+          </div>
+          <div class="content">
+            <a class="center aligned header">{{basicDiagram.type | titlecase}}</a>
+          </div>
       </a>
   </div>
   </div>

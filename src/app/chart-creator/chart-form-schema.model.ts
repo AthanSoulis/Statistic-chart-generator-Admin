@@ -58,13 +58,14 @@ export class FormSchema {
                     description : { type: 'string', widget: 'hidden' },
                     imageURL : { type: 'string', widget: 'hidden' },
                     isPolar : { type: 'boolean', widget: 'hidden' },
+                    isHidden : { type: 'boolean', widget: 'hidden' },
                     supportedLibraries : { 
                         type: 'array',
                         widget: 'hidden',
                         items: { type : 'string', widget : 'hidden' }
                     }
                 },
-                fieldsets: [{ fields: ['name','type','diagramId','description','imageURL','isPolar','supportedLibraries'] }]
+                fieldsets: [{ fields: ['name','type','diagramId','description','imageURL','isPolar','isHidden','supportedLibraries'] }]
             }
         },
         fieldsets: [{ fields: ['diagram'] }],

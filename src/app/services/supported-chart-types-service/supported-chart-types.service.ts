@@ -68,7 +68,8 @@ export interface ISupportedCategory {
   diagramId?: number;
   description?: string;
   imageURL?: string;
-  isPolar?: boolean; 
+  isPolar?: boolean;
+  isHidden?: boolean;
 }
 export interface ISupportedChart extends ISupportedCategory {}
 export interface ISupportedPolar extends ISupportedCategory { isPolar: boolean;}

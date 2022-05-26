@@ -26,10 +26,12 @@ export class DiagramCategoryService {
 
   availableDiagrams: Array<ISupportedCategory> = [];
 
+  hideChartFilter = (chart: ISupportedChart)=> !chart.isHidden;
+
   constructor(private chartTypesService: SupportedChartTypesService) {
 
     this.chartTypesService.getSupportedChartTypes().pipe(first()).subscribe(
-      (data: Array<ISupportedChart>) => this.supportedChartTypes = data, // success path
+      (data: Array<ISupportedChart>) => this.supportedChartTypes = data.filter(this.hideChartFilter), // success path
       error => {}, // error path
       () => {
         this.supportedChartTypes
@@ -37,7 +39,7 @@ export class DiagramCategoryService {
       }
     );
     this.chartTypesService.getSupportedPolarTypes().pipe(first()).subscribe(
-      (data: Array<ISupportedPolar>) => this.supportedPolarTypes = data, // success path
+      (data: Array<ISupportedPolar>) => this.supportedPolarTypes = data.filter(this.hideChartFilter), // success path
       error => {}, // error path
       () => {
         this.supportedPolarTypes
@@ -45,9 +47,7 @@ export class DiagramCategoryService {
       }
     );
     this.chartTypesService.getSupportedMaps().subscribe(
-      (data: Array<ISupportedMap>) => {
-        this.supportedMaps = data;
-      }, // success path
+      (data: Array<ISupportedMap>) => this.supportedMaps = data.filter(this.hideChartFilter), // success path
       error => {}, // error path
       () => {
         this.supportedMaps
@@ -55,9 +55,7 @@ export class DiagramCategoryService {
       }
     );
     this.chartTypesService.getSupportedSpecialChartTypes().subscribe(
-      (data: Array<ISupportedSpecialChartType>) => {
-        this.supportedSpecialisedDiagrams = data;
-      }, // success path
+      (data: Array<ISupportedSpecialChartType>) => this.supportedSpecialisedDiagrams = data.filter(this.hideChartFilter), // success path
       error => {}, // error path
       () => {
         this.supportedSpecialisedDiagrams
@@ -65,9 +63,7 @@ export class DiagramCategoryService {
       }
     );
     this.chartTypesService.getSupportedMiscTypes().subscribe(
-        (data: Array<ISupportedMiscType>) => {
-              this.supportedMiscTypes = data;
-          }, // success path
+        (data: Array<ISupportedMiscType>) => this.supportedMiscTypes = data.filter(this.hideChartFilter), // success path
           error => {}, // error path
           () => {
               this.supportedMiscTypes
