@@ -124,7 +124,7 @@ export class FormSchema {
                                     },
                                     required: ['name'],
                                     visibleIf: {
-                                        'yaxisAggregate': ['count', 'min', 'max', 'avg', 'null']
+                                        'yaxisAggregate': ['count', 'min', 'max', 'avg', 'sum', 'null']
                                     }
                                 },
                             },

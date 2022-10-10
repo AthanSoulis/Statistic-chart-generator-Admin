@@ -18,6 +18,7 @@ export class SupportedAggregateFunctionsService {
     return of([
       {name: 'Total', code: 'total'},
       {name: 'Count', code: 'count'},
+      {name: 'Sum', code: 'sum'},
       {name: 'Minimum', code: 'min'},
       {name: 'Maximum', code: 'max'},
       {name: 'Average', code: 'avg'}]);
