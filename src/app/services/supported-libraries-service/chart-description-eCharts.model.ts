@@ -35,8 +35,9 @@ class EChartsDescription {
 
     constructor() {
 
+        this.title = {} as EChartTitleOption;
         this.yAxis = {} as EChartOption.YAxis;
-        this.xAxis = {} as EChartOption.XAxis
+        this.xAxis = {} as EChartOption.XAxis;
         this.toolbox = new ECToolbox();
         this.legend = new ECLegend();
         this.tooltip = {} as EChartOption.Tooltip;
