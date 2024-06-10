@@ -910,6 +910,14 @@ export class FormSchema {
                                         tooltip: 'Enable the context button on the top right of the chart, allowing end users to download image exports.',
                                         description: 'Enable Exporting'
                                     },
+                                    drilldown: {
+                                        type: 'boolean',
+                                        widget : {id : 'csui-boolean'},
+                                        default: false,
+                                        // tslint:disable-next-line:max-line-length
+                                        tooltip: 'When the point is clicked, this series is loaded in the chart and replaces the existing series.',
+                                        description: 'Enable Drilldown'
+                                    },
                                     stackedChart : {
                                         type : 'string',
                                         widget : { id: 'csui-select'},
@@ -938,7 +946,7 @@ export class FormSchema {
                                 fieldsets:
                                 [{
                                     title: 'Misc Options',
-                                    fields: ['exporting', 'stackedChart']
+                                    fields: ['exporting', 'drilldown', 'stackedChart']
                                 }]
                             },
                             hcDataLabels: {

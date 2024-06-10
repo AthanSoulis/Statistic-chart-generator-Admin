@@ -189,6 +189,10 @@ export class DiagramCreator {
                 // Exporting
                 chartObj.chartDescription.exporting.enabled =
                     appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.exporting;
+
+                // Drilldown
+                if (appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.drilldown)
+                chartObj.drilldown = appearanceOptions.chartAppearance.highchartsAppearanceOptions.hcMiscOptions.drilldown;
                 
                 // Stacked Chart
                 chartObj.chartDescription.plotOptions.series.stacking = 

@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --watch",
+    "run:localhost": "ng run stats-tool:serve:localhost",
     "build:prod": "ng build --prod --aot --build-optimizer",
     "build:beta": "ng build --prod --configuration beta --aot --build-optimizer",
     "build:madgik": "ng build --prod --configuration madgik --aot --build-optimizer",
@@ -33,10 +34,10 @@
     "highcharts": "^9.1.2",
     "jexl": "^2.3.0",
     "ngx-color-picker": "^11.0.0",
-    "ngx-schema-form": "^2.6.3",
+    "ngx-schema-form": "2.6.9",
     "rxjs": "^6.6.7",
     "tslib": "^2.0.0",
-    "typescript": "^4.0.7",
+    "typescript": "<4.2",
     "z-schema": "^4.2.3",
     "zone.js": "^0.10.3"
   },

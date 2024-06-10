@@ -1,14 +1,16 @@
-import { Query, ChartInfo } from '../../chart-creator/chart-query.model';
+import { ChartInfo } from '../../chart-creator/chart-query.model';
 import * as Highcharts from "highcharts";
 
 export class HighChartsChart {
     library: string;
+    drilldown: boolean;
     orderBy: string;
     chartDescription: HighChartsDescription;
 
     constructor() {
         this.library = 'HighCharts';
         this.orderBy = 'xaxis';
+        this.drilldown = undefined;
         this.chartDescription = new HighChartsDescription();
     }
 }
