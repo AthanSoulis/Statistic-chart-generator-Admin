@@ -299,8 +299,12 @@ export class DiagramCreator {
             queries.push( chartInfo );
             
             // Make sure that Highcharts gets a valid stacking value
-            chartObj.chartDescription.series.push({ stacking: dataElement.chartProperties.stacking == 'null' ? undefined : dataElement.chartProperties.stacking });
-            
+            console.log(dataElement.chartProperties.stackName);
+            chartObj.chartDescription.series.push({
+              stacking: dataElement.chartProperties.stacking == 'null' ? undefined : dataElement.chartProperties.stacking,
+              stack: dataElement.chartProperties.stackName == '' ? undefined : dataElement.chartProperties.stackName
+            });
+
             // Push Dataseries colors to the color scheme
             if(dataElement.chartProperties.dataseriesColor != null)
                 dataseriesColors.push(dataElement.chartProperties.dataseriesColor);

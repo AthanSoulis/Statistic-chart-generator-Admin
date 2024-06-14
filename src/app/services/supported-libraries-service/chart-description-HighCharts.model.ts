@@ -30,7 +30,7 @@ class HighChartsDescription {
     credits: HCCredits;
     colors: Highcharts.ColorType[] = [];
     colorAxis: { minColor: Highcharts.ColorType, maxColor: Highcharts.ColorType };
-    series: Array<{stacking?: undefined | 'normal' | 'percent' | 'stream' | 'overlap'}> = [];
+    series: Array<{stacking?: undefined | 'normal' | 'percent' | 'stream' | 'overlap', stack?: undefined | string | number}> = [];
 
     constructor() {
         this.chart =  {

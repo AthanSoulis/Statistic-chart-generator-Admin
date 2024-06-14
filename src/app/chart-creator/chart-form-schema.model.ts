@@ -369,6 +369,15 @@ export class FormSchema {
                                   enum: ['percent']
                                 }
                               ]
+                        },
+                        stackName : {
+                            type : 'string',
+                            title: 'Stack Name',
+                            visibleIf: {
+                                '/appearance/chartAppearance/generalOptions/library': ["HighCharts"]
+                            },
+                            tooltip: 'Highcharts only - Set the name for the stack group.',
+                            widget: { id: 'csui-string' }
                         }
                     },
                     fieldsets:
@@ -377,7 +386,7 @@ export class FormSchema {
                         },
                         {
                             width: ['four wide'],
-                            fields: ['chartType', 'stacking', 'dataseriesColor']
+                            fields: ['chartType', 'stacking', 'stackName', 'dataseriesColor']
                         }]
                 }
             },

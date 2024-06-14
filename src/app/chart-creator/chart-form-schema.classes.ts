@@ -50,6 +50,7 @@ export interface ChartPropertiesFormSchema {
     dataseriesColor?: string;
     dataseriesName?: string;
     stacking?: 'null' | 'normal' | 'percent' | 'stream' | 'overlap';
+    stackName?: string;
 }
 export interface TitlesOptionsFormSchema {
     title ?: string;
